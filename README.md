@@ -25,7 +25,7 @@
 - [Solution](#-our-solution)
 - [Features](#-features)
 - [Tech Stack](#-tech-stack)
-- [Frontend Folder Structure](#-frontend-folder-structure)
+- [Project Architecture](#-project-architecture)
 - [System Architecture](#-system-architecture)
 - [User Roles](#-user-roles)
 - [Project Workflow](#-project-workflow)
@@ -106,146 +106,67 @@ Medical history is scattered across multiple hospitals, clinics, and diagnostic 
 
 ---
 
-## 📁 Frontend Folder Structure
+## 🏗️ Project Architecture
 
-> The following structure follows industry best practices for a **scalable, maintainable React.js** application within the MediSync MERN stack project.
+> MediSync follows a **Modular Monolith** structure for the backend and a **Feature-Based Design** for the frontend to ensure maximum scalability and maintainability.
 
-```
-client/
-└── src/
-    │
-    ├── assets/                        # Static assets
-    │   ├── images/                    # Project images & illustrations
-    │   ├── icons/                     # SVG & PNG icons
-    │   └── fonts/                     # Custom font files
-    │
-    ├── components/                    # Reusable UI components
-    │   ├── Navbar/
-    │   │   ├── Navbar.jsx
-    │   │   └── Navbar.module.css
-    │   ├── Footer/
-    │   │   └── Footer.jsx
-    │   ├── Cards/
-    │   │   ├── MedicineCard.jsx
-    │   │   └── RecordCard.jsx
-    │   ├── Buttons/
-    │   │   └── PrimaryButton.jsx
-    │   ├── Modal/
-    │   │   └── ConfirmModal.jsx
-    │   ├── Loader/
-    │   │   └── Spinner.jsx
-    │   └── Badge/
-    │       └── RoleBadge.jsx
-    │
-    ├── pages/                         # Route-level page components
-    │   ├── LandingPage/
-    │   │   └── LandingPage.jsx
-    │   ├── LoginPage/
-    │   │   └── LoginPage.jsx
-    │   ├── SignupPage/
-    │   │   └── SignupPage.jsx
-    │   ├── DashboardPage/
-    │   │   └── DashboardPage.jsx
-    │   ├── MedicalRecordsPage/
-    │   │   └── MedicalRecordsPage.jsx
-    │   ├── UploadRecordPage/
-    │   │   └── UploadRecordPage.jsx
-    │   ├── SharingPage/
-    │   │   └── SharingPage.jsx
-    │   ├── PharmacyPage/
-    │   │   └── PharmacyPage.jsx
-    │   ├── ComparisonPage/
-    │   │   └── ComparisonPage.jsx
-    │   ├── DoctorPortalPage/
-    │   │   └── DoctorPortalPage.jsx
-    │   ├── AdminPage/
-    │   │   └── AdminPage.jsx
-    │   ├── NotificationsPage/
-    │   │   └── NotificationsPage.jsx
-    │   ├── SettingsPage/
-    │   │   └── SettingsPage.jsx
-    │   └── EmergencyPage/
-    │       └── EmergencyPage.jsx
-    │
-    ├── features/                      # Business logic modules (feature-based)
-    │   ├── auth/
-    │   │   ├── authSlice.js           # Redux slice or Context logic
-    │   │   └── authAPI.js
-    │   ├── medicine/
-    │   │   ├── medicineSlice.js
-    │   │   └── medicineAPI.js
-    │   └── records/
-    │       ├── recordsSlice.js
-    │       └── recordsAPI.js
-    │
-    ├── layouts/                       # Page layout wrappers
-    │   ├── DashboardLayout.jsx        # Sidebar + Topbar for authenticated users
-    │   ├── AuthLayout.jsx             # Centered card layout for Login/Signup
-    │   └── PublicLayout.jsx           # Navbar + Footer for public pages
-    │
-    ├── routes/                        # React Router configuration
-    │   ├── AppRoutes.jsx              # Main router with all routes
-    │   ├── PrivateRoute.jsx           # Protected route wrapper
-    │   └── RoleRoute.jsx              # Role-based route guard
-    │
-    ├── services/                      # API service layer (Axios)
-    │   ├── api.js                     # Axios instance with base URL & interceptors
-    │   ├── authService.js             # Auth-related API calls
-    │   ├── medicineService.js         # Medicine & pharmacy API calls
-    │   └── recordService.js           # Medical record API calls
-    │
-    ├── hooks/                         # Custom React hooks
-    │   ├── useAuth.js                 # Hook for auth state & actions
-    │   ├── useFetch.js                # Generic data-fetching hook
-    │   └── useLocalStorage.js         # Persistent local storage hook
-    │
-    ├── context/                       # React Context API (global state)
-    │   ├── AuthContext.jsx            # Authentication context provider
-    │   ├── ThemeContext.jsx           # Dark/Light mode context
-    │   └── NotificationContext.jsx    # Global notification state
-    │
-    ├── store/                         # Redux Toolkit store (if using Redux)
-    │   ├── store.js                   # Redux store configuration
-    │   └── rootReducer.js             # Combined reducers
-    │
-    ├── utils/                         # Utility / helper functions
-    │   ├── formatDate.js              # Date formatting helpers
-    │   ├── validateForm.js            # Form validation logic
-    │   ├── roleHelpers.js             # Role-check utility functions
-    │   └── constants.js              # App-wide constants (roles, status codes)
-    │
-    ├── config/                        # Application configuration
-    │   ├── appConfig.js               # Base URLs, feature flags
-    │   └── axiosConfig.js             # Global Axios settings
-    │
-    ├── styles/                        # Global styles
-    │   ├── global.css                 # CSS reset & base styles
-    │   ├── variables.css              # CSS custom properties (colors, fonts)
-    │   └── animations.css             # Reusable keyframe animations
-    │
-    ├── App.jsx                        # Root application component
-    └── main.jsx                       # React DOM entry point
+### 📂 Directory Overview
+
+```text
+mediSync/
+├── 💻 frontend/                      # Client-side Application (React + Vite)
+│   ├── 📁 public/                    # Static assets & manifest files
+│   └── 📁 src/
+│       ├── 📁 assets/                # Media, Global Styles & Fonts
+│       ├── 📁 components/            # Reusable UI Components
+│       │   ├── 📁 common/            # Atomic elements (Buttons, Inputs, Cards)
+│       │   └── 📁 layout/            # Structural parts (Navbar, Sidebar, Footer)
+│       ├── 📁 features/              # Feature-specific logic (Auth, Records, etc.)
+│       ├── 📁 pages/                 # Full-screen route components
+│       ├── 📁 services/              # API Client (Axios) & Interceptors
+│       ├── 📁 store/                 # Global State Management (Context/Redux)
+│       ├── 📁 hooks/                 # Custom React hooks
+│       ├── 📁 routes/                # Route configuration & Role-based guards
+│       ├── 📁 utils/                 # Helper functions & Date formatters
+│       ├── 📄 App.jsx                # Application Root
+│       └── 📄 main.jsx               # Entry Point
+│
+├── ⚙️ server/                        # Backend API (Node.js + Express)
+│   ├── 📁 config/                    # Database & Env configurations
+│   ├── 📁 controllers/               # Business logic & Route handlers
+│   ├── 📁 middleware/                # JWT Auth, Validation & Error Handling
+│   ├── 📁 models/                    # Data Models (Mongoose Schemas)
+│   ├── 📁 routes/                    # Express API endpoints
+│   ├── 📁 utils/                     # Backend helper scripts
+│   └── 📄 index.js                   # Server Entry Point
+│
+├── 📄 .env.example                   # Environment variables template
+└── 📄 README.md                      # Project Documentation
 ```
 
 ---
 
-### 🗂️ Folder Breakdown
+### 🛡️ Architecture Highlights
 
-| Folder | Purpose |
-|---|---|
-| `assets/` | Houses all static resources — images, icons, and custom fonts used across the app |
-| `components/` | Contains small, **reusable UI building blocks** (Navbar, Cards, Buttons, Modals) shared across multiple pages |
-| `pages/` | Each sub-folder represents a **distinct route/screen** in the application, keeping page-level logic self-contained |
-| `features/` | Implements **domain-driven business logic** — each feature (auth, medicine, records) owns its state slice and API calls |
-| `layouts/` | Provides structural **wrapper templates** (e.g., sidebar + topbar for dashboard, centered card for auth screens) |
-| `routes/` | Centralizes **React Router** configuration including protected routes and role-based access guards |
-| `services/` | Abstracts all **HTTP API communication** (Axios instance, interceptors, and per-domain service files) |
-| `hooks/` | Encapsulates **reusable stateful logic** into clean custom hooks (`useAuth`, `useFetch`, etc.) |
-| `context/` | Manages **global application state** using the React Context API (auth session, theme, notifications) |
-| `store/` | Houses the **Redux Toolkit** store and root reducer when using Redux for more complex state management |
-| `utils/` | Holds **pure helper functions** (date formatting, form validation, role checks) with no side effects |
-| `config/` | Stores **environment-specific configuration** such as base API URLs, Axios defaults, and feature flags |
-| `styles/` | Contains **global CSS** — reset rules, CSS variables (color tokens, spacing), and keyframe animations |
+| Section | Patterns & Principles |
+| :--- | :--- |
+| **Frontend** | **Atomic Design Principles** for components, **Feature-Sliced** modules for business logic, and **RBAC** (Role-Based Access Control) for routing. |
+| **Backend** | **MVC (Model-View-Controller)** pattern, **RESTful API** design, and **JWT-based** stateless authentication. |
+| **Security** | CORS enabled, Environment variable protection, and encrypted medical data flow. |
+
+---
+
+### 🗂️ Core Folder Breakdown
+
+#### ⚛️ Frontend Logic
+*   `features/`: Each module (e.g., `auth/`, `medicine/`) contains its own logic, keeping the code modular.
+*   `services/`: Centralized Axios instance with interceptors for automatic token handling.
+*   `routes/`: Implements `PrivateRoute` and `PublicRoute` to handle session-based navigation.
+
+#### 🚀 Backend Logic
+*   `controllers/`: Separates business logic from routing for cleaner code.
+*   `middleware/`: Handles security checks (Auth, Input Validation) before reaching controllers.
+*   `models/`: Defines the structure of healthcare data using Mongoose for MongoDB.
 
 ---
 
@@ -371,7 +292,7 @@ cd server
 npm install
 
 # 3. Install frontend dependencies
-cd ../client
+cd ../frontend
 npm install
 ```
 
@@ -398,7 +319,7 @@ cd server
 npm run dev
 
 # Start frontend (in a new terminal)
-cd client
+cd frontend
 npm run dev
 ```
 

@@ -13,6 +13,7 @@
 [![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 [![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
+[![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)](https://firebase.google.com/)
 [![Figma](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)](https://figma.com/)
 
 </div>
@@ -100,7 +101,8 @@ Medical history is scattered across multiple hospitals, clinics, and diagnostic 
 | **Backend** | Node.js + Express.js | RESTful API server |
 | **Database** | MongoDB + Mongoose | Flexible NoSQL data storage |
 | **Authentication** | JWT + Google OAuth 2.0 | Secure, stateless session management |
-| **File Storage** | Cloudinary / Multer | Medical report upload & retrieval |
+| **File Storage** | Cloudinary / Firebase Storage | Medical report upload & retrieval |
+| **Notifications** | Firebase Cloud Messaging (FCM) | Real-time alerts & price drop notifications |
 | **Design** | Figma | UI/UX prototyping |
 | **Version Control** | Git + GitHub | Collaborative development |
 
@@ -128,6 +130,7 @@ mediSync/
 │       ├── 📁 hooks/                 # Custom React hooks
 │       ├── 📁 routes/                # Route configuration & Role-based guards
 │       ├── 📁 utils/                 # Helper functions & Date formatters
+│       ├── 📄 firebase.js            # Firebase Configuration & Auth Setup
 │       ├── 📄 App.jsx                # Application Root
 │       └── 📄 main.jsx               # Entry Point
 │
@@ -309,6 +312,14 @@ GOOGLE_CLIENT_SECRET=your_google_oauth_client_secret
 CLOUDINARY_CLOUD_NAME=your_cloudinary_name
 CLOUDINARY_API_KEY=your_cloudinary_api_key
 CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+
+# Firebase Configuration
+VITE_FIREBASE_API_KEY=your_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+VITE_FIREBASE_APP_ID=your_app_id
 ```
 
 ### Running the App

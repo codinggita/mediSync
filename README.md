@@ -134,14 +134,20 @@ mediSync/
 │       ├── 📄 App.jsx                # Application Root
 │       └── 📄 main.jsx               # Entry Point
 │
-├── ⚙️ server/                        # Backend API (Node.js + Express)
-│   ├── 📁 config/                    # Database & Env configurations
-│   ├── 📁 controllers/               # Business logic & Route handlers
-│   ├── 📁 middleware/                # JWT Auth, Validation & Error Handling
-│   ├── 📁 models/                    # Data Models (Mongoose Schemas)
-│   ├── 📁 routes/                    # Express API endpoints
-│   ├── 📁 utils/                     # Backend helper scripts
-│   └── 📄 index.js                   # Server Entry Point
+├── ⚙️ backend/                       # Backend API (Node.js + Express)
+│   ├── 📁 src/
+│   │   ├── 📁 config/                # Database & Environment settings
+│   │   ├── 📁 controllers/           # Route logic (Business logic)
+│   │   ├── 📁 middleware/            # Auth, Validation & Error Handling
+│   │   ├── 📁 models/                # Database schemas (Mongoose)
+│   │   ├── 📁 routes/                # API endpoint definitions
+│   │   ├── 📁 services/              # External integrations (SMS, Mail)
+│   │   ├── 📁 utils/                 # Global utility functions
+│   │   ├── 📁 uploads/               # Temporary file storage
+│   │   ├── 📄 app.js                 # App configuration
+│   │   └── 📄 server.js              # Server entry point
+│   ├── 📄 .env                       # Local environment variables
+│   └── 📄 package.json               # Backend dependencies
 │
 ├── 📄 .env.example                   # Environment variables template
 └── 📄 README.md                      # Project Documentation
@@ -291,7 +297,8 @@ git clone https://github.com/priyabratasahoo780/mediSync.git
 cd mediSync
 
 # 2. Install backend dependencies
-cd server
+# 2. Install backend dependencies
+cd backend
 npm install
 
 # 3. Install frontend dependencies
@@ -301,7 +308,7 @@ npm install
 
 ### Environment Variables
 
-Create a `.env` file in the `/server` directory:
+Create a `.env` file in the `/backend` directory:
 
 ```env
 PORT=5000
@@ -326,7 +333,7 @@ VITE_FIREBASE_APP_ID=your_app_id
 
 ```bash
 # Start backend server
-cd server
+cd backend
 npm run dev
 
 # Start frontend (in a new terminal)

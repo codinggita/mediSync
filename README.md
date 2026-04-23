@@ -13,6 +13,7 @@
 [![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 [![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
+[![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)](https://firebase.google.com/)
 [![Figma](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)](https://figma.com/)
 
 </div>
@@ -25,6 +26,7 @@
 - [Solution](#-our-solution)
 - [Features](#-features)
 - [Tech Stack](#-tech-stack)
+- [Project Architecture](#-project-architecture)
 - [System Architecture](#-system-architecture)
 - [User Roles](#-user-roles)
 - [Project Workflow](#-project-workflow)
@@ -99,9 +101,75 @@ Medical history is scattered across multiple hospitals, clinics, and diagnostic 
 | **Backend** | Node.js + Express.js | RESTful API server |
 | **Database** | MongoDB + Mongoose | Flexible NoSQL data storage |
 | **Authentication** | JWT + Google OAuth 2.0 | Secure, stateless session management |
-| **File Storage** | Cloudinary / Multer | Medical report upload & retrieval |
+| **File Storage** | Cloudinary / Firebase Storage | Medical report upload & retrieval |
+| **Notifications** | Firebase Cloud Messaging (FCM) | Real-time alerts & price drop notifications |
 | **Design** | Figma | UI/UX prototyping |
 | **Version Control** | Git + GitHub | Collaborative development |
+
+---
+
+## 🏗️ Project Architecture
+
+> MediSync follows a **Modular Monolith** structure for the backend and a **Feature-Based Design** for the frontend to ensure maximum scalability and maintainability.
+
+### 📂 Directory Overview
+
+```text
+mediSync/
+├── 💻 frontend/                      # Client-side Application (React + Vite)
+│   ├── 📁 public/                    # Static assets & manifest files
+│   └── 📁 src/
+│       ├── 📁 assets/                # Media, Global Styles & Fonts
+│       ├── 📁 components/            # Reusable UI Components
+│       │   ├── 📁 common/            # Atomic elements (Buttons, Inputs, Cards)
+│       │   └── 📁 layout/            # Structural parts (Navbar, Sidebar, Footer)
+│       ├── 📁 features/              # Feature-specific logic (Auth, Records, etc.)
+│       ├── 📁 pages/                 # Full-screen route components
+│       ├── 📁 services/              # API Client (Axios) & Interceptors
+│       ├── 📁 store/                 # Global State Management (Context/Redux)
+│       ├── 📁 hooks/                 # Custom React hooks
+│       ├── 📁 routes/                # Route configuration & Role-based guards
+│       ├── 📁 utils/                 # Helper functions & Date formatters
+│       ├── 📄 firebase.js            # Firebase Configuration & Auth Setup
+│       ├── 📄 App.jsx                # Application Root
+│       └── 📄 main.jsx               # Entry Point
+│
+├── ⚙️ server/                        # Backend API (Node.js + Express)
+│   ├── 📁 config/                    # Database & Env configurations
+│   ├── 📁 controllers/               # Business logic & Route handlers
+│   ├── 📁 middleware/                # JWT Auth, Validation & Error Handling
+│   ├── 📁 models/                    # Data Models (Mongoose Schemas)
+│   ├── 📁 routes/                    # Express API endpoints
+│   ├── 📁 utils/                     # Backend helper scripts
+│   └── 📄 index.js                   # Server Entry Point
+│
+├── 📄 .env.example                   # Environment variables template
+└── 📄 README.md                      # Project Documentation
+```
+
+---
+
+### 🛡️ Architecture Highlights
+
+| Section | Patterns & Principles |
+| :--- | :--- |
+| **Frontend** | **Atomic Design Principles** for components, **Feature-Sliced** modules for business logic, and **RBAC** (Role-Based Access Control) for routing. |
+| **Backend** | **MVC (Model-View-Controller)** pattern, **RESTful API** design, and **JWT-based** stateless authentication. |
+| **Security** | CORS enabled, Environment variable protection, and encrypted medical data flow. |
+
+---
+
+### 🗂️ Core Folder Breakdown
+
+#### ⚛️ Frontend Logic
+*   `features/`: Each module (e.g., `auth/`, `medicine/`) contains its own logic, keeping the code modular.
+*   `services/`: Centralized Axios instance with interceptors for automatic token handling.
+*   `routes/`: Implements `PrivateRoute` and `PublicRoute` to handle session-based navigation.
+
+#### 🚀 Backend Logic
+*   `controllers/`: Separates business logic from routing for cleaner code.
+*   `middleware/`: Handles security checks (Auth, Input Validation) before reaching controllers.
+*   `models/`: Defines the structure of healthcare data using Mongoose for MongoDB.
 
 ---
 
@@ -227,7 +295,7 @@ cd server
 npm install
 
 # 3. Install frontend dependencies
-cd ../client
+cd ../frontend
 npm install
 ```
 
@@ -244,6 +312,14 @@ GOOGLE_CLIENT_SECRET=your_google_oauth_client_secret
 CLOUDINARY_CLOUD_NAME=your_cloudinary_name
 CLOUDINARY_API_KEY=your_cloudinary_api_key
 CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+
+# Firebase Configuration
+VITE_FIREBASE_API_KEY=your_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+VITE_FIREBASE_APP_ID=your_app_id
 ```
 
 ### Running the App
@@ -254,7 +330,7 @@ cd server
 npm run dev
 
 # Start frontend (in a new terminal)
-cd client
+cd frontend
 npm run dev
 ```
 

@@ -25,6 +25,7 @@
 - [Solution](#-our-solution)
 - [Features](#-features)
 - [Tech Stack](#-tech-stack)
+- [Frontend Folder Structure](#-frontend-folder-structure)
 - [System Architecture](#-system-architecture)
 - [User Roles](#-user-roles)
 - [Project Workflow](#-project-workflow)
@@ -102,6 +103,149 @@ Medical history is scattered across multiple hospitals, clinics, and diagnostic 
 | **File Storage** | Cloudinary / Multer | Medical report upload & retrieval |
 | **Design** | Figma | UI/UX prototyping |
 | **Version Control** | Git + GitHub | Collaborative development |
+
+---
+
+## 📁 Frontend Folder Structure
+
+> The following structure follows industry best practices for a **scalable, maintainable React.js** application within the MediSync MERN stack project.
+
+```
+client/
+└── src/
+    │
+    ├── assets/                        # Static assets
+    │   ├── images/                    # Project images & illustrations
+    │   ├── icons/                     # SVG & PNG icons
+    │   └── fonts/                     # Custom font files
+    │
+    ├── components/                    # Reusable UI components
+    │   ├── Navbar/
+    │   │   ├── Navbar.jsx
+    │   │   └── Navbar.module.css
+    │   ├── Footer/
+    │   │   └── Footer.jsx
+    │   ├── Cards/
+    │   │   ├── MedicineCard.jsx
+    │   │   └── RecordCard.jsx
+    │   ├── Buttons/
+    │   │   └── PrimaryButton.jsx
+    │   ├── Modal/
+    │   │   └── ConfirmModal.jsx
+    │   ├── Loader/
+    │   │   └── Spinner.jsx
+    │   └── Badge/
+    │       └── RoleBadge.jsx
+    │
+    ├── pages/                         # Route-level page components
+    │   ├── LandingPage/
+    │   │   └── LandingPage.jsx
+    │   ├── LoginPage/
+    │   │   └── LoginPage.jsx
+    │   ├── SignupPage/
+    │   │   └── SignupPage.jsx
+    │   ├── DashboardPage/
+    │   │   └── DashboardPage.jsx
+    │   ├── MedicalRecordsPage/
+    │   │   └── MedicalRecordsPage.jsx
+    │   ├── UploadRecordPage/
+    │   │   └── UploadRecordPage.jsx
+    │   ├── SharingPage/
+    │   │   └── SharingPage.jsx
+    │   ├── PharmacyPage/
+    │   │   └── PharmacyPage.jsx
+    │   ├── ComparisonPage/
+    │   │   └── ComparisonPage.jsx
+    │   ├── DoctorPortalPage/
+    │   │   └── DoctorPortalPage.jsx
+    │   ├── AdminPage/
+    │   │   └── AdminPage.jsx
+    │   ├── NotificationsPage/
+    │   │   └── NotificationsPage.jsx
+    │   ├── SettingsPage/
+    │   │   └── SettingsPage.jsx
+    │   └── EmergencyPage/
+    │       └── EmergencyPage.jsx
+    │
+    ├── features/                      # Business logic modules (feature-based)
+    │   ├── auth/
+    │   │   ├── authSlice.js           # Redux slice or Context logic
+    │   │   └── authAPI.js
+    │   ├── medicine/
+    │   │   ├── medicineSlice.js
+    │   │   └── medicineAPI.js
+    │   └── records/
+    │       ├── recordsSlice.js
+    │       └── recordsAPI.js
+    │
+    ├── layouts/                       # Page layout wrappers
+    │   ├── DashboardLayout.jsx        # Sidebar + Topbar for authenticated users
+    │   ├── AuthLayout.jsx             # Centered card layout for Login/Signup
+    │   └── PublicLayout.jsx           # Navbar + Footer for public pages
+    │
+    ├── routes/                        # React Router configuration
+    │   ├── AppRoutes.jsx              # Main router with all routes
+    │   ├── PrivateRoute.jsx           # Protected route wrapper
+    │   └── RoleRoute.jsx              # Role-based route guard
+    │
+    ├── services/                      # API service layer (Axios)
+    │   ├── api.js                     # Axios instance with base URL & interceptors
+    │   ├── authService.js             # Auth-related API calls
+    │   ├── medicineService.js         # Medicine & pharmacy API calls
+    │   └── recordService.js           # Medical record API calls
+    │
+    ├── hooks/                         # Custom React hooks
+    │   ├── useAuth.js                 # Hook for auth state & actions
+    │   ├── useFetch.js                # Generic data-fetching hook
+    │   └── useLocalStorage.js         # Persistent local storage hook
+    │
+    ├── context/                       # React Context API (global state)
+    │   ├── AuthContext.jsx            # Authentication context provider
+    │   ├── ThemeContext.jsx           # Dark/Light mode context
+    │   └── NotificationContext.jsx    # Global notification state
+    │
+    ├── store/                         # Redux Toolkit store (if using Redux)
+    │   ├── store.js                   # Redux store configuration
+    │   └── rootReducer.js             # Combined reducers
+    │
+    ├── utils/                         # Utility / helper functions
+    │   ├── formatDate.js              # Date formatting helpers
+    │   ├── validateForm.js            # Form validation logic
+    │   ├── roleHelpers.js             # Role-check utility functions
+    │   └── constants.js              # App-wide constants (roles, status codes)
+    │
+    ├── config/                        # Application configuration
+    │   ├── appConfig.js               # Base URLs, feature flags
+    │   └── axiosConfig.js             # Global Axios settings
+    │
+    ├── styles/                        # Global styles
+    │   ├── global.css                 # CSS reset & base styles
+    │   ├── variables.css              # CSS custom properties (colors, fonts)
+    │   └── animations.css             # Reusable keyframe animations
+    │
+    ├── App.jsx                        # Root application component
+    └── main.jsx                       # React DOM entry point
+```
+
+---
+
+### 🗂️ Folder Breakdown
+
+| Folder | Purpose |
+|---|---|
+| `assets/` | Houses all static resources — images, icons, and custom fonts used across the app |
+| `components/` | Contains small, **reusable UI building blocks** (Navbar, Cards, Buttons, Modals) shared across multiple pages |
+| `pages/` | Each sub-folder represents a **distinct route/screen** in the application, keeping page-level logic self-contained |
+| `features/` | Implements **domain-driven business logic** — each feature (auth, medicine, records) owns its state slice and API calls |
+| `layouts/` | Provides structural **wrapper templates** (e.g., sidebar + topbar for dashboard, centered card for auth screens) |
+| `routes/` | Centralizes **React Router** configuration including protected routes and role-based access guards |
+| `services/` | Abstracts all **HTTP API communication** (Axios instance, interceptors, and per-domain service files) |
+| `hooks/` | Encapsulates **reusable stateful logic** into clean custom hooks (`useAuth`, `useFetch`, etc.) |
+| `context/` | Manages **global application state** using the React Context API (auth session, theme, notifications) |
+| `store/` | Houses the **Redux Toolkit** store and root reducer when using Redux for more complex state management |
+| `utils/` | Holds **pure helper functions** (date formatting, form validation, role checks) with no side effects |
+| `config/` | Stores **environment-specific configuration** such as base API URLs, Axios defaults, and feature flags |
+| `styles/` | Contains **global CSS** — reset rules, CSS variables (color tokens, spacing), and keyframe animations |
 
 ---
 

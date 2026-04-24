@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, ArrowRight, CheckCircle2, ShieldCheck, Activity, Loader2, AlertCircle } from 'lucide-react';
-import './LoginPage.css';
+import { Mail, Lock, ArrowRight, CheckCircle2, ShieldCheck, Activity, Loader2, AlertCircle, Shield } from 'lucide-react';
 import loginBg from '../../assets/images/login-bg.png';
 import brandingBg from '../../assets/images/branding-bg.png';
+import logoImg from '../../assets/MediSync_Logo.png';
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -14,7 +14,10 @@ const LoginPage = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [role, setRole] = useState('Patient'); // 'Patient', 'Doctor', 'Admin'
   const navigate = useNavigate();
+
+  const roles = ['Patient', 'Doctor', 'Admin'];
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -35,21 +38,34 @@ const LoginPage = () => {
       // Simulate network request for premium feel
       await new Promise(resolve => setTimeout(resolve, 1500));
       
-      if (!formData.email.includes('@')) {
+      // Validation rules
+      if (role !== 'Admin' && !formData.email.includes('@')) {
         throw new Error('Please enter a valid email address.');
       }
       if (formData.password.length < 6) {
-        throw new Error('Password must be at least 6 characters.');
+        throw new Error('Incorrect password. Please try again.');
       }
       
-      console.log('Login successful:', formData);
-      // Connect page: Redirect to the dashboard upon successful authentication
-      navigate('/dashboard');
+      console.log(`Login successful for ${role}:`, formData);
+      // Navigate based on role
+      navigate(role === 'Patient' ? '/dashboard' : `/${role.toLowerCase()}-portal`);
     } catch (err) {
-      setError(err.message || 'Invalid email or password.');
+      setError(err.message || 'Invalid credentials. Please try again.');
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const getEmailPlaceholder = () => {
+    if (role === 'Doctor') return 'Enter hospital email / ID';
+    if (role === 'Admin') return 'Enter admin credentials';
+    return 'Enter your email';
+  };
+
+  const getRoleSubtitle = () => {
+    if (role === 'Doctor') return 'Access patient records and manage schedules.';
+    if (role === 'Admin') return 'Manage system settings and users securely.';
+    return 'Access your secure health dashboard.';
   };
 
   return (
@@ -58,23 +74,21 @@ const LoginPage = () => {
       <div className="absolute inset-0 bg-emerald-500/5 backdrop-blur-[8px] flex items-center justify-center p-5">
         
         {/* Main Glass Panel */}
-        <div className="flex flex-col md:flex-row w-full max-w-5xl bg-white/85 backdrop-blur-3xl border border-white/60 rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.15),inset_0_0_0_1px_rgba(255,255,255,0.2)] overflow-hidden animate-slideUp md:h-[85vh] md:max-h-[650px]">
+        <div className="flex flex-col md:flex-row w-full max-w-5xl bg-white/85 backdrop-blur-3xl border border-white/60 rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.15),inset_0_0_0_1px_rgba(255,255,255,0.2)] overflow-hidden animate-slideUp md:min-h-[600px] md:h-auto">
           
           {/* Left Side - Branding & Value Prop */}
-          <div className="flex-1 bg-cover bg-center text-white p-8 md:p-10 flex flex-col relative overflow-hidden" style={{ backgroundImage: `url(${brandingBg})` }}>
+          <div className="flex-1 bg-cover bg-center text-white p-8 md:p-10 flex flex-col relative overflow-hidden hidden md:flex" style={{ backgroundImage: `url(${brandingBg})` }}>
             <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/85 to-emerald-600/95 z-0"></div>
             
             <div className="flex items-center gap-3 mb-6 relative z-10">
-              <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-emerald-500 font-extrabold shadow-md">
-                <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                  <path d="M19 10h-5V5c0-1.1-.9-2-2-2s-2 .9-2 2v5H5c-1.1 0-2 .9-2 2s.9 2 2 2h5v5c0 1.1.9 2 2 2s2-.9 2-2v-5h5c1.1 0 2-.9 2-2s-.9-2-2-2z"/>
-                </svg>
+              <div className="w-11 h-11 bg-white rounded-xl flex items-center justify-center shadow-md overflow-hidden">
+                <img src={logoImg} alt="MediSync Logo" className="w-full h-full object-contain scale-[1.25]" />
               </div>
               <div className="text-2xl font-bold text-white tracking-tight">Medi<span className="opacity-80">Sync</span></div>
             </div>
             
             {/* Decorative Elements */}
-            <div className="flex flex-col gap-3 my-auto relative z-10 hidden md:flex">
+            <div className="flex flex-col gap-3 my-auto relative z-10">
               <div className="flex items-center gap-4 bg-white/15 backdrop-blur-md px-4 py-3 rounded-2xl border border-white/20 w-fit shadow-xl animate-floatBadge">
                 <div className="flex items-center justify-center w-11 h-11 rounded-xl bg-white text-emerald-500 shadow-[0_4px_12px_rgba(16,185,129,0.2)]">
                   <ShieldCheck size={20} />
@@ -96,11 +110,11 @@ const LoginPage = () => {
               </div>
             </div>
 
-            <div className="relative z-10 mt-6 md:mt-0">
-              <h1 className="text-3xl md:text-[2.5rem] font-extrabold leading-tight mb-3 drop-shadow-sm">Your Health,<br/>Synchronized.</h1>
+            <div className="relative z-10 mt-6">
+              <h1 className="text-[2.5rem] font-extrabold leading-tight mb-3 drop-shadow-sm">Your Health,<br/>Synchronized.</h1>
               <p className="text-base text-white/90 leading-relaxed mb-6 max-w-[90%]">Experience the next generation of healthcare management. Secure, fast, and always at your fingertips.</p>
               
-              <ul className="flex flex-col gap-3 hidden md:flex">
+              <ul className="flex flex-col gap-3">
                 {[
                   "Secure Health Records",
                   "Smart Medicine Tracking",
@@ -118,40 +132,59 @@ const LoginPage = () => {
           </div>
           
           {/* Right Side - Form */}
-          <div className="flex-[1.2] p-8 md:p-10 flex items-center justify-center bg-transparent">
-            <div className="w-full max-w-[400px]">
-              <div className="mb-5 text-center md:text-left">
-                <h2 className="text-2xl md:text-[1.75rem] font-bold text-gray-900 mb-1">Welcome back</h2>
-                <p className="text-sm text-gray-500">Please enter your details to sign in.</p>
+          <div className="flex-[1.2] px-8 py-6 md:px-10 md:py-8 flex flex-col justify-center items-center bg-transparent">
+            <div className="w-full max-w-[420px]">
+              
+              <div className="mb-4 text-center md:text-left">
+                <h2 className="text-2xl md:text-[1.75rem] font-bold text-gray-900 mb-0.5">Welcome back</h2>
+                <p className="text-sm text-gray-500 transition-all">{getRoleSubtitle()}</p>
+              </div>
+
+              {/* Role Selection Segmented Buttons */}
+              <div className="flex bg-gray-100 p-1 rounded-xl mb-4 shadow-inner">
+                {roles.map((r) => (
+                  <button
+                    key={r}
+                    type="button"
+                    onClick={() => setRole(r)}
+                    className={`flex-1 py-2 text-[0.9rem] font-bold rounded-lg transition-all duration-200 ${
+                      role === r 
+                        ? 'bg-white text-emerald-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)]' 
+                        : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200/50'
+                    }`}
+                  >
+                    {r}
+                  </button>
+                ))}
               </div>
 
               {error && (
-                <div className="mb-4 p-3 bg-red-50 border border-red-100 rounded-xl flex items-start gap-2 text-red-600 animate-slideUp">
+                <div className="mb-4 p-2.5 bg-red-50 border border-red-200 rounded-xl flex items-start gap-2.5 text-[#D32F2F] animate-slideUp shadow-sm">
                   <AlertCircle size={18} className="mt-0.5 shrink-0" />
                   <span className="text-sm font-medium">{error}</span>
                 </div>
               )}
 
-              <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                <div className="flex flex-col gap-2">
-                  <label className="text-sm font-semibold text-gray-700">Email address</label>
+              <form onSubmit={handleSubmit} className="flex flex-col gap-3.5">
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-sm font-bold text-gray-700">Email address</label>
                   <div className="relative flex items-center group">
                     <Mail className="absolute left-4 text-gray-400 transition-colors group-focus-within:text-emerald-500" size={20} />
                     <input 
-                      type="email" 
+                      type={role === 'Admin' ? 'text' : 'email'} 
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      placeholder="Enter your email"
-                      className="w-full py-3 pl-11 pr-4 border-[1.5px] border-gray-200 rounded-xl text-base bg-white/90 transition-all outline-none text-gray-800 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 focus:bg-white placeholder:text-gray-400"
+                      placeholder={getEmailPlaceholder()}
+                      className="w-full py-3 pl-11 pr-4 border-[1.5px] border-gray-200 rounded-xl text-[0.95rem] bg-white/90 transition-all outline-none text-gray-800 shadow-sm focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 focus:bg-white placeholder:text-gray-400"
                       required
                       autoComplete="off"
                     />
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-2">
-                  <label className="text-sm font-semibold text-gray-700">Password</label>
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-sm font-bold text-gray-700">Password</label>
                   <div className="relative flex items-center group">
                     <Lock className="absolute left-4 text-gray-400 transition-colors group-focus-within:text-emerald-500" size={20} />
                     <input 
@@ -160,15 +193,17 @@ const LoginPage = () => {
                       value={formData.password}
                       onChange={handleChange}
                       placeholder="Enter your password"
-                      className="w-full py-3 pl-11 pr-4 border-[1.5px] border-gray-200 rounded-xl text-base bg-white/90 transition-all outline-none text-gray-800 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 focus:bg-white placeholder:text-gray-400"
+                      className="w-full py-3 pl-11 pr-4 border-[1.5px] border-gray-200 rounded-xl text-[0.95rem] bg-white/90 transition-all outline-none text-gray-800 shadow-sm focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 focus:bg-white placeholder:text-gray-400"
                       required
                       autoComplete="new-password"
                     />
+                    {/* Small lock icon inside input for extra security hint */}
+                    <Shield className="absolute right-4 text-gray-300 opacity-60" size={16} />
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between text-sm mt-[-4px]">
-                  <label className="flex items-center gap-2 text-gray-600 font-medium cursor-pointer group">
+                <div className="flex items-center justify-between text-sm mt-[-2px]">
+                  <label className="flex items-center gap-2 text-gray-600 font-semibold cursor-pointer group">
                     <div className="relative flex items-center">
                       <input 
                         type="checkbox" 
@@ -177,56 +212,72 @@ const LoginPage = () => {
                         onChange={handleChange}
                         className="peer sr-only" 
                       />
-                      <div className="w-[18px] h-[18px] bg-white border-[1.5px] border-gray-300 rounded peer-checked:bg-emerald-500 peer-checked:border-emerald-500 transition-all group-hover:border-emerald-500 flex items-center justify-center">
-                        <svg className="w-3 h-3 text-white hidden peer-checked:block" viewBox="0 0 14 10" fill="none">
-                          <path d="M1 5L5 9L13 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <div className="w-5 h-5 bg-white border-[1.5px] border-gray-300 rounded peer-checked:bg-emerald-500 peer-checked:border-emerald-500 transition-all group-hover:border-emerald-500 flex items-center justify-center">
+                        <svg className="w-3.5 h-3.5 text-white hidden peer-checked:block" viewBox="0 0 14 10" fill="none">
+                          <path d="M1 5L5 9L13 1" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                       </div>
                     </div>
-                    Remember for 30 days
+                    Remember me
                   </label>
-                  <Link to="/forgot-password" className="text-emerald-500 font-semibold hover:text-emerald-600 transition-colors">Forgot password?</Link>
+                  <Link to="/forgot-password" className="text-emerald-600 font-bold hover:text-emerald-700 hover:underline transition-colors">Forgot password?</Link>
                 </div>
 
                 <button 
                   type="submit" 
                   disabled={isLoading}
-                  className="flex items-center justify-center gap-2 bg-emerald-500 text-white py-[14px] rounded-xl font-semibold text-base mt-2 shadow-[0_4px_6px_rgba(16,185,129,0.2)] hover:bg-emerald-600 hover:-translate-y-[2px] hover:shadow-[0_6px_12px_rgba(16,185,129,0.3)] active:translate-y-0 disabled:opacity-70 disabled:pointer-events-none transition-all group"
+                  className="flex items-center justify-center gap-2 bg-emerald-500 text-white py-3 rounded-xl font-bold text-base mt-1 shadow-[0_4px_12px_rgba(16,185,129,0.25)] hover:bg-emerald-600 hover:-translate-y-[2px] hover:shadow-[0_8px_16px_rgba(16,185,129,0.35)] active:translate-y-0 disabled:opacity-75 disabled:pointer-events-none transition-all duration-200 group"
                 >
                   {isLoading ? (
                     <>
                       <Loader2 size={18} className="animate-spin" />
-                      Signing in...
+                      Authenticating...
                     </>
                   ) : (
                     <>
-                      Sign in
-                      <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+                      Sign in securely
+                      <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
                     </>
                   )}
                 </button>
               </form>
 
-              <div className="flex items-center gap-4 my-5 text-gray-400 text-[0.85rem] font-medium">
-                <div className="flex-1 h-px bg-gray-200"></div>
-                OR
-                <div className="flex-1 h-px bg-gray-200"></div>
+              {/* Form Security Footnote */}
+              <div className="flex justify-center items-center gap-4 mt-4 text-[0.7rem] text-gray-400 font-semibold uppercase tracking-wider">
+                <span className="flex items-center gap-1"><Lock size={10} /> Encrypted</span>
+                <span className="w-1 h-1 rounded-full bg-gray-300"></span>
+                <span className="flex items-center gap-1"><ShieldCheck size={11} /> HIPAA Compliant</span>
               </div>
 
-              <button type="button" className="flex items-center justify-center gap-3 w-full bg-white border-[1.5px] border-gray-200 py-[12px] rounded-xl font-semibold text-[0.95rem] text-gray-700 hover:bg-gray-50 hover:border-gray-300 hover:-translate-y-[1px] hover:shadow-sm transition-all">
-                <svg className="w-[18px] h-[18px]" viewBox="0 0 24 24">
-                  <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-                  <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                  <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-                  <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-                </svg>
-                Sign in with Google
-              </button>
+              {/* Google Login - Restricted for Admins */}
+              {role !== 'Admin' && (
+                <div className="animate-slideUp" style={{ animationDuration: '0.4s' }}>
+                  <div className="flex items-center gap-4 my-4 text-gray-300 text-[0.8rem] font-bold uppercase tracking-wider">
+                    <div className="flex-1 h-[1.5px] bg-gray-100"></div>
+                    OR
+                    <div className="flex-1 h-[1.5px] bg-gray-100"></div>
+                  </div>
 
-              <div className="text-center mt-6 text-[0.85rem] text-gray-500">
-                Don't have an account? 
-                <Link to="/signup" className="text-emerald-500 font-bold ml-1.5 hover:text-emerald-600 hover:underline transition-colors">Sign up</Link>
-              </div>
+                  <button type="button" className="flex items-center justify-center gap-3 w-full bg-white border-[1.5px] border-gray-200 py-[10px] rounded-xl font-bold text-[0.95rem] text-gray-700 shadow-sm hover:bg-gray-50 hover:border-gray-300 hover:-translate-y-[1px] hover:shadow-md transition-all duration-200">
+                    <svg className="w-[18px] h-[18px]" viewBox="0 0 24 24">
+                      <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                      <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                      <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                      <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                    </svg>
+                    Sign in with Google
+                  </button>
+                  <p className="text-center text-[0.7rem] text-gray-400 mt-1.5 font-medium">Patients & Doctors only</p>
+                </div>
+              )}
+
+              {/* Patient Signup Only */}
+              {role === 'Patient' && (
+                <div className="text-center mt-4 text-[0.9rem] text-gray-500 font-medium animate-slideUp" style={{ animationDuration: '0.5s' }}>
+                  Don't have an account? 
+                  <Link to="/signup" className="text-emerald-600 font-bold ml-1.5 hover:text-emerald-700 hover:underline transition-colors">Sign up</Link>
+                </div>
+              )}
             </div>
           </div>
 

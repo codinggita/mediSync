@@ -71,14 +71,14 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen w-full bg-cover bg-center bg-no-repeat flex items-center justify-center font-sans relative overflow-hidden" style={{ backgroundImage: `url(${loginBg})` }}>
       {/* Overlay */}
-      <div className="absolute inset-0 bg-emerald-500/5 backdrop-blur-[8px] flex items-center justify-center p-5">
+      <div className="absolute inset-0 bg-blue-500/5 backdrop-blur-[8px] flex items-center justify-center p-5">
         
         {/* Main Glass Panel */}
         <div className="flex flex-col md:flex-row w-full max-w-5xl bg-white/85 backdrop-blur-3xl border border-white/60 rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.15),inset_0_0_0_1px_rgba(255,255,255,0.2)] overflow-hidden animate-slideUp md:min-h-[600px] md:h-auto">
           
           {/* Left Side - Branding & Value Prop */}
           <div className="flex-1 bg-cover bg-center text-white p-8 md:p-10 flex flex-col relative overflow-hidden hidden md:flex" style={{ backgroundImage: `url(${brandingBg})` }}>
-            <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/85 to-emerald-600/95 z-0"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/85 to-blue-600/95 z-0"></div>
             
             <div className="flex items-center gap-3 mb-6 relative z-10">
               <div className="w-11 h-11 bg-white rounded-xl flex items-center justify-center shadow-md overflow-hidden">
@@ -90,7 +90,7 @@ const LoginPage = () => {
             {/* Decorative Elements */}
             <div className="flex flex-col gap-3 my-auto relative z-10">
               <div className="flex items-center gap-4 bg-white/15 backdrop-blur-md px-4 py-3 rounded-2xl border border-white/20 w-fit shadow-xl animate-floatBadge">
-                <div className="flex items-center justify-center w-11 h-11 rounded-xl bg-white text-emerald-500 shadow-[0_4px_12px_rgba(16,185,129,0.2)]">
+                <div className="flex items-center justify-center w-11 h-11 rounded-xl bg-white text-blue-500 shadow-[0_4px_12px_rgba(16,185,129,0.2)]">
                   <ShieldCheck size={20} />
                 </div>
                 <div className="flex flex-col">
@@ -149,7 +149,7 @@ const LoginPage = () => {
                     onClick={() => setRole(r)}
                     className={`flex-1 py-2 text-[0.9rem] font-bold rounded-lg transition-all duration-200 ${
                       role === r 
-                        ? 'bg-white text-emerald-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)]' 
+                        ? 'bg-white text-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)]' 
                         : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200/50'
                     }`}
                   >
@@ -169,14 +169,14 @@ const LoginPage = () => {
                 <div className="flex flex-col gap-1.5">
                   <label className="text-sm font-bold text-gray-700">Email address</label>
                   <div className="relative flex items-center group">
-                    <Mail className="absolute left-4 text-gray-400 transition-colors group-focus-within:text-emerald-500" size={20} />
+                    <Mail className="absolute left-4 text-gray-400 transition-colors group-focus-within:text-blue-500" size={20} />
                     <input 
                       type={role === 'Admin' ? 'text' : 'email'} 
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
                       placeholder={getEmailPlaceholder()}
-                      className="w-full py-3 pl-11 pr-4 border-[1.5px] border-gray-200 rounded-xl text-[0.95rem] bg-white/90 transition-all outline-none text-gray-800 shadow-sm focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 focus:bg-white placeholder:text-gray-400"
+                      className="w-full py-3 pl-11 pr-4 border-[1.5px] border-gray-200 rounded-xl text-[0.95rem] bg-white/90 transition-all outline-none text-gray-800 shadow-sm focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 focus:bg-white placeholder:text-gray-400"
                       required
                       autoComplete="off"
                     />
@@ -186,14 +186,14 @@ const LoginPage = () => {
                 <div className="flex flex-col gap-1.5">
                   <label className="text-sm font-bold text-gray-700">Password</label>
                   <div className="relative flex items-center group">
-                    <Lock className="absolute left-4 text-gray-400 transition-colors group-focus-within:text-emerald-500" size={20} />
+                    <Lock className="absolute left-4 text-gray-400 transition-colors group-focus-within:text-blue-500" size={20} />
                     <input 
                       type="password" 
                       name="password"
                       value={formData.password}
                       onChange={handleChange}
                       placeholder="Enter your password"
-                      className="w-full py-3 pl-11 pr-4 border-[1.5px] border-gray-200 rounded-xl text-[0.95rem] bg-white/90 transition-all outline-none text-gray-800 shadow-sm focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 focus:bg-white placeholder:text-gray-400"
+                      className="w-full py-3 pl-11 pr-4 border-[1.5px] border-gray-200 rounded-xl text-[0.95rem] bg-white/90 transition-all outline-none text-gray-800 shadow-sm focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 focus:bg-white placeholder:text-gray-400"
                       required
                       autoComplete="new-password"
                     />
@@ -212,7 +212,7 @@ const LoginPage = () => {
                         onChange={handleChange}
                         className="peer sr-only" 
                       />
-                      <div className="w-5 h-5 bg-white border-[1.5px] border-gray-300 rounded peer-checked:bg-emerald-500 peer-checked:border-emerald-500 transition-all group-hover:border-emerald-500 flex items-center justify-center">
+                      <div className="w-5 h-5 bg-white border-[1.5px] border-gray-300 rounded peer-checked:bg-blue-500 peer-checked:border-blue-500 transition-all group-hover:border-blue-500 flex items-center justify-center">
                         <svg className="w-3.5 h-3.5 text-white hidden peer-checked:block" viewBox="0 0 14 10" fill="none">
                           <path d="M1 5L5 9L13 1" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
@@ -220,13 +220,13 @@ const LoginPage = () => {
                     </div>
                     Remember me
                   </label>
-                  <Link to="/forgot-password" className="text-emerald-600 font-bold hover:text-emerald-700 hover:underline transition-colors">Forgot password?</Link>
+                  <Link to="/forgot-password" className="text-blue-600 font-bold hover:text-blue-700 hover:underline transition-colors">Forgot password?</Link>
                 </div>
 
                 <button 
                   type="submit" 
                   disabled={isLoading}
-                  className="flex items-center justify-center gap-2 bg-emerald-500 text-white py-3 rounded-xl font-bold text-base mt-1 shadow-[0_4px_12px_rgba(16,185,129,0.25)] hover:bg-emerald-600 hover:-translate-y-[2px] hover:shadow-[0_8px_16px_rgba(16,185,129,0.35)] active:translate-y-0 disabled:opacity-75 disabled:pointer-events-none transition-all duration-200 group"
+                  className="flex items-center justify-center gap-2 bg-blue-500 text-white py-3 rounded-xl font-bold text-base mt-1 shadow-[0_4px_12px_rgba(16,185,129,0.25)] hover:bg-blue-600 hover:-translate-y-[2px] hover:shadow-[0_8px_16px_rgba(16,185,129,0.35)] active:translate-y-0 disabled:opacity-75 disabled:pointer-events-none transition-all duration-200 group"
                 >
                   {isLoading ? (
                     <>
@@ -275,7 +275,7 @@ const LoginPage = () => {
               {role === 'Patient' && (
                 <div className="text-center mt-4 text-[0.9rem] text-gray-500 font-medium animate-slideUp" style={{ animationDuration: '0.5s' }}>
                   Don't have an account? 
-                  <Link to="/signup" className="text-emerald-600 font-bold ml-1.5 hover:text-emerald-700 hover:underline transition-colors">Sign up</Link>
+                  <Link to="/signup" className="text-blue-600 font-bold ml-1.5 hover:text-blue-700 hover:underline transition-colors">Sign up</Link>
                 </div>
               )}
             </div>

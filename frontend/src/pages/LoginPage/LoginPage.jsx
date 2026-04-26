@@ -1,286 +1,242 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, ArrowRight, CheckCircle2, ShieldCheck, Activity, Loader2, AlertCircle, Shield } from 'lucide-react';
-import loginBg from '../../assets/images/login-bg.png';
-import brandingBg from '../../assets/images/branding-bg.png';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { 
+  Mail, Lock, ArrowRight, ShieldCheck, 
+  Activity, Loader2, AlertCircle, Shield 
+} from 'lucide-react';
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
 import logoImg from '../../assets/MediSync_Logo.png';
+import loginBg from '../../assets/images/login-bg.png';
+import medicalHeroImg from '../../assets/images/medical_hero.png';
+import { useAuth } from '../../context/AuthContext';
+import api from '../../utils/api';
 
 const LoginPage = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    rememberMe: false,
-  });
-
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [role, setRole] = useState('Patient'); // 'Patient', 'Doctor', 'Admin'
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const roles = ['Patient', 'Doctor', 'Admin'];
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
-    // Clear error when user types
-    if (error) setError(null);
-  };
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+      rememberMe: false
+    },
+    validationSchema: Yup.object({
+      email: role === 'Admin' 
+        ? Yup.string().required('Admin ID is required')
+        : Yup.string().test('email-or-phone', 'Enter a valid email or 10-digit mobile number', (value) => {
+            const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+            const phoneRegex = /^[0-9]{10}$/;
+            return emailRegex.test(value) || phoneRegex.test(value);
+          }).required('Email or Mobile Number is required'),
+      password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required')
+    }),
+    onSubmit: async (values) => {
+      setError(null);
+      setIsLoading(true);
+      try {
+        const { data } = await api.post('/auth/login', {
+          email: values.email,
+          password: values.password,
+          role: role
+        });
+        login(data);
+        if (data.role === 'Patient') navigate('/dashboard');
+        else if (data.role === 'Doctor') navigate('/doctor-portal');
+        else if (data.role === 'Admin') navigate('/admin');
+      } catch (err) {
+        setError(err.response?.data?.message || 'Invalid credentials.');
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(null);
+  // Google OAuth handlers
+  const handleGoogleSuccess = async (credentialResponse) => {
     setIsLoading(true);
-
+    setError(null);
     try {
-      // Simulate network request for premium feel
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const decoded = jwtDecode(credentialResponse.credential);
       
-      // Validation rules
-      if (role !== 'Admin' && !formData.email.includes('@')) {
-        throw new Error('Please enter a valid email address.');
+      try {
+        // Try to login with Google email
+        const { data } = await api.post('/auth/google-login', { 
+          email: decoded.email,
+          name: decoded.name 
+        });
+        
+        login(data);
+        // Role-based navigation
+        if (data.role === 'Patient') navigate('/dashboard');
+        else if (data.role === 'Doctor') navigate('/doctor-portal');
+        else if (data.role === 'Admin') navigate('/admin');
+        
+      } catch (err) {
+        if (err.response?.status === 404) {
+          // User doesn't exist, redirect to signup with pre-filled data
+          navigate('/signup', { 
+            state: { 
+              googleData: { 
+                name: decoded.name, 
+                email: decoded.email 
+              } 
+            } 
+          });
+        } else {
+          setError(err.response?.data?.message || 'Google sign-in failed.');
+        }
       }
-      if (formData.password.length < 6) {
-        throw new Error('Incorrect password. Please try again.');
-      }
-      
-      console.log(`Login successful for ${role}:`, formData);
-      // Navigate based on role
-      navigate(role === 'Patient' ? '/dashboard' : `/${role.toLowerCase()}-portal`);
     } catch (err) {
-      setError(err.message || 'Invalid credentials. Please try again.');
+      setError('Google sign-in failed.');
     } finally {
       setIsLoading(false);
     }
   };
 
-  const getEmailPlaceholder = () => {
-    if (role === 'Doctor') return 'Enter hospital email / ID';
-    if (role === 'Admin') return 'Enter admin credentials';
-    return 'Enter your email';
-  };
-
-  const getRoleSubtitle = () => {
-    if (role === 'Doctor') return 'Access patient records and manage schedules.';
-    if (role === 'Admin') return 'Manage system settings and users securely.';
-    return 'Access your secure health dashboard.';
-  };
+  const handleGoogleError = () => setError('Google sign-in failed.');
 
   return (
-    <div className="min-h-screen w-full bg-cover bg-center bg-no-repeat flex items-center justify-center font-sans relative overflow-hidden" style={{ backgroundImage: `url(${loginBg})` }}>
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-emerald-500/5 backdrop-blur-[8px] flex items-center justify-center p-5">
+    <div 
+      className="min-h-screen w-full flex items-center justify-center font-sans relative overflow-hidden bg-[#ecf0f3] dark:bg-[#121826]"
+    >
+      <div className="absolute inset-0 bg-white/10 dark:bg-black/10" />
+      
+      <div className="flex flex-col md:flex-row w-full max-w-5xl neu-flat rounded-3xl overflow-hidden z-10 md:min-h-[650px] m-4 border-none shadow-[20px_20px_40px_#cbced1,-20px_-20px_40px_#ffffff]">
         
-        {/* Main Glass Panel */}
-        <div className="flex flex-col md:flex-row w-full max-w-5xl bg-white/85 backdrop-blur-3xl border border-white/60 rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.15),inset_0_0_0_1px_rgba(255,255,255,0.2)] overflow-hidden animate-slideUp md:min-h-[600px] md:h-auto">
+        {/* Left Side - Branding */}
+        <div className="flex-1 p-12 flex flex-col relative overflow-hidden hidden md:flex border-none bg-gradient-to-br from-[#ecf0f3] to-[#e0e5ec] dark:from-[#121826] dark:to-[#1a2133] shadow-[inset_10px_10px_20px_#cbced1,inset_-10px_-10px_20px_#ffffff] dark:shadow-[inset_10px_10px_20px_#0a0f1d,inset_-10px_-10px_20px_#202d47] m-4 rounded-[2rem] group/brand">
           
-          {/* Left Side - Branding & Value Prop */}
-          <div className="flex-1 bg-cover bg-center text-white p-8 md:p-10 flex flex-col relative overflow-hidden hidden md:flex" style={{ backgroundImage: `url(${brandingBg})` }}>
-            <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/85 to-emerald-600/95 z-0"></div>
-            
-            <div className="flex items-center gap-3 mb-6 relative z-10">
-              <div className="w-11 h-11 bg-white rounded-xl flex items-center justify-center shadow-md overflow-hidden">
-                <img src={logoImg} alt="MediSync Logo" className="w-full h-full object-contain scale-[1.25]" />
-              </div>
-              <div className="text-2xl font-bold text-white tracking-tight">Medi<span className="opacity-80">Sync</span></div>
-            </div>
-            
-            {/* Decorative Elements */}
-            <div className="flex flex-col gap-3 my-auto relative z-10">
-              <div className="flex items-center gap-4 bg-white/15 backdrop-blur-md px-4 py-3 rounded-2xl border border-white/20 w-fit shadow-xl animate-floatBadge">
-                <div className="flex items-center justify-center w-11 h-11 rounded-xl bg-white text-emerald-500 shadow-[0_4px_12px_rgba(16,185,129,0.2)]">
-                  <ShieldCheck size={20} />
-                </div>
-                <div className="flex flex-col">
-                  <span className="font-bold text-base text-white tracking-wide">100% Secure</span>
-                  <span className="text-sm text-white/90 mt-0.5">HIPAA Compliant</span>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-4 bg-white/15 backdrop-blur-md px-4 py-3 rounded-2xl border border-white/20 w-fit shadow-xl animate-floatBadge ml-12" style={{ animationDelay: '1.5s' }}>
-                <div className="flex items-center justify-center w-11 h-11 rounded-xl bg-white text-blue-500 shadow-[0_4px_12px_rgba(59,130,246,0.2)]">
-                  <Activity size={20} />
-                </div>
-                <div className="flex flex-col">
-                  <span className="font-bold text-base text-white tracking-wide">24/7 Access</span>
-                  <span className="text-sm text-white/90 mt-0.5">Real-time Sync</span>
-                </div>
-              </div>
-            </div>
+          {/* Background Hero Image */}
+          <div className="absolute inset-0 opacity-10 group-hover/brand:opacity-20 transition-opacity pointer-events-none group-hover/brand:scale-110 transition-transform duration-[10s]">
+            <img src={medicalHeroImg} alt="Branding" className="w-full h-full object-cover" />
+          </div>
 
-            <div className="relative z-10 mt-6">
-              <h1 className="text-[2.5rem] font-extrabold leading-tight mb-3 drop-shadow-sm">Your Health,<br/>Synchronized.</h1>
-              <p className="text-base text-white/90 leading-relaxed mb-6 max-w-[90%]">Experience the next generation of healthcare management. Secure, fast, and always at your fingertips.</p>
-              
-              <ul className="flex flex-col gap-3">
-                {[
-                  "Secure Health Records",
-                  "Smart Medicine Tracking",
-                  "Direct Doctor Access"
-                ].map((text, i) => (
-                  <li key={i} className="flex items-center gap-3 text-base font-medium text-white/95">
-                    <div className="flex items-center justify-center w-6 h-6 bg-white/20 rounded-full">
-                      <CheckCircle2 size={16} />
-                    </div>
-                    <span>{text}</span>
-                  </li>
-                ))}
-              </ul>
+          <div className="flex items-center gap-3 mb-10 relative z-10">
+            <div className="w-14 h-14 bg-[#ecf0f3] dark:bg-[#151E32] rounded-2xl flex items-center justify-center shadow-[4px_4px_8px_#cbced1,-4px_-4px_8px_#ffffff] p-1 border-none">
+              <img src={logoImg} alt="MediSync" className="w-full h-full object-contain scale-[1.2]" />
             </div>
+            <div className="text-3xl font-black text-slate-900 dark:text-white tracking-tight drop-shadow-sm">Medi<span className="text-[#2A7FFF]">Sync</span></div>
           </div>
           
-          {/* Right Side - Form */}
-          <div className="flex-[1.2] px-8 py-6 md:px-10 md:py-8 flex flex-col justify-center items-center bg-transparent">
-            <div className="w-full max-w-[420px]">
-              
-              <div className="mb-4 text-center md:text-left">
-                <h2 className="text-2xl md:text-[1.75rem] font-bold text-gray-900 mb-0.5">Welcome back</h2>
-                <p className="text-sm text-gray-500 transition-all">{getRoleSubtitle()}</p>
-              </div>
+          <div className="relative z-10 my-auto animate-in fade-in slide-in-from-left-8 duration-700">
+            <h1 className="text-[3.2rem] font-black text-slate-900 dark:text-white leading-[1.1] mb-6 drop-shadow-md">
+              Healthcare,<br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2A7FFF] to-[#2ECC71]">
+                Elevated.
+              </span>
+            </h1>
+            <p className="text-[1.1rem] text-slate-500 dark:text-slate-400 font-bold leading-relaxed max-w-[90%]">
+              The enterprise-grade platform connecting patients, doctors, and pharmacies with zero friction.
+            </p>
+          </div>
+        </div>
+        
+        {/* Right Side - Auth Form */}
+        <div className="flex-[1.2] px-8 py-10 md:px-12 flex flex-col justify-center bg-transparent">
+          <div className="w-full max-w-[420px] mx-auto">
+            <div className="mb-8 animate-in fade-in slide-in-from-right-8 duration-700">
+              <h2 className="text-[2.2rem] font-black text-slate-900 dark:text-white leading-tight drop-shadow-sm">Welcome back</h2>
+              <p className="text-[0.95rem] text-slate-500 dark:text-slate-400 font-bold mt-1 uppercase tracking-widest">Secure Portal Authentication</p>
+            </div>
 
-              {/* Role Selection Segmented Buttons */}
-              <div className="flex bg-gray-100 p-1 rounded-xl mb-4 shadow-inner">
-                {roles.map((r) => (
-                  <button
-                    key={r}
-                    type="button"
-                    onClick={() => setRole(r)}
-                    className={`flex-1 py-2 text-[0.9rem] font-bold rounded-lg transition-all duration-200 ${
-                      role === r 
-                        ? 'bg-white text-emerald-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)]' 
-                        : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200/50'
-                    }`}
-                  >
-                    {r}
-                  </button>
-                ))}
-              </div>
-
-              {error && (
-                <div className="mb-4 p-2.5 bg-red-50 border border-red-200 rounded-xl flex items-start gap-2.5 text-[#D32F2F] animate-slideUp shadow-sm">
-                  <AlertCircle size={18} className="mt-0.5 shrink-0" />
-                  <span className="text-sm font-medium">{error}</span>
-                </div>
-              )}
-
-              <form onSubmit={handleSubmit} className="flex flex-col gap-3.5">
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-sm font-bold text-gray-700">Email address</label>
-                  <div className="relative flex items-center group">
-                    <Mail className="absolute left-4 text-gray-400 transition-colors group-focus-within:text-emerald-500" size={20} />
-                    <input 
-                      type={role === 'Admin' ? 'text' : 'email'} 
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder={getEmailPlaceholder()}
-                      className="w-full py-3 pl-11 pr-4 border-[1.5px] border-gray-200 rounded-xl text-[0.95rem] bg-white/90 transition-all outline-none text-gray-800 shadow-sm focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 focus:bg-white placeholder:text-gray-400"
-                      required
-                      autoComplete="off"
-                    />
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-sm font-bold text-gray-700">Password</label>
-                  <div className="relative flex items-center group">
-                    <Lock className="absolute left-4 text-gray-400 transition-colors group-focus-within:text-emerald-500" size={20} />
-                    <input 
-                      type="password" 
-                      name="password"
-                      value={formData.password}
-                      onChange={handleChange}
-                      placeholder="Enter your password"
-                      className="w-full py-3 pl-11 pr-4 border-[1.5px] border-gray-200 rounded-xl text-[0.95rem] bg-white/90 transition-all outline-none text-gray-800 shadow-sm focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 focus:bg-white placeholder:text-gray-400"
-                      required
-                      autoComplete="new-password"
-                    />
-                    {/* Small lock icon inside input for extra security hint */}
-                    <Shield className="absolute right-4 text-gray-300 opacity-60" size={16} />
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between text-sm mt-[-2px]">
-                  <label className="flex items-center gap-2 text-gray-600 font-semibold cursor-pointer group">
-                    <div className="relative flex items-center">
-                      <input 
-                        type="checkbox" 
-                        name="rememberMe"
-                        checked={formData.rememberMe}
-                        onChange={handleChange}
-                        className="peer sr-only" 
-                      />
-                      <div className="w-5 h-5 bg-white border-[1.5px] border-gray-300 rounded peer-checked:bg-emerald-500 peer-checked:border-emerald-500 transition-all group-hover:border-emerald-500 flex items-center justify-center">
-                        <svg className="w-3.5 h-3.5 text-white hidden peer-checked:block" viewBox="0 0 14 10" fill="none">
-                          <path d="M1 5L5 9L13 1" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                      </div>
-                    </div>
-                    Remember me
-                  </label>
-                  <Link to="/forgot-password" className="text-emerald-600 font-bold hover:text-emerald-700 hover:underline transition-colors">Forgot password?</Link>
-                </div>
-
-                <button 
-                  type="submit" 
-                  disabled={isLoading}
-                  className="flex items-center justify-center gap-2 bg-emerald-500 text-white py-3 rounded-xl font-bold text-base mt-1 shadow-[0_4px_12px_rgba(16,185,129,0.25)] hover:bg-emerald-600 hover:-translate-y-[2px] hover:shadow-[0_8px_16px_rgba(16,185,129,0.35)] active:translate-y-0 disabled:opacity-75 disabled:pointer-events-none transition-all duration-200 group"
+            {/* Role Selection */}
+            <div className="flex bg-[#ecf0f3] dark:bg-[#151E32] p-1.5 rounded-2xl mb-8 shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0a0f1d,inset_-4px_-4px_8px_#202d47]">
+              {roles.map((r) => (
+                <button
+                  key={r} type="button" onClick={() => setRole(r)}
+                  className={`flex-1 py-2.5 text-[0.8rem] font-black rounded-xl transition-all ${
+                    role === r 
+                      ? 'bg-[#2A7FFF] text-white shadow-[0_4px_12px_rgba(42,127,255,0.4)] translate-y-[-1px]' 
+                      : 'text-slate-500 hover:text-[#2A7FFF] dark:hover:text-white'
+                  }`}
                 >
-                  {isLoading ? (
-                    <>
-                      <Loader2 size={18} className="animate-spin" />
-                      Authenticating...
-                    </>
-                  ) : (
-                    <>
-                      Sign in securely
-                      <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
-                    </>
-                  )}
+                  {r}
                 </button>
-              </form>
+              ))}
+            </div>
 
-              {/* Form Security Footnote */}
-              <div className="flex justify-center items-center gap-4 mt-4 text-[0.7rem] text-gray-400 font-semibold uppercase tracking-wider">
-                <span className="flex items-center gap-1"><Lock size={10} /> Encrypted</span>
-                <span className="w-1 h-1 rounded-full bg-gray-300"></span>
-                <span className="flex items-center gap-1"><ShieldCheck size={11} /> HIPAA Compliant</span>
+            {error && (
+              <div className="mb-5 p-3 bg-red-50 border border-red-100 rounded-xl flex items-start gap-2.5 text-red-600 animate-in fade-in slide-in-from-top-2">
+                <AlertCircle size={18} className="mt-0.5 shrink-0" />
+                <span className="text-[0.8rem] font-medium">{error}</span>
+              </div>
+            )}
+
+            <form onSubmit={formik.handleSubmit} className="flex flex-col gap-4">
+              <div className="flex flex-col gap-1.5">
+                <label className="text-[0.65rem] font-black text-slate-500 uppercase tracking-widest pl-1">{role === 'Admin' ? 'Admin ID' : 'Email or Mobile Number'}</label>
+                <div className="relative flex items-center group">
+                  <Mail className={`absolute left-4 transition-colors z-10 ${formik.errors.email && formik.touched.email ? 'text-red-400' : 'text-slate-400 group-focus-within:text-[#2A7FFF]'}`} size={16} />
+                  <input 
+                    {...formik.getFieldProps('email')}
+                    placeholder={role === 'Doctor' ? 'hospital.id@medisync.app' : 'you@example.com or 9999999999'}
+                    className={`w-full py-4 pl-12 pr-4 neu-input text-[0.9rem] font-bold text-slate-800 dark:text-white ${formik.errors.email && formik.touched.email ? 'ring-2 ring-red-400/20' : ''}`}
+                    autoComplete="off"
+                    readOnly
+                    onFocus={(e) => e.target.removeAttribute('readonly')}
+                  />
+                </div>
+                {formik.touched.email && formik.errors.email && <span className="text-[0.65rem] font-bold text-red-500 ml-1">{formik.errors.email}</span>}
               </div>
 
-              {/* Google Login - Restricted for Admins */}
-              {role !== 'Admin' && (
-                <div className="animate-slideUp" style={{ animationDuration: '0.4s' }}>
-                  <div className="flex items-center gap-4 my-4 text-gray-300 text-[0.8rem] font-bold uppercase tracking-wider">
-                    <div className="flex-1 h-[1.5px] bg-gray-100"></div>
-                    OR
-                    <div className="flex-1 h-[1.5px] bg-gray-100"></div>
-                  </div>
-
-                  <button type="button" className="flex items-center justify-center gap-3 w-full bg-white border-[1.5px] border-gray-200 py-[10px] rounded-xl font-bold text-[0.95rem] text-gray-700 shadow-sm hover:bg-gray-50 hover:border-gray-300 hover:-translate-y-[1px] hover:shadow-md transition-all duration-200">
-                    <svg className="w-[18px] h-[18px]" viewBox="0 0 24 24">
-                      <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-                      <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                      <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-                      <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-                    </svg>
-                    Sign in with Google
-                  </button>
-                  <p className="text-center text-[0.7rem] text-gray-400 mt-1.5 font-medium">Patients & Doctors only</p>
+              <div className="flex flex-col gap-1.5">
+                <label className="text-[0.65rem] font-black text-slate-500 uppercase tracking-widest pl-1">Password</label>
+                <div className="relative flex items-center group">
+                  <Lock className={`absolute left-4 transition-colors z-10 ${formik.errors.password && formik.touched.password ? 'text-red-400' : 'text-slate-400 group-focus-within:text-[#2A7FFF]'}`} size={16} />
+                  <input 
+                    type="password" {...formik.getFieldProps('password')}
+                    placeholder="••••••••"
+                    className={`w-full py-4 pl-12 pr-4 neu-input text-[0.9rem] font-bold text-slate-800 dark:text-white ${formik.errors.password && formik.touched.password ? 'ring-2 ring-red-400/20' : ''}`}
+                    autoComplete="new-password"
+                    readOnly
+                    onFocus={(e) => e.target.removeAttribute('readonly')}
+                  />
                 </div>
-              )}
+                {formik.touched.password && formik.errors.password && <span className="text-[0.65rem] font-bold text-red-500 ml-1">{formik.errors.password}</span>}
+              </div>
 
-              {/* Patient Signup Only */}
-              {role === 'Patient' && (
-                <div className="text-center mt-4 text-[0.9rem] text-gray-500 font-medium animate-slideUp" style={{ animationDuration: '0.5s' }}>
-                  Don't have an account? 
-                  <Link to="/signup" className="text-emerald-600 font-bold ml-1.5 hover:text-emerald-700 hover:underline transition-colors">Sign up</Link>
+              <div className="flex items-center justify-between text-[0.75rem] mt-1 font-bold">
+                <label className="flex items-center gap-2 text-slate-500 cursor-pointer hover:text-slate-700">
+                  <input type="checkbox" {...formik.getFieldProps('rememberMe')} className="w-4 h-4 rounded border-slate-300 text-[#2A7FFF] focus:ring-[#2A7FFF]/30" />
+                  Remember device
+                </label>
+                <Link to="/forgot-password" title="Recover access" className="text-[#2A7FFF] hover:underline">Recover access</Link>
+              </div>
+
+              <button 
+                type="submit" disabled={isLoading}
+                className="flex items-center justify-center gap-3 bg-[#2A7FFF] text-white py-4 rounded-2xl font-black text-[1rem] mt-6 shadow-[0_12px_24px_rgba(42,127,255,0.3)] hover:bg-[#1C71E1] hover:-translate-y-1 active:scale-[0.98] transition-all disabled:opacity-70 group"
+              >
+                {isLoading ? <><Loader2 size={20} className="animate-spin" /> Authenticating...</> : <>Access Portal <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" /></>}
+              </button>
+            </form>
+
+            {role !== 'Admin' && (
+              <>
+                <div className="flex items-center gap-4 my-6 text-slate-400 text-[0.65rem] font-black uppercase tracking-widest">
+                  <div className="flex-1 h-[1px] bg-slate-100"></div> OR <div className="flex-1 h-[1px] bg-slate-100"></div>
                 </div>
-              )}
-            </div>
+                <div className="w-full flex justify-center">
+                  <GoogleLogin onSuccess={handleGoogleSuccess} onError={handleGoogleError} theme="outline" size="large" width="420" />
+                </div>
+              </>
+            )}
+
+            {role === 'Patient' && (
+              <div className="text-center mt-6 text-[0.85rem] text-slate-500 font-medium">
+                New to MediSync? <Link to="/signup" className="text-[#2A7FFF] font-black hover:underline">Create account</Link>
+              </div>
+            )}
           </div>
-
         </div>
       </div>
     </div>

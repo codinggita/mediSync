@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Pill, FileText, AlertTriangle, TrendingDown, CalendarCheck, Check, ShieldCheck } from 'lucide-react';
+import { Pill, FileText, AlertTriangle, CalendarCheck } from 'lucide-react';
 import { useAuth } from '../../../context/AuthContext';
 import api from '../../../utils/api';
 import MedicineComparison from './MedicineComparison';
@@ -12,6 +11,8 @@ import PremiumHealthVault from './PremiumHealthVault';
 import SavingsInsights from './SavingsInsights';
 import HealthActivity from './HealthActivity';
 import RecentRecordsPreview from './RecentRecordsPreview';
+import PriceAlertBanner from './PriceAlertBanner';
+import DashboardFooter from './DashboardFooter';
 import PremiumLoader from '../../../components/PremiumLoader';
 
 import medBoxImg from '../../../assets/images/medicine_box.png';
@@ -24,7 +25,6 @@ const DashboardContent = () => {
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({ medicines: 0, records: 0, appointments: 0, alerts: 3 });
   const { user } = useAuth();
-  const navigate = useNavigate();
   const [isUploading, setIsUploading] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const medCompRef = useRef(null);
@@ -71,32 +71,9 @@ const DashboardContent = () => {
   return (
     <main className="flex-1 overflow-y-auto bg-[#ecf0f3] dark:bg-[#121826] transition-colors duration-300 p-6 lg:p-8 space-y-10 scrollbar-hide pb-24 md:pb-20">
       <div className="flex flex-col gap-10">
-        
-        {/* Main Welcome & Stats Layer */}
         <WelcomeBanner user={user} stats={stats} greeting={greeting} firstAidImg={firstAidImg} />
-        
         <StatGrid statCards={statCards} loading={loading} />
-
-
-
-        {/* Price Drop Alert Banner */}
-        <div 
-           onClick={() => navigate('/comparison')}
-           className="bg-emerald-500/10 border border-emerald-500/20 rounded-[2.5rem] p-6 flex items-center justify-between cursor-pointer hover:bg-emerald-500/20 hover:scale-[1.01] transition-all group shadow-sm"
-        >
-           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-              <div className="w-14 h-14 shrink-0 rounded-[1.2rem] bg-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 shadow-inner">
-                 <TrendingDown size={28} />
-              </div>
-              <div>
-                 <h3 className="text-[1.1rem] font-black text-emerald-700 dark:text-emerald-400 mb-1 leading-tight">PRICE DROP ALERT: Medicines now under ₹100!</h3>
-                 <p className="text-[0.75rem] font-bold text-emerald-600/70 dark:text-emerald-400/70 uppercase tracking-widest">Click to view nearby pharmacy addresses & exact locations</p>
-              </div>
-           </div>
-           <button className="hidden md:block px-6 py-3 bg-emerald-500 text-white rounded-[1rem] text-[0.75rem] font-black uppercase tracking-widest shadow-lg shadow-emerald-500/30 group-hover:bg-emerald-600 group-active:scale-95 transition-all whitespace-nowrap">
-              View Stores
-           </button>
-        </div>
+        <PriceAlertBanner />
 
         <PremiumHealthVault 
            medBoxImg={medBoxImg} 
@@ -127,17 +104,7 @@ const DashboardContent = () => {
           <DoctorConnect />
         </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-8 py-10 border-t border-slate-200/50 dark:border-slate-800">
-           {[
-             { text: 'End-to-End Encrypted', icon: ShieldCheck },
-             { text: 'HIPAA Compliant Protocol', icon: Check },
-             { text: 'Biometric Secure Node', icon: ShieldCheck }
-           ].map((item, i) => (
-             <div key={i} className="flex items-center gap-3 px-6 py-3 bg-white/40 dark:bg-[#151E32]/40 backdrop-blur-xl rounded-2xl border border-white/20 text-[0.75rem] font-black text-slate-400 uppercase tracking-widest shadow-sm">
-                <item.icon size={16} className="text-[#2ECC71]" /> {item.text}
-             </div>
-           ))}
-        </div>
+        <DashboardFooter />
       </div>
     </main>
   );

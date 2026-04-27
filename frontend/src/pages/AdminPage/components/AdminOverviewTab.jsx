@@ -2,91 +2,13 @@ import React, { useState, useEffect } from 'react';
 import api from '../../../utils/api';
 import { useTheme } from '../../../context/ThemeContext';
 import {
-  Users, Building2, Pill, BarChart3, AlertTriangle, UserCheck,
-  TrendingUp, Activity, Loader2, ArrowUpRight, Zap, Shield,
-  Clock, Award
+  Users, Building2, Pill, UserCheck,
+  Loader2, Zap, Shield
 } from 'lucide-react';
 import adminCoreImg from '../../../assets/images/admin_core.png';
-import healthAbstractImg from '../../../assets/images/health_abstract.png';
 import PremiumLoader from '../../../components/PremiumLoader';
-
-const GlowCard = ({ label, value, icon: Icon, color, sub, trend, delay = 0 }) => {
-  const { isDarkMode } = useTheme();
-  
-  return (
-    <div 
-      className={`relative overflow-hidden rounded-[2rem] p-7 transition-all duration-500 hover:scale-[1.02] group cursor-pointer ${
-        isDarkMode 
-          ? 'bg-[#151E32] shadow-[8px_8px_16px_#0a0f1d,-8px_-8px_16px_#202d47]' 
-          : 'bg-[#ecf0f3] shadow-[10px_10px_20px_#cbced1,-10px_-10px_20px_#ffffff]'
-      }`}
-      style={{ animationDelay: `${delay}ms` }}
-    >
-      {/* Background Accent Image */}
-      <div className="absolute -right-6 -bottom-6 w-32 h-32 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity pointer-events-none group-hover:scale-125 transition-transform duration-700">
-         <img src={healthAbstractImg} alt="Abstract" className="w-full h-full object-contain" />
-      </div>
-
-      <div className="relative z-10">
-        <div className="flex items-center justify-between mb-6">
-          <div 
-            className={`w-14 h-14 rounded-[1.2rem] flex items-center justify-center transition-all duration-300 ${
-              isDarkMode 
-                ? 'shadow-[4px_4px_8px_#0a0f1d,-4px_-4px_8px_#202d47]' 
-                : 'shadow-[5px_5px_10px_#cbced1,-5px_-5px_10px_#ffffff]'
-            } group-hover:scale-110`}
-          >
-            <Icon size={24} style={{ color }} />
-          </div>
-          {trend && (
-            <div className={`flex items-center gap-1 px-3 py-1.5 rounded-xl text-[0.65rem] font-black ${
-              isDarkMode ? 'bg-white/5' : 'bg-black/5'
-            }`} style={{ color }}>
-              <ArrowUpRight size={12} />{trend}
-            </div>
-          )}
-        </div>
-
-        <p className={`text-[2.5rem] font-black leading-none ${isDarkMode ? 'text-white' : 'text-[#1F2937]'}`}>
-          {value ?? <Loader2 size={24} className="animate-spin opacity-40" />}
-        </p>
-        <p className="text-[0.7rem] font-black text-slate-400 uppercase tracking-[0.2em] mt-3">{label}</p>
-        {sub && (
-          <p className="text-[0.65rem] text-slate-500 mt-2 flex items-center gap-1.5 font-bold uppercase tracking-wider">
-            <Clock size={11} />{sub}
-          </p>
-        )}
-      </div>
-    </div>
-  );
-};
-
-const ActivityRow = ({ user: u }) => {
-  const { isDarkMode } = useTheme();
-  return (
-    <div className={`flex items-center gap-4 p-4 rounded-2xl transition-all hover:scale-[1.01] group mb-2 ${
-      isDarkMode 
-        ? 'bg-[#151E32] shadow-[4px_4px_8px_#0a0f1d,-4px_-4px_8px_#202d47]' 
-        : 'bg-[#ecf0f3] shadow-[4px_4px_8px_#cbced1,-4px_-4px_8px_#ffffff]'
-    }`}>
-      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#2A7FFF] to-[#8B5CF6] flex items-center justify-center text-white text-[0.8rem] font-black shadow-lg shrink-0">
-        {u.name?.[0]?.toUpperCase()}
-      </div>
-      <div className="flex-1 min-w-0">
-        <p className={`text-[0.9rem] font-black truncate ${isDarkMode ? 'text-white' : 'text-[#1F2937]'}`}>{u.name}</p>
-        <p className="text-[0.7rem] text-slate-500 truncate font-medium">{u.email}</p>
-      </div>
-      <div className="flex flex-col items-end gap-1.5">
-        <span className={`px-3 py-1 rounded-full text-[0.6rem] font-black uppercase tracking-wider ${
-          u.role === 'Admin'   ? 'bg-purple-500/10 text-purple-500' :
-          u.role === 'Doctor'  ? 'bg-blue-500/10 text-blue-500' :
-                               'bg-emerald-500/10 text-emerald-500'
-        }`}>{u.role}</span>
-        <span className="text-[0.6rem] font-bold text-slate-400 uppercase tracking-tighter">{new Date(u.createdAt).toLocaleDateString()}</span>
-      </div>
-    </div>
-  );
-};
+import AdminGlowCard from './AdminGlowCard';
+import AdminActivityRow from './AdminActivityRow';
 
 const AdminOverviewTab = () => {
   const [stats, setStats] = useState(null);
@@ -135,10 +57,10 @@ const AdminOverviewTab = () => {
 
       {/* Primary Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        <GlowCard label="Total Users" value={loading ? null : s.totalUsers} icon={Users} color="#2A7FFF" trend="+12%" sub={`${s.bannedUsers ?? 0} suspended`} delay={0} />
-        <GlowCard label="Total Doctors" value={loading ? null : s.totalDoctors} icon={UserCheck} color="#8B5CF6" trend="+5.2%" sub="Verified Clinical" delay={100} />
-        <GlowCard label="Pharmacies" value={loading ? null : s.totalPharmacies} icon={Building2} color="#2ECC71" sub={`${s.pendingPharmacies ?? 0} pending`} delay={200} />
-        <GlowCard label="Medicines" value={loading ? null : s.totalMedicines} icon={Pill} color="#F59E0B" trend="Active" sub="Global Registry" delay={300} />
+        <AdminGlowCard label="Total Users" value={loading ? null : s.totalUsers} icon={Users} color="#2A7FFF" trend="+12%" sub={`${s.bannedUsers ?? 0} suspended`} delay={0} />
+        <AdminGlowCard label="Total Doctors" value={loading ? null : s.totalDoctors} icon={UserCheck} color="#8B5CF6" trend="+5.2%" sub="Verified Clinical" delay={100} />
+        <AdminGlowCard label="Pharmacies" value={loading ? null : s.totalPharmacies} icon={Building2} color="#2ECC71" sub={`${s.pendingPharmacies ?? 0} pending`} delay={200} />
+        <AdminGlowCard label="Medicines" value={loading ? null : s.totalMedicines} icon={Pill} color="#F59E0B" trend="Active" sub="Global Registry" delay={300} />
       </div>
 
       {/* Main Grid */}
@@ -165,7 +87,7 @@ const AdminOverviewTab = () => {
             {loading ? (
               <div className="flex items-center justify-center py-20"><Loader2 size={40} className="text-[#2A7FFF] animate-spin opacity-50" /></div>
             ) : (
-              (stats?.recentUsers || []).map(u => <ActivityRow key={u._id} user={u} />)
+              (stats?.recentUsers || []).map(u => <AdminActivityRow key={u._id} user={u} />)
             )}
           </div>
         </div>

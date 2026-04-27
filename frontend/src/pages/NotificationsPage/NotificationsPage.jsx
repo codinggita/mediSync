@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Sidebar from '../DashboardPage/components/Sidebar';
 import TopBar from '../DashboardPage/components/TopBar';
-import { AlertTriangle, TrendingDown, FileText, Bell } from 'lucide-react';
 import NotificationsHeader from './components/NotificationsHeader';
-import NotificationCard from './components/NotificationCard';
+import NotificationsList from './components/NotificationsList';
+import { AlertTriangle, TrendingDown, FileText } from 'lucide-react';
 
 const NotificationsPage = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -61,24 +61,11 @@ const NotificationsPage = () => {
             onMarkAllRead={() => setNotifications(notifications.map(n => ({ ...n, read: true })))}
           />
 
-          <div className="max-w-4xl space-y-4">
-            {notifications.length > 0 ? (
-              notifications.map((notif) => (
-                <NotificationCard 
-                  key={notif.id}
-                  notif={notif}
-                  onMarkRead={markAsRead}
-                  onDelete={deleteNotification}
-                />
-              ))
-            ) : (
-              <div className="flex flex-col items-center justify-center py-20 text-center opacity-40">
-                 <Bell size={64} className="text-slate-300 mb-4" />
-                 <p className="text-lg font-black text-slate-400 uppercase tracking-[0.2em]">All Caught Up!</p>
-                 <p className="text-sm font-bold text-slate-400">No new notifications at the moment.</p>
-              </div>
-            )}
-          </div>
+          <NotificationsList 
+            notifications={notifications}
+            onMarkRead={markAsRead}
+            onDelete={deleteNotification}
+          />
         </main>
       </div>
     </div>

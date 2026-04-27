@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useFormik } from 'formik';
-import { AlertCircle } from 'lucide-react';
 import { jwtDecode } from 'jwt-decode';
 import loginBg from '../../assets/images/login-bg.png';
 import { useAuth } from '../../context/AuthContext';
@@ -12,6 +11,8 @@ import SignupSuccessOverlay from './components/SignupSuccessOverlay';
 import SignupProgressDots from './components/SignupProgressDots';
 import SignupHeader from './components/SignupHeader';
 import SignupGoogleAuth from './components/SignupGoogleAuth';
+import SignupErrorAlert from './components/SignupErrorAlert';
+import SignupFooter from './components/SignupFooter';
 import { SignupSchema } from './utils/SignupValidation';
 import { INITIAL_SIGNUP_VALUES } from './utils/SignupConstants';
 
@@ -30,7 +31,6 @@ const SignupPage = () => {
       const { name, email } = location.state.googleData;
       formik.setFieldValue('name', name);
       formik.setFieldValue('email', email);
-      // If we are at step 0 or 1, move to details step
       if (step <= 1) setStep(2);
     }
   }, [location.state]);
@@ -64,7 +64,6 @@ const SignupPage = () => {
         }
 
         const { data } = await api.post('/auth/register', payload);
-        
         setIsLoading('success');
         
         setTimeout(() => {
@@ -114,12 +113,7 @@ const SignupPage = () => {
           <div className="w-full max-w-[400px] mx-auto">
             <SignupHeader />
 
-            {error && (
-              <div className="mb-4 p-3 bg-[#ecf0f3] rounded-xl flex items-start gap-2 text-red-500 animate-in fade-in slide-in-from-top-2 shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff]">
-                <AlertCircle size={16} className="mt-0.5 shrink-0" />
-                <span className="text-[0.75rem] font-bold">{error}</span>
-              </div>
-            )}
+            <SignupErrorAlert error={error} />
 
             <SignupProgressDots step={step} />
 
@@ -141,9 +135,7 @@ const SignupPage = () => {
               onError={handleGoogleError}
             />
 
-            <div className="text-center mt-6 text-[0.85rem] text-slate-500 font-medium pb-4">
-              Already have an account? <Link to="/login" className="text-[#2A7FFF] font-bold hover:underline">Log in</Link>
-            </div>
+            <SignupFooter />
           </div>
         </div>
       </div>

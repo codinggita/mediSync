@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { AlertCircle, CheckCircle } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
 import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
 import loginBg from '../../assets/images/login-bg.png';
@@ -10,6 +10,8 @@ import { useAuth } from '../../context/AuthContext';
 import api from '../../utils/api';
 import SignupBranding from './components/SignupBranding';
 import SignupSteps from './components/SignupSteps';
+import SignupSuccessOverlay from './components/SignupSuccessOverlay';
+import SignupProgressDots from './components/SignupProgressDots';
 
 const SignupPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -131,12 +133,10 @@ const SignupPage = () => {
 
         const { data } = await api.post('/auth/register', payload);
         
-        // Show success state
         setIsLoading('success');
         
         setTimeout(() => {
           signup(data);
-          // Role-based navigation
           if (data.role === 'Doctor') {
             navigate('/doctor-portal');
           } else if (data.role === 'Admin') {
@@ -152,25 +152,13 @@ const SignupPage = () => {
     }
   });
 
-  // Google OAuth handlers
   const handleGoogleSuccess = (credentialResponse) => {
     try {
       const decoded = jwtDecode(credentialResponse.credential);
-      
-      // Instead of immediate signup, we populate the form fields
-      // as requested by the user ("fill user name and email in form")
       formik.setFieldValue('name', decoded.name);
       formik.setFieldValue('email', decoded.email);
-      
-      // If we are at the plan selection or basic info step, move to details
-      if (step <= 1) {
-        setStep(2);
-      }
-      
-      setError(null); // Clear any previous errors
-      
-      // Optional: Visual feedback could be added here
-      console.log("Imported from Google:", decoded.name, decoded.email);
+      if (step <= 1) setStep(2);
+      setError(null);
     } catch (err) {
       setError('Google data import failed.');
     }
@@ -185,25 +173,11 @@ const SignupPage = () => {
     >
       <div className="absolute inset-0 bg-white/60 backdrop-blur-[2px]" />
       
-      {/* Success Overlay */}
-      {isLoading === 'success' && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#ecf0f3] dark:bg-[#0B1121] transition-all duration-500">
-           <div className="flex flex-col items-center animate-in zoom-in duration-500">
-              <div className="w-24 h-24 rounded-[2rem] bg-white dark:bg-[#151E32] flex items-center justify-center shadow-[10px_10px_20px_#cbced1,-10px_-10px_20px_#ffffff] mb-6">
-                 <CheckCircle size={48} className="text-[#2ECC71] animate-bounce" />
-              </div>
-              <h2 className="text-[2.2rem] font-black text-slate-900 dark:text-white mb-2">Vault Secured</h2>
-              <p className="text-[0.9rem] font-bold text-slate-500 uppercase tracking-[0.3em]">Syncing Biometrics...</p>
-           </div>
-        </div>
-      )}
+      <SignupSuccessOverlay show={isLoading === 'success'} />
 
       <div className="flex flex-col md:flex-row w-full max-w-4xl bg-white/95 backdrop-blur-3xl border border-white rounded-3xl shadow-[0_30px_80px_-15px_rgba(0,0,0,0.15)] overflow-hidden z-10 m-4 max-h-[90vh]">
-        
-        {/* Left Side - Branding */}
         <SignupBranding />
         
-        {/* Right Side - Auth Form (Neumorphic) */}
         <div className="flex-[1.2] px-6 py-6 md:px-10 flex flex-col justify-start bg-[#ecf0f3] overflow-y-auto scrollbar-hide rounded-r-3xl z-10">
           <div className="w-full max-w-[400px] mx-auto">
             <div className="mb-5 text-center">
@@ -218,16 +192,8 @@ const SignupPage = () => {
               </div>
             )}
 
-            {/* Step Progress */}
-            {step > 0 && (
-              <div className="flex justify-center gap-2 mb-4">
-                {[1, 2, 3].map(s => (
-                  <div key={s} className={`h-1.5 rounded-full transition-all duration-300 ${s === step ? 'w-8 bg-[#2A7FFF] shadow-[inset_1px_1px_2px_rgba(0,0,0,0.2)]' : 'w-3 bg-[#cbced1] shadow-[inset_1px_1px_2px_#cbced1]'}`} />
-                ))}
-              </div>
-            )}
+            <SignupProgressDots step={step} />
 
-            {/* Signup Steps & Forms */}
             <form onSubmit={formik.handleSubmit} className="flex flex-col gap-4">
               <SignupSteps 
                 step={step}

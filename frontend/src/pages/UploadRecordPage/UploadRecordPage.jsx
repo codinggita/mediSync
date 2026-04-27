@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import Sidebar from '../DashboardPage/components/Sidebar';
 import TopBar from '../DashboardPage/components/TopBar';
-import DropZone from './components/DropZone';
 import UploadMetaForm from './components/UploadMetaForm';
 import UploadHeader from './components/UploadHeader';
-import TacticalTips from './components/TacticalTips';
-import { UploadCloud } from 'lucide-react';
+import UploadDecorations from './components/UploadDecorations';
+import UploadSelectionContainer from './components/UploadSelectionContainer';
 import { useNavigate } from 'react-router-dom';
 import api from '../../utils/api';
 
@@ -46,13 +45,7 @@ const UploadRecordPage = () => {
 
   return (
     <div className="flex h-screen overflow-hidden bg-[#ecf0f3] dark:bg-[#0B1121] transition-colors duration-300 font-sans relative">
-      {/* Floating 3D Artifacts */}
-      <div className="absolute top-[15%] left-[10%] animate-float opacity-30 pointer-events-none overflow-hidden h-full w-full z-0">
-        <img src="/src/assets/images/medicine_box.png" alt="" className="w-64 object-contain drop-shadow-2xl rotate-12" />
-      </div>
-      <div className="absolute bottom-[10%] right-[15%] animate-float-slow opacity-15 pointer-events-none z-0">
-        <img src="/src/assets/images/first_aid.png" alt="" className="w-56 object-contain drop-shadow-2xl -rotate-12 grayscale" />
-      </div>
+      <UploadDecorations />
 
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
 
@@ -66,33 +59,10 @@ const UploadRecordPage = () => {
           <div className="flex flex-col lg:flex-row gap-12 max-w-7xl mx-auto w-full pb-20">
             {/* Left: Tactical Drop Zone */}
             <div className="flex-1 min-w-0">
-              <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[4rem] p-12 shadow-[25px_25px_50px_#cbced1,-25px_-25px_50px_#ffffff] dark:shadow-[25px_25px_50px_#0a0f1d] border border-white/40 relative overflow-hidden group">
-                <div className="absolute top-0 right-0 p-10 opacity-5 group-hover:scale-110 transition-transform duration-700">
-                   <UploadCloud size={120} className="text-slate-900 dark:text-white" />
-                </div>
-
-                <div className="flex items-center justify-between mb-10 relative z-10">
-                  <h3 className="text-[1.4rem] font-black text-slate-900 dark:text-white flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-2xl bg-[#2A7FFF]/10 flex items-center justify-center text-[#2A7FFF] shadow-inner">
-                       <UploadCloud size={20} />
-                    </div>
-                    Snapshot Selection
-                  </h3>
-                  <span className="px-4 py-1.5 bg-slate-900 text-white rounded-full text-[0.65rem] font-black uppercase tracking-widest shadow-xl">
-                    Awaiting Source
-                  </span>
-                </div>
-
-                <div className="relative z-10">
-                  <DropZone
-                    file={file}
-                    onFileSelected={setFile}
-                    onClear={() => setFile(null)}
-                  />
-                </div>
-
-                <TacticalTips />
-              </div>
+              <UploadSelectionContainer 
+                file={file} 
+                setFile={setFile} 
+              />
             </div>
 
             {/* Right: Metadata Form */}

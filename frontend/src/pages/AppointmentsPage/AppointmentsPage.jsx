@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../DashboardPage/components/Sidebar';
 import TopBar from '../DashboardPage/components/TopBar';
-import { 
-  Search, Loader2, CalendarDays
-} from 'lucide-react';
+import { Search } from 'lucide-react';
 import api from '../../utils/api';
-import medicineBoxImg from '../../assets/images/medicine_box.png';
-import inhalerImg from '../../assets/images/inhaler.png';
 import DoctorAppointmentsPage from './components/DoctorAppointmentsPage';
 import AppointmentsCalendar from './components/AppointmentsCalendar';
 import BookingModal from './components/BookingModal';
 import AppointmentsHeader from './components/AppointmentsHeader';
-import AppointmentCard from './components/AppointmentCard';
+import AppointmentsDecorations from './components/AppointmentsDecorations';
+import AppointmentsListContent from './components/AppointmentsListContent';
 import { useAuth } from '../../context/AuthContext';
 
 const AppointmentsPage = () => {
@@ -94,16 +91,7 @@ const AppointmentsPage = () => {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#ecf0f3] dark:bg-[#0f141f] transition-colors duration-500 font-sans relative">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(42,127,255,0.03),transparent)] pointer-events-none" />
-      
-      {/* Floating 3D Artifacts */}
-      <div className="absolute top-[15%] right-[5%] animate-float opacity-30 pointer-events-none">
-        <img src={medicineBoxImg} alt="" className="w-56 object-contain drop-shadow-2xl" />
-      </div>
-      <div className="absolute bottom-[10%] left-[20%] animate-float-slow opacity-10 pointer-events-none">
-        <img src={inhalerImg} alt="" className="w-44 object-contain drop-shadow-2xl -rotate-12 grayscale" />
-      </div>
+      <AppointmentsDecorations />
 
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
 
@@ -138,27 +126,11 @@ const AppointmentsPage = () => {
                  />
               </div>
 
-              <div className="flex flex-col gap-6 pb-20">
-                {loading ? (
-                  <div className="flex flex-col items-center justify-center py-24 gap-6 bg-[#ecf0f3] dark:bg-[#151E32] rounded-[3rem] border-4 border-dashed border-slate-200 dark:border-slate-800">
-                    <Loader2 className="animate-spin text-[#2A7FFF]" size={40} />
-                    <p className="text-slate-400 font-black uppercase tracking-widest">Synchronizing Schedule...</p>
-                  </div>
-                ) : appointments.length > 0 ? (
-                  appointments.map((app) => (
-                    <AppointmentCard 
-                      key={app._id} 
-                      app={app} 
-                      user={user} 
-                    />
-                  ))
-                ) : (
-                  <div className="flex flex-col items-center justify-center py-24 gap-6 bg-[#ecf0f3] dark:bg-[#151E32] rounded-[3rem] border-4 border-dashed border-slate-200 dark:border-slate-800">
-                    <CalendarDays className="text-slate-200" size={64} />
-                    <p className="text-slate-400 font-black uppercase tracking-widest">No Active Sessions Detected</p>
-                  </div>
-                )}
-              </div>
+              <AppointmentsListContent 
+                loading={loading}
+                appointments={appointments}
+                user={user}
+              />
             </div>
           </div>
         </main>

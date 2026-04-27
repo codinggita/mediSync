@@ -1,34 +1,31 @@
-import React from 'react';
-import EmergencyHero from './components/EmergencyHero';
-import EmergencyActions from './components/EmergencyActions';
-import NearbyHospitals from './components/NearbyHospitals';
-import './EmergencyPage.css';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Sidebar from '../DashboardPage/components/Sidebar';
+import TopBar from '../DashboardPage/components/TopBar';
+
+import EmergencyHeader from './components/EmergencyHeader';
+import ResponseNetwork from './components/ResponseNetwork';
+import TrustedNetwork from './components/TrustedNetwork';
+import ClinicalIdCard from './components/ClinicalIdCard';
 
 const EmergencyPage = () => {
   return (
     <div className="min-h-screen bg-[#FFF5F5] font-sans flex flex-col">
 
-      {/* Top bar */}
-      <div className="bg-[#D32F2F] px-6 py-3 flex items-center justify-between shadow-md">
-        <span className="text-white font-bold text-base tracking-wide">MediSync</span>
-        <span className="text-white/80 text-xs font-semibold uppercase tracking-widest">Emergency Mode</span>
-      </div>
-
-      {/* Content */}
-      <div className="flex-1 max-w-xl w-full mx-auto px-4 py-6 flex flex-col gap-5">
-        <EmergencyHero />
-        <EmergencyActions />
-        <NearbyHospitals />
-      </div>
-
-      {/* Footer strip */}
-      <div className="bg-[#D32F2F]/10 border-t border-red-100 py-3 text-center">
-        <p className="text-xs text-[#D32F2F] font-semibold">
-          🔴 Emergency services are being notified of your location
-        </p>
+            <div className="xl:col-span-5 space-y-12">
+               <TrustedNetwork 
+                 contacts={emergencyContacts} 
+                 isSearching={isSearching} 
+                 onRefresh={handleRefresh} 
+               />
+               <ClinicalIdCard />
+            </div>
+          </div>
+        </main>
       </div>
     </div>
   );
 };
+
 
 export default EmergencyPage;

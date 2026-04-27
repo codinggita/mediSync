@@ -3,7 +3,6 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { AlertCircle } from 'lucide-react';
-import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
 import loginBg from '../../assets/images/login-bg.png';
 import { useAuth } from '../../context/AuthContext';
@@ -12,6 +11,8 @@ import SignupBranding from './components/SignupBranding';
 import SignupSteps from './components/SignupSteps';
 import SignupSuccessOverlay from './components/SignupSuccessOverlay';
 import SignupProgressDots from './components/SignupProgressDots';
+import SignupHeader from './components/SignupHeader';
+import SignupGoogleAuth from './components/SignupGoogleAuth';
 
 const SignupPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -180,10 +181,7 @@ const SignupPage = () => {
         
         <div className="flex-[1.2] px-6 py-6 md:px-10 flex flex-col justify-start bg-[#ecf0f3] overflow-y-auto scrollbar-hide rounded-r-3xl z-10">
           <div className="w-full max-w-[400px] mx-auto">
-            <div className="mb-5 text-center">
-              <h2 className="text-[1.8rem] font-black text-slate-700 leading-tight drop-shadow-sm">Create Account</h2>
-              <p className="text-[0.8rem] text-slate-500 mt-1 font-medium">Setup your professional or patient portal.</p>
-            </div>
+            <SignupHeader />
 
             {error && (
               <div className="mb-4 p-3 bg-[#ecf0f3] rounded-xl flex items-start gap-2 text-red-500 animate-in fade-in slide-in-from-top-2 shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff]">
@@ -206,18 +204,11 @@ const SignupPage = () => {
               />
             </form>
 
-            {formik.values.role !== 'Admin' && (
-              <>
-                <div className="flex items-center gap-4 my-6 text-slate-400 text-[0.65rem] font-black uppercase tracking-widest px-4">
-                  <div className="flex-1 h-[2px] rounded-full shadow-[inset_1px_1px_2px_#cbced1,inset_-1px_-1px_2px_#ffffff] bg-[#ecf0f3]"></div> OR <div className="flex-1 h-[2px] rounded-full shadow-[inset_1px_1px_2px_#cbced1,inset_-1px_-1px_2px_#ffffff] bg-[#ecf0f3]"></div>
-                </div>
-                <div className="w-full flex justify-center scale-95 origin-top relative z-20">
-                  <div className="p-1 rounded-full shadow-[6px_6px_12px_#cbced1,-6px_-6px_12px_#ffffff] bg-[#ecf0f3]">
-                    <GoogleLogin onSuccess={handleGoogleSuccess} onError={handleGoogleError} theme="outline" size="large" width="350" />
-                  </div>
-                </div>
-              </>
-            )}
+            <SignupGoogleAuth 
+              role={formik.values.role}
+              onSuccess={handleGoogleSuccess}
+              onError={handleGoogleError}
+            />
 
             <div className="text-center mt-6 text-[0.85rem] text-slate-500 font-medium pb-4">
               Already have an account? <Link to="/login" className="text-[#2A7FFF] font-bold hover:underline">Log in</Link>

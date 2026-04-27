@@ -17,6 +17,16 @@ export const INITIAL_SIGNUP_VALUES = {
 };
 
 export const SIGNUP_PLANS = [
-  { id: 'Free', label: 'Clinical Tier-1', price: '₹0', features: ['Core Vitals Tracking', 'Secure Vault'] },
-  { id: 'Pro', label: 'Clinical Elite', price: '₹499/mo', features: ['Advanced Telemetry', 'Priority Access'] }
+  { 
+    id: 'Free', 
+    label: 'Biological Starter', 
+    price: '₹0', 
+    features: ['50MB Clinical Storage', 'Basic Vital Tracking', 'Emergency Contact Link', 'Standard Encrypted Vault'] 
+  },
+  { 
+    id: 'Pro', 
+    label: 'Advanced Portal', 
+    price: '₹199/mo', 
+    features: ['Unlimited Health Records', 'Real-time AI Biometrics', 'Priority Market Alerts', 'Multi-Family Access Sync'] 
+  }
 ];

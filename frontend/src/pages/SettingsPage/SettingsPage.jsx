@@ -14,6 +14,9 @@ import { useAuth } from '../../context/AuthContext';
 import api from '../../utils/api';
 import SettingsTabControl from './components/SettingsTabControl';
 import ProfileSettingsPanel from './components/ProfileSettingsPanel';
+import SettingsRecordsPanel from './components/SettingsRecordsPanel';
+import SettingsSecurityPanel from './components/SettingsSecurityPanel';
+import SettingsTelemetryPanel from './components/SettingsTelemetryPanel';
 
 const SettingsPage = () => {
   const navigate = useNavigate();
@@ -220,185 +223,37 @@ const SettingsPage = () => {
                )}
 
                {activeTab === 'records' && (
-                  <div className="max-w-4xl animate-in fade-in slide-in-from-right-10 duration-700">
-                     <div className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-6">
-                        <div>
-                            <h2 className="text-[1.8rem] font-black text-slate-900 dark:text-white leading-tight">Secure Archive</h2>
-                            <p className="text-[0.8rem] text-slate-400 font-bold uppercase tracking-[0.3em] mt-2 italic">Historical Medical Intelligence</p>
-                        </div>
-                        <div className="bg-amber-500/10 p-5 rounded-[1.8rem] border border-amber-500/20 flex items-center gap-5">
-                            <AlertTriangle size={24} className="text-amber-500" />
-                            <p className="text-[0.7rem] font-black text-amber-600 dark:text-amber-400 uppercase tracking-widest max-w-[180px] leading-relaxed">
-                                Purge protocol recommended for records older than 3 years.
-                            </p>
-                        </div>
-                     </div>
-
-                     {/* Storage Telemetry */}
-                     <div className="bg-slate-50 dark:bg-[#0B1121] p-8 rounded-[2.5rem] mb-10 border border-slate-100 dark:border-white/5">
-                        <div className="flex items-center justify-between mb-4">
-                            <span className="text-[0.75rem] font-black text-slate-500 uppercase tracking-widest">Vault Capacity: 62.4 MB / 500 MB</span>
-                            <span className="text-[0.75rem] font-black text-[#2A7FFF] uppercase tracking-widest">12% Utilized</span>
-                        </div>
-                        <div className="w-full h-3 bg-slate-200 dark:bg-white/5 rounded-full overflow-hidden flex">
-                            <div className="h-full bg-[#2A7FFF] w-[12%] shadow-[0_0_15px_rgba(42,127,255,0.5)]"></div>
-                            <div className="h-full bg-rose-500 w-[5%]"></div>
-                        </div>
-                        <div className="mt-4 flex gap-6">
-                            <div className="flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-[#2A7FFF]"></div>
-                                <span className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">Active Records</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-rose-500"></div>
-                                <span className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">Legacy Purgeable</span>
-                            </div>
-                        </div>
-                     </div>
-
-                     {/* Action Controls */}
-                     <div className="flex flex-col md:flex-row items-center justify-between mb-8 gap-6">
-                        <div className="flex bg-slate-50 dark:bg-[#0B1121] p-1.5 rounded-[1.5rem] border border-slate-100 dark:border-white/5 w-full md:w-auto">
-                           {['All', 'Legacy', 'Large Files'].map(f => (
-                              <button 
-                                 key={f} 
-                                 onClick={() => setFilterMode(f)}
-                                 className={`px-6 py-2.5 rounded-xl text-[0.7rem] font-black uppercase tracking-widest transition-all ${filterMode === f ? 'bg-white dark:bg-[#151E32] text-[#2A7FFF] shadow-md' : 'text-slate-400 hover:text-slate-600'}`}
-                              >
-                                 {f}
-                              </button>
-                           ))}
-                        </div>
-                        <button 
-                            onClick={() => {
-                                if(window.confirm('Execute Bulk Purge? This will permanently remove all records older than 2024.')) {
-                                    setRecords(prev => prev.filter(r => new Date(r.date).getFullYear() >= 2024));
-                                    setFilterMode('All');
-                                    alert('Legacy Data Purge Complete.');
-                                }
-                            }}
-                            className="flex items-center gap-3 px-8 py-3.5 bg-rose-500 text-white rounded-2xl font-black text-[0.75rem] uppercase tracking-widest hover:bg-rose-600 transition-all shadow-lg shadow-rose-500/20 active:scale-95"
-                        >
-                            <Trash2 size={16} /> Purge All Legacy
-                        </button>
-                     </div>
-
-                     <div className="space-y-6">
-                        {records.filter(record => {
-                            if (filterMode === 'Legacy') return new Date(record.date).getFullYear() < 2024;
-                            if (filterMode === 'Large Files') return parseFloat(record.size) > 10;
-                            return true;
-                        }).map((record) => {
-                           const isOld = new Date(record.date).getFullYear() < 2024;
-                           return (
-                              <div key={record.id} className={`p-8 bg-slate-50 dark:bg-[#090E1A]/40 rounded-[2.5rem] border border-slate-100 dark:border-white/5 flex items-center justify-between group hover:shadow-2xl hover:scale-[1.01] transition-all duration-500 relative ${isOld ? 'border-l-4 border-l-rose-500' : 'border-l-4 border-l-[#2A7FFF]'}`}>
-                                 <div className="flex items-center gap-8">
-                                    <div className={`w-16 h-16 rounded-[1.4rem] flex items-center justify-center shadow-lg transition-transform group-hover:rotate-6 ${isOld ? 'bg-rose-500/10 text-rose-500' : 'bg-[#2A7FFF]/10 text-[#2A7FFF]'}`}>
-                                       <FileText size={28} />
-                                    </div>
-                                    <div className="min-w-0">
-                                       <div className="flex items-center gap-3 mb-1">
-                                          <p className="text-[1.1rem] font-black text-slate-900 dark:text-white tracking-tight truncate max-w-[200px] md:max-w-none">{record.name}</p>
-                                          {isOld && <span className="px-3 py-0.5 bg-rose-500/10 text-rose-500 text-[0.55rem] font-black uppercase rounded-lg border border-rose-500/20 tracking-widest shrink-0">Legacy</span>}
-                                       </div>
-                                       <div className="flex items-center gap-5 flex-wrap">
-                                          <div className="flex items-center gap-2">
-                                             <Calendar size={14} className="text-slate-400" />
-                                             <span className="text-[0.8rem] font-bold text-slate-400 uppercase tracking-widest">{record.date}</span>
-                                          </div>
-                                          <div className="hidden sm:block w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-700" />
-                                          <span className="text-[0.8rem] font-bold text-slate-400">{record.size} • {record.type}</span>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div className="flex items-center gap-3">
-                                    <button className="w-12 h-12 rounded-[1rem] bg-white dark:bg-white/5 text-slate-300 hover:text-[#2A7FFF] dark:hover:bg-[#2A7FFF]/10 transition-all flex items-center justify-center shadow-md border border-slate-100 dark:border-white/5 active:scale-90">
-                                        <ChevronRight size={20} />
-                                    </button>
-                                    <button 
-                                        onClick={() => handleDeleteRecord(record.id)}
-                                        className="w-12 h-12 rounded-[1rem] bg-white dark:bg-rose-500/10 text-slate-300 hover:text-rose-500 dark:hover:bg-rose-500/20 transition-all flex items-center justify-center shadow-md border border-slate-100 dark:border-white/5 active:scale-90"
-                                    >
-                                        <Trash2 size={20} />
-                                    </button>
-                                 </div>
-                              </div>
-                           );
-                        })}
-
-                        {records.length === 0 && (
-                           <div className="text-center py-20 bg-slate-50 dark:bg-[#0B1121] rounded-[3rem] border border-dashed border-slate-200 dark:border-slate-800">
-                                <Database size={48} className="text-slate-200 mx-auto mb-6" />
-                                <p className="text-[1.2rem] font-black text-slate-400">Clinical Archive Empty</p>
-                           </div>
-                        )}
-                     </div>
-                  </div>
+                  <SettingsRecordsPanel 
+                    records={records.filter(record => {
+                        if (filterMode === 'Legacy') return new Date(record.date).getFullYear() < 2024;
+                        if (filterMode === 'Large Files') return parseFloat(record.size) > 10;
+                        return true;
+                    })}
+                    filterMode={filterMode}
+                    setFilterMode={setFilterMode}
+                    onDeleteRecord={handleDeleteRecord}
+                    onBulkPurge={() => {
+                        if(window.confirm('Execute Bulk Purge? This will permanently remove all records older than 2024.')) {
+                            setRecords(prev => prev.filter(r => new Date(r.date).getFullYear() >= 2024));
+                            setFilterMode('All');
+                            alert('Legacy Data Purge Complete.');
+                        }
+                    }}
+                  />
                )}
 
                {activeTab === 'security' && (
-                  <div className="max-w-3xl animate-in fade-in slide-in-from-right-10 duration-700">
-                     <h2 className="text-[1.8rem] font-black text-slate-900 dark:text-white mb-10 tracking-tight">Security Encryption HUD</h2>
-                     <div className="grid grid-cols-1 gap-8">
-                        {[
-                          { label: 'Account Password', sub: 'Last changed 3 months ago', icon: Key, color: '#F43F5E', action: 'Update Password' },
-                          { label: 'Master Access Key', sub: `Last updated ${securityState.keyUpdated}`, icon: Key, color: '#2A7FFF', action: 'Regenerate' },
-                          { label: 'Biometric 2FA Pulse', sub: 'Protocol STATUS: ACTIVE', icon: Shield, color: '#2ECC71', action: 'Synchronize', loading: securityState.syncing },
-                          { label: 'Linked Clinical Nodes', sub: `${securityState.activeSessions} active session${securityState.activeSessions > 1 ? 's' : ''} detected`, icon: Smartphone, color: '#F59E0B', action: 'Purge Sessions', disabled: securityState.activeSessions <= 1 }
-                        ].map((sec, i) => (
-                           <div key={i} className={`p-10 bg-slate-50 dark:bg-[#151E32]/30 rounded-[3rem] border border-slate-100 dark:border-white/5 flex items-center justify-between group transition-all duration-500 ${sec.disabled ? 'opacity-70' : 'hover:shadow-2xl'}`}>
-                              <div className="flex items-center gap-8">
-                                 <div className="w-16 h-16 rounded-3xl flex items-center justify-center transition-all group-hover:scale-110 shadow-xl" style={{ backgroundColor: `${sec.color}10`, color: sec.color }}>
-                                    {sec.loading ? <RefreshCw size={28} className="animate-spin" /> : <sec.icon size={28} />}
-                                 </div>
-                                 <div>
-                                    <p className="text-[1.1rem] font-black text-slate-900 dark:text-white mb-1 tracking-tight">{sec.label}</p>
-                                    <p className="text-[0.75rem] text-slate-400 font-black uppercase tracking-[0.2em]">{sec.sub}</p>
-                                 </div>
-                              </div>
-                              <button 
-                                onClick={() => handleSecurityAction(sec.action)}
-                                disabled={sec.disabled || sec.loading}
-                                className={`px-8 py-4 rounded-2xl text-[0.85rem] font-black shadow-lg border border-transparent transition-all active:scale-95 ${sec.disabled ? 'bg-slate-200 dark:bg-[#0B1121]/50 text-slate-400 cursor-not-allowed shadow-none' : 'bg-white dark:bg-[#0B1121] text-slate-700 dark:text-slate-200 hover:border-[#2A7FFF]/30 hover:text-[#2A7FFF]'}`}
-                              >
-                                 {sec.loading ? 'Syncing...' : (sec.disabled && sec.action === 'Purge Sessions' ? 'Isolated' : sec.action)}
-                              </button>
-                           </div>
-                        ))}
-                     </div>
-                  </div>
+                  <SettingsSecurityPanel 
+                    securityState={securityState}
+                    onSecurityAction={handleSecurityAction}
+                  />
                )}
 
                {activeTab === 'notifications' && (
-                  <div className="max-w-3xl animate-in fade-in slide-in-from-right-10 duration-700">
-                     <h2 className="text-[1.8rem] font-black text-slate-900 dark:text-white mb-10 tracking-tight">Telemetry Alerts HUD</h2>
-                     <div className="grid grid-cols-1 gap-6">
-                        {[
-                          { id: 'vitals', label: 'Critical Health Vitals Anomaly', sub: 'Instant SMS & Push for Biometric spikes', icon: AlertTriangle, color: '#E11D48' },
-                          { id: 'priceDrops', label: 'Medicine Price Drops', sub: 'Alerts when wishlist drugs drop in price', icon: Zap, color: '#F59E0B' },
-                          { id: 'appointments', label: 'Upcoming Appointments', sub: 'Reminders 24 hours and 1 hour prior', icon: Calendar, color: '#2A7FFF' },
-                          { id: 'records', label: 'New Clinical Records', sub: 'Notify when labs/reports are uploaded', icon: FileText, color: '#2ECC71' }
-                        ].map((alertOpt) => (
-                           <div key={alertOpt.id} className="p-8 bg-slate-50 dark:bg-[#151E32]/30 rounded-[2.5rem] border border-slate-100 dark:border-white/5 flex items-center justify-between group hover:shadow-2xl transition-all duration-500">
-                              <div className="flex items-center gap-6">
-                                 <div className="w-14 h-14 rounded-2xl flex items-center justify-center transition-all group-hover:scale-110 shadow-xl" style={{ backgroundColor: `${alertOpt.color}10`, color: alertOpt.color }}>
-                                    <alertOpt.icon size={24} />
-                                 </div>
-                                 <div>
-                                    <p className="text-[1.1rem] font-black text-slate-900 dark:text-white mb-1 tracking-tight">{alertOpt.label}</p>
-                                    <p className="text-[0.75rem] text-slate-400 font-bold uppercase tracking-[0.2em]">{alertOpt.sub}</p>
-                                 </div>
-                              </div>
-                              <button 
-                                onClick={() => handleToggle(alertOpt.id)}
-                                className={`w-16 h-8 rounded-full transition-all duration-300 relative flex items-center p-1 shadow-inner border border-transparent ${telemetryState[alertOpt.id] ? 'bg-[#2ECC71] shadow-[#2ECC71]/30' : 'bg-slate-200 dark:bg-[#0B1121] dark:border-white/10'}`}
-                              >
-                                 <div className={`w-6 h-6 rounded-full bg-white shadow-md transition-transform duration-300 ${telemetryState[alertOpt.id] ? 'translate-x-8' : 'translate-x-0'}`}></div>
-                              </button>
-                           </div>
-                        ))}
-                     </div>
-                  </div>
+                  <SettingsTelemetryPanel 
+                    telemetryState={telemetryState}
+                    onToggle={handleToggle}
+                  />
                )}
             </div>
           </div>

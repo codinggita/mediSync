@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import {
-  AlertTriangle, CheckCircle, FileText,
-  Download, Eye, Microscope, FlaskConical, Activity, Share2, ShieldCheck, Clock
+  FileText, Microscope, Share2, Clock
 } from 'lucide-react';
 import RecordPreviewModal from './RecordPreviewModal';
 import RecordShareModal from './RecordShareModal';
+import RecordStatusGrid from './RecordStatusGrid';
+import RecordArtifactsVault from './RecordArtifactsVault';
 import firstAidImg from '../../../assets/images/first_aid.png';
 
 const RecordDetailCard = ({ record }) => {
@@ -55,10 +56,10 @@ const RecordDetailCard = ({ record }) => {
 
   const getIcon = (type) => {
     switch (type?.toLowerCase()) {
-      case 'prescription': return Activity;
-      case 'lab report': return Activity;
+      case 'prescription': return FileText;
+      case 'lab report': return FileText;
       case 'x-ray': return FileText;
-      case 'scan': return Activity;
+      case 'scan': return FileText;
       default: return FileText;
     }
   };
@@ -116,28 +117,7 @@ const RecordDetailCard = ({ record }) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-         <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[2.5rem] p-7 shadow-[8px_8px_16px_#cbced1,-8px_-8px_16px_#ffffff] dark:shadow-[8px_8px_16px_#0a0f1d,-8px_-8px_16px_#202d47] flex items-center gap-5">
-            <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${record.hasAlert ? 'bg-amber-500/10 text-amber-500' : 'bg-emerald-500/10 text-emerald-500'} shadow-inner`}>
-               {record.hasAlert ? <AlertTriangle size={24} /> : <CheckCircle size={24} />}
-            </div>
-            <div>
-               <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-[0.2em] mb-0.5">Clinical Status</p>
-               <h4 className={`text-[1.1rem] font-black ${record.hasAlert ? 'text-amber-600' : 'text-emerald-600'}`}>
-                  {record.hasAlert ? 'Anomalies Detected' : 'Physiological Normal'}
-               </h4>
-            </div>
-         </div>
-         <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[2.5rem] p-7 shadow-[8px_8px_16px_#cbced1,-8px_-8px_16px_#ffffff] dark:shadow-[8px_8px_16px_#0a0f1d,-8px_-8px_16px_#202d47] flex items-center gap-5">
-            <div className="w-14 h-14 rounded-2xl bg-blue-500/10 text-[#2A7FFF] shadow-inner flex items-center justify-center">
-               <ShieldCheck size={24} />
-            </div>
-            <div>
-               <p className="text-[0.65rem] font-black text-slate-400 uppercase tracking-[0.2em] mb-0.5">Encryption</p>
-               <h4 className="text-[1.1rem] font-black text-[#2A7FFF]">AES-256 Secured</h4>
-            </div>
-         </div>
-      </div>
+      <RecordStatusGrid hasAlert={record.hasAlert} />
 
       <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[2.5rem] p-8 shadow-[8px_8px_16px_#cbced1,-8px_-8px_16px_#ffffff] dark:shadow-[8px_8px_16px_#0a0f1d,-8px_-8px_16px_#202d47]">
         <h3 className="text-[1.1rem] font-black text-slate-900 dark:text-white flex items-center gap-3 mb-5">
@@ -149,44 +129,10 @@ const RecordDetailCard = ({ record }) => {
         </p>
       </div>
 
-      {record.fileUrl && (
-        <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[2.5rem] p-8 shadow-[8px_8px_16px_#cbced1,-8px_-8px_16px_#ffffff] dark:shadow-[8px_8px_16px_#0a0f1d,-8px_-8px_16px_#202d47]">
-          <h3 className="text-[1.1rem] font-black text-slate-900 dark:text-white flex items-center gap-3 mb-6">
-            <FlaskConical size={20} className="text-[#2A7FFF]" />
-            Artifacts Vault
-          </h3>
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center justify-between p-5 rounded-[1.8rem] bg-[#ecf0f3] dark:bg-[#151E32] shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0a0f1d,inset_-4px_-4px_8px_#202d47] hover:shadow-[4px_4px_8px_#cbced1] transition-all group/doc">
-              <div className="flex items-center gap-5">
-                <div className="w-12 h-12 rounded-2xl bg-white dark:bg-[#151E32] flex items-center justify-center shadow-sm text-[#2A7FFF]">
-                  <FileText size={22} />
-                </div>
-                <div>
-                  <p className="text-[0.9rem] font-black text-slate-800 dark:text-white truncate max-w-[150px] sm:max-w-none">{record.title}_Analysis.pdf</p>
-                  <p className="text-[0.65rem] font-bold text-gray-400 uppercase tracking-widest mt-0.5">Encrypted PDF · 1.2 MB</p>
-                </div>
-              </div>
-              <div className="flex gap-3 shrink-0">
-                <button 
-                  onClick={() => setShowPreview(true)}
-                  className="w-10 h-10 rounded-xl bg-[#ecf0f3] dark:bg-[#151E32] flex items-center justify-center text-slate-400 hover:text-[#2A7FFF] shadow-[3px_3px_6px_#cbced1,-3px_-3px_6px_#ffffff] dark:shadow-[3px_3px_6px_#0a0f1d] active:shadow-inner transition-all"
-                >
-                  <Eye size={18} />
-                </button>
-                <a 
-                  href={record.fileUrl} 
-                  download={`${record.title.replace(/\s+/g, '_')}_Report`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-10 h-10 rounded-xl bg-[#ecf0f3] dark:bg-[#151E32] flex items-center justify-center text-slate-400 hover:text-[#2ECC71] shadow-[3px_3px_6px_#cbced1,-3px_-3px_6px_#ffffff] dark:shadow-[3px_3px_6px_#0a0f1d] active:shadow-inner transition-all"
-                >
-                  <Download size={18} />
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      <RecordArtifactsVault 
+        record={record} 
+        onShowPreview={() => setShowPreview(true)} 
+      />
 
       <RecordPreviewModal 
         show={showPreview}
@@ -206,5 +152,6 @@ const RecordDetailCard = ({ record }) => {
     </div>
   );
 };
+
 
 export default RecordDetailCard;

@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import TopBar from '../DashboardPage/components/TopBar';
-import AdminOverviewTab from './components/AdminOverviewTab';
-import AdminPharmacyTab from './components/AdminPharmacyTab';
-import AdminMedicineTab from './components/AdminMedicineTab';
-import AdminPriceTab from './components/AdminPriceTab';
-import AdminUsersTab from './components/AdminUsersTab';
-import AdminAnalyticsTab from './components/AdminAnalyticsTab';
-import AdminAlertsTab from './components/AdminAlertsTab';
 import AdminSidebar from './components/AdminSidebar';
 import AdminBreadcrumb from './components/AdminBreadcrumb';
+import AdminGlows from './components/AdminGlows';
+import AdminTabContent from './components/AdminTabContent';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
@@ -45,19 +40,6 @@ const AdminPage = () => {
     return () => clearInterval(t);
   }, []);
 
-  const renderTab = () => {
-    switch (activeTab) {
-      case 'overview':  return <AdminOverviewTab />;
-      case 'pharmacy':  return <AdminPharmacyTab />;
-      case 'medicines': return <AdminMedicineTab />;
-      case 'prices':    return <AdminPriceTab />;
-      case 'users':     return <AdminUsersTab />;
-      case 'analytics': return <AdminAnalyticsTab />;
-      case 'alerts':    return <AdminAlertsTab onCountChange={setAlertCount} />;
-      default:          return <AdminOverviewTab />;
-    }
-  };
-
   const activeTabData = TABS.find(t => t.id === activeTab);
 
   // Mode-aware style tokens
@@ -71,13 +53,7 @@ const AdminPage = () => {
 
   return (
     <div className="flex h-screen overflow-hidden font-sans transition-colors duration-300" style={{ backgroundColor: main.bg }}>
-      {/* Ambient glows — only in dark */}
-      {isDarkMode && (
-        <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-          <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-[#2A7FFF]/6 rounded-full blur-[120px]" />
-          <div className="absolute bottom-[-20%] right-[-10%] w-[400px] h-[400px] bg-[#8B5CF6]/6 rounded-full blur-[100px]" />
-        </div>
-      )}
+      <AdminGlows isDarkMode={isDarkMode} />
 
       <AdminSidebar
         collapsed={collapsed}
@@ -99,7 +75,7 @@ const AdminPage = () => {
         <AdminBreadcrumb activeTabData={activeTabData} sidebar={sidebar} main={main} />
 
         <main className="flex-1 overflow-y-auto px-8 py-6 scrollbar-hide pb-24 md:pb-6">
-          {renderTab()}
+          <AdminTabContent activeTab={activeTab} setAlertCount={setAlertCount} />
         </main>
       </div>
     </div>

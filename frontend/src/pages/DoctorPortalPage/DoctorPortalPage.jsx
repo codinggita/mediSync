@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from '../DashboardPage/components/Sidebar';
 import TopBar from '../DashboardPage/components/TopBar';
 import PatientProfileCard from './components/PatientProfileCard';
-import VitalStatsRow from './components/VitalStatsRow';
-import ClinicalHistory from './components/ClinicalHistory';
-import ActiveNotesPanel from './components/ActiveNotesPanel';
-import QuickActions from './components/QuickActions';
-import { Loader2, BrainCircuit, Video, Phone, Mic, MicOff, FileText, X, Check, Search, HeartPulse, Activity, User, AlertTriangle, Scan, TestTube, ArrowUpRight, ArrowDownRight, MessageCircle, UploadCloud, RefreshCw, Calendar, Clock } from 'lucide-react';
+import ClinicalLoader from './components/ClinicalLoader';
+import ClinicalStatsDisplay from './components/ClinicalStatsDisplay';
+import { Loader2, Activity } from 'lucide-react';
 import api from '../../utils/api';
 
 import ClinicalHeader from './components/ClinicalHeader';
@@ -108,10 +106,7 @@ const DoctorPortalPage = () => {
           />
 
           {loading ? (
-            <div className="flex flex-col items-center justify-center py-24 gap-6 bg-[#ecf0f3] dark:bg-[#151E32] rounded-[3rem] shadow-2xl">
-              <Loader2 className="animate-spin text-[#2A7FFF]" size={50} />
-              <p className="text-slate-400 font-black uppercase tracking-widest">Synchronizing Clinical Data...</p>
-            </div>
+            <ClinicalLoader />
           ) : activePatient ? (
             <div className="grid grid-cols-1 xl:grid-cols-12 gap-10">
                <div className="xl:col-span-8 flex flex-col gap-10">
@@ -121,16 +116,7 @@ const DoctorPortalPage = () => {
                     onAiDiagnosis={() => setShowAiModal(true)}
                     onAddRecord={() => setShowUploadModal(true)}
                   />
-                  <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[3.5rem] p-10 shadow-2xl border border-white/40">
-                    <h3 className="text-[1.2rem] font-black text-slate-900 dark:text-white uppercase tracking-widest mb-8 flex items-center gap-3">
-                      <Activity className="text-[#2A7FFF]" /> Real-Time Vitals
-                    </h3>
-                    <VitalStatsRow patient={activePatient} />
-                  </div>
-                  <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[3.5rem] p-10 shadow-2xl border border-white/40">
-                    <h3 className="text-[1.2rem] font-black text-slate-900 dark:text-white uppercase tracking-widest mb-8">Clinical History</h3>
-                    <ClinicalHistory patient={activePatient} />
-                  </div>
+                  <ClinicalStatsDisplay activePatient={activePatient} />
                </div>
 
                <ScheduleSidebar 

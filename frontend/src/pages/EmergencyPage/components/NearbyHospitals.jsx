@@ -1,83 +1,76 @@
 import React from 'react';
-import { MapPin, Clock, ChevronRight } from 'lucide-react';
+import { Navigation2, Phone, Clock, ArrowUpRight } from 'lucide-react';
 
-const HOSPITALS = [
+const hospitals = [
   {
-    name: 'Apollo Hospital',
-    address: 'Sector 26, Noida',
-    distance: '0.8 km',
-    open: true,
-    eta: '3 min',
-  },
-  {
-    name: 'Fortis Hospital',
-    address: 'Sector 62, Noida',
-    distance: '2.1 km',
-    open: true,
-    eta: '7 min',
-  },
-  {
-    name: 'Max Super Specialty',
-    address: 'Vaishali, Ghaziabad',
+    id: 1,
+    name: 'Apollo ER Center',
     distance: '3.4 km',
-    open: true,
-    eta: '11 min',
+    time: '8 min',
+    status: 'High Capacity',
   },
   {
-    name: 'Kailash Hospital',
-    address: 'Sector 27, Noida',
-    distance: '4.0 km',
-    open: false,
-    eta: '—',
+    id: 2,
+    name: 'City Care Hospital',
+    distance: '1.2 km',
+    time: '3 min',
+    status: 'Accepting ER',
+  },
+  {
+    id: 3,
+    name: 'Medicenter Triage',
+    distance: '5.1 km',
+    time: '12 min',
+    status: 'Limited Space',
   },
 ];
 
 const NearbyHospitals = () => {
   return (
-    <div className="bg-white rounded-[14px] border border-red-100 shadow-sm p-5 em-card3">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-sm font-bold text-gray-800 uppercase tracking-wide">
-          Nearby Hospitals
+    <div className="flex flex-col gap-4">
+      <div className="flex items-center justify-between px-1">
+        <h2 className="text-[0.85rem] font-black text-white uppercase tracking-widest flex items-center gap-2">
+          <div className="w-1.5 h-1.5 bg-[#EF4444] rounded-full" />
+          Nearest ER Facilities
         </h2>
-        <span className="text-[11px] font-bold text-[#2A7FFF] bg-green-50 border border-green-100 px-2.5 py-0.5 rounded-full">
-          {HOSPITALS.filter((h) => h.open).length} Open Now
-        </span>
       </div>
 
-      <div className="flex flex-col divide-y divide-gray-50">
-        {HOSPITALS.map((h, i) => (
-          <button
-            key={i}
-            className="flex items-center gap-4 py-3.5 hover:bg-red-50/50 transition-colors duration-150 rounded-[10px] px-2 -mx-2 group text-left w-full"
+      <div className="flex flex-col gap-3">
+        {hospitals.map((h, i) => (
+          <div
+            key={h.id}
+            className="group relative bg-[#150A0A] border border-[#D32F2F]/20 rounded-xl p-4 flex items-center justify-between transition-all hover:bg-[#1C0D0D] hover:border-[#D32F2F]/40 cursor-pointer overflow-hidden"
           >
-            {/* Distance badge */}
-            <div className={`w-12 h-12 rounded-[10px] flex flex-col items-center justify-center flex-shrink-0 ${h.open ? 'bg-red-50' : 'bg-gray-100'}`}>
-              <MapPin size={14} className={h.open ? 'text-[#D32F2F]' : 'text-gray-400'} />
-              <span className={`text-[10px] font-bold mt-0.5 ${h.open ? 'text-[#D32F2F]' : 'text-gray-400'}`}>
-                {h.distance}
-              </span>
-            </div>
-
-            {/* Info */}
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-bold text-gray-800 truncate">{h.name}</p>
-              <p className="text-xs text-gray-400 truncate mt-0.5">{h.address}</p>
-              <div className="flex items-center gap-2 mt-1">
-                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${h.open ? 'bg-green-50 text-[#2A7FFF] border-green-100' : 'bg-gray-50 text-gray-400 border-gray-200'}`}>
-                  {h.open ? 'Open' : 'Closed'}
+            {/* Highlight for the closest hospital */}
+            {i === 1 && (
+              <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#D32F2F] shadow-[0_0_10px_#D32F2F]" />
+            )}
+            
+            <div className={`flex flex-col gap-1.5 ${i === 1 ? 'pl-2' : ''}`}>
+              <h3 className="text-[0.95rem] font-black text-white leading-none">{h.name}</h3>
+              <div className="flex items-center gap-3">
+                <span className="text-[0.65rem] text-[#EF4444] font-bold uppercase tracking-wider flex items-center gap-1">
+                  <Navigation2 size={10} /> {h.distance}
                 </span>
-                {h.open && (
-                  <span className="flex items-center gap-1 text-[10px] text-gray-400 font-medium">
-                    <Clock size={9} />
-                    {h.eta} away
-                  </span>
-                )}
+                <span className="text-[0.65rem] text-gray-400 font-bold uppercase tracking-wider flex items-center gap-1">
+                  <Clock size={10} /> {h.time} away
+                </span>
               </div>
             </div>
 
-            {/* Arrow */}
-            <ChevronRight size={16} className="text-gray-300 group-hover:text-[#D32F2F] transition-colors flex-shrink-0" />
-          </button>
+            <div className="flex items-center gap-3">
+              <span className={`text-[0.6rem] font-bold uppercase tracking-wider px-2 py-1 rounded-md hidden sm:block ${
+                h.status === 'High Capacity' ? 'bg-[#2ECC71]/10 text-[#2ECC71]' :
+                h.status === 'Limited Space' ? 'bg-[#F59E0B]/10 text-[#F59E0B]' :
+                'bg-[#2A7FFF]/10 text-[#2A7FFF]'
+              }`}>
+                {h.status}
+              </span>
+              <button className="w-9 h-9 rounded-lg bg-[#D32F2F]/10 flex items-center justify-center border border-[#D32F2F]/30 text-[#EF4444] group-hover:bg-[#D32F2F] group-hover:text-white transition-all active:scale-95">
+                <ArrowUpRight size={16} />
+              </button>
+            </div>
+          </div>
         ))}
       </div>
     </div>

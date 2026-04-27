@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from '../DashboardPage/components/Sidebar';
 import TopBar from '../DashboardPage/components/TopBar';
 import { 
-  Share2, UserCheck, Clock, Stethoscope, Search, AlertCircle, Activity
+  Stethoscope, Search, AlertCircle
 } from 'lucide-react';
-import securityImg from '../../assets/images/security.png';
-import medicineBoxImg from '../../assets/images/medicine_box.png';
 import DoctorSharingPage from './components/DoctorSharingPage';
 import SharingHeader from './components/SharingHeader';
 import DoctorSharingModal from './components/DoctorSharingModal';
+import SharingDecorations from './components/SharingDecorations';
+import DoctorSharingCard from './components/DoctorSharingCard';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../utils/api';
 
@@ -93,13 +93,8 @@ const SharingPage = () => {
     <div className="flex h-screen overflow-hidden bg-[#ecf0f3] dark:bg-[#0f141f] transition-colors duration-500 font-sans relative text-slate-800 dark:text-white">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(42,127,255,0.03),transparent)] pointer-events-none" />
       
-      <div className="absolute top-[10%] right-[10%] animate-float opacity-30 pointer-events-none">
-        <img src={securityImg} alt="" className="w-56 object-contain drop-shadow-2xl grayscale-[0.2]" />
-      </div>
-      <div className="absolute bottom-[5%] left-[25%] animate-float-slow opacity-10 pointer-events-none">
-        <img src={medicineBoxImg} alt="" className="w-40 object-contain drop-shadow-2xl -rotate-12" />
-      </div>
-
+      <SharingDecorations />
+      
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
 
       <div className="flex flex-col flex-1 overflow-hidden min-w-0 relative z-10">
@@ -134,29 +129,11 @@ const SharingPage = () => {
                      ))
                    ) : doctors.length > 0 ? (
                      doctors.map((doctor) => (
-                       <div key={doctor._id} className="bg-white dark:bg-[#0B1121] p-8 rounded-[3.5rem] border border-slate-100 dark:border-slate-800 shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all group relative overflow-hidden">
-                          <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:scale-125 transition-transform">
-                             <Stethoscope size={100} />
-                          </div>
-                          
-                          <div className="flex flex-col items-center text-center">
-                             <div className="w-24 h-24 rounded-[2.5rem] bg-[#ecf0f3] dark:bg-[#151E32] flex items-center justify-center border-4 border-white dark:border-[#151E32] shadow-2xl mb-6">
-                                <UserCheck className="text-[#2A7FFF]" size={40} />
-                             </div>
-                             <h4 className="text-[1.4rem] font-black text-slate-900 dark:text-white leading-tight mb-2">{doctor.name}</h4>
-                             <p className="text-[0.8rem] font-black text-[#2A7FFF] uppercase tracking-[0.2em] mb-4">{doctor.specialty}</p>
-                             <div className="flex items-center gap-3 px-4 py-2 bg-emerald-500/5 text-emerald-500 rounded-full text-[0.7rem] font-black uppercase tracking-widest mb-8 border border-emerald-500/10">
-                                <Clock size={14} /> Available Now
-                             </div>
-                             
-                             <button 
-                               onClick={() => handleShareClick(doctor)}
-                               className="w-full py-4 bg-[#2A7FFF] text-white rounded-[1.8rem] font-black text-[0.9rem] uppercase tracking-widest shadow-lg shadow-[#2A7FFF]/25 hover:shadow-xl hover:scale-105 transition-all flex items-center justify-center gap-3"
-                             >
-                                <Share2 size={18} /> Share Report
-                             </button>
-                          </div>
-                       </div>
+                       <DoctorSharingCard 
+                         key={doctor._id} 
+                         doctor={doctor} 
+                         onShareClick={handleShareClick} 
+                       />
                      ))
                    ) : (
                      <div className="col-span-full py-20 text-center bg-[#0B1121]/5 rounded-[3rem] border-4 border-dashed border-slate-200 dark:border-slate-800 flex flex-col items-center gap-4">

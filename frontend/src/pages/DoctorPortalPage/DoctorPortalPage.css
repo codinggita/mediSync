@@ -1,0 +1,30 @@
+@keyframes doctorFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.doctor-card {
+  animation: doctorFadeIn 0.35s ease forwards;
+}
+
+/* Timeline hover highlight */
+.timeline-item:hover .timeline-card {
+  border-color: #c8e6c9;
+  box-shadow: 0 2px 8px rgba(46, 125, 50, 0.08);
+}
+
+/* Smooth scroll in notes panel */
+.custom-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scroll::-webkit-scrollbar-track {
+  background: #f1f5f1;
+  border-radius: 99px;
+}
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: #a5d6a7;
+  border-radius: 99px;
+}
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: #2A7FFF;
+}

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import { AlertCircle } from 'lucide-react';
 import { jwtDecode } from 'jwt-decode';
 import loginBg from '../../assets/images/login-bg.png';
@@ -13,6 +12,8 @@ import SignupSuccessOverlay from './components/SignupSuccessOverlay';
 import SignupProgressDots from './components/SignupProgressDots';
 import SignupHeader from './components/SignupHeader';
 import SignupGoogleAuth from './components/SignupGoogleAuth';
+import { SignupSchema } from './utils/SignupValidation';
+import { INITIAL_SIGNUP_VALUES } from './utils/SignupConstants';
 
 const SignupPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -35,78 +36,8 @@ const SignupPage = () => {
   }, [location.state]);
 
   const formik = useFormik({
-    initialValues: {
-      name: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-      role: 'Patient',
-      bloodGroup: '',
-      gender: '',
-      specialty: '',
-      hospital: '',
-      medicalLicenseId: '',
-      orgEmail: '',
-      licenseCertificateUrl: '',
-      profilePic: '',
-      phone: '',
-      agreeTerms: false
-    },
-    validationSchema: Yup.object({
-      name: Yup.string().required('Full name is required'),
-      email: Yup.string().email('Invalid email address').required('Email is required'),
-      password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
-      confirmPassword: Yup.string()
-        .oneOf([Yup.ref('password'), null], 'Passwords must match')
-        .required('Please confirm your password'),
-      role: Yup.string().oneOf(['Patient', 'Doctor', 'Admin']).required('Role is required'),
-      phone: Yup.string().matches(/^[0-9]{10}$/, 'Phone number must be exactly 10 digits').required('Mobile number is required'),
-      agreeTerms: Yup.boolean().oneOf([true], 'You must agree to the terms'),
-      
-      // Patient Specific
-      bloodGroup: Yup.string().when('role', {
-        is: 'Patient',
-        then: (schema) => schema.required('Blood group is required'),
-        otherwise: (schema) => schema.notRequired()
-      }),
-      gender: Yup.string().when('role', {
-        is: 'Patient',
-        then: (schema) => schema.required('Gender is required'),
-        otherwise: (schema) => schema.notRequired()
-      }),
-
-      // Doctor Specific
-      specialty: Yup.string().when('role', {
-        is: 'Doctor',
-        then: (schema) => schema.required('Specialty is required'),
-        otherwise: (schema) => schema.notRequired()
-      }),
-      hospital: Yup.string().when('role', {
-        is: 'Doctor',
-        then: (schema) => schema.required('Hospital is required'),
-        otherwise: (schema) => schema.notRequired()
-      }),
-      medicalLicenseId: Yup.string().when('role', {
-        is: 'Doctor',
-        then: (schema) => schema.required('License ID is required'),
-        otherwise: (schema) => schema.notRequired()
-      }),
-      orgEmail: Yup.string().email('Invalid email').when('role', {
-        is: 'Doctor',
-        then: (schema) => schema.required('Org email is required'),
-        otherwise: (schema) => schema.notRequired()
-      }),
-      licenseCertificateUrl: Yup.string().when('role', {
-        is: 'Doctor',
-        then: (schema) => schema.required('Certificate is required'),
-        otherwise: (schema) => schema.notRequired()
-      }),
-      profilePic: Yup.string().when('role', {
-        is: 'Doctor',
-        then: (schema) => schema.required('Profile image is required'),
-        otherwise: (schema) => schema.notRequired()
-      })
-    }),
+    initialValues: INITIAL_SIGNUP_VALUES,
+    validationSchema: SignupSchema,
     onSubmit: async (values) => {
       setError(null);
       setIsLoading(true);

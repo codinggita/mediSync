@@ -1,6 +1,5 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
 import Sidebar from '../DashboardPage/components/Sidebar';
 import TopBar from '../DashboardPage/components/TopBar';
 
@@ -8,6 +7,7 @@ import ProfileSidebar from './components/ProfileSidebar';
 import SentimentAnalysis from './components/SentimentAnalysis';
 import DoctorClinicalBio from './components/DoctorClinicalBio';
 import DoctorLocationCard from './components/DoctorLocationCard';
+import DoctorProfileHero from './components/DoctorProfileHero';
 
 const DoctorProfilePage = () => {
   const { id } = useParams();
@@ -58,14 +58,10 @@ const DoctorProfilePage = () => {
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <TopBar />
         <main className="flex-1 overflow-y-auto p-8 lg:p-12 scrollbar-hide pb-24 md:pb-6">
-          <button onClick={() => navigate(-1)} className="flex items-center gap-4 mb-12 group w-fit">
-            <div className="w-12 h-12 rounded-[20px] bg-white dark:bg-[#151E32] flex items-center justify-center shadow-lg border border-white dark:border-white/5 group-hover:bg-[#2A7FFF] group-hover:text-white transition-all transform active:scale-95">
-              <ArrowLeft size={20} />
-            </div>
-            <span className="font-black text-[0.9rem] uppercase tracking-[0.3em] text-slate-400 group-hover:text-slate-600 dark:group-hover:text-white transition-colors">
-              Back to Intelligence Center
-            </span>
-          </button>
+          <DoctorProfileHero 
+            name={doctor.name} 
+            specialty={doctor.specialty} 
+          />
 
           <div className="grid grid-cols-1 xl:grid-cols-12 gap-12">
             <ProfileSidebar 

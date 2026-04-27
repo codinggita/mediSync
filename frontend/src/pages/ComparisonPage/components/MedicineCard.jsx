@@ -1,0 +1,166 @@
+import React, { useState } from 'react';
+import { 
+  Heart, BarChart2, ChevronDown, MapPin, Star, Zap, ShoppingCart 
+} from 'lucide-react';
+import medBoxImg from '../../../assets/images/medicine_box.png';
+import vitaminsImg from '../../../assets/images/vitamins.png';
+
+const CategoryBadge = ({ cat }) => {
+  const colors = {
+    Diabetes:  'bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400',
+    Cardiac:   'bg-red-50 dark:bg-red-500/10 text-red-500',
+    Analgesic: 'bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400',
+    Gastro:    'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400',
+  };
+  return (
+    <span className={`px-3 py-1 rounded-full text-[0.65rem] font-black uppercase tracking-widest ${colors[cat] || 'bg-slate-100 text-slate-500'}`}>
+      {cat}
+    </span>
+  );
+};
+
+const PriceRow = ({ entry, isBest }) => {
+  const saving = entry.original - entry.price;
+  const pct    = Math.round((saving / entry.original) * 100);
+
+  return (
+    <div className={`flex items-center justify-between p-4 rounded-2xl border transition-all group ${
+      isBest
+        ? 'bg-emerald-50 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/30'
+        : 'bg-slate-50 dark:bg-[#0B1121]/60 border-slate-100 dark:border-slate-800 hover:border-[#2A7FFF]/30'
+    }`}>
+      <div className="flex items-center gap-3 min-w-0">
+        {isBest && (
+          <span className="shrink-0 flex items-center gap-1 px-2.5 py-1 bg-emerald-500 text-white text-[0.6rem] font-black rounded-full uppercase tracking-widest">
+            <Zap size={10} /> Best
+          </span>
+        )}
+        <div className="min-w-0">
+          <p className="text-[0.85rem] font-black text-slate-900 dark:text-white truncate">{entry.pharmacy}</p>
+          <div className="flex items-center gap-2 mt-0.5">
+            <span className="text-[0.7rem] text-slate-400 flex items-center gap-1">
+              <MapPin size={10} /> {entry.distance}
+            </span>
+            <span className="text-[0.7rem] text-slate-400 flex items-center gap-1">
+              <Star size={10} className="text-amber-400 fill-amber-400" /> {entry.rating}
+            </span>
+            {entry.inStock
+              ? <span className="text-[0.65rem] text-emerald-500 font-black">In Stock</span>
+              : <span className="text-[0.65rem] text-red-400 font-black">Out of Stock</span>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div className="flex items-center gap-4 shrink-0">
+        <div className="text-right">
+          <p className="text-[1.1rem] font-black text-slate-900 dark:text-white">₹{entry.price}</p>
+          <div className="flex items-center gap-1.5">
+            <p className="text-[0.7rem] text-slate-400 line-through">₹{entry.original}</p>
+            {pct > 0 && (
+              <span className="text-[0.65rem] font-black text-emerald-500">-{pct}%</span>
+            )}
+          </div>
+        </div>
+        <button
+          className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all ${
+            entry.inStock
+              ? 'bg-[#2A7FFF] text-white hover:bg-[#1565C0] shadow-lg shadow-[#2A7FFF]/20'
+              : 'bg-slate-100 dark:bg-slate-800 text-slate-300 cursor-not-allowed'
+          }`}
+          disabled={!entry.inStock}
+        >
+          <ShoppingCart size={15} />
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const MedicineCard = ({ medicine, isWishlisted, onWishlist }) => {
+  const [expanded, setExpanded] = useState(false);
+
+  const sorted    = [...medicine.prices].sort((a, b) => a.price - b.price);
+  const bestPrice = sorted[0].price;
+  const maxPrice  = sorted[sorted.length - 1].price;
+  const avgSave   = Math.round(
+    medicine.prices.reduce((s, p) => s + (p.original - p.price), 0) / medicine.prices.length
+  );
+
+  return (
+    <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[3rem] shadow-[10px_10px_20px_#cbced1,-10px_-10px_20px_#ffffff] dark:shadow-[10px_10px_20px_#0a0f1d,-10px_-10px_20px_#202d47] hover:shadow-[15px_15px_30px_#cbced1,-15px_-15px_30px_#ffffff] transition-all duration-500 overflow-hidden group">
+      {/* Card Header */}
+      <div className="p-6">
+        <div className="flex items-start justify-between gap-4 mb-4">
+          <div className="flex items-center gap-5">
+            <div className="w-16 h-16 rounded-2xl bg-[#ecf0f3] dark:bg-[#151E32] flex items-center justify-center shadow-[4px_4px_8px_#cbced1,-4px_-4px_8px_#ffffff] dark:shadow-[4px_4px_8px_#0a0f1d] p-2 overflow-hidden shrink-0">
+              <img 
+                src={medicine.category === 'Analgesic' ? vitaminsImg : medBoxImg} 
+                alt={medicine.name} 
+                className="w-full h-full object-contain drop-shadow-lg group-hover:scale-110 transition-transform duration-500" 
+              />
+            </div>
+            <div>
+              <h3 className="text-[1.1rem] font-black text-slate-900 dark:text-white leading-tight">{medicine.name}</h3>
+              <p className="text-[0.78rem] text-slate-400 font-bold mt-1 uppercase tracking-tighter">{medicine.generic}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <CategoryBadge cat={medicine.category} />
+            <button
+              onClick={() => onWishlist(medicine.id)}
+              className={`w-9 h-9 rounded-xl border flex items-center justify-center transition-all ${
+                isWishlisted
+                  ? 'bg-red-50 dark:bg-red-500/10 border-red-200 dark:border-red-500/30 text-red-500'
+                  : 'border-slate-100 dark:border-slate-800 text-slate-300 hover:text-red-500'
+              }`}
+            >
+              <Heart size={15} fill={isWishlisted ? 'currentColor' : 'none'} />
+            </button>
+          </div>
+        </div>
+
+        {/* Price Summary Bar */}
+        <div className="grid grid-cols-3 gap-4 mb-6">
+          <div className="p-4 rounded-[2rem] bg-[#ecf0f3] dark:bg-[#151E32] shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0a0f1d,inset_-4px_-4px_8px_#202d47] text-center">
+            <p className="text-[0.6rem] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-1">Best Price</p>
+            <p className="text-[1.2rem] font-black text-emerald-600 dark:text-emerald-400">₹{bestPrice}</p>
+          </div>
+          <div className="p-4 rounded-[2rem] bg-[#ecf0f3] dark:bg-[#151E32] shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0a0f1d,inset_-4px_-4px_8px_#202d47] text-center">
+            <p className="text-[0.6rem] font-black text-slate-400 uppercase tracking-widest mb-1">Highest</p>
+            <p className="text-[1.2rem] font-black text-slate-700 dark:text-slate-200">₹{maxPrice}</p>
+          </div>
+          <div className="p-4 rounded-[2rem] bg-[#ecf0f3] dark:bg-[#151E32] shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0a0f1d,inset_-4px_-4px_8px_#202d47] text-center">
+            <p className="text-[0.6rem] font-black text-[#2A7FFF] uppercase tracking-widest mb-1">Avg Save</p>
+            <p className="text-[1.2rem] font-black text-[#2A7FFF]">₹{avgSave}</p>
+          </div>
+        </div>
+
+        {/* Expand toggle */}
+        <button
+          onClick={() => setExpanded(!expanded)}
+          className="w-full flex items-center justify-between px-4 py-2.5 rounded-2xl bg-slate-50 dark:bg-[#0B1121]/60 border border-slate-100 dark:border-slate-800 text-[0.75rem] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest hover:border-[#2A7FFF]/30 transition-all"
+        >
+          <span className="flex items-center gap-2">
+            <BarChart2 size={14} /> Compare {medicine.prices.length} Pharmacies
+          </span>
+          <ChevronDown
+            size={16}
+            className={`transition-transform duration-300 ${expanded ? 'rotate-180' : ''}`}
+          />
+        </button>
+      </div>
+
+      {/* Expanded Price List */}
+      {expanded && (
+        <div className="px-6 pb-6 space-y-3 border-t border-slate-100 dark:border-slate-800/50 pt-4">
+          {sorted.map((entry, i) => (
+            <PriceRow key={i} entry={entry} isBest={i === 0} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default MedicineCard;

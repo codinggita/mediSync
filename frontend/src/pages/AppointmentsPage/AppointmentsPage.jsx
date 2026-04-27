@@ -91,6 +91,7 @@ const AppointmentsPage = () => {
   };
 
   return (
+    <div className="flex h-screen overflow-hidden bg-[#ecf0f3] dark:bg-[#0f141f] transition-colors duration-500 font-sans relative">
       <AppointmentsDecorations />
 
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />

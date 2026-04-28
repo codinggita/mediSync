@@ -1,6 +1,6 @@
 import React from 'react';
-import securityImg from '../../assets/images/security.png';
-import medicineBoxImg from '../../assets/images/medicine_box.png';
+import securityImg from '../../../assets/images/security.png';
+import medicineBoxImg from '../../../assets/images/medicine_box.png';
 
 const SharingDecorations = () => {
   return (

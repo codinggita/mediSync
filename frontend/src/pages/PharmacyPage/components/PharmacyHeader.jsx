@@ -1,28 +1,17 @@
 import React, { useState } from 'react';
-import { Star, Bookmark, Send, CheckCircle, MapPin, Clock } from 'lucide-react';
+import { Star, Bookmark, Send, MapPin, Clock } from 'lucide-react';
+import PharmacyStatusBadges from './PharmacyStatusBadges';
 
 const PharmacyHeader = () => {
   const [saved, setSaved] = useState(false);
 
   return (
     <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[3.5rem] shadow-[15px_15px_30px_#cbced1,-15px_-15px_30px_#ffffff] dark:shadow-[15px_15px_30px_#0a0f1d] p-10 border border-white/40 relative overflow-hidden group">
-      
-      {/* Decorative Architecture */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-[#2A7FFF]/5 rounded-full blur-[80px] pointer-events-none" />
 
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-10 relative z-10">
-
-        {/* Left — Info Cluster */}
         <div className="flex flex-col gap-6">
-          <div className="flex items-center gap-4">
-             <div className="px-5 py-2 bg-emerald-500/10 text-emerald-500 text-[0.7rem] font-black rounded-full border border-emerald-500/20 uppercase tracking-[0.2em] flex items-center gap-2 shadow-sm">
-               <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-               Clinical Stock Active
-             </div>
-             <div className="px-5 py-2 bg-amber-500/10 text-amber-500 text-[0.7rem] font-black rounded-full border border-amber-500/20 uppercase tracking-[0.2em] flex items-center gap-2 shadow-sm">
-               High Demand
-             </div>
-          </div>
+          <PharmacyStatusBadges />
 
           <div className="flex flex-col gap-2">
             <h1 className="text-[2.8rem] font-black text-slate-900 dark:text-white leading-none tracking-tight">
@@ -40,15 +29,10 @@ const PharmacyHeader = () => {
             </div>
           </div>
 
-          {/* Star Rating — Precision Render */}
           <div className="flex items-center gap-4 mt-2">
             <div className="flex items-center gap-1.5 p-2 bg-white/50 dark:bg-black/20 rounded-2xl border border-white/60">
               {[1, 2, 3, 4, 5].map((i) => (
-                <Star
-                  key={i}
-                  size={18}
-                  className={i <= 4 ? 'fill-amber-400 text-amber-400 drop-shadow-sm' : 'fill-slate-200 text-slate-200'}
-                />
+                <Star key={i} size={18} className={i <= 4 ? 'fill-amber-400 text-amber-400 drop-shadow-sm' : 'fill-slate-200 text-slate-200'} />
               ))}
             </div>
             <div className="flex flex-col">
@@ -58,14 +42,11 @@ const PharmacyHeader = () => {
           </div>
         </div>
 
-        {/* Right — Strategic Actions */}
         <div className="flex items-center gap-6 flex-shrink-0">
           <button
             onClick={() => setSaved(!saved)}
             className={`w-20 h-20 rounded-[2rem] flex flex-col items-center justify-center gap-1 transition-all duration-500 shadow-[8px_8px_16px_#cbced1,-8px_-8px_16px_#ffffff] dark:shadow-none border border-white/40 group/btn ${
-              saved
-                ? 'bg-[#2A7FFF] text-white shadow-[#2A7FFF]/30'
-                : 'bg-[#ecf0f3] dark:bg-[#151E32] text-slate-400 hover:text-[#2A7FFF]'
+              saved ? 'bg-[#2A7FFF] text-white shadow-[#2A7FFF]/30' : 'bg-[#ecf0f3] dark:bg-[#151E32] text-slate-400 hover:text-[#2A7FFF]'
             }`}
           >
             <Bookmark size={24} className={saved ? 'fill-white' : 'group-hover/btn:scale-110 transition-transform'} />

@@ -51,9 +51,16 @@ api.interceptors.response.use(
     }
 
     if (error.response && error.response.status === 401) {
-      console.warn('🚨 [API SYNC]: Session Protocol Expired. Redirecting to Re-auth.');
+      console.warn('🚨 [API SYNC]: Session Protocol Expired. Cleaning up local state.');
       localStorage.removeItem('mediSync_user');
-      window.location.href = '/login?reason=session_missing';
+      
+      // 🛡️ Smart Redirect: Only force login if the user is NOT already on a public page
+      const publicPages = ['/', '/login', '/signup', '/forgot-password'];
+      const isPublic = publicPages.includes(window.location.pathname);
+      
+      if (!isPublic) {
+        window.location.href = '/login?reason=session_missing';
+      }
     }
     return Promise.reject(error);
   }

@@ -57,12 +57,24 @@ export const AuthProvider = ({ children }) => {
         try {
           const parsed = JSON.parse(stored);
           if (parsed?.token) {
+            // Set user immediately for UI responsiveness
             setUser(parsed);
-            await refreshUser();
-          } else {
-            logout();
+            // 🛡️ Silent Background Refresh: Don't show errors if this fails
+            try {
+              const { data } = await api.get('/auth/me');
+              if (data) {
+                const updatedUser = { ...data, token: data.token || parsed.token };
+                setUser(updatedUser);
+                localStorage.setItem('mediSync_user', JSON.stringify(updatedUser));
+              }
+            } catch (refreshErr) {
+              console.warn('📡 [AUTH SYNC]: Background refresh failed, keeping local session.');
+              // Only logout if the server explicitly says 401
+              if (refreshErr.response?.status === 401) logout();
+            }
           }
-        } catch {
+        } catch (err) {
+          console.error('Auth Init Error:', err);
           logout();
         }
       }

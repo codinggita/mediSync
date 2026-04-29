@@ -113,14 +113,14 @@ const LandingHero = () => {
               <Activity size={40} className="text-[#2A7FFF]" />
             </div>
 
-            <div className="hero-badge absolute -bottom-6 right-6 sm:top-1/2 sm:-right-12 sm:-translate-y-1/2 bg-white/90 dark:bg-[#151E32]/90 p-4 sm:p-8 rounded-[1.5rem] sm:rounded-[2.5rem] shadow-2xl border border-white/40 z-40">
-              <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 mb-2 sm:mb-4">
-                <Activity size={18} sm:size={24} />
+            <div className="hero-badge absolute -bottom-6 right-6 sm:top-1/2 sm:-right-8 sm:-translate-y-1/2 bg-white/40 dark:bg-black/20 backdrop-blur-2xl p-4 rounded-[1.5rem] sm:rounded-[2rem] shadow-2xl border border-white/60 dark:border-white/10 z-40 flex flex-col items-center justify-center w-28 h-28 sm:w-36 sm:h-36 text-center">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-500 mb-2 sm:mb-3">
+                <Activity size={16} sm:size={20} />
               </div>
-              <p className="text-[1rem] sm:text-[1.2rem] font-black text-slate-900 dark:text-white">
+              <p className="text-[0.9rem] sm:text-[1.1rem] font-black text-slate-900 dark:text-white leading-none mb-1">
                 99.9%
               </p>
-              <p className="text-[0.5rem] sm:text-[0.6rem] font-bold text-slate-400 uppercase tracking-widest">
+              <p className="text-[0.4rem] sm:text-[0.5rem] font-black text-slate-400 uppercase tracking-widest leading-tight">
                 Sync Accuracy
               </p>
             </div>

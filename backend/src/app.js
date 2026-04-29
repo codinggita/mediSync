@@ -41,7 +41,7 @@ if (process.env.NODE_ENV === 'production') {
   const distPath = path.join(__dirname, '../../frontend/dist');
   app.use(express.static(distPath));
 
-  app.get('*', (req, res) => res.sendFile(path.resolve(distPath, 'index.html')));
+  app.get('*any', (req, res) => res.sendFile(path.resolve(distPath, 'index.html')));
 } else {
   app.get('/', (req, res) => {
     res.send('MediSync API is running in development mode...');

@@ -2,10 +2,7 @@
 // Force reload
 export default {
   darkMode: 'class',
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       fontFamily: {
@@ -28,13 +25,13 @@ export default {
         floatBadge: {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-8px)' },
-        }
+        },
       },
       animation: {
         slideUp: 'slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
         floatBadge: 'floatBadge 6s ease-in-out infinite',
-      }
+      },
     },
   },
   plugins: [],
-}
+};

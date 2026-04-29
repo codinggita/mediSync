@@ -1,9 +1,9 @@
 import express from 'express';
-import { 
-  registerPharmacy, 
-  getVerifiedPharmacies, 
-  getPendingPharmacies, 
-  updatePharmacyStatus 
+import {
+  registerPharmacy,
+  getVerifiedPharmacies,
+  getPendingPharmacies,
+  updatePharmacyStatus,
 } from '../controllers/pharmacyController.js';
 import { protect, admin } from '../middleware/authMiddleware.js';
 

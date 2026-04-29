@@ -25,7 +25,7 @@ const UploadRecordPage = () => {
           const reader = new FileReader();
           reader.readAsDataURL(file);
           reader.onload = () => resolve(reader.result);
-          reader.onerror = error => reject(error);
+          reader.onerror = (error) => reject(error);
         });
       }
 
@@ -35,9 +35,9 @@ const UploadRecordPage = () => {
         description: meta.notes,
         hospital: meta.hospital,
         date: meta.date,
-        fileUrl: fileDataUrl
+        fileUrl: fileDataUrl,
       };
-      
+
       await api.post('/records', recordData);
       navigate('/records');
     } catch (error) {
@@ -66,10 +66,7 @@ const UploadRecordPage = () => {
           <div className="flex flex-col lg:flex-row gap-12 max-w-7xl mx-auto w-full pb-20">
             {/* Left: Tactical Drop Zone */}
             <div className="flex-1 min-w-0">
-              <UploadSelectionContainer 
-                file={file} 
-                setFile={setFile} 
-              />
+              <UploadSelectionContainer file={file} setFile={setFile} />
             </div>
 
             {/* Right: Metadata Form */}

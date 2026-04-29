@@ -2,13 +2,17 @@ import React from 'react';
 
 const TimelineNode = ({ rec, isSelected, isLast, onSelect, Icon, color }) => {
   const dateObj = rec.createdAt ? new Date(rec.createdAt) : new Date();
-  const shortDate = isNaN(dateObj.getTime()) ? 'Recent' : dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  const shortDate = isNaN(dateObj.getTime())
+    ? 'Recent'
+    : dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
   return (
     <div className="flex gap-4 group cursor-pointer relative" onClick={() => onSelect(rec._id)}>
       {/* Spine Connector */}
       {!isLast && (
-        <div className={`absolute left-5 top-10 bottom-0 w-[2px] ${isSelected ? 'bg-gradient-to-b from-[#2A7FFF] to-transparent' : 'bg-slate-200 dark:bg-slate-800'} transition-colors duration-500`} />
+        <div
+          className={`absolute left-5 top-10 bottom-0 w-[2px] ${isSelected ? 'bg-gradient-to-b from-[#2A7FFF] to-transparent' : 'bg-slate-200 dark:bg-slate-800'} transition-colors duration-500`}
+        />
       )}
 
       {/* Node Icon */}
@@ -23,7 +27,11 @@ const TimelineNode = ({ rec, isSelected, isLast, onSelect, Icon, color }) => {
             backgroundColor: isSelected ? '#2A7FFF' : '',
           }}
         >
-          <Icon size={16} style={{ color: isSelected ? 'white' : color }} className={isSelected ? 'animate-pulse' : ''} />
+          <Icon
+            size={16}
+            style={{ color: isSelected ? 'white' : color }}
+            className={isSelected ? 'animate-pulse' : ''}
+          />
         </div>
       </div>
 
@@ -36,13 +44,21 @@ const TimelineNode = ({ rec, isSelected, isLast, onSelect, Icon, color }) => {
         }`}
       >
         <div className="flex items-center justify-between mb-1.5">
-          <span className="text-[0.65rem] font-black text-[#2A7FFF] uppercase tracking-[0.15em]">{shortDate}</span>
-          <div className={`w-2 h-2 rounded-full ${rec.hasAlert ? 'bg-amber-500 animate-ping' : 'bg-emerald-500'}`} />
+          <span className="text-[0.65rem] font-black text-[#2A7FFF] uppercase tracking-[0.15em]">
+            {shortDate}
+          </span>
+          <div
+            className={`w-2 h-2 rounded-full ${rec.hasAlert ? 'bg-amber-500 animate-ping' : 'bg-emerald-500'}`}
+          />
         </div>
-        <p className={`text-[0.9rem] font-black truncate ${isSelected ? 'text-[#2A7FFF]' : 'text-slate-800 dark:text-white'}`}>
+        <p
+          className={`text-[0.9rem] font-black truncate ${isSelected ? 'text-[#2A7FFF]' : 'text-slate-800 dark:text-white'}`}
+        >
           {rec.title}
         </p>
-        <p className="text-[0.65rem] font-bold text-gray-400 dark:text-slate-500 truncate uppercase tracking-tighter mt-1">{rec.type} · Secured</p>
+        <p className="text-[0.65rem] font-bold text-gray-400 dark:text-slate-500 truncate uppercase tracking-tighter mt-1">
+          {rec.type} · Secured
+        </p>
       </div>
     </div>
   );

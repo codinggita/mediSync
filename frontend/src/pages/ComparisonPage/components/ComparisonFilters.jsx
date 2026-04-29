@@ -1,7 +1,15 @@
 import React from 'react';
 import { Search, X, ArrowUpDown } from 'lucide-react';
 
-const ComparisonFilters = ({ search, setSearch, category, setCategory, sortBy, setSortBy, categories }) => {
+const ComparisonFilters = ({
+  search,
+  setSearch,
+  category,
+  setCategory,
+  sortBy,
+  setSortBy,
+  categories,
+}) => {
   return (
     <div className="flex flex-col lg:flex-row items-start lg:items-center gap-4 mb-8">
       <div className="relative flex-1 max-w-md">
@@ -10,18 +18,21 @@ const ComparisonFilters = ({ search, setSearch, category, setCategory, sortBy, s
           type="text"
           placeholder="Search medicine or generic name..."
           value={search}
-          onChange={e => setSearch(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)}
           className="w-full pl-11 pr-10 py-3.5 neu-input text-[0.875rem] text-slate-700 dark:text-white"
         />
         {search && (
-          <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300 hover:text-slate-500 transition">
+          <button
+            onClick={() => setSearch('')}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300 hover:text-slate-500 transition"
+          >
             <X size={14} />
           </button>
         )}
       </div>
 
       <div className="flex items-center gap-3 flex-wrap">
-        {categories.map(cat => (
+        {categories.map((cat) => (
           <button
             key={cat}
             onClick={() => setCategory(cat)}
@@ -40,7 +51,7 @@ const ComparisonFilters = ({ search, setSearch, category, setCategory, sortBy, s
         <ArrowUpDown size={14} className="text-[#2A7FFF] ml-3" />
         <select
           value={sortBy}
-          onChange={e => setSortBy(e.target.value)}
+          onChange={(e) => setSortBy(e.target.value)}
           className="pl-2 pr-8 py-2 bg-transparent border-none rounded-xl text-[0.75rem] font-black text-slate-600 dark:text-slate-300 uppercase tracking-wider outline-none cursor-pointer"
         >
           <option value="name">Name A–Z</option>

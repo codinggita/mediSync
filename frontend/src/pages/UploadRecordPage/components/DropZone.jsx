@@ -1,5 +1,4 @@
 import React, { useState, useRef, useCallback } from 'react';
-import api from '../../../utils/api';
 import FileUploadHeader from './FileUploadHeader';
 import UploadedFileCard from './UploadedFileCard';
 
@@ -24,30 +23,45 @@ const DropZone = ({ onFileSelected, file, onClear }) => {
     return true;
   };
 
-  const processFile = useCallback((f) => {
-    setError('');
-    if (!validate(f)) return;
-    setProgress(0);
-    onFileSelected(f);
-    // Simulate upload progress animation
-    let p = 0;
-    const timer = setInterval(() => {
-      p += Math.random() * 18 + 5;
-      if (p >= 100) { p = 100; clearInterval(timer); }
-      setProgress(Math.min(Math.round(p), 100));
-    }, 120);
-  }, [onFileSelected]);
+  const processFile = useCallback(
+    (f) => {
+      setError('');
+      if (!validate(f)) return;
+      setProgress(0);
+      onFileSelected(f);
+      // Simulate upload progress animation
+      let p = 0;
+      const timer = setInterval(() => {
+        p += Math.random() * 18 + 5;
+        if (p >= 100) {
+          p = 100;
+          clearInterval(timer);
+        }
+        setProgress(Math.min(Math.round(p), 100));
+      }, 120);
+    },
+    [onFileSelected]
+  );
 
-  const handleDrop = useCallback((e) => {
+  const handleDrop = useCallback(
+    (e) => {
+      e.preventDefault();
+      setDragging(false);
+      const f = e.dataTransfer.files?.[0];
+      if (f) processFile(f);
+    },
+    [processFile]
+  );
+
+  const handleDragOver = (e) => {
     e.preventDefault();
-    setDragging(false);
-    const f = e.dataTransfer.files?.[0];
-    if (f) processFile(f);
-  }, [processFile]);
-
-  const handleDragOver = (e) => { e.preventDefault(); setDragging(true); };
+    setDragging(true);
+  };
   const handleDragLeave = () => setDragging(false);
-  const handleInput = (e) => { const f = e.target.files?.[0]; if (f) processFile(f); };
+  const handleInput = (e) => {
+    const f = e.target.files?.[0];
+    if (f) processFile(f);
+  };
 
   const handleClear = () => {
     onClear();
@@ -63,25 +77,28 @@ const DropZone = ({ onFileSelected, file, onClear }) => {
         onDragLeave={handleDragLeave}
         onClick={() => !file && inputRef.current?.click()}
         className={`relative flex flex-col items-center justify-center gap-6 rounded-[2.5rem] border-2 border-dashed transition-all duration-500 cursor-pointer select-none overflow-hidden
-          ${file
-            ? 'border-[#2ECC71]/30 bg-[#ecf0f3] dark:bg-[#151E32] shadow-[inset_6px_6px_12px_#cbced1,inset_-6px_-6px_12px_#ffffff] dark:shadow-[inset_6px_6px_12px_#0a0f1d,inset_-6px_-6px_12px_#202d47]'
-            : dragging
-              ? 'border-[#2A7FFF] bg-[#2A7FFF]/5 scale-[1.02] shadow-[20px_20px_40px_rgba(42,127,255,0.1)]'
-              : 'border-slate-300 dark:border-slate-700 bg-[#ecf0f3] dark:bg-[#151E32] shadow-[8px_8px_16px_#cbced1,-8px_-8px_16px_#ffffff] dark:shadow-[8px_8px_16px_#0a0f1d,-8px_-8px_16px_#202d47] hover:shadow-[12px_12px_24px_#cbced1,-12px_-12px_24px_#ffffff]'
+          ${
+            file
+              ? 'border-[#2ECC71]/30 bg-[#ecf0f3] dark:bg-[#151E32] shadow-[inset_6px_6px_12px_#cbced1,inset_-6px_-6px_12px_#ffffff] dark:shadow-[inset_6px_6px_12px_#0a0f1d,inset_-6px_-6px_12px_#202d47]'
+              : dragging
+                ? 'border-[#2A7FFF] bg-[#2A7FFF]/5 scale-[1.02] shadow-[20px_20px_40px_rgba(42,127,255,0.1)]'
+                : 'border-slate-300 dark:border-slate-700 bg-[#ecf0f3] dark:bg-[#151E32] shadow-[8px_8px_16px_#cbced1,-8px_-8px_16px_#ffffff] dark:shadow-[8px_8px_16px_#0a0f1d,-8px_-8px_16px_#202d47] hover:shadow-[12px_12px_24px_#cbced1,-12px_-12px_24px_#ffffff]'
           }
           ${file ? 'py-8 px-8' : 'py-20 px-8'}
         `}
       >
-        <input ref={inputRef} type="file" accept={ACCEPTED.join(',')} className="hidden" onChange={handleInput} />
+        <input
+          ref={inputRef}
+          type="file"
+          accept={ACCEPTED.join(',')}
+          className="hidden"
+          onChange={handleInput}
+        />
 
         {!file ? (
           <FileUploadHeader dragging={dragging} />
         ) : (
-          <UploadedFileCard 
-            file={file} 
-            progress={progress} 
-            onClear={handleClear} 
-          />
+          <UploadedFileCard file={file} progress={progress} onClear={handleClear} />
         )}
       </div>
 

@@ -13,7 +13,9 @@ const SharingHeader = () => {
         <div>
           <h1 className="text-[2.2rem] font-black text-slate-900 dark:text-white leading-none tracking-tight flex items-center gap-4">
             Data Sharing Hub
-            <span className="px-4 py-1.5 bg-[#2ECC71]/10 text-[#2ECC71] text-[0.65rem] rounded-full font-black uppercase tracking-widest border border-[#2ECC71]/20">Secure Sharing</span>
+            <span className="px-4 py-1.5 bg-[#2ECC71]/10 text-[#2ECC71] text-[0.65rem] rounded-full font-black uppercase tracking-widest border border-[#2ECC71]/20">
+              Secure Sharing
+            </span>
           </h1>
           <p className="text-[0.85rem] text-slate-400 mt-2 font-bold uppercase tracking-[0.25em] flex items-center gap-3">
             <Activity size={14} className="text-[#2A7FFF]" />
@@ -23,8 +25,10 @@ const SharingHeader = () => {
       </div>
 
       <div className="hidden lg:flex items-center gap-4 px-8 py-4 bg-[#ecf0f3] dark:bg-[#1a2235] rounded-3xl shadow-[4px_4px_8px_#cbced1,-4px_-4px_8px_#ffffff] dark:shadow-[inset_2px_2px_4px_#0a0f1d] border border-white/40">
-         <ShieldCheck className="text-[#2ECC71]" size={22} />
-         <span className="text-[0.8rem] font-black text-slate-500 dark:text-slate-300 uppercase tracking-widest">HIPAA Compliant</span>
+        <ShieldCheck className="text-[#2ECC71]" size={22} />
+        <span className="text-[0.8rem] font-black text-slate-500 dark:text-slate-300 uppercase tracking-widest">
+          HIPAA Compliant
+        </span>
       </div>
     </div>
   );

@@ -51,9 +51,13 @@ const NearbyHospitals = () => {
             className="flex items-center gap-4 py-3.5 hover:bg-red-50/50 transition-colors duration-150 rounded-[10px] px-2 -mx-2 group text-left w-full"
           >
             {/* Distance badge */}
-            <div className={`w-12 h-12 rounded-[10px] flex flex-col items-center justify-center flex-shrink-0 ${h.open ? 'bg-red-50' : 'bg-gray-100'}`}>
+            <div
+              className={`w-12 h-12 rounded-[10px] flex flex-col items-center justify-center flex-shrink-0 ${h.open ? 'bg-red-50' : 'bg-gray-100'}`}
+            >
               <MapPin size={14} className={h.open ? 'text-[#D32F2F]' : 'text-gray-400'} />
-              <span className={`text-[10px] font-bold mt-0.5 ${h.open ? 'text-[#D32F2F]' : 'text-gray-400'}`}>
+              <span
+                className={`text-[10px] font-bold mt-0.5 ${h.open ? 'text-[#D32F2F]' : 'text-gray-400'}`}
+              >
                 {h.distance}
               </span>
             </div>
@@ -63,7 +67,9 @@ const NearbyHospitals = () => {
               <p className="text-sm font-bold text-gray-800 truncate">{h.name}</p>
               <p className="text-xs text-gray-400 truncate mt-0.5">{h.address}</p>
               <div className="flex items-center gap-2 mt-1">
-                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${h.open ? 'bg-green-50 text-[#2A7FFF] border-green-100' : 'bg-gray-50 text-gray-400 border-gray-200'}`}>
+                <span
+                  className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${h.open ? 'bg-green-50 text-[#2A7FFF] border-green-100' : 'bg-gray-50 text-gray-400 border-gray-200'}`}
+                >
                   {h.open ? 'Open' : 'Closed'}
                 </span>
                 {h.open && (
@@ -76,7 +82,10 @@ const NearbyHospitals = () => {
             </div>
 
             {/* Arrow */}
-            <ChevronRight size={16} className="text-gray-300 group-hover:text-[#D32F2F] transition-colors flex-shrink-0" />
+            <ChevronRight
+              size={16}
+              className="text-gray-300 group-hover:text-[#D32F2F] transition-colors flex-shrink-0"
+            />
           </button>
         ))}
       </div>

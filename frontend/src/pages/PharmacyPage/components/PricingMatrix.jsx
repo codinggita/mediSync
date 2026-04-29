@@ -2,17 +2,16 @@ import React from 'react';
 import { TrendingDown, RefreshCw } from 'lucide-react';
 
 const PRICING_DATA = [
-  { dosage: '500mg',  form: 'Tablet',       qty: 10, price: 45, cheapest: false },
-  { dosage: '500mg',  form: 'Capsule',      qty: 10, price: 38, cheapest: true  },
-  { dosage: '250mg',  form: 'Tablet',       qty: 20, price: 52, cheapest: false },
-  { dosage: '1000mg', form: 'Tablet',       qty: 5,  price: 65, cheapest: false },
-  { dosage: '500mg',  form: 'Syrup 100ml',  qty: 1,  price: 78, cheapest: false },
+  { dosage: '500mg', form: 'Tablet', qty: 10, price: 45, cheapest: false },
+  { dosage: '500mg', form: 'Capsule', qty: 10, price: 38, cheapest: true },
+  { dosage: '250mg', form: 'Tablet', qty: 20, price: 52, cheapest: false },
+  { dosage: '1000mg', form: 'Tablet', qty: 5, price: 65, cheapest: false },
+  { dosage: '500mg', form: 'Syrup 100ml', qty: 1, price: 78, cheapest: false },
 ];
 
 const PricingMatrix = () => {
   return (
     <div className="bg-white rounded-[14px] shadow-sm border border-gray-100 p-6 pharmacy-section">
-
       {/* Header */}
       <div className="flex items-center justify-between mb-5">
         <div>
@@ -59,7 +58,9 @@ const PricingMatrix = () => {
                         Best Price
                       </span>
                     )}
-                    <span className={`font-bold text-[15px] ${row.cheapest ? 'text-[#2A7FFF]' : 'text-gray-800'}`}>
+                    <span
+                      className={`font-bold text-[15px] ${row.cheapest ? 'text-[#2A7FFF]' : 'text-gray-800'}`}
+                    >
                       ₹{row.price}
                     </span>
                   </div>

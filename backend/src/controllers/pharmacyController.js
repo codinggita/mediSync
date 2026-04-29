@@ -7,8 +7,8 @@ const registerPharmacy = async (req, res, next) => {
   try {
     const { name, ownerName, email, phone, location, licenseNumber, document } = req.body;
 
-    const pharmacyExists = await Pharmacy.findOne({ 
-      $or: [{ email }, { licenseNumber }] 
+    const pharmacyExists = await Pharmacy.findOne({
+      $or: [{ email }, { licenseNumber }],
     });
 
     if (pharmacyExists) {
@@ -25,12 +25,13 @@ const registerPharmacy = async (req, res, next) => {
       licenseNumber,
       document,
       registeredBy: req.user._id,
-      verificationStatus: 'Pending'
+      verificationStatus: 'Pending',
     });
 
     res.status(201).json({
-      message: 'Pharmacy registration request submitted successfully. It will be reviewed by the admin.',
-      pharmacy
+      message:
+        'Pharmacy registration request submitted successfully. It will be reviewed by the admin.',
+      pharmacy,
     });
   } catch (error) {
     next(error);
@@ -42,7 +43,9 @@ const registerPharmacy = async (req, res, next) => {
 // @access  Public
 const getVerifiedPharmacies = async (req, res, next) => {
   try {
-    const pharmacies = await Pharmacy.find({ verificationStatus: 'Verified' }).sort({ createdAt: -1 });
+    const pharmacies = await Pharmacy.find({ verificationStatus: 'Verified' }).sort({
+      createdAt: -1,
+    });
     res.json(pharmacies);
   } catch (error) {
     next(error);
@@ -54,7 +57,9 @@ const getVerifiedPharmacies = async (req, res, next) => {
 // @access  Private/Admin
 const getPendingPharmacies = async (req, res, next) => {
   try {
-    const pharmacies = await Pharmacy.find({ verificationStatus: 'Pending' }).populate('registeredBy', 'name email').sort({ createdAt: -1 });
+    const pharmacies = await Pharmacy.find({ verificationStatus: 'Pending' })
+      .populate('registeredBy', 'name email')
+      .sort({ createdAt: -1 });
     res.json(pharmacies);
   } catch (error) {
     next(error);
@@ -67,7 +72,7 @@ const getPendingPharmacies = async (req, res, next) => {
 const updatePharmacyStatus = async (req, res, next) => {
   try {
     const { status } = req.body;
-    
+
     if (!['Verified', 'Rejected'].includes(status)) {
       res.status(400);
       throw new Error('Invalid status update');
@@ -85,16 +90,11 @@ const updatePharmacyStatus = async (req, res, next) => {
 
     res.json({
       message: `Pharmacy request has been ${status}`,
-      pharmacy
+      pharmacy,
     });
   } catch (error) {
     next(error);
   }
 };
 
-export { 
-  registerPharmacy, 
-  getVerifiedPharmacies, 
-  getPendingPharmacies, 
-  updatePharmacyStatus 
-};
+export { registerPharmacy, getVerifiedPharmacies, getPendingPharmacies, updatePharmacyStatus };

@@ -11,7 +11,6 @@ const EmergencyActions = () => {
 
   return (
     <div className="flex flex-col gap-3 em-card2">
-
       {/* Emergency Call Button */}
       <button
         onClick={handleCall}
@@ -42,7 +41,8 @@ const EmergencyActions = () => {
       {/* Disclaimer */}
       <p className="text-center text-[11px] text-red-400 font-medium leading-relaxed">
         If this is a life-threatening emergency, call <strong>112</strong> immediately.
-        <br />Do not wait for app response.
+        <br />
+        Do not wait for app response.
       </p>
     </div>
   );

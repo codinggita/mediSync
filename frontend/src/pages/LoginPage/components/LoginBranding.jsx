@@ -18,16 +18,18 @@ const LoginBranding = () => {
           Medi<span className="text-[#2A7FFF]">Sync</span>
         </div>
       </div>
-      
+
       <div className="relative z-10 my-auto animate-in fade-in slide-in-from-left-8 duration-700">
         <h1 className="text-[3.2rem] font-black text-slate-900 dark:text-white leading-[1.1] mb-6 drop-shadow-md">
-          Healthcare,<br/>
+          Healthcare,
+          <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2A7FFF] to-[#2ECC71]">
             Elevated.
           </span>
         </h1>
         <p className="text-[1.1rem] text-slate-500 dark:text-slate-400 font-bold leading-relaxed max-w-[90%]">
-          The enterprise-grade platform connecting patients, doctors, and pharmacies with zero friction.
+          The enterprise-grade platform connecting patients, doctors, and pharmacies with zero
+          friction.
         </p>
       </div>
     </div>

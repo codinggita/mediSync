@@ -22,8 +22,10 @@ const ScheduleStatusHeader = ({ pendingCount }) => {
       </div>
 
       <div className="hidden lg:flex items-center gap-4 px-8 py-4 bg-[#ecf0f3] dark:bg-[#1a2235] rounded-3xl shadow-[4px_4px_8px_#cbced1,-4px_-4px_8px_#ffffff] dark:shadow-[inset_2px_2px_4px_#0a0f1d] border border-white/40">
-         <div className="w-3 h-3 rounded-full bg-amber-500 animate-pulse" />
-         <span className="text-[0.8rem] font-black text-slate-500 dark:text-slate-300 uppercase tracking-widest">{pendingCount} Pending Requests</span>
+        <div className="w-3 h-3 rounded-full bg-amber-500 animate-pulse" />
+        <span className="text-[0.8rem] font-black text-slate-500 dark:text-slate-300 uppercase tracking-widest">
+          {pendingCount} Pending Requests
+        </span>
       </div>
     </div>
   );

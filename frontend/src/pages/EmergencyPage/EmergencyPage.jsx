@@ -23,29 +23,35 @@ const EmergencyPage = () => {
           <div className="max-w-6xl mx-auto flex flex-col gap-10">
             {/* Tactical Dashboard Header */}
             <div>
-               <h1 className="text-[2.8rem] font-black text-slate-900 dark:text-white leading-none tracking-tight">
-                 Emergency <span className="text-red-500">Protocols</span>
-               </h1>
-               <p className="text-slate-500 font-bold mt-3 uppercase tracking-[0.3em] text-[0.85rem]">Strategic Medical Response Environment</p>
+              <h1 className="text-[2.8rem] font-black text-slate-900 dark:text-white leading-none tracking-tight">
+                Emergency <span className="text-red-500">Protocols</span>
+              </h1>
+              <p className="text-slate-500 font-bold mt-3 uppercase tracking-[0.3em] text-[0.85rem]">
+                Strategic Medical Response Environment
+              </p>
             </div>
 
             {/* Main Response Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-               <div className="lg:col-span-12">
-                  <EmergencyActionPanel />
-               </div>
-               
-               <div className="lg:col-span-8">
-                  <EmergencyContactList />
-               </div>
+              <div className="lg:col-span-12">
+                <EmergencyActionPanel />
+              </div>
 
-               <div className="lg:col-span-4 bg-[#ecf0f3] dark:bg-[#151E32] rounded-[3rem] p-10 shadow-2xl border border-white/40 flex flex-col items-center justify-center text-center">
-                  <div className="w-24 h-24 rounded-full bg-red-500/10 flex items-center justify-center text-red-500 mb-6">
-                     <AlertCircle size={48} />
-                  </div>
-                  <h3 className="text-[1.2rem] font-black text-slate-900 dark:text-white mb-2 uppercase">Bio-Metric Lock</h3>
-                  <p className="text-[0.8rem] font-bold text-slate-400 leading-relaxed uppercase tracking-wider">Authentication required for full biological broadcast access.</p>
-               </div>
+              <div className="lg:col-span-8">
+                <EmergencyContactList />
+              </div>
+
+              <div className="lg:col-span-4 bg-[#ecf0f3] dark:bg-[#151E32] rounded-[3rem] p-10 shadow-2xl border border-white/40 flex flex-col items-center justify-center text-center">
+                <div className="w-24 h-24 rounded-full bg-red-500/10 flex items-center justify-center text-red-500 mb-6">
+                  <AlertCircle size={48} />
+                </div>
+                <h3 className="text-[1.2rem] font-black text-slate-900 dark:text-white mb-2 uppercase">
+                  Bio-Metric Lock
+                </h3>
+                <p className="text-[0.8rem] font-bold text-slate-400 leading-relaxed uppercase tracking-wider">
+                  Authentication required for full biological broadcast access.
+                </p>
+              </div>
             </div>
           </div>
         </main>

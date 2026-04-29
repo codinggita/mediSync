@@ -37,7 +37,7 @@ const medicalRecordSchema = new mongoose.Schema(
       type: String,
       enum: ['Active', 'Archived'],
       default: 'Active',
-    }
+    },
   },
   {
     timestamps: true,

@@ -3,7 +3,14 @@ import { Loader2 } from 'lucide-react';
 import RecordsTimeline from './RecordsTimeline';
 import RecordDetailCard from './RecordDetailCard';
 
-const RecordsContent = ({ loading, records, selectedId, setSelectedId, selectedRecord, onDelete }) => {
+const RecordsContent = ({
+  loading,
+  records,
+  selectedId,
+  setSelectedId,
+  selectedRecord,
+  onDelete,
+}) => {
   if (loading) {
     return (
       <div className="flex-1 flex flex-col items-center justify-center gap-4">
@@ -17,11 +24,7 @@ const RecordsContent = ({ loading, records, selectedId, setSelectedId, selectedR
     <div className="flex flex-col lg:flex-row gap-5 pb-4">
       {/* Left Column: Timeline */}
       <div className="w-full lg:w-[320px] shrink-0">
-        <RecordsTimeline 
-          records={records}
-          selectedId={selectedId} 
-          onSelect={setSelectedId} 
-        />
+        <RecordsTimeline records={records} selectedId={selectedId} onSelect={setSelectedId} />
       </div>
 
       {/* Right Column: Detail View */}

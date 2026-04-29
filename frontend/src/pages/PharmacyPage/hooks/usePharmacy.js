@@ -14,7 +14,7 @@ const usePharmacy = () => {
     searchQuery,
     setSearchQuery,
     selectedPharmacy,
-    setSelectedPharmacy
+    setSelectedPharmacy,
   };
 };
 

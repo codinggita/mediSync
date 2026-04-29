@@ -1,6 +1,12 @@
 import {
-  LayoutDashboard, FileText, Calendar, ShoppingBag,
-  Share2, AlertTriangle, Sparkles, CheckCircle
+  LayoutDashboard,
+  FileText,
+  Calendar,
+  ShoppingBag,
+  Share2,
+  AlertTriangle,
+  Sparkles,
+  CheckCircle,
 } from 'lucide-react';
 
 export const steps = [
@@ -11,7 +17,7 @@ export const steps = [
     title: 'Welcome to MediSync! 👋',
     subtitle: 'Your Personal Health Hub',
     description:
-      'MediSync keeps your entire health life in one secure, beautiful place. Let\'s take a quick 30-second tour so you know exactly where everything is.',
+      "MediSync keeps your entire health life in one secure, beautiful place. Let's take a quick 30-second tour so you know exactly where everything is.",
     cta: 'Start Tour',
   },
   {

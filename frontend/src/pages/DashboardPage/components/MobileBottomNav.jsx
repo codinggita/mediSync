@@ -12,8 +12,8 @@ const MobileBottomNav = ({ filteredNavItems, location }) => {
               key={path}
               to={path}
               className={`relative flex flex-col items-center justify-center w-14 h-14 rounded-2xl transition-all ${
-                active 
-                  ? 'text-[#2A7FFF] -translate-y-2' 
+                active
+                  ? 'text-[#2A7FFF] -translate-y-2'
                   : 'text-slate-500 dark:text-slate-400 hover:text-[#1F2937] dark:hover:text-white'
               }`}
             >
@@ -21,14 +21,19 @@ const MobileBottomNav = ({ filteredNavItems, location }) => {
                 <div className="absolute -top-1 w-8 h-8 bg-[#2A7FFF]/10 rounded-full blur-md"></div>
               )}
               <div className="relative z-10 flex items-center justify-center mb-1 transition-transform group-hover:scale-110">
-                <Icon size={20} className={`${active ? 'text-[#2A7FFF]' : 'text-slate-400'} transition-colors`} />
+                <Icon
+                  size={20}
+                  className={`${active ? 'text-[#2A7FFF]' : 'text-slate-400'} transition-colors`}
+                />
                 {badge && (
                   <span className="absolute -top-2 -right-2 w-4 h-4 bg-amber-500 text-white text-[0.55rem] font-black rounded-full flex items-center justify-center shadow-sm">
                     {badge}
                   </span>
                 )}
               </div>
-              <span className={`text-[0.6rem] leading-none ${active ? 'font-black opacity-100' : 'font-bold opacity-70'}`}>
+              <span
+                className={`text-[0.6rem] leading-none ${active ? 'font-black opacity-100' : 'font-bold opacity-70'}`}
+              >
                 {label.split(' ')[0]}
               </span>
             </Link>

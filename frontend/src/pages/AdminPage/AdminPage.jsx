@@ -7,19 +7,17 @@ import AdminTabContent from './components/AdminTabContent';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
-import {
-  LayoutDashboard, Building2, Pill, DollarSign, Users,
-  BarChart3, Bell
-} from 'lucide-react';
+import SEO from '../../components/SEO';
+import { LayoutDashboard, Building2, Pill, DollarSign, Users, BarChart3, Bell } from 'lucide-react';
 
 const TABS = [
-  { id: 'overview',  label: 'Overview',   icon: LayoutDashboard, color: '#2A7FFF' },
-  { id: 'pharmacy',  label: 'Pharmacies', icon: Building2,       color: '#2ECC71' },
-  { id: 'medicines', label: 'Medicines',  icon: Pill,            color: '#F59E0B' },
-  { id: 'prices',    label: 'Prices',     icon: DollarSign,      color: '#8B5CF6' },
-  { id: 'users',     label: 'Users',      icon: Users,           color: '#06B6D4' },
-  { id: 'analytics', label: 'Analytics', icon: BarChart3,       color: '#E11D48' },
-  { id: 'alerts',    label: 'Alerts',     icon: Bell,            color: '#F97316' },
+  { id: 'overview', label: 'Overview', icon: LayoutDashboard, color: '#2A7FFF' },
+  { id: 'pharmacy', label: 'Pharmacies', icon: Building2, color: '#2ECC71' },
+  { id: 'medicines', label: 'Medicines', icon: Pill, color: '#F59E0B' },
+  { id: 'prices', label: 'Prices', icon: DollarSign, color: '#8B5CF6' },
+  { id: 'users', label: 'Users', icon: Users, color: '#06B6D4' },
+  { id: 'analytics', label: 'Analytics', icon: BarChart3, color: '#E11D48' },
+  { id: 'alerts', label: 'Alerts', icon: Bell, color: '#F97316' },
 ];
 
 const AdminPage = () => {
@@ -40,19 +38,41 @@ const AdminPage = () => {
     return () => clearInterval(t);
   }, []);
 
-  const activeTabData = TABS.find(t => t.id === activeTab);
+  const activeTabData = TABS.find((t) => t.id === activeTab);
 
   // Mode-aware style tokens
   const sidebar = isDarkMode
-    ? { bg: 'linear-gradient(180deg,#0D1526 0%,#0B1121 100%)', border: 'rgba(255,255,255,0.06)', text: '#fff', sub: '#475569', profileBg: 'rgba(42,127,255,0.12)', profileBorder: 'rgba(42,127,255,0.2)' }
-    : { bg: 'linear-gradient(180deg,#ffffff 0%,#f8fafc 100%)', border: 'rgba(0,0,0,0.07)', text: '#1e293b', sub: '#94a3b8', profileBg: 'rgba(42,127,255,0.06)', profileBorder: 'rgba(42,127,255,0.15)' };
+    ? {
+        bg: 'linear-gradient(180deg,#0D1526 0%,#0B1121 100%)',
+        border: 'rgba(255,255,255,0.06)',
+        text: '#fff',
+        sub: '#475569',
+        profileBg: 'rgba(42,127,255,0.12)',
+        profileBorder: 'rgba(42,127,255,0.2)',
+      }
+    : {
+        bg: 'linear-gradient(180deg,#ffffff 0%,#f8fafc 100%)',
+        border: 'rgba(0,0,0,0.07)',
+        text: '#1e293b',
+        sub: '#94a3b8',
+        profileBg: 'rgba(42,127,255,0.06)',
+        profileBorder: 'rgba(42,127,255,0.15)',
+      };
 
   const main = isDarkMode
-    ? { bg: '#0B1121', breadcrumb: 'rgba(13,21,38,0.9)', breadcrumbBorder: 'rgba(255,255,255,0.05)' }
+    ? {
+        bg: '#0B1121',
+        breadcrumb: 'rgba(13,21,38,0.9)',
+        breadcrumbBorder: 'rgba(255,255,255,0.05)',
+      }
     : { bg: '#ecf0f3', breadcrumb: 'rgba(248,250,252,0.95)', breadcrumbBorder: 'rgba(0,0,0,0.06)' };
 
   return (
-    <div className="flex h-screen overflow-hidden font-sans transition-colors duration-300" style={{ backgroundColor: main.bg }}>
+    <div
+      className="flex h-screen overflow-hidden font-sans transition-colors duration-300"
+      style={{ backgroundColor: main.bg }}
+    >
+      <SEO title={`${activeTabData?.label} | Admin Control`} />
       <AdminGlows isDarkMode={isDarkMode} />
 
       <AdminSidebar
@@ -65,7 +85,10 @@ const AdminPage = () => {
         setActiveTab={setActiveTab}
         alertCount={alertCount}
         TABS={TABS}
-        onLogout={() => { logout?.(); navigate('/login'); }}
+        onLogout={() => {
+          logout?.();
+          navigate('/login');
+        }}
       />
 
       {/* ── MAIN ── */}
@@ -74,7 +97,24 @@ const AdminPage = () => {
 
         <AdminBreadcrumb activeTabData={activeTabData} sidebar={sidebar} main={main} />
 
-        <main className="flex-1 overflow-y-auto px-8 py-6 scrollbar-hide pb-24 md:pb-6">
+        <main className="flex-1 overflow-y-auto px-4 sm:px-8 py-6 scrollbar-hide pb-24 md:pb-6">
+          {/* Mobile Tab Selector */}
+          <div className="lg:hidden flex items-center gap-2 overflow-x-auto pb-6 scrollbar-hide mb-4">
+            {TABS.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center gap-2 px-6 py-3 rounded-2xl whitespace-nowrap transition-all ${
+                  activeTab === tab.id
+                    ? 'bg-[#2A7FFF] text-white shadow-lg'
+                    : 'bg-white dark:bg-[#151E32] text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-white/5'
+                }`}
+              >
+                <tab.icon size={16} />
+                <span className="text-xs font-black uppercase tracking-widest">{tab.label}</span>
+              </button>
+            ))}
+          </div>
           <AdminTabContent activeTab={activeTab} setAlertCount={setAlertCount} />
         </main>
       </div>

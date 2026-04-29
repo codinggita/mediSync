@@ -10,9 +10,7 @@ const RoleDetails = ({ formik, step }) => {
         <PatientDetails formik={formik} />
       )}
 
-      {formik.values.role === 'Doctor' && (
-        <DoctorDetails formik={formik} />
-      )}
+      {formik.values.role === 'Doctor' && <DoctorDetails formik={formik} />}
     </div>
   );
 };

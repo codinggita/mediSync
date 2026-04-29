@@ -64,33 +64,35 @@ const METRICS = [
 const AdminMetrics = () => {
   return (
     <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
-      {METRICS.map(({ icon: Icon, label, value, trend, trendUp, sub, iconBg, gradient, border, alert }) => (
-        <div
-          key={label}
-          className={`bg-gradient-to-br ${gradient} rounded-[14px] border ${border} shadow-sm p-4 flex flex-col gap-3 admin-card hover:-translate-y-[2px] hover:shadow-md transition-all duration-200`}
-        >
-          <div className="flex items-center justify-between">
-            <div className={`w-9 h-9 rounded-[10px] ${iconBg} flex items-center justify-center`}>
-              <Icon size={17} />
+      {METRICS.map(
+        ({ icon: Icon, label, value, trend, trendUp, sub, iconBg, gradient, border, alert }) => (
+          <div
+            key={label}
+            className={`bg-gradient-to-br ${gradient} rounded-[14px] border ${border} shadow-sm p-4 flex flex-col gap-3 admin-card hover:-translate-y-[2px] hover:shadow-md transition-all duration-200`}
+          >
+            <div className="flex items-center justify-between">
+              <div className={`w-9 h-9 rounded-[10px] ${iconBg} flex items-center justify-center`}>
+                <Icon size={17} />
+              </div>
+              {alert && <span className="w-2 h-2 rounded-full bg-[#D32F2F] animate-pulse" />}
             </div>
-            {alert && (
-              <span className="w-2 h-2 rounded-full bg-[#D32F2F] animate-pulse" />
-            )}
-          </div>
 
-          <div>
-            <p className="text-2xl font-extrabold text-gray-900 leading-none">{value}</p>
-            <p className="text-xs text-gray-500 font-medium mt-1">{label}</p>
-          </div>
+            <div>
+              <p className="text-2xl font-extrabold text-gray-900 leading-none">{value}</p>
+              <p className="text-xs text-gray-500 font-medium mt-1">{label}</p>
+            </div>
 
-          <div className="flex items-center gap-1.5">
-            <span className={`text-xs font-bold ${trendUp ? 'text-[#2A7FFF]' : 'text-[#D32F2F]'}`}>
-              {trendUp ? '↑' : '↑'} {trend}
-            </span>
-            <span className="text-[11px] text-gray-400">{sub}</span>
+            <div className="flex items-center gap-1.5">
+              <span
+                className={`text-xs font-bold ${trendUp ? 'text-[#2A7FFF]' : 'text-[#D32F2F]'}`}
+              >
+                {trendUp ? '↑' : '↑'} {trend}
+              </span>
+              <span className="text-[11px] text-gray-400">{sub}</span>
+            </div>
           </div>
-        </div>
-      ))}
+        )
+      )}
     </div>
   );
 };

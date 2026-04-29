@@ -16,32 +16,50 @@ const SystemHealthPanel = () => {
           <Activity size={18} className="text-[#2ECC71]" />
         </div>
         <div>
-          <h3 className="font-black text-[#1F2937] dark:text-white text-[0.92rem]">System Health</h3>
-          <p className="text-[0.6rem] text-gray-400 font-bold uppercase tracking-wider">Real-time infrastructure</p>
+          <h3 className="font-black text-[#1F2937] dark:text-white text-[0.92rem]">
+            System Health
+          </h3>
+          <p className="text-[0.6rem] text-gray-400 font-bold uppercase tracking-wider">
+            Real-time infrastructure
+          </p>
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         {stats.map((s) => (
-          <div key={s.name} className="p-3 rounded-xl border border-gray-50 dark:border-slate-800 bg-gray-50/50 dark:bg-[#0B1121]/30">
-            <p className="text-[0.6rem] font-bold text-gray-400 uppercase tracking-widest">{s.name}</p>
+          <div
+            key={s.name}
+            className="p-3 rounded-xl border border-gray-50 dark:border-slate-800 bg-gray-50/50 dark:bg-[#0B1121]/30"
+          >
+            <p className="text-[0.6rem] font-bold text-gray-400 uppercase tracking-widest">
+              {s.name}
+            </p>
             <div className="flex items-baseline gap-1.5 mt-1">
-              <p className="text-[1rem] font-black text-[#1F2937] dark:text-white leading-none">{s.value}</p>
-              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: s.color }} />
+              <p className="text-[1rem] font-black text-[#1F2937] dark:text-white leading-none">
+                {s.value}
+              </p>
+              <span
+                className="w-1.5 h-1.5 rounded-full animate-pulse"
+                style={{ backgroundColor: s.color }}
+              />
             </div>
-            <p className="text-[0.6rem] font-bold mt-1.5" style={{ color: s.color }}>{s.status}</p>
+            <p className="text-[0.6rem] font-bold mt-1.5" style={{ color: s.color }}>
+              {s.status}
+            </p>
           </div>
         ))}
       </div>
 
       <div className="mt-5 p-3 rounded-xl bg-[#2A7FFF]/5 border border-[#2A7FFF]/10">
-         <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-               <ShieldCheck size={14} className="text-[#2A7FFF]" />
-               <p className="text-[0.7rem] font-bold text-gray-600 dark:text-slate-300">Security: <span className="text-[#2A7FFF]">Verified</span></p>
-            </div>
-            <p className="text-[0.62rem] font-bold text-gray-400">v2.1.0-prod</p>
-         </div>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <ShieldCheck size={14} className="text-[#2A7FFF]" />
+            <p className="text-[0.7rem] font-bold text-gray-600 dark:text-slate-300">
+              Security: <span className="text-[#2A7FFF]">Verified</span>
+            </p>
+          </div>
+          <p className="text-[0.62rem] font-bold text-gray-400">v2.1.0-prod</p>
+        </div>
       </div>
     </div>
   );

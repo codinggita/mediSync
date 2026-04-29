@@ -32,13 +32,46 @@ const DashboardContent = () => {
   if (loading) return <PremiumLoader message="Syncing Health Records" />;
 
   const statCards = [
-    { label: 'Saved Medicines', value: stats.medicines, trend: '+2 this week', up: true, icon: Pill, color: '#2A7FFF' },
-    { label: 'Clinical Reports', value: stats.records, trend: '+1 this month', up: true, icon: FileText, color: '#2ECC71' },
-    { label: 'Appointments', value: stats.appointments, trend: 'Next: Tomorrow', up: true, icon: CalendarCheck, color: '#8B5CF6' },
-    { label: 'Active Alerts', value: stats.alerts, trend: '+1 urgent', up: false, icon: AlertTriangle, color: '#F59E0B' },
+    {
+      label: 'Saved Medicines',
+      value: stats.medicines,
+      trend: '+2 this week',
+      up: true,
+      icon: Pill,
+      color: '#2A7FFF',
+    },
+    {
+      label: 'Clinical Reports',
+      value: stats.records,
+      trend: '+1 this month',
+      up: true,
+      icon: FileText,
+      color: '#2ECC71',
+    },
+    {
+      label: 'Appointments',
+      value: stats.appointments,
+      trend: 'Next: Tomorrow',
+      up: true,
+      icon: CalendarCheck,
+      color: '#8B5CF6',
+    },
+    {
+      label: 'Active Alerts',
+      value: stats.alerts,
+      trend: '+1 urgent',
+      up: false,
+      icon: AlertTriangle,
+      color: '#F59E0B',
+    },
   ];
 
-  const greeting = new Date().getHours() < 12 ? 'Good Morning' : new Date().getHours() < 17 ? 'Good Afternoon' : 'Good Evening';
+  const greeting =
+    new Date().getHours() < 12
+      ? 'Good Morning'
+      : new Date().getHours() < 17
+        ? 'Good Afternoon'
+        : 'Good Evening';
 
   return (
     <main className="flex-1 overflow-y-auto bg-[#ecf0f3] dark:bg-[#121826] transition-colors duration-300 p-6 lg:p-8 space-y-6 scrollbar-hide pb-24 md:pb-20">
@@ -47,31 +80,39 @@ const DashboardContent = () => {
         <StatGrid statCards={statCards} loading={loading} />
         <PriceAlertBanner />
 
-        <PremiumHealthVault 
-           medBoxImg={medBoxImg} 
-           vitaminsImg={vitaminsImg} 
-           firstAidImg={firstAidImg} 
-           eyeDropsImg={eyeDropsImg} 
-           inhalerImg={inhalerImg} 
-           onSelectMedicine={(name) => {
-              if (medCompRef.current) {
-                 medCompRef.current.searchForMedicine(name);
-                 const el = document.getElementById('price-intel-section');
-                 if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }
-           }}
+        <PremiumHealthVault
+          medBoxImg={medBoxImg}
+          vitaminsImg={vitaminsImg}
+          firstAidImg={firstAidImg}
+          eyeDropsImg={eyeDropsImg}
+          inhalerImg={inhalerImg}
+          onSelectMedicine={(name) => {
+            if (medCompRef.current) {
+              medCompRef.current.searchForMedicine(name);
+              const el = document.getElementById('price-intel-section');
+              if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }}
         />
 
         <div id="price-intel-section" className="grid grid-cols-1 xl:grid-cols-12 gap-6">
-          <div className="xl:col-span-8"><MedicineComparison ref={medCompRef} onRefresh={refreshStats} /></div>
+          <div className="xl:col-span-8">
+            <MedicineComparison ref={medCompRef} onRefresh={refreshStats} />
+          </div>
           <div className="xl:col-span-4 flex flex-col gap-6">
-             <SavingsInsights />
-             <HealthActivity user={user} />
+            <SavingsInsights />
+            <HealthActivity user={user} />
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          <RecentRecordsPreview isUploading={isUploading} setIsUploading={setIsUploading} uploadSuccess={uploadSuccess} setUploadSuccess={setUploadSuccess} onRefresh={refreshStats} />
+          <RecentRecordsPreview
+            isUploading={isUploading}
+            setIsUploading={setIsUploading}
+            uploadSuccess={uploadSuccess}
+            setUploadSuccess={setUploadSuccess}
+            onRefresh={refreshStats}
+          />
           <NearbyPharmacies />
           <DoctorConnect />
         </div>

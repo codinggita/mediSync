@@ -17,19 +17,23 @@ const RecordArtifactsVault = ({ record, onShowPreview }) => {
               <FileText size={22} />
             </div>
             <div>
-              <p className="text-[0.9rem] font-black text-slate-800 dark:text-white truncate max-w-[150px] sm:max-w-none">{record.title}_Analysis.pdf</p>
-              <p className="text-[0.65rem] font-bold text-gray-400 uppercase tracking-widest mt-0.5">Encrypted PDF · 1.2 MB</p>
+              <p className="text-[0.9rem] font-black text-slate-800 dark:text-white truncate max-w-[150px] sm:max-w-none">
+                {record.title}_Analysis.pdf
+              </p>
+              <p className="text-[0.65rem] font-bold text-gray-400 uppercase tracking-widest mt-0.5">
+                Encrypted PDF · 1.2 MB
+              </p>
             </div>
           </div>
           <div className="flex gap-3 shrink-0">
-            <button 
+            <button
               onClick={onShowPreview}
               className="w-10 h-10 rounded-xl bg-[#ecf0f3] dark:bg-[#151E32] flex items-center justify-center text-slate-400 hover:text-[#2A7FFF] shadow-[3px_3px_6px_#cbced1,-3px_-3px_6px_#ffffff] dark:shadow-[3px_3px_6px_#0a0f1d] active:shadow-inner transition-all"
             >
               <Eye size={18} />
             </button>
-            <a 
-              href={record.fileUrl} 
+            <a
+              href={record.fileUrl}
               download={`${record.title.replace(/\s+/g, '_')}_Report`}
               target="_blank"
               rel="noreferrer"

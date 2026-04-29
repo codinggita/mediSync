@@ -54,21 +54,32 @@ export const updateUserProfile = async (req, res, next) => {
       throw new Error('User not found');
     }
 
-    const { name, email, password, phone, bloodGroup, gender, dateOfBirth, specialty, hospital, preferences } = req.body;
+    const {
+      name,
+      email,
+      password,
+      phone,
+      bloodGroup,
+      gender,
+      dateOfBirth,
+      specialty,
+      hospital,
+      preferences,
+    } = req.body;
 
-    if (name)        user.name        = name;
-    if (email)       user.email       = email;
-    if (phone)       user.phone       = phone;
-    if (bloodGroup)  user.bloodGroup  = bloodGroup;
-    if (gender)      user.gender      = gender;
+    if (name) user.name = name;
+    if (email) user.email = email;
+    if (phone) user.phone = phone;
+    if (bloodGroup) user.bloodGroup = bloodGroup;
+    if (gender) user.gender = gender;
     if (dateOfBirth) user.dateOfBirth = dateOfBirth;
-    if (specialty)   user.specialty   = specialty;
-    if (hospital)    user.hospital    = hospital;
-    if (password)    user.password    = password;
+    if (specialty) user.specialty = specialty;
+    if (hospital) user.hospital = hospital;
+    if (password) user.password = password;
     if (preferences) {
-      user.preferences = { 
-        ...(user.preferences?.toObject ? user.preferences.toObject() : (user.preferences || {})), 
-        ...preferences 
+      user.preferences = {
+        ...(user.preferences?.toObject ? user.preferences.toObject() : user.preferences || {}),
+        ...preferences,
       };
     }
 
@@ -103,10 +114,10 @@ export const updateVitals = async (req, res, next) => {
     }
 
     user.vitals = {
-      heartRate:     heartRate     ?? user.vitals?.heartRate,
+      heartRate: heartRate ?? user.vitals?.heartRate,
       bloodPressure: bloodPressure ?? user.vitals?.bloodPressure,
-      glucose:       glucose       ?? user.vitals?.glucose,
-      spO2:          spO2          ?? user.vitals?.spO2,
+      glucose: glucose ?? user.vitals?.glucose,
+      spO2: spO2 ?? user.vitals?.spO2,
     };
 
     await user.save();
@@ -124,7 +135,9 @@ export const updateVitals = async (req, res, next) => {
  */
 export const getDoctors = async (req, res, next) => {
   try {
-    const doctors = await User.find({ role: 'Doctor' }).select('name specialty hospital email phone whatsapp address');
+    const doctors = await User.find({ role: 'Doctor' }).select(
+      'name specialty hospital email phone whatsapp address'
+    );
     res.json(doctors);
   } catch (error) {
     next(error);

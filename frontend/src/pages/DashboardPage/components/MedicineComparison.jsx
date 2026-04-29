@@ -23,7 +23,9 @@ const MedicineComparison = forwardRef((props, ref) => {
 
     const fetchMeds = async () => {
       try {
-        const response = await fetch(`https://rxnav.nlm.nih.gov/REST/spellcheck.json?name=${searchQuery}`);
+        const response = await fetch(
+          `https://rxnav.nlm.nih.gov/REST/spellcheck.json?name=${searchQuery}`
+        );
         if (!response.ok) return;
         const data = await response.json();
         if (data.suggestionGroup && data.suggestionGroup.suggestion) {
@@ -42,7 +44,7 @@ const MedicineComparison = forwardRef((props, ref) => {
     if (!name || name.trim().length === 0) return;
     setIsSearching(true);
     setSuggestions([]);
-    
+
     // Smooth scroll to top of search results if needed
     if (searchRef.current) {
       searchRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -50,16 +52,17 @@ const MedicineComparison = forwardRef((props, ref) => {
 
     try {
       const { data: meds } = await api.get(`/medicines?search=${name}`);
-      
+
       const medsArray = Array.isArray(meds) ? meds : [];
-      const medicine = medsArray.find(m => m.name?.toLowerCase() === name.toLowerCase()) || medsArray[0];
+      const medicine =
+        medsArray.find((m) => m.name?.toLowerCase() === name.toLowerCase()) || medsArray[0];
 
       if (!medicine) {
-        setSelectedMed({ 
-          name, 
-          brand: 'Registry Reference', 
-          type: 'Sourcing Intelligence Required', 
-          pharmacies: [] 
+        setSelectedMed({
+          name,
+          brand: 'Registry Reference',
+          type: 'Sourcing Intelligence Required',
+          pharmacies: [],
         });
         setSearchQuery(name);
         return;
@@ -70,15 +73,17 @@ const MedicineComparison = forwardRef((props, ref) => {
         name: medicine.name,
         brand: medicine.manufacturer || 'Verified Generic',
         type: medicine.category || 'Clinical Protocol',
-        pharmacies: Array.isArray(priceEntries) ? priceEntries.map(p => ({
-          name: p.pharmacy?.name || 'Local Hub',
-          price: Number(p.price || 0) - (Number(p.price || 0) * (p.discount || 0) / 100),
-          distance: (Math.random() * 5).toFixed(1) + ' km',
-          rating: (4 + Math.random()).toFixed(1),
-          stock: 'Available',
-          delivery: Math.floor(Math.random() * 30 + 10) + ' mins',
-          location: p.pharmacy?.address || 'Medical District'
-        })) : []
+        pharmacies: Array.isArray(priceEntries)
+          ? priceEntries.map((p) => ({
+              name: p.pharmacy?.name || 'Local Hub',
+              price: Number(p.price || 0) - (Number(p.price || 0) * (p.discount || 0)) / 100,
+              distance: (Math.random() * 5).toFixed(1) + ' km',
+              rating: (4 + Math.random()).toFixed(1),
+              stock: 'Available',
+              delivery: Math.floor(Math.random() * 30 + 10) + ' mins',
+              location: p.pharmacy?.address || 'Medical District',
+            }))
+          : [],
       });
       setSearchQuery(name);
     } catch (err) {
@@ -90,7 +95,7 @@ const MedicineComparison = forwardRef((props, ref) => {
   };
 
   useImperativeHandle(ref, () => ({
-    searchForMedicine: (name) => handleSelectMed(name)
+    searchForMedicine: (name) => handleSelectMed(name),
   }));
 
   const handleGetDirections = (pharm) => {
@@ -103,7 +108,7 @@ const MedicineComparison = forwardRef((props, ref) => {
       <SourcingEngineStatus />
 
       <div ref={searchRef}>
-        <MedicineSearchInput 
+        <MedicineSearchInput
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           handleSelectMed={handleSelectMed}
@@ -115,16 +120,18 @@ const MedicineComparison = forwardRef((props, ref) => {
       <div className="space-y-6 overflow-y-auto pr-2 scrollbar-hide flex-1 relative">
         {isSearching && (
           <div className="absolute inset-0 z-20 bg-white/60 dark:bg-[#151E32]/60 backdrop-blur-sm rounded-[2rem] flex flex-col items-center justify-center animate-in fade-in duration-300">
-             <div className="w-20 h-20 relative mb-6">
-                <div className="absolute inset-0 border-4 border-[#2A7FFF]/20 rounded-full" />
-                <div className="absolute inset-0 border-4 border-t-[#2A7FFF] rounded-full animate-spin" />
-             </div>
-             <p className="text-[0.7rem] font-black text-[#2A7FFF] uppercase tracking-[0.3em] animate-pulse">Sourcing Clinical Data...</p>
+            <div className="w-20 h-20 relative mb-6">
+              <div className="absolute inset-0 border-4 border-[#2A7FFF]/20 rounded-full" />
+              <div className="absolute inset-0 border-4 border-t-[#2A7FFF] rounded-full animate-spin" />
+            </div>
+            <p className="text-[0.7rem] font-black text-[#2A7FFF] uppercase tracking-[0.3em] animate-pulse">
+              Sourcing Clinical Data...
+            </p>
           </div>
         )}
 
         {selectedMed ? (
-          <PharmacyComparisonResults 
+          <PharmacyComparisonResults
             selectedMed={selectedMed}
             onSelectPharmacy={setSelectedPharmacy}
             onClear={() => setSelectedMed(null)}
@@ -134,7 +141,7 @@ const MedicineComparison = forwardRef((props, ref) => {
         )}
       </div>
 
-      <OrderConfirmationModal 
+      <OrderConfirmationModal
         pharmacy={selectedPharmacy}
         orderSuccess={orderSuccess}
         onOrder={async () => {
@@ -144,12 +151,15 @@ const MedicineComparison = forwardRef((props, ref) => {
               brand: selectedMed.brand,
               type: selectedMed.type,
               pharmacy: selectedPharmacy.name,
-              price: selectedPharmacy.price
+              price: selectedPharmacy.price,
             });
             setOrderSuccess(true);
             // Trigger global stats refresh if provided via props
             if (props.onRefresh) props.onRefresh();
-            setTimeout(() => { setOrderSuccess(false); setSelectedPharmacy(null); }, 3000);
+            setTimeout(() => {
+              setOrderSuccess(false);
+              setSelectedPharmacy(null);
+            }, 3000);
           } catch (err) {
             console.error('Failed to save medicine:', err);
             alert('Sourcing Synchronization Failed. Please try again.');

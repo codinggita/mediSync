@@ -9,23 +9,34 @@ const getRecords = async (req, res, next) => {
   try {
     let records;
     if (req.user.role === 'Patient') {
-      records = await MedicalRecord.find({ patient: req.user._id }).populate('doctor', 'name specialty hospital');
+      records = await MedicalRecord.find({ patient: req.user._id }).populate(
+        'doctor',
+        'name specialty hospital'
+      );
     } else if (req.user.role === 'Doctor') {
       // Find records where doctor is the primary doctor
-      const primaryRecords = await MedicalRecord.find({ doctor: req.user._id }).populate('patient', 'name email patientId phone vitals gender bloodGroup dateOfBirth');
-      
+      const primaryRecords = await MedicalRecord.find({ doctor: req.user._id }).populate(
+        'patient',
+        'name email patientId phone vitals gender bloodGroup dateOfBirth'
+      );
+
       // Find records shared with this doctor
       const sharedMappings = await SharedRecord.find({ doctor: req.user._id }).populate({
         path: 'record',
-        populate: { path: 'patient', select: 'name email patientId phone vitals gender bloodGroup dateOfBirth' }
+        populate: {
+          path: 'patient',
+          select: 'name email patientId phone vitals gender bloodGroup dateOfBirth',
+        },
       });
-      
-      const sharedRecords = sharedMappings.map(m => m.record).filter(r => r !== null);
-      
+
+      const sharedRecords = sharedMappings.map((m) => m.record).filter((r) => r !== null);
+
       // Combine and remove duplicates if any
       records = [...primaryRecords, ...sharedRecords];
     } else {
-      records = await MedicalRecord.find({}).populate('patient', 'name patientId').populate('doctor', 'name specialty');
+      records = await MedicalRecord.find({})
+        .populate('patient', 'name patientId')
+        .populate('doctor', 'name specialty');
     }
     res.json(records);
   } catch (error) {
@@ -59,7 +70,7 @@ const createRecord = async (req, res, next) => {
       description,
       hospital: hospital || (req.user.role === 'Doctor' ? req.user.hospital : undefined),
       fileUrl,
-      date: date || Date.now()
+      date: date || Date.now(),
     });
 
     res.status(201).json(record);
@@ -138,7 +149,7 @@ const shareRecord = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: `Report successfully shared with Dr. ${doctor.name}`,
-      sharedRecord
+      sharedRecord,
     });
   } catch (error) {
     next(error);

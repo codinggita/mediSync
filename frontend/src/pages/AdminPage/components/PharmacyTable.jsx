@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { Eye, CheckCircle, XCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const PHARMACIES = [
-  { name: 'MedPlus Sector 18', location: 'Noida, UP',      status: 'Verified', date: '12 Apr 2026' },
-  { name: 'Apollo Pharmacy',   location: 'Connaught Pl.',  status: 'Pending',  date: '18 Apr 2026' },
-  { name: 'Jan Aushadhi Store', location: 'Dwarka, Delhi', status: 'Pending',  date: '20 Apr 2026' },
-  { name: 'NetMeds Point',     location: 'Gurugram, HR',   status: 'Rejected', date: '09 Apr 2026' },
-  { name: 'Wellness Forever',  location: 'Pune, MH',       status: 'Verified', date: '01 Apr 2026' },
-  { name: 'Sanjivani Medical', location: 'Jaipur, RJ',     status: 'Pending',  date: '22 Apr 2026' },
+  { name: 'MedPlus Sector 18', location: 'Noida, UP', status: 'Verified', date: '12 Apr 2026' },
+  { name: 'Apollo Pharmacy', location: 'Connaught Pl.', status: 'Pending', date: '18 Apr 2026' },
+  { name: 'Jan Aushadhi Store', location: 'Dwarka, Delhi', status: 'Pending', date: '20 Apr 2026' },
+  { name: 'NetMeds Point', location: 'Gurugram, HR', status: 'Rejected', date: '09 Apr 2026' },
+  { name: 'Wellness Forever', location: 'Pune, MH', status: 'Verified', date: '01 Apr 2026' },
+  { name: 'Sanjivani Medical', location: 'Jaipur, RJ', status: 'Pending', date: '22 Apr 2026' },
 ];
 
 const STATUS = {
   Verified: 'bg-green-50 text-[#2A7FFF] border-green-100',
-  Pending:  'bg-amber-50 text-[#F59E0B] border-amber-100',
+  Pending: 'bg-amber-50 text-[#F59E0B] border-amber-100',
   Rejected: 'bg-red-50 text-[#D32F2F] border-red-100',
 };
 
@@ -41,7 +41,10 @@ const PharmacyTable = () => {
           <thead>
             <tr className="bg-[#F8FAFC] border-b border-gray-100">
               {['Pharmacy Name', 'Location', 'Status', 'Date Applied', 'Actions'].map((h) => (
-                <th key={h} className="px-4 py-3 text-[11px] font-bold text-gray-400 uppercase tracking-wider text-left">
+                <th
+                  key={h}
+                  className="px-4 py-3 text-[11px] font-bold text-gray-400 uppercase tracking-wider text-left"
+                >
                   {h}
                 </th>
               ))}
@@ -49,26 +52,40 @@ const PharmacyTable = () => {
           </thead>
           <tbody>
             {visible.map((row, i) => (
-              <tr key={i} className="border-b border-gray-50 hover:bg-[#F8FAFC] transition-colors duration-150 last:border-b-0">
+              <tr
+                key={i}
+                className="border-b border-gray-50 hover:bg-[#F8FAFC] transition-colors duration-150 last:border-b-0"
+              >
                 <td className="px-4 py-3.5 font-semibold text-gray-800">{row.name}</td>
                 <td className="px-4 py-3.5 text-gray-500">{row.location}</td>
                 <td className="px-4 py-3.5">
-                  <span className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full border ${STATUS[row.status]}`}>
+                  <span
+                    className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full border ${STATUS[row.status]}`}
+                  >
                     {row.status}
                   </span>
                 </td>
                 <td className="px-4 py-3.5 text-gray-500 text-xs">{row.date}</td>
                 <td className="px-4 py-3.5">
                   <div className="flex items-center gap-2">
-                    <button className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500 hover:text-gray-800 transition-colors" title="Review">
+                    <button
+                      className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500 hover:text-gray-800 transition-colors"
+                      title="Review"
+                    >
                       <Eye size={14} />
                     </button>
                     {row.status === 'Pending' && (
                       <>
-                        <button className="p-1.5 rounded-lg hover:bg-green-50 text-[#2A7FFF] transition-colors" title="Approve">
+                        <button
+                          className="p-1.5 rounded-lg hover:bg-green-50 text-[#2A7FFF] transition-colors"
+                          title="Approve"
+                        >
                           <CheckCircle size={14} />
                         </button>
-                        <button className="p-1.5 rounded-lg hover:bg-red-50 text-[#D32F2F] transition-colors" title="Reject">
+                        <button
+                          className="p-1.5 rounded-lg hover:bg-red-50 text-[#D32F2F] transition-colors"
+                          title="Reject"
+                        >
                           <XCircle size={14} />
                         </button>
                       </>

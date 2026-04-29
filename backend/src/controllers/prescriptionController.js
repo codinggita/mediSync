@@ -2,11 +2,11 @@ import Prescription from '../models/Prescription.js';
 
 export const getMyPrescription = async (req, res) => {
   try {
-    const prescription = await Prescription.findOne({ 
-      patient: req.user._id, 
-      status: 'Active' 
+    const prescription = await Prescription.findOne({
+      patient: req.user._id,
+      status: 'Active',
     });
-    
+
     res.status(200).json(prescription);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -36,7 +36,7 @@ export const addMedication = async (req, res) => {
       prescription = await Prescription.create({
         patient: req.user._id,
         doctor: req.user._id, // Self-managed for now
-        medicines: []
+        medicines: [],
       });
     }
 
@@ -45,7 +45,7 @@ export const addMedication = async (req, res) => {
       brand,
       frequency: 'As needed',
       dosage: 'Standard',
-      instructions: `Sourced from ${pharmacy} at $${price}`
+      instructions: `Sourced from ${pharmacy} at $${price}`,
     });
 
     await prescription.save();

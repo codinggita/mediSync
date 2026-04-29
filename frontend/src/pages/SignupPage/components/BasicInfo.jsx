@@ -7,13 +7,13 @@ const BasicInfo = ({ step, formik, setStep }) => {
 
   return (
     <div className="flex flex-col gap-4 animate-in fade-in slide-in-from-right-4 duration-300">
-      <RoleSelector 
-        currentRole={formik.values.role} 
-        setFieldValue={formik.setFieldValue} 
-        setStep={setStep} 
+      <RoleSelector
+        currentRole={formik.values.role}
+        setFieldValue={formik.setFieldValue}
+        setStep={setStep}
       />
 
-      <SignupInputField 
+      <SignupInputField
         label="Full Name"
         icon={User}
         name="name"
@@ -21,7 +21,7 @@ const BasicInfo = ({ step, formik, setStep }) => {
         formik={formik}
       />
 
-      <SignupInputField 
+      <SignupInputField
         label="Email address"
         icon={Mail}
         name="email"
@@ -30,7 +30,7 @@ const BasicInfo = ({ step, formik, setStep }) => {
         formik={formik}
       />
 
-      <SignupInputField 
+      <SignupInputField
         label="Mobile Number"
         prefix="+91"
         name="phone"

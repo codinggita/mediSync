@@ -7,9 +7,33 @@ const HealthActivity = ({ user }) => {
   const hasData = stats.medicines > 0 || stats.records > 0;
 
   const activityStats = [
-    { label: 'Heart Rate', value: user?.vitals?.heartRate?.value || (hasData ? 72 : 0), max: 120, unit: 'bpm', color: '#EF4444', icon: Heart, status: user?.vitals?.heartRate?.value ? 'Normal' : 'Syncing' },
-    { label: 'SpO2 Level', value: user?.vitals?.spO2?.value || (hasData ? 98 : 0), max: 100, unit: '%', color: '#2A7FFF', icon: Activity, status: user?.vitals?.spO2?.value ? 'Excellent' : 'Syncing' },
-    { label: 'Clinical Artifacts', value: stats.medicines + stats.records, max: 20, unit: 'Total', color: '#2ECC71', icon: Droplets, status: hasData ? 'Active' : 'Empty' }
+    {
+      label: 'Heart Rate',
+      value: user?.vitals?.heartRate?.value || (hasData ? 72 : 0),
+      max: 120,
+      unit: 'bpm',
+      color: '#EF4444',
+      icon: Heart,
+      status: user?.vitals?.heartRate?.value ? 'Normal' : 'Syncing',
+    },
+    {
+      label: 'SpO2 Level',
+      value: user?.vitals?.spO2?.value || (hasData ? 98 : 0),
+      max: 100,
+      unit: '%',
+      color: '#2A7FFF',
+      icon: Activity,
+      status: user?.vitals?.spO2?.value ? 'Excellent' : 'Syncing',
+    },
+    {
+      label: 'Clinical Artifacts',
+      value: stats.medicines + stats.records,
+      max: 20,
+      unit: 'Total',
+      color: '#2ECC71',
+      icon: Droplets,
+      status: hasData ? 'Active' : 'Empty',
+    },
   ];
 
   return (
@@ -20,10 +44,10 @@ const HealthActivity = ({ user }) => {
           Health Activity
         </h3>
         <div className="w-8 h-8 rounded-full bg-[#ecf0f3] dark:bg-[#151E32] shadow-[inset_2px_2px_4px_#cbced1,inset_-2px_-2px_4px_#ffffff] flex items-center justify-center text-[#2A7FFF]">
-           <TrendingUp size={14} />
+          <TrendingUp size={14} />
         </div>
       </div>
-      
+
       <div className="space-y-8">
         {activityStats.map((stat, i) => (
           <div key={i} className="group">
@@ -33,16 +57,21 @@ const HealthActivity = ({ user }) => {
                   <stat.icon size={16} style={{ color: stat.color }} />
                 </div>
                 <div>
-                  <span className="text-[0.85rem] font-black text-[#1F2937] dark:text-white block">{stat.label}</span>
-                  <span className="text-[0.6rem] font-bold text-[#2ECC71] uppercase tracking-tighter">{stat.status}</span>
+                  <span className="text-[0.85rem] font-black text-[#1F2937] dark:text-white block">
+                    {stat.label}
+                  </span>
+                  <span className="text-[0.6rem] font-bold text-[#2ECC71] uppercase tracking-tighter">
+                    {stat.status}
+                  </span>
                 </div>
               </div>
               <span className="text-[0.9rem] font-black text-[#1F2937] dark:text-white">
-                {stat.value} <span className="text-[0.7rem] text-gray-400 font-bold uppercase">{stat.unit}</span>
+                {stat.value}{' '}
+                <span className="text-[0.7rem] text-gray-400 font-bold uppercase">{stat.unit}</span>
               </span>
             </div>
             <div className="h-2.5 bg-[#ecf0f3] dark:bg-[#151E32] rounded-full overflow-hidden shadow-[inset_2px_2px_4px_#cbced1,inset_-2px_-2px_4px_#ffffff] dark:shadow-[inset_2px_2px_4px_#0a0f1d,inset_-2px_-2px_4px_#202d47]">
-              <div 
+              <div
                 className="h-full rounded-full transition-all duration-1000 ease-out"
                 style={{ width: `${(stat.value / stat.max) * 100}%`, backgroundColor: stat.color }}
               />
@@ -50,9 +79,10 @@ const HealthActivity = ({ user }) => {
           </div>
         ))}
       </div>
-      
+
       <button className="w-full mt-10 py-3.5 rounded-2xl bg-[#ecf0f3] dark:bg-[#151E32] text-[0.8rem] font-black text-slate-700 dark:text-white shadow-[6px_6px_12px_#cbced1,-6px_-6px_12px_#ffffff] dark:shadow-[6px_6px_12px_#0a0f1d,-6px_-6px_12px_#202d47] active:shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff] transition-all flex justify-center items-center gap-2 group">
-         View Full Insights <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+        View Full Insights{' '}
+        <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
       </button>
     </div>
   );

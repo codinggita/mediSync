@@ -35,14 +35,24 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Response interceptor to handle session expiration
+// Response interceptor to handle session expiration and cold starts
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
+    const originalRequest = error.config;
+
+    // 🛡️ Cold Start Resilience: Retry once if the server is waking up (502/503/504)
+    if (error.response && [502, 503, 504].includes(error.response.status) && !originalRequest._retry) {
+      originalRequest._retry = true;
+      console.warn('📡 [API SYNC]: Backend is warming up. Retrying clinical handshake...');
+      // Wait 3 seconds for Render to spin up
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      return api(originalRequest);
+    }
+
     if (error.response && error.response.status === 401) {
       console.warn('🚨 [API SYNC]: Session Protocol Expired. Redirecting to Re-auth.');
       localStorage.removeItem('mediSync_user');
-      // Redirect to login with reason
       window.location.href = '/login?reason=session_missing';
     }
     return Promise.reject(error);

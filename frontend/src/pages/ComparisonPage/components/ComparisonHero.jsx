@@ -1,7 +1,7 @@
 import React from 'react';
 import { TrendingDown, CheckCircle2, Zap } from 'lucide-react';
-import medBoxImg from '../../assets/images/medicine_box.png';
-import vitaminsImg from '../../assets/images/vitamins.png';
+import medBoxImg from '../../../assets/images/medicine_box.png';
+import vitaminsImg from '../../../assets/images/vitamins.png';
 
 const ComparisonHero = ({ medicinesCount, totalSavings }) => {
   return (

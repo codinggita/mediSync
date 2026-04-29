@@ -10,6 +10,7 @@ import AppointmentsListContent from './components/AppointmentsListContent';
 import AppointmentSearch from './components/AppointmentSearch';
 import { useAuth } from '../../context/AuthContext';
 import useAppointments from './hooks/useAppointments';
+import SEO from '../../components/SEO';
 
 const AppointmentsPage = () => {
   const { user } = useAuth();
@@ -32,6 +33,10 @@ const AppointmentsPage = () => {
 
   return (
     <div className="flex h-screen overflow-hidden bg-[#ecf0f3] dark:bg-[#0f141f] transition-colors duration-500 font-sans relative">
+      <SEO 
+        title={user?.role === 'Doctor' ? "Manage Patient Appointments" : "Book Clinical Appointments"} 
+        description="Schedule, manage, and track your clinical sessions securely with MediSync's advanced appointment protocol."
+      />
       <AppointmentsDecorations />
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
 

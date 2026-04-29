@@ -1,8 +1,8 @@
 import React from 'react';
 
 const TimelineNode = ({ rec, isSelected, isLast, onSelect, Icon, color }) => {
-  const dateObj = new Date(rec.createdAt);
-  const shortDate = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  const dateObj = rec.createdAt ? new Date(rec.createdAt) : new Date();
+  const shortDate = isNaN(dateObj.getTime()) ? 'Recent' : dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
   return (
     <div className="flex gap-4 group cursor-pointer relative" onClick={() => onSelect(rec._id)}>

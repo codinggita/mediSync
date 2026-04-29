@@ -38,42 +38,34 @@ const HISTORY = [
 
 const ClinicalHistory = () => {
   return (
-    <div className="bg-white rounded-[14px] border border-gray-100 shadow-sm p-5 doctor-card h-full">
-      <div className="flex items-center justify-between mb-5">
-        <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wide">Clinical History</h3>
-        <span className="text-xs text-[#2A7FFF] font-semibold cursor-pointer hover:underline">View All</span>
-      </div>
+    <div className="relative flex flex-col gap-0 h-full">
+      {/* Vertical line */}
+      <div className="absolute left-[27px] top-4 bottom-4 w-[2px] bg-slate-200 dark:bg-slate-800 rounded-full" />
 
-      {/* Timeline */}
-      <div className="relative flex flex-col gap-0">
-        {/* Vertical line */}
-        <div className="absolute left-[19px] top-2 bottom-2 w-[2px] bg-gray-100 rounded-full" />
-
-        {HISTORY.map(({ icon: Icon, iconBg, title, date, summary, cta }, i) => (
-          <div
-            key={i}
-            className="relative flex gap-4 pb-5 last:pb-0 group timeline-item"
-          >
-            {/* Icon node */}
-            <div className={`relative z-10 w-10 h-10 rounded-[10px] ${iconBg} flex items-center justify-center flex-shrink-0 shadow-sm border border-white group-hover:scale-110 transition-transform duration-200`}>
-              <Icon size={16} />
-            </div>
-
-            {/* Content card */}
-            <div className="flex-1 min-w-0 bg-[#F8FAFC] rounded-[12px] border border-gray-100 p-4 group-hover:border-green-100 group-hover:shadow-sm transition-all duration-200">
-              <div className="flex items-start justify-between gap-2 mb-1">
-                <p className="text-sm font-bold text-gray-800 leading-snug">{title}</p>
-                <span className="text-[11px] text-gray-400 font-medium whitespace-nowrap flex-shrink-0">{date}</span>
-              </div>
-              <p className="text-xs text-gray-500 leading-relaxed mb-3">{summary}</p>
-              <button className="flex items-center gap-1.5 text-xs font-bold text-[#2A7FFF] hover:text-[#1A66CC] transition-colors duration-150">
-                <ExternalLink size={11} />
-                {cta}
-              </button>
-            </div>
+      {HISTORY.map(({ icon: Icon, iconBg, title, date, summary, cta }, i) => (
+        <div
+          key={i}
+          className="relative flex gap-6 pb-8 last:pb-0 group timeline-item"
+        >
+          {/* Icon node */}
+          <div className={`relative z-10 w-14 h-14 rounded-2xl bg-[#ecf0f3] dark:bg-[#151E32] flex items-center justify-center flex-shrink-0 shadow-[8px_8px_16px_#cbced1,-8px_-8px_16px_#ffffff] dark:shadow-[8px_8px_16px_#0a0f1d,-8px_-8px_16px_#202d47] border border-white/40 dark:border-white/5 group-hover:-translate-y-1 transition-transform duration-300`}>
+            <Icon size={20} className={iconBg.split(' ')[1]} />
           </div>
-        ))}
-      </div>
+
+          {/* Content card */}
+          <div className="flex-1 min-w-0 bg-[#ecf0f3] dark:bg-[#151E32] rounded-[2rem] border border-white/40 dark:border-white/5 p-6 shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0a0f1d,inset_-4px_-4px_8px_#202d47] transition-all duration-300">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+              <p className="text-[1rem] font-black text-slate-800 dark:text-white leading-snug">{title}</p>
+              <span className="text-[0.7rem] text-[#2A7FFF] font-black uppercase tracking-widest whitespace-nowrap flex-shrink-0 bg-[#2A7FFF]/10 px-3 py-1 rounded-lg">{date}</span>
+            </div>
+            <p className="text-[0.85rem] text-slate-500 font-bold leading-relaxed mb-4">{summary}</p>
+            <button className="flex items-center gap-2 text-[0.75rem] font-black uppercase tracking-widest text-[#2A7FFF] hover:text-[#1A66CC] transition-colors duration-150 group/btn">
+              <ExternalLink size={14} className="group-hover/btn:translate-x-0.5 transition-transform" />
+              {cta}
+            </button>
+          </div>
+        </div>
+      ))}
     </div>
   );
 };

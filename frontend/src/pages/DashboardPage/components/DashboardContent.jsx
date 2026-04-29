@@ -14,6 +14,7 @@ import RecentRecordsPreview from './RecentRecordsPreview';
 import PriceAlertBanner from './PriceAlertBanner';
 import DashboardFooter from './DashboardFooter';
 import PremiumLoader from '../../../components/PremiumLoader';
+import { useDashboardStats } from '../../../hooks/useDashboardStats';
 
 import medBoxImg from '../../../assets/images/medicine_box.png';
 import vitaminsImg from '../../../assets/images/vitamins.png';
@@ -22,40 +23,11 @@ import eyeDropsImg from '../../../assets/images/eye_drops.png';
 import inhalerImg from '../../../assets/images/inhaler.png';
 
 const DashboardContent = () => {
-  const [loading, setLoading] = useState(true);
-  const [stats, setStats] = useState({ medicines: 0, records: 0, appointments: 0, alerts: 3 });
+  const { stats, loading, refreshStats } = useDashboardStats();
   const { user } = useAuth();
   const [isUploading, setIsUploading] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const medCompRef = useRef(null);
-
-  useEffect(() => {
-    const fetchDashboardData = async () => {
-      try {
-        const [prescRes, recordRes, apptRes] = await Promise.all([
-          api.get('/prescriptions/my').catch(e => ({ data: { medicines: [] } })), 
-          api.get('/records').catch(e => ({ data: [] })), 
-          api.get('/appointments').catch(e => ({ data: [] }))
-        ]);
-        
-        const medicinesCount = Array.isArray(prescRes?.data) 
-          ? prescRes.data.length 
-          : (prescRes?.data?.medicines?.length || 0);
-
-        setStats({
-          medicines: medicinesCount,
-          records: Array.isArray(recordRes?.data) ? recordRes.data.length : 0,
-          appointments: Array.isArray(apptRes?.data) ? apptRes.data.length : 0,
-          alerts: 3
-        });
-      } catch (error) { 
-        console.error('Error fetching dashboard stats:', error); 
-        setStats({ medicines: 0, records: 0, appointments: 0, alerts: 0 });
-      }
-      finally { setLoading(false); }
-    };
-    fetchDashboardData();
-  }, []);
 
   if (loading) return <PremiumLoader message="Syncing Health Records" />;
 
@@ -69,8 +41,8 @@ const DashboardContent = () => {
   const greeting = new Date().getHours() < 12 ? 'Good Morning' : new Date().getHours() < 17 ? 'Good Afternoon' : 'Good Evening';
 
   return (
-    <main className="flex-1 overflow-y-auto bg-[#ecf0f3] dark:bg-[#121826] transition-colors duration-300 p-6 lg:p-8 space-y-10 scrollbar-hide pb-24 md:pb-20">
-      <div className="flex flex-col gap-10">
+    <main className="flex-1 overflow-y-auto bg-[#ecf0f3] dark:bg-[#121826] transition-colors duration-300 p-6 lg:p-8 space-y-6 scrollbar-hide pb-24 md:pb-20">
+      <div className="flex flex-col gap-6">
         <WelcomeBanner user={user} stats={stats} greeting={greeting} firstAidImg={firstAidImg} />
         <StatGrid statCards={statCards} loading={loading} />
         <PriceAlertBanner />
@@ -90,16 +62,16 @@ const DashboardContent = () => {
            }}
         />
 
-        <div id="price-intel-section" className="grid grid-cols-1 xl:grid-cols-12 gap-10">
-          <div className="xl:col-span-8"><MedicineComparison ref={medCompRef} /></div>
-          <div className="xl:col-span-4 flex flex-col gap-8">
+        <div id="price-intel-section" className="grid grid-cols-1 xl:grid-cols-12 gap-6">
+          <div className="xl:col-span-8"><MedicineComparison ref={medCompRef} onRefresh={refreshStats} /></div>
+          <div className="xl:col-span-4 flex flex-col gap-6">
              <SavingsInsights />
              <HealthActivity user={user} />
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
-          <RecentRecordsPreview isUploading={isUploading} setIsUploading={setIsUploading} uploadSuccess={uploadSuccess} setUploadSuccess={setUploadSuccess} />
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          <RecentRecordsPreview isUploading={isUploading} setIsUploading={setIsUploading} uploadSuccess={uploadSuccess} setUploadSuccess={setUploadSuccess} onRefresh={refreshStats} />
           <NearbyPharmacies />
           <DoctorConnect />
         </div>

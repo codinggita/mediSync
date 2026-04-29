@@ -8,11 +8,21 @@ import EmptyRecordDetail from './EmptyRecordDetail';
 import RecordDetailHeader from './RecordDetailHeader';
 import RecordDossier from './RecordDossier';
 
-const RecordDetailCard = ({ record }) => {
+const RecordDetailCard = ({ record, onDelete }) => {
   const [showPreview, setShowPreview] = useState(false);
   const [pdfBlobUrl, setPdfBlobUrl] = useState(null);
   const [showShareModal, setShowShareModal] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleDelete = async () => {
+    if (window.confirm('Are you sure you want to remove this clinical artifact from your vault? This action cannot be undone.')) {
+      setIsDeleting(true);
+      const res = await onDelete(record._id);
+      setIsDeleting(false);
+      if (!res.success) alert('Failed to remove artifact: ' + res.error);
+    }
+  };
 
   useEffect(() => {
     if (showPreview && record?.fileUrl) {
@@ -56,7 +66,9 @@ const RecordDetailCard = ({ record }) => {
 
   const Icon = getIcon(record.type);
   const color = getColor(record.type);
-  const dateStr = new Date(record.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  const rawDate = record.date || record.createdAt;
+  const dateObj = rawDate ? new Date(rawDate) : new Date();
+  const dateStr = isNaN(dateObj.getTime()) ? 'Recent Report' : dateObj.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
   const shareLink = `https://medisync.app/secure/${record._id}`;
 
   const handleCopy = () => {
@@ -73,7 +85,13 @@ const RecordDetailCard = ({ record }) => {
         </div>
         
         <div className="relative z-10">
-          <RecordDetailHeader record={record} dateStr={dateStr} onShare={() => setShowShareModal(true)} />
+          <RecordDetailHeader 
+            record={record} 
+            dateStr={dateStr} 
+            onShare={() => setShowShareModal(true)} 
+            onDelete={handleDelete}
+            isDeleting={isDeleting}
+          />
 
           <div className="flex items-start gap-6">
             <div className="w-20 h-20 rounded-[2rem] bg-[#ecf0f3] dark:bg-[#151E32] flex items-center justify-center shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0a0f1d,inset_-4px_-4px_8px_#202d47]">

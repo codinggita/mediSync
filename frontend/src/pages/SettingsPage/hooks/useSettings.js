@@ -5,16 +5,16 @@ import api from '../../../utils/api';
 
 export const useSettings = (isDoctor) => {
   const navigate = useNavigate();
-  const { user, refreshUser } = useAuth();
+  const { user, refreshUser, logout } = useAuth();
   
   const [isSaving, setIsSaving] = useState(false);
   const [filterMode, setFilterMode] = useState('All');
   
   const [telemetryState, setTelemetryState] = useState({
-     vitals: true,
-     priceDrops: false,
-     appointments: true,
-     records: false
+     vitals: user?.preferences?.vitals ?? true,
+     priceDrops: user?.preferences?.priceDrops ?? false,
+     appointments: user?.preferences?.appointments ?? true,
+     records: user?.preferences?.records ?? false
   });
 
   const [securityState, setSecurityState] = useState({
@@ -23,18 +23,20 @@ export const useSettings = (isDoctor) => {
     syncing: false,
     showPasswordModal: false,
     passwords: { current: '', new: '', confirm: '' },
-    updating: false
+    updating: false,
+    passwordLastChanged: user?.preferences?.passwordLastChanged || '3 months ago'
   });
 
   const [userData, setUserData] = useState({
-    firstName: 'Shubham',
-    lastName: 'Kumar',
-    email: 'shubham@gmail.com',
-    phone: '+91 99887 76655',
-    bloodType: 'B Positive',
-    specialization: 'Cardiology Specialist',
-    nodeId: '#MS-SHB99',
-    profileImg: null
+    firstName: user?.name?.split(' ')[0] || 'Jivan',
+    lastName: user?.name?.split(' ').slice(1).join(' ') || 'User',
+    email: user?.email || '',
+    phone: user?.phone || '',
+    bloodType: user?.bloodGroup || 'B Positive',
+    specialty: user?.specialty || '',
+    hospital: user?.hospital || '',
+    nodeId: user?.patientId || (isDoctor ? '#MS-DOC-X9' : '#MS-PT-88'),
+    profileImg: user?.profilePic || null
   });
 
   const [records, setRecords] = useState([
@@ -52,10 +54,23 @@ export const useSettings = (isDoctor) => {
         firstName: user.name?.split(' ')[0] || prev.firstName,
         lastName: user.name?.split(' ').slice(1).join(' ') || prev.lastName,
         email: user.email || prev.email,
-        nodeId: isDoctor ? '#MS-DOC-X9' : '#MS-PT-88',
-        bloodType: isDoctor ? 'MD-LIC-829' : 'B Positive',
-        specialization: isDoctor ? 'Senior Cardiologist' : ''
+        phone: user.phone || prev.phone,
+        bloodType: user.bloodGroup || prev.bloodType,
+        specialty: user.specialty || prev.specialty,
+        hospital: user.hospital || prev.hospital,
+        nodeId: user.patientId || (isDoctor ? '#MS-DOC-X9' : '#MS-PT-88'),
+        profileImg: user.profilePic || prev.profileImg
       }));
+      if (user.preferences) {
+        setTelemetryState(prev => ({
+          ...prev,
+          ...user.preferences
+        }));
+        setSecurityState(prev => ({
+          ...prev,
+          passwordLastChanged: user.preferences.passwordLastChanged || prev.passwordLastChanged
+        }));
+      }
     }
   }, [user, isDoctor]);
 
@@ -95,7 +110,8 @@ export const useSettings = (isDoctor) => {
       setSecurityState(prev => ({ 
         ...prev, 
         showPasswordModal: false, 
-        passwords: { current: '', new: '', confirm: '' } 
+        passwords: { current: '', new: '', confirm: '' },
+        passwordLastChanged: 'just now'
       }));
     } catch (err) {
       alert('Security Protocol Failed: ' + (err.response?.data?.message || 'Verification Error'));
@@ -110,19 +126,42 @@ export const useSettings = (isDoctor) => {
   };
 
   const handleSaveChanges = async () => {
+    // Synchronize with AuthContext state for the most current session credentials
+    const currentToken = user?.token;
+    
+    if (!currentToken) {
+      alert('Sync Protocol Failed: Session Credentials Missing. Please re-login to synchronize your clinical profile.');
+      return;
+    }
+
     setIsSaving(true);
     try {
-      await api.put('/users/profile', {
-        name: `${userData.firstName} ${userData.lastName}`,
+      const payload = {
+        name: `${userData.firstName} ${userData.lastName}`.trim(),
         email: userData.email,
-        bloodGroup: userData.bloodGroup,
-        gender: userData.gender
-      });
+        phone: userData.phone,
+        bloodGroup: userData.bloodType,
+        specialty: userData.specialty,
+        hospital: userData.hospital,
+        gender: userData.gender,
+        preferences: {
+          ...telemetryState,
+          passwordLastChanged: securityState.passwordLastChanged
+        }
+      };
+
+      // Only include gender if it's one of the valid enum values to avoid validation errors
+      if (['Male', 'Female', 'Other'].includes(userData.gender)) {
+        payload.gender = userData.gender;
+      }
+
+      await api.put('/users/profile', payload);
       await refreshUser();
       alert('Clinical Profile Synchronized Successfully.');
     } catch (err) {
       console.error('Failed to update profile:', err);
-      alert('Sync Protocol Failed. Please verify network connectivity.');
+      const errorMsg = err.response?.data?.message || 'Verification Error';
+      alert(`Sync Protocol Failed: ${errorMsg}`);
     } finally {
       setIsSaving(false);
     }
@@ -147,6 +186,7 @@ export const useSettings = (isDoctor) => {
 
   const handleTerminate = () => {
     if(window.confirm('CRITICAL ACTION: Are you sure you want to terminate your session? You will be securely logged out.')) {
+      logout();
       navigate('/login');
     }
   };

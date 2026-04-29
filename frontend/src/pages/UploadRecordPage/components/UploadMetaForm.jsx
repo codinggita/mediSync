@@ -8,22 +8,20 @@ const categories = [
   'Surgery Summary', 'Vaccination', 'Discharge Summary', 'Other',
 ];
 
-const UploadMetaForm = ({ file, onSubmit, onCancel }) => {
+const UploadMetaForm = ({ file, onSubmit, onCancel, isLoading }) => {
   const [form, setForm] = useState({
+    title: '',
     hospital: '',
     date: new Date().toISOString().split('T')[0],
     category: categories[0],
     notes: '',
   });
-  const [submitted, setSubmitted] = useState(false);
 
   const set = (key, val) => setForm(prev => ({ ...prev, [key]: val }));
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!file) return;
-    setSubmitted(true);
-    setTimeout(() => { setSubmitted(false); onSubmit?.(form); }, 2000);
+    if (!isLoading) onSubmit?.(form);
   };
 
   const inputCls = `w-full text-[0.9rem] px-5 py-4 rounded-2xl bg-[#ecf0f3] dark:bg-[#0B1121]
@@ -57,7 +55,7 @@ const UploadMetaForm = ({ file, onSubmit, onCancel }) => {
 
         <UploadFormActions 
           file={file}
-          submitted={submitted}
+          isLoading={isLoading}
           onCancel={onCancel}
         />
 

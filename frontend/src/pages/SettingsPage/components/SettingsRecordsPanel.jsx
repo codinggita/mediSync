@@ -2,6 +2,12 @@ import React from 'react';
 import { Database, AlertTriangle, Trash2, FileText, Calendar, ChevronRight } from 'lucide-react';
 
 const SettingsRecordsPanel = ({ records, filterMode, setFilterMode, onDeleteRecord, onBulkPurge }) => {
+  const totalSize = records.reduce((acc, r) => acc + parseFloat(r.size), 0);
+  const legacySize = records.filter(r => new Date(r.date).getFullYear() < 2024).reduce((acc, r) => acc + parseFloat(r.size), 0);
+  const maxCapacity = 500;
+  const utilizedPercent = Math.min(100, (totalSize / maxCapacity) * 100);
+  const legacyPercent = Math.min(100, (legacySize / maxCapacity) * 100);
+
   return (
     <div className="max-w-4xl animate-in fade-in slide-in-from-right-10 duration-700">
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-6">
@@ -18,23 +24,23 @@ const SettingsRecordsPanel = ({ records, filterMode, setFilterMode, onDeleteReco
       </div>
 
       {/* Storage Telemetry */}
-      <div className="bg-slate-50 dark:bg-[#0B1121] p-8 rounded-[2.5rem] mb-10 border border-slate-100 dark:border-white/5">
+      <div className="bg-slate-50 dark:bg-[#0B1121] p-8 rounded-[2.5rem] mb-10 border border-slate-100 dark:border-white/5 shadow-inner">
         <div className="flex items-center justify-between mb-4">
-          <span className="text-[0.75rem] font-black text-slate-500 uppercase tracking-widest">Vault Capacity: 62.4 MB / 500 MB</span>
-          <span className="text-[0.75rem] font-black text-[#2A7FFF] uppercase tracking-widest">12% Utilized</span>
+          <span className="text-[0.75rem] font-black text-slate-500 uppercase tracking-widest">Vault Capacity: {totalSize.toFixed(1)} MB / {maxCapacity} MB</span>
+          <span className="text-[0.75rem] font-black text-[#2A7FFF] uppercase tracking-widest">{utilizedPercent.toFixed(1)}% Utilized</span>
         </div>
-        <div className="w-full h-3 bg-slate-200 dark:bg-white/5 rounded-full overflow-hidden flex">
-          <div className="h-full bg-[#2A7FFF] w-[12%] shadow-[0_0_15px_rgba(42,127,255,0.5)]"></div>
-          <div className="h-full bg-rose-500 w-[5%]"></div>
+        <div className="w-full h-3 bg-slate-200 dark:bg-white/5 rounded-full overflow-hidden flex shadow-inner">
+          <div className="h-full bg-[#2A7FFF] transition-all duration-1000" style={{ width: `${utilizedPercent - legacyPercent}%` }}></div>
+          <div className="h-full bg-rose-500 transition-all duration-1000" style={{ width: `${legacyPercent}%` }}></div>
         </div>
         <div className="mt-4 flex gap-6">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-[#2A7FFF]"></div>
-            <span className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">Active Records</span>
+            <span className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">Active Records ({records.length - records.filter(r => new Date(r.date).getFullYear() < 2024).length})</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-rose-500"></div>
-            <span className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">Legacy Purgeable</span>
+            <span className="text-[0.65rem] font-black text-slate-400 uppercase tracking-widest">Legacy Purgeable ({records.filter(r => new Date(r.date).getFullYear() < 2024).length})</span>
           </div>
         </div>
       </div>

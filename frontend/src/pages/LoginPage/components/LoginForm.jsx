@@ -14,7 +14,7 @@ const LoginForm = ({ formik, role, isLoading }) => {
           <input 
             {...formik.getFieldProps('email')}
             placeholder={role === 'Doctor' ? 'hospital.id@medisync.app' : 'you@example.com or 9999999999'}
-            className={`w-full py-4 pl-12 pr-4 neu-input text-[0.9rem] font-bold text-slate-800 dark:text-white ${formik.errors.email && formik.touched.email ? 'ring-2 ring-red-400/20' : ''}`}
+            className={`w-full py-4 pl-12 pr-4 nm-inset rounded-2xl text-[0.9rem] font-bold text-slate-800 dark:text-white border-none focus:outline-none ${formik.errors.email && formik.touched.email ? 'ring-2 ring-red-400/20' : ''}`}
             autoComplete="off"
           />
         </div>
@@ -28,7 +28,7 @@ const LoginForm = ({ formik, role, isLoading }) => {
           <input 
             type="password" {...formik.getFieldProps('password')}
             placeholder="••••••••"
-            className={`w-full py-4 pl-12 pr-4 neu-input text-[0.9rem] font-bold text-slate-800 dark:text-white ${formik.errors.password && formik.touched.password ? 'ring-2 ring-red-400/20' : ''}`}
+            className={`w-full py-4 pl-12 pr-4 nm-inset rounded-2xl text-[0.9rem] font-bold text-slate-800 dark:text-white border-none focus:outline-none ${formik.errors.password && formik.touched.password ? 'ring-2 ring-red-400/20' : ''}`}
             autoComplete="new-password"
           />
         </div>
@@ -45,7 +45,7 @@ const LoginForm = ({ formik, role, isLoading }) => {
 
       <button 
         type="submit" disabled={isLoading}
-        className="flex items-center justify-center gap-3 bg-[#2A7FFF] text-white py-5 rounded-2xl font-black text-[1rem] mt-6 shadow-[0_12px_24px_rgba(42,127,255,0.3)] hover:bg-[#1C71E1] hover:-translate-y-1 active:scale-[0.98] transition-all disabled:opacity-70 group"
+        className="flex items-center justify-center gap-3 bg-[#2A7FFF] text-white py-5 rounded-2xl font-black text-[1rem] mt-6 shadow-[0_12px_24px_rgba(42,127,255,0.3)] nm-button hover:bg-[#1C71E1] hover:-translate-y-1 active:scale-[0.98] transition-all disabled:opacity-70 group"
       >
         {isLoading ? <><Loader2 size={20} className="animate-spin" /> Authenticating...</> : <>Access Portal <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" /></>}
       </button>

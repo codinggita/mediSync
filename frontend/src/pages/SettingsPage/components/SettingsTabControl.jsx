@@ -32,9 +32,9 @@ const SettingsTabControl = ({ tabs, activeTab, setActiveTab, onTerminate }) => {
         <p className="text-[0.65rem] font-black text-rose-500 uppercase tracking-[0.3em]">Critical Action</p>
         <button 
           onClick={onTerminate}
-          className="flex items-center justify-center gap-3 w-full py-4 bg-rose-500 text-white rounded-[1.4rem] font-black text-[0.8rem] uppercase tracking-widest hover:bg-rose-600 transition-colors shadow-lg shadow-rose-500/20 active:scale-95"
+          className="flex items-center justify-center gap-3 w-full py-5 bg-[#F43F5E] hover:bg-[#E11D48] text-white rounded-full font-black text-[0.85rem] uppercase tracking-[0.2em] shadow-[0_15px_30px_rgba(244,63,94,0.3)] hover:shadow-[0_20px_40px_rgba(244,63,94,0.4)] hover:-translate-y-1 active:scale-95 transition-all"
         >
-          <LogOut size={16} /> Termination
+          <LogOut size={20} /> TERMINATION
         </button>
       </div>
     </div>

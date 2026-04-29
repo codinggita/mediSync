@@ -4,9 +4,8 @@ import { FileText, ChevronRight, Upload, Loader2, Check, Eye } from 'lucide-reac
 import api from '../../../utils/api';
 import DocumentViewerOverlay from './DocumentViewerOverlay';
 
-const RecentRecordsPreview = ({ 
-  isUploading, setIsUploading, uploadSuccess, setUploadSuccess 
-}) => {
+const RecentRecordsPreview = (props) => {
+  const { isUploading, setIsUploading, uploadSuccess, setUploadSuccess } = props;
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedRecord, setSelectedRecord] = useState(null);
@@ -36,7 +35,9 @@ const RecentRecordsPreview = ({
     const fetchRecords = async () => {
       try {
         const { data } = await api.get('/records');
-        setRecords(data.slice(0, 3)); // show only top 3
+        if (Array.isArray(data)) {
+          setRecords(data.slice(0, 3)); // show only top 3
+        }
       } catch (err) {
         console.error('Failed to fetch records', err);
       } finally {
@@ -46,19 +47,50 @@ const RecentRecordsPreview = ({
     fetchRecords();
   }, []);
 
-  const handleUpload = (e) => {
-    e.preventDefault();
-    if (isUploading) return;
+  const handleFileChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file || isUploading) return;
+    
     setIsUploading(true);
-    setTimeout(() => {
+    try {
+      // For the clinical demo, we'll convert the local file to a Data URL (base64)
+      // so it can be viewed immediately in the overlay without a complex S3 backend setup
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const base64data = reader.result;
+        const payload = {
+          title: file.name.split('.')[0] || 'Diagnostic Lab Report',
+          type: file.type.includes('pdf') ? 'Diagnostic' : 'Imaging',
+          description: `User uploaded clinical artifact: ${file.name}`,
+          hospital: 'MediSync Self-Upload',
+          fileUrl: base64data
+        };
+
+        await api.post('/records', payload);
+        setUploadSuccess(true);
+        
+        // Refresh local list and global stats
+        const { data } = await api.get('/records');
+        if (Array.isArray(data)) setRecords(data.slice(0, 3));
+        if (props.onRefresh) props.onRefresh();
+
+        setTimeout(() => setUploadSuccess(false), 3000);
+        setIsUploading(false);
+      };
+      reader.readAsDataURL(file);
+    } catch (err) {
+      console.error('Clinical Upload failed:', err);
+      alert('Sourcing Synchronization Failed. Please verify your connection.');
       setIsUploading(false);
-      setUploadSuccess(true);
-      setTimeout(() => setUploadSuccess(false), 3000);
-    }, 1500);
+    }
+  };
+
+  const triggerFileInput = () => {
+    document.getElementById('clinical-report-upload').click();
   };
 
   return (
-    <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[32px] p-7 shadow-[8px_8px_16px_#cbced1,-8px_-8px_16px_#ffffff] dark:shadow-[8px_8px_16px_#0a0f1d,-8px_-8px_16px_#202d47] flex flex-col h-full transition-all duration-300">
+    <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[32px] p-6 shadow-[8px_8px_16px_#cbced1,-8px_-8px_16px_#ffffff] dark:shadow-[8px_8px_16px_#0a0f1d,-8px_-8px_16px_#202d47] flex flex-col transition-all duration-300">
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-[1.1rem] font-black text-[#1F2937] dark:text-white flex items-center gap-2.5">
           <FileText size={20} className="text-[#F59E0B]" />
@@ -84,7 +116,9 @@ const RecentRecordsPreview = ({
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-[0.85rem] font-black text-[#1F2937] dark:text-white truncate">{rec.title}</p>
-              <p className="text-[0.68rem] text-gray-400 font-bold uppercase mt-0.5">{new Date(rec.createdAt).toLocaleDateString()} · {rec.hospital || 'MediSync Lab'}</p>
+              <p className="text-[0.68rem] text-gray-400 font-bold uppercase mt-0.5">
+                {rec.createdAt ? new Date(rec.createdAt).toLocaleDateString() : 'Pending Sync'} · {rec.hospital || 'MediSync Lab'}
+              </p>
             </div>
             
             <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -104,8 +138,8 @@ const RecentRecordsPreview = ({
             </div>
           </div>
         )) : (
-          <div className="flex flex-col items-center justify-center h-full text-center opacity-30 py-6">
-            <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-white/5 flex items-center justify-center mb-3">
+          <div className="flex flex-col items-center justify-center h-full text-center py-6">
+            <div className="w-12 h-12 rounded-full bg-[#ecf0f3] dark:bg-[#151E32] shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0a0f1d,inset_-4px_-4px_8px_#202d47] flex items-center justify-center mb-3">
               <FileText size={24} className="text-slate-300" />
             </div>
             <p className="text-[0.7rem] font-black text-slate-400 uppercase tracking-widest leading-relaxed">No medical records <br /> uploaded yet</p>
@@ -114,13 +148,20 @@ const RecentRecordsPreview = ({
       </div>
 
       <div 
-        onClick={handleUpload}
+        onClick={triggerFileInput}
         className={`mt-6 p-5 rounded-[24px] ${uploadSuccess ? 'bg-[#ecf0f3] text-emerald-500 shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff]' : 'bg-[#ecf0f3] shadow-[4px_4px_8px_#cbced1,-4px_-4px_8px_#ffffff] active:shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff]'} flex flex-col items-center text-center group cursor-pointer transition-all relative overflow-hidden`}
       >
+        <input 
+          type="file" 
+          id="clinical-report-upload" 
+          className="hidden" 
+          accept=".pdf,.png,.jpg,.jpeg" 
+          onChange={handleFileChange} 
+        />
         {isUploading ? (
           <div className="flex flex-col items-center animate-in fade-in duration-300">
              <Loader2 size={24} className="text-[#F59E0B] animate-spin mb-3" />
-             <p className="text-[0.85rem] font-black text-slate-900 dark:text-white">Analyzing Report...</p>
+             <p className="text-[0.85rem] font-black text-slate-900 dark:text-white">Syncing Report...</p>
              <p className="text-[0.6rem] text-slate-400 font-bold mt-1 uppercase tracking-widest">Applying AI Classification</p>
           </div>
         ) : uploadSuccess ? (

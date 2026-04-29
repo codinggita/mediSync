@@ -38,7 +38,7 @@ const getRecords = async (req, res, next) => {
 // @access  Private
 const createRecord = async (req, res, next) => {
   try {
-    const { title, type, description, hospital, fileUrl, patientId } = req.body;
+    const { title, type, description, hospital, fileUrl, patientId, date } = req.body;
 
     let targetPatientId = req.user._id;
 
@@ -59,6 +59,7 @@ const createRecord = async (req, res, next) => {
       description,
       hospital: hospital || (req.user.role === 'Doctor' ? req.user.hospital : undefined),
       fileUrl,
+      date: date || Date.now()
     });
 
     res.status(201).json(record);
@@ -144,4 +145,29 @@ const shareRecord = async (req, res, next) => {
   }
 };
 
-export { getRecords, createRecord, getRecordById, shareRecord };
+// @desc    Delete a medical record
+// @route   DELETE /api/records/:id
+// @access  Private
+const deleteRecord = async (req, res, next) => {
+  try {
+    const record = await MedicalRecord.findById(req.params.id);
+
+    if (!record) {
+      res.status(404);
+      throw new Error('Medical record not found');
+    }
+
+    // Check authorization
+    if (record.patient.toString() !== req.user._id.toString() && req.user.role !== 'Admin') {
+      res.status(401);
+      throw new Error('Not authorized to delete this record');
+    }
+
+    await record.deleteOne();
+    res.json({ message: 'Clinical artifact removed successfully' });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { getRecords, createRecord, getRecordById, shareRecord, deleteRecord };

@@ -50,16 +50,25 @@ const SecurityAgreement = ({
         </button>
         <button 
           type="submit" 
-          disabled={isLoading}
-          onClick={() => {
-            const errors = Object.values(formik.errors);
-            if (errors.length > 0) {
-              setError(`Missing fields: ${errors[0]}`);
+          disabled={isLoading === true || isLoading === 'success'}
+          onClick={async () => {
+            // Touch all fields to show all validation errors
+            await formik.setTouched({
+              password: true,
+              confirmPassword: true,
+              agreeTerms: true,
+            });
+            const errors = await formik.validateForm();
+            const errorMessages = Object.values(errors);
+            if (errorMessages.length > 0) {
+              setError(errorMessages[0]);
+            } else {
+              setError(null);
             }
           }}
           className="flex-1 flex items-center justify-center gap-2 bg-[#ecf0f3] text-[#2A7FFF] py-4 rounded-xl font-black text-[0.95rem] shadow-[6px_6px_12px_#cbced1,-6px_-6px_12px_#ffffff] hover:shadow-[4px_4px_8px_#cbced1,-4px_-4px_8px_#ffffff] active:shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff] disabled:opacity-70 transition-all group"
         >
-          {isLoading ? <><Loader2 size={18} className="animate-spin" /> Creating Vault...</> : <>Complete Registration <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" /></>}
+          {isLoading === true ? <><Loader2 size={18} className="animate-spin" /> Creating Vault...</> : <>Complete Registration <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" /></>}
         </button>
       </div>
     </div>

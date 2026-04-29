@@ -5,12 +5,10 @@ import ReactGA from 'react-ga4';
 import AppRoutes from './routes/AppRoutes';
 import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthContext';
-import { GoogleOAuthProvider } from '@react-oauth/google';
 import GlobalErrorUI from './components/GlobalErrorUI';
 import AnalyticsTracker from './components/AnalyticsTracker';
 
-// 🔑 Identity & Analytics Matrices
-const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || 'YOUR_GOOGLE_CLIENT_ID_HERE';
+// 🔑 Analytics Matrix
 const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_ID || 'G-XXXXXXXXXX';
 
 function App() {
@@ -21,8 +19,7 @@ function App() {
 
   return (
     <ErrorBoundary FallbackComponent={GlobalErrorUI} onReset={() => window.location.reload()}>
-      <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-        <ThemeProvider>
+      <ThemeProvider>
           <AuthProvider>
             <Router>
               <AnalyticsTracker />
@@ -31,8 +28,7 @@ function App() {
               </div>
             </Router>
           </AuthProvider>
-        </ThemeProvider>
-      </GoogleOAuthProvider>
+      </ThemeProvider>
     </ErrorBoundary>
   );
 }

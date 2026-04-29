@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { 
   CalendarDays, Calendar as CalendarIcon, Loader2
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import api from '../../../utils/api';
 import DoctorAppointmentCard from './DoctorAppointmentCard';
 import ScheduleStatusHeader from './ScheduleStatusHeader';
@@ -9,12 +10,41 @@ import ScheduleStatusHeader from './ScheduleStatusHeader';
 const DoctorAppointmentsPage = () => {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
         const { data } = await api.get('/appointments');
-        setAppointments(data);
+        let fetchedAppointments = data;
+
+        // Inject Premium Mock Data if DB is empty so the user can test the UI!
+        if (fetchedAppointments.length === 0) {
+          const today = new Date();
+          fetchedAppointments = [
+            {
+              _id: 'mock_app_1',
+              patient: { name: 'Sarah Connor', email: 'sarah@example.com' },
+              date: today.toISOString(),
+              time: '14:30',
+              type: 'Video Consultation',
+              status: 'Pending',
+              reason: 'Follow-up on recent asthma flare-up and medication review.',
+              meetingLink: 'https://meet.google.com/mock-123'
+            },
+            {
+              _id: 'mock_app_2',
+              patient: { name: 'James Wilson', email: 'james@example.com' },
+              date: new Date(today.getTime() + 86400000).toISOString(), // Tomorrow
+              time: '09:00',
+              type: 'In-Person',
+              status: 'Confirmed',
+              reason: 'Routine cardiac checkup and blood pressure monitoring.'
+            }
+          ];
+        }
+
+        setAppointments(fetchedAppointments);
       } catch (error) {
         console.error('Error fetching doctor appointments:', error);
       } finally {
@@ -35,7 +65,8 @@ const DoctorAppointmentsPage = () => {
   };
 
   const handleStartSession = () => {
-    alert('Initializing Clinical Video Stream...');
+    const confirm = window.confirm('Initializing Secure Tele-Health Stream. Do you wish to proceed to the Clinical Portal for synchronized documentation?');
+    if (confirm) navigate('/doctor-portal');
   };
 
   const pendingCount = appointments.filter(a => a.status === 'Pending').length;

@@ -5,13 +5,18 @@ import DashboardContent from './components/DashboardContent';
 import DoctorDashboardContent from './components/DoctorDashboardContent';
 import OnboardingModal from '../../components/OnboardingModal';
 import { useAuth } from '../../context/AuthContext';
+import SEO from '../../components/SEO';
 
 const DashboardPage = () => {
   const [collapsed, setCollapsed] = useState(false);
   const { user } = useAuth();
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#F8FAFC] dark:bg-[#0B1121] transition-colors duration-300 font-sans">
+    <div className="flex h-screen overflow-hidden bg-[#ecf0f3] dark:bg-[#0f141f] transition-colors duration-300 font-sans">
+      <SEO 
+        title={user?.role === 'Doctor' ? 'Doctor Dashboard' : 'Patient Dashboard'}
+        description={`Securely manage your ${user?.role === 'Doctor' ? 'clinical appointments and patient cases' : 'medical records, vitals, and pharmacy connections'}.`}
+      />
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
       <div className="flex flex-col flex-1 overflow-hidden min-w-0">
         <TopBar />

@@ -5,7 +5,7 @@ export const getMyPrescription = async (req, res) => {
     const prescription = await Prescription.findOne({ 
       patient: req.user._id, 
       status: 'Active' 
-    }).populate('medicines.medicine');
+    });
     
     res.status(200).json(prescription);
   } catch (error) {
@@ -22,6 +22,34 @@ export const updateMedicationStatus = async (req, res) => {
       { new: true }
     );
     res.status(200).json(prescription);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const addMedication = async (req, res) => {
+  try {
+    const { name, brand, type, pharmacy, price } = req.body;
+    let prescription = await Prescription.findOne({ patient: req.user._id, status: 'Active' });
+
+    if (!prescription) {
+      prescription = await Prescription.create({
+        patient: req.user._id,
+        doctor: req.user._id, // Self-managed for now
+        medicines: []
+      });
+    }
+
+    prescription.medicines.push({
+      name,
+      brand,
+      frequency: 'As needed',
+      dosage: 'Standard',
+      instructions: `Sourced from ${pharmacy} at $${price}`
+    });
+
+    await prescription.save();
+    res.status(201).json(prescription);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

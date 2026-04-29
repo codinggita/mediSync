@@ -3,7 +3,7 @@ import { Key, Shield, Smartphone, RefreshCw } from 'lucide-react';
 
 const SettingsSecurityPanel = ({ securityState, onSecurityAction }) => {
   const securityItems = [
-    { label: 'Account Password', sub: 'Last changed 3 months ago', icon: Key, color: '#F43F5E', action: 'Update Password' },
+    { label: 'Account Password', sub: `Last changed ${securityState.passwordLastChanged}`, icon: Key, color: '#F43F5E', action: 'Update Password' },
     { label: 'Master Access Key', sub: `Last updated ${securityState.keyUpdated}`, icon: Key, color: '#2A7FFF', action: 'Regenerate' },
     { label: 'Biometric 2FA Pulse', sub: 'Protocol STATUS: ACTIVE', icon: Shield, color: '#2ECC71', action: 'Synchronize', loading: securityState.syncing },
     { label: 'Linked Clinical Nodes', sub: `${securityState.activeSessions} active session${securityState.activeSessions > 1 ? 's' : ''} detected`, icon: Smartphone, color: '#F59E0B', action: 'Purge Sessions', disabled: securityState.activeSessions <= 1 }

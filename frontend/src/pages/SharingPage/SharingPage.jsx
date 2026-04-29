@@ -8,6 +8,7 @@ import SharingDecorations from './components/SharingDecorations';
 import SharingMainContent from './components/SharingMainContent';
 import { useAuth } from '../../context/AuthContext';
 import useSharing from './hooks/useSharing';
+import SEO from '../../components/SEO';
 
 const SharingPage = () => {
   const { user } = useAuth();
@@ -21,6 +22,10 @@ const SharingPage = () => {
 
   return (
     <div className="flex h-screen overflow-hidden bg-[#ecf0f3] dark:bg-[#0f141f] transition-colors duration-500 font-sans relative text-slate-800 dark:text-white">
+      <SEO 
+        title={user?.role === 'Doctor' ? "Patient Data Portal" : "Clinical Record Sharing"} 
+        description="Securely share and transmit your end-to-end encrypted clinical artifacts and medical history directly to verified specialists."
+      />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(42,127,255,0.03),transparent)] pointer-events-none" />
       <SharingDecorations />
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />

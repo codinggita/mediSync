@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { AlertCircle } from 'lucide-react';
+import { AlertCircle, ShieldAlert } from 'lucide-react';
 import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
 import { useAuth } from '../../context/AuthContext';
@@ -11,13 +11,19 @@ import LoginBranding from './components/LoginBranding';
 import LoginRoleSelector from './components/LoginRoleSelector';
 import AuthDecorations from './components/AuthDecorations';
 import LoginForm from './components/LoginForm';
+import SEO from '../../components/SEO';
 
 const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [role, setRole] = useState('Patient');
-  const navigate = useNavigate();
   const { login } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Check both state and query params for sync failure
+  const queryParams = new URLSearchParams(location.search);
+  const isSyncFailure = location.state?.reason === 'session_missing' || queryParams.get('reason') === 'session_missing';
 
   const roles = ['Patient', 'Doctor', 'Admin'];
 
@@ -62,9 +68,13 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center font-sans relative overflow-hidden bg-[#ecf0f3] dark:bg-[#121826]">
+      <SEO 
+        title={`Portal Login - ${role}`} 
+        description="Authenticate securely to access your MediSync clinical node and synchronize your health protocols."
+      />
       <AuthDecorations />
       
-      <div className="flex flex-col md:flex-row w-full max-w-5xl rounded-3xl overflow-hidden z-10 md:min-h-[650px] m-4 shadow-[20px_20px_40px_#cbced1,-20px_-20px_40px_#ffffff] dark:shadow-none">
+      <div className="flex flex-col md:flex-row w-full max-w-5xl overflow-hidden z-10 md:min-h-[650px] m-4 skeuo-card">
         <LoginBranding />
         
         <div className="flex-[1.2] px-8 py-10 md:px-12 flex flex-col justify-center bg-transparent">
@@ -75,6 +85,18 @@ const LoginPage = () => {
             </div>
 
             <LoginRoleSelector role={role} setRole={setRole} roles={roles} />
+
+            {isSyncFailure && !error && (
+              <div className="mb-6 p-4 bg-amber-500/10 border border-amber-500/20 rounded-[20px] flex flex-col gap-2 text-amber-600 dark:text-amber-400 animate-in fade-in slide-in-from-top-4">
+                <div className="flex items-center gap-2.5">
+                   <ShieldAlert size={20} className="shrink-0" />
+                   <span className="text-[0.85rem] font-black uppercase tracking-widest">Sync Protocol Failed</span>
+                </div>
+                <p className="text-[0.75rem] font-bold leading-relaxed opacity-80">
+                  Session credentials missing. Please re-login to synchronize your clinical profile.
+                </p>
+              </div>
+            )}
 
             {error && (
               <div className="mb-5 p-3 bg-red-50 border border-red-100 rounded-xl flex items-start gap-2.5 text-red-600 animate-in fade-in slide-in-from-top-2">

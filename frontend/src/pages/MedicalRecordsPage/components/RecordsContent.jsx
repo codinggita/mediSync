@@ -3,7 +3,7 @@ import { Loader2 } from 'lucide-react';
 import RecordsTimeline from './RecordsTimeline';
 import RecordDetailCard from './RecordDetailCard';
 
-const RecordsContent = ({ loading, records, selectedId, setSelectedId, selectedRecord }) => {
+const RecordsContent = ({ loading, records, selectedId, setSelectedId, selectedRecord, onDelete }) => {
   if (loading) {
     return (
       <div className="flex-1 flex flex-col items-center justify-center gap-4">
@@ -26,7 +26,7 @@ const RecordsContent = ({ loading, records, selectedId, setSelectedId, selectedR
 
       {/* Right Column: Detail View */}
       <div className="flex-1 min-w-0">
-        <RecordDetailCard record={selectedRecord} />
+        <RecordDetailCard record={selectedRecord} onDelete={onDelete} />
       </div>
     </div>
   );

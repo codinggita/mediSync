@@ -27,13 +27,17 @@ export const AuthProvider = ({ children }) => {
       const storedUser = localStorage.getItem('mediSync_user');
       if (!storedUser) return;
       
-      const { token } = JSON.parse(storedUser);
+      const currentUser = JSON.parse(storedUser);
+      const { token } = currentUser;
       if (!token) return;
 
       const { data } = await api.get('/auth/me');
-
       if (data) {
-        const updatedUser = { ...data, token }; // keep the token
+        // Persistence Guard: Merge fresh data with existing token
+        const updatedUser = { 
+          ...data, 
+          token: data.token || token 
+        };
         setUser(updatedUser);
         localStorage.setItem('mediSync_user', JSON.stringify(updatedUser));
       }
@@ -48,15 +52,21 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const storedUser = localStorage.getItem('mediSync_user');
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
-      refreshUser(); // Sync with backend immediately on mount
+      try {
+        const parsed = JSON.parse(storedUser);
+        if (parsed && parsed.token) {
+          setUser(parsed);
+          refreshUser(); // Sync with backend
+        } else {
+          // If token is missing, the session is invalid
+          logout();
+        }
+      } catch (err) {
+        logout();
+      }
     }
     
-    // Periodically sync user profile (e.g. for role changes by admin)
-    const interval = setInterval(refreshUser, 60000); // every 60s
-    
     setLoading(false);
-    return () => clearInterval(interval);
   }, []);
 
   const login = (userData) => {

@@ -8,11 +8,7 @@ const AdminGlowCard = ({ label, value, icon: Icon, color, sub, trend, delay = 0 
   
   return (
     <div 
-      className={`relative overflow-hidden rounded-[2rem] p-7 transition-all duration-500 hover:scale-[1.02] group cursor-pointer ${
-        isDarkMode 
-          ? 'bg-[#151E32] shadow-[8px_8px_16px_#0a0f1d,-8px_-8px_16px_#202d47]' 
-          : 'bg-[#ecf0f3] shadow-[10px_10px_20px_#cbced1,-10px_-10px_20px_#ffffff]'
-      }`}
+      className="relative overflow-hidden rounded-[2rem] p-7 transition-all duration-500 hover:scale-[1.02] group cursor-pointer nm-flat"
       style={{ animationDelay: `${delay}ms` }}
     >
       {/* Background Accent Image */}
@@ -23,11 +19,7 @@ const AdminGlowCard = ({ label, value, icon: Icon, color, sub, trend, delay = 0 
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-6">
           <div 
-            className={`w-14 h-14 rounded-[1.2rem] flex items-center justify-center transition-all duration-300 ${
-              isDarkMode 
-                ? 'shadow-[4px_4px_8px_#0a0f1d,-4px_-4px_8px_#202d47]' 
-                : 'shadow-[5px_5px_10px_#cbced1,-5px_-5px_10px_#ffffff]'
-            } group-hover:scale-110`}
+            className="w-14 h-14 rounded-[1.2rem] flex items-center justify-center transition-all duration-300 group-hover:scale-110 nm-inset"
           >
             <Icon size={24} style={{ color }} />
           </div>

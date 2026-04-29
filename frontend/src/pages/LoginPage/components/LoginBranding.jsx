@@ -1,6 +1,6 @@
 import React from 'react';
-import logoImg from '../../assets/MediSync_Logo.png';
-import medicalHeroImg from '../../assets/images/medical_hero.png';
+import logoImg from '../../../assets/MediSync_Logo.png';
+import medicalHeroImg from '../../../assets/images/medical_hero.png';
 
 const LoginBranding = () => {
   return (

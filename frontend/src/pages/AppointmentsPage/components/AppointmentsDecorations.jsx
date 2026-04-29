@@ -1,6 +1,6 @@
 import React from 'react';
-import medicineBoxImg from '../../assets/images/medicine_box.png';
-import inhalerImg from '../../assets/images/inhaler.png';
+import medicineBoxImg from '../../../assets/images/medicine_box.png';
+import inhalerImg from '../../../assets/images/inhaler.png';
 
 const AppointmentsDecorations = () => {
   return (

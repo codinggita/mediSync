@@ -33,7 +33,7 @@ const WelcomeBanner = ({ user, stats, greeting, firstAidImg }) => {
           </div>
           
           <h2 className="text-white text-[2.2rem] sm:text-[2.8rem] font-black leading-[1.1] tracking-tight mb-4">
-            {greeting}, <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/60">{user?.name?.split(' ')[0] || 'Jivan'}</span>!
+            {greeting}, <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/60">{user?.name?.split(' ')[0] || 'Member'}</span>!
           </h2>
           
           <p className="text-white/80 text-[1rem] sm:text-[1.1rem] font-medium max-w-lg leading-relaxed">

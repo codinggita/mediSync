@@ -15,7 +15,7 @@ const DesktopSidebar = ({
 }) => {
   return (
     <div 
-      className={`hidden md:flex relative flex-col h-screen bg-[#ecf0f3] dark:bg-[#121826] border-none shadow-[8px_0_16px_#cbced1,-8px_0_16px_#ffffff] dark:shadow-[8px_0_16px_#0a0f1d,-8px_0_16px_#1a2133] transition-all duration-300 z-20 shrink-0 ${collapsed ? 'w-[80px]' : 'w-[260px]'}`}
+      className={`hidden md:flex relative flex-col h-screen bg-[#ecf0f3] dark:bg-[#121826] border-none shadow-[8px_0_16px_#cbced1,-8px_0_16px_#ffffff] dark:shadow-[8px_0_16px_#0a0f1d,-8px_0_16px_#1a2133] transition-all duration-300 z-[60] shrink-0 ${collapsed ? 'w-[80px]' : 'w-[260px]'}`}
     >
       {/* Logo Header */}
       <div className={`flex items-center h-[70px] border-b border-[#cbced1] dark:border-slate-800/60 ${collapsed ? 'justify-center px-0' : 'px-5 gap-3'}`}>
@@ -47,11 +47,13 @@ const DesktopSidebar = ({
             />
           ) : (
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#2A7FFF] to-[#1565C0] flex items-center justify-center text-white text-xs font-black shadow-[4px_4px_8px_#cbced1,-4px_-4px_8px_#ffffff] shrink-0 uppercase border-2 border-[#ecf0f3] dark:border-[#151E32]">
-              {user?.name?.substring(0, 2) || 'PS'}
+              {user?.name ? user.name.split(' ').map(n => n[0]).join('').substring(0, 2) : 'ID'}
             </div>
           )}
           <div className="flex-1 min-w-0">
-            <p className="text-[0.85rem] font-black text-[#1F2937] dark:text-white truncate leading-tight">{user?.name || 'Guest User'}</p>
+            <p className="text-[0.85rem] font-black text-[#1F2937] dark:text-white truncate leading-tight">
+              {user?.name || 'Syncing Profile...'}
+            </p>
             <p className="text-[0.65rem] font-bold text-gray-400 dark:text-slate-500 mt-0.5 tracking-wide uppercase">{user?.role || 'Patient'}</p>
           </div>
           <div className="flex flex-col items-center gap-1 shrink-0">

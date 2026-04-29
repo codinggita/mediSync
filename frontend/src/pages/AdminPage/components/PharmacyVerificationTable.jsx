@@ -1,126 +1,92 @@
 import React from 'react';
 import { CheckCircle, XCircle, MoreVertical, Eye, MapPin, Calendar, ExternalLink } from 'lucide-react';
 
-const pharmacies = [
-  {
-    id: 1,
-    name: 'Apollo Pharmacy',
-    location: 'Sector 62, Noida',
-    status: 'Verified',
-    date: 'Apr 20, 2026',
-    email: 'contact@apollo.com',
-  },
-  {
-    id: 2,
-    name: 'Wellness Forever',
-    location: 'Andheri West, Mumbai',
-    status: 'Pending',
-    date: 'Apr 22, 2026',
-    email: 'admin@wellness.in',
-  },
-  {
-    id: 3,
-    name: 'MedPlus Store #42',
-    location: 'HSR Layout, Bangalore',
-    status: 'Verified',
-    date: 'Apr 15, 2026',
-    email: 'blr42@medplus.com',
-  },
-  {
-    id: 4,
-    name: 'City Care Pharma',
-    location: 'Salt Lake, Kolkata',
-    status: 'Rejected',
-    date: 'Apr 10, 2026',
-    email: 'citycare@gmail.com',
-  },
-  {
-    id: 5,
-    name: 'Guardian Lifecare',
-    location: 'Gurgaon, Haryana',
-    status: 'Pending',
-    date: 'Apr 23, 2026',
-    email: 'onboarding@guardian.com',
-  },
-];
+// Static data removed to favor props from parent state
 
-const PharmacyVerificationTable = () => {
+const PharmacyVerificationTable = ({ pharmacies }) => {
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const itemsPerPage = 5;
+  
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedPharmacies = pharmacies.slice(startIndex, startIndex + itemsPerPage);
+  const totalPages = Math.ceil(pharmacies.length / itemsPerPage) || 1;
+
   return (
-    <div className="bg-white dark:bg-[#151E32] border border-gray-100 dark:border-slate-700/50 rounded-[14px] overflow-hidden shadow-sm transition-all hover:shadow-md">
-      <div className="px-6 py-5 border-b border-gray-50 dark:border-slate-800/50 flex items-center justify-between bg-white dark:bg-[#151E32]">
+    <div className="bg-[#ecf0f3] dark:bg-[#151E32] border-none rounded-[3rem] overflow-hidden transition-all">
+      <div className="px-6 py-8 border-b border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between bg-[#ecf0f3] dark:bg-[#151E32] gap-6">
         <div>
-          <h3 className="text-[1rem] font-black text-[#1F2937] dark:text-white leading-none">Pharmacy Verification</h3>
-          <p className="text-[0.68rem] text-gray-400 font-bold uppercase tracking-widest mt-1.5">Manage onboarding requests</p>
+          <h3 className="text-[1.3rem] font-black text-slate-900 dark:text-white leading-none tracking-tight">Onboarding Requests</h3>
+          <p className="text-[0.7rem] text-slate-400 font-black uppercase tracking-[0.2em] mt-2">Active Network Intelligence</p>
         </div>
-        <div className="flex gap-2">
-          <button className="text-[0.7rem] font-bold px-3 py-1.5 rounded-lg border border-gray-100 dark:border-slate-700 text-gray-500 hover:bg-gray-50 transition-all">Export CSV</button>
-          <button className="text-[0.7rem] font-bold px-3 py-1.5 rounded-lg bg-[#2A7FFF] text-white hover:bg-[#1565C0] transition-all">View All</button>
+        <div className="flex gap-4">
+          <button className="text-[0.75rem] font-black px-6 py-3.5 rounded-2xl bg-[#ecf0f3] dark:bg-[#151E32] text-slate-500 shadow-[6px_6px_12px_#cbced1,-6px_-6px_12px_#ffffff] dark:shadow-[6px_6px_12px_#0a0f1d,-6px_-6px_12px_#202d47] hover:text-[#2A7FFF] transition-all uppercase tracking-widest active:shadow-inner border border-white/40">Export CSV</button>
+          <button className="text-[0.75rem] font-black px-8 py-3.5 rounded-2xl bg-[#2A7FFF] text-white shadow-[0_8px_16px_rgba(42,127,255,0.3)] hover:bg-[#1565C0] transition-all uppercase tracking-[0.15em]">View All Nodes</button>
         </div>
       </div>
 
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto scrollbar-hide">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="bg-gray-50/50 dark:bg-[#0B1121]/50 border-b border-gray-50 dark:border-slate-800">
-              <th className="px-6 py-4 text-[0.65rem] font-black text-gray-400 uppercase tracking-widest">Pharmacy Details</th>
-              <th className="px-6 py-4 text-[0.65rem] font-black text-gray-400 uppercase tracking-widest">Location</th>
-              <th className="px-6 py-4 text-[0.65rem] font-black text-gray-400 uppercase tracking-widest">Date Applied</th>
-              <th className="px-6 py-4 text-[0.65rem] font-black text-gray-400 uppercase tracking-widest">Status</th>
-              <th className="px-6 py-4 text-[0.65rem] font-black text-gray-400 uppercase tracking-widest text-right">Actions</th>
+            <tr className="bg-[#ecf0f3]/50 dark:bg-[#0B1121]/50 border-b border-slate-200 dark:border-slate-800">
+              <th className="px-6 py-6 text-[0.7rem] font-black text-slate-400 uppercase tracking-widest">Pharmacy Identity</th>
+              <th className="px-6 py-6 text-[0.7rem] font-black text-slate-400 uppercase tracking-widest">Geo Location</th>
+              <th className="px-6 py-6 text-[0.7rem] font-black text-slate-400 uppercase tracking-widest">Timeline</th>
+              <th className="px-6 py-6 text-[0.7rem] font-black text-slate-400 uppercase tracking-widest">Status</th>
+              <th className="px-6 py-6 text-[0.7rem] font-black text-slate-400 uppercase tracking-widest text-right">Protocol</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-50 dark:divide-slate-800">
-            {pharmacies.map((p) => (
-              <tr key={p.id} className="hover:bg-gray-50 dark:hover:bg-[#1A2642]/40 transition-colors group">
-                <td className="px-6 py-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#2A7FFF] to-[#1565C0] flex items-center justify-center text-white text-[0.75rem] font-black shadow-sm group-hover:scale-110 transition-transform">
+          <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+            {paginatedPharmacies.map((p) => (
+              <tr key={p.id} className="hover:bg-white/30 dark:hover:bg-white/5 transition-colors group">
+                <td className="px-6 py-6">
+                  <div className="flex items-center gap-5">
+                    <div className="w-12 h-12 rounded-[18px] bg-[#ecf0f3] dark:bg-[#151E32] flex items-center justify-center text-[#2A7FFF] text-[1rem] font-black shadow-[4px_4px_8px_#cbced1,-4px_-4px_8px_#ffffff] dark:shadow-[4px_4px_8px_#0a0f1d,-4px_-4px_8px_#202d47] border border-white/40 group-hover:scale-110 transition-transform">
                       {p.name.charAt(0)}
                     </div>
                     <div>
-                      <p className="text-[0.85rem] font-bold text-[#1F2937] dark:text-white leading-tight">{p.name}</p>
-                      <p className="text-[0.68rem] text-gray-400 font-medium mt-0.5">{p.email}</p>
+                      <p className="text-[1rem] font-black text-slate-900 dark:text-white leading-tight">{p.name}</p>
+                      <p className="text-[0.75rem] text-slate-400 font-bold mt-1 tracking-tight">{p.email}</p>
                     </div>
                   </div>
                 </td>
-                <td className="px-6 py-4">
-                  <div className="flex items-center gap-1.5 text-[0.78rem] text-gray-500 dark:text-slate-400 font-medium">
-                    <MapPin size={12} className="text-gray-300" />
+                <td className="px-6 py-6">
+                  <div className="flex items-center gap-2 text-[0.85rem] text-slate-600 dark:text-slate-400 font-black tracking-tight">
+                    <MapPin size={14} className="text-[#2A7FFF]" />
                     {p.location}
                   </div>
                 </td>
-                <td className="px-6 py-4">
-                  <div className="flex items-center gap-1.5 text-[0.78rem] text-gray-500 dark:text-slate-400 font-medium">
-                    <Calendar size={12} className="text-gray-300" />
+                <td className="px-6 py-6">
+                  <div className="flex items-center gap-2 text-[0.85rem] text-slate-600 dark:text-slate-400 font-black tracking-tight">
+                    <Calendar size={14} className="text-slate-400" />
                     {p.date}
                   </div>
                 </td>
-                <td className="px-6 py-4">
-                  <span className={`text-[0.65rem] font-black px-2.5 py-1 rounded-full uppercase tracking-tighter ${
-                    p.status === 'Verified' ? 'bg-green-50 text-green-500 border border-green-100' :
-                    p.status === 'Pending' ? 'bg-amber-50 text-amber-500 border border-amber-100' :
-                    'bg-red-50 text-red-500 border border-red-100'
+                <td className="px-6 py-6">
+                  <span className={`text-[0.65rem] font-black px-4 py-1.5 rounded-lg uppercase tracking-widest border shadow-sm ${
+                    p.status === 'Verified' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' :
+                    p.status === 'Pending' ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' :
+                    'bg-rose-500/10 text-rose-500 border-rose-500/20'
                   }`}>
                     {p.status}
                   </span>
                 </td>
-                <td className="px-6 py-4 text-right">
-                  <div className="flex items-center justify-end gap-2">
-                    <button title="Review Details" className="w-8 h-8 rounded-lg bg-gray-50 dark:bg-[#0B1121] flex items-center justify-center text-gray-400 hover:text-[#2A7FFF] hover:bg-[#E6F0FF] transition-all">
-                      <Eye size={14} />
+                <td className="px-6 py-6 text-right">
+                  <div className="flex items-center justify-end gap-3">
+                    <button title="Review Details" className="w-10 h-10 rounded-xl bg-[#ecf0f3] dark:bg-[#151E32] flex items-center justify-center text-slate-400 hover:text-[#2A7FFF] shadow-[4px_4px_8px_#cbced1,-4px_-4px_8px_#ffffff] dark:shadow-[4px_4px_8px_#0a0f1d,-4px_-4px_8px_#202d47] active:shadow-inner transition-all">
+                      <Eye size={16} />
                     </button>
                     {p.status === 'Pending' && (
                       <>
-                        <button title="Approve" className="w-8 h-8 rounded-lg bg-green-50 dark:bg-green-500/10 flex items-center justify-center text-green-500 hover:bg-green-100 transition-all active:scale-90">
-                          <CheckCircle size={14} />
+                        <button title="Approve" className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 shadow-sm hover:bg-emerald-500/20 transition-all active:scale-90">
+                          <CheckCircle size={16} />
                         </button>
-                        <button title="Reject" className="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-500/10 flex items-center justify-center text-red-500 hover:bg-red-100 transition-all active:scale-90">
-                          <XCircle size={14} />
+                        <button title="Reject" className="w-10 h-10 rounded-xl bg-rose-500/10 flex items-center justify-center text-rose-500 shadow-sm hover:bg-rose-500/20 transition-all active:scale-90">
+                          <XCircle size={16} />
                         </button>
                       </>
                     )}
-                    <button className="w-8 h-8 rounded-lg flex items-center justify-center text-gray-300 hover:text-gray-600 transition-colors">
-                      <MoreVertical size={14} />
+                    <button className="w-10 h-10 rounded-xl flex items-center justify-center text-slate-300 hover:text-slate-600 transition-colors">
+                      <MoreVertical size={16} />
                     </button>
                   </div>
                 </td>
@@ -130,12 +96,22 @@ const PharmacyVerificationTable = () => {
         </table>
       </div>
 
-      <div className="px-6 py-4 border-t border-gray-50 dark:border-slate-800/50 bg-gray-50/30 dark:bg-[#0B1121]/30 flex items-center justify-between">
-         <p className="text-[0.7rem] text-gray-400 font-bold">Showing 5 of 24 applications</p>
-         <div className="flex gap-1">
-            <button className="w-8 h-8 rounded-lg border border-gray-100 dark:border-slate-700 flex items-center justify-center text-gray-400 disabled:opacity-50" disabled>1</button>
-            <button className="w-8 h-8 rounded-lg border border-transparent flex items-center justify-center text-gray-400 hover:bg-gray-100 dark:hover:bg-[#151E32]">2</button>
-            <button className="w-8 h-8 rounded-lg border border-transparent flex items-center justify-center text-gray-400 hover:bg-gray-100 dark:hover:bg-[#151E32]">3</button>
+      <div className="px-6 py-6 border-t border-slate-200 dark:border-slate-800 bg-[#ecf0f3] dark:bg-[#151E32] flex items-center justify-between">
+         <p className="text-[0.75rem] text-slate-400 font-black uppercase tracking-widest">Network Load: {pharmacies.length} Entities Active</p>
+         <div className="flex gap-3">
+            {[...Array(totalPages)].map((_, i) => (
+              <button 
+                key={i}
+                onClick={() => setCurrentPage(i + 1)}
+                className={`w-10 h-10 rounded-xl font-black text-[0.8rem] transition-all ${
+                  currentPage === i + 1
+                    ? 'bg-[#ecf0f3] dark:bg-[#151E32] shadow-[inset_2px_2px_4px_#cbced1,inset_-2px_-2px_4px_#ffffff] dark:shadow-[inset_2px_2px_4px_#0a0f1d,inset_-2px_-2px_4px_#202d47] text-[#2A7FFF]'
+                    : 'text-slate-400 hover:bg-white/50 dark:hover:bg-[#151E32]'
+                }`}
+              >
+                {i + 1}
+              </button>
+            ))}
          </div>
       </div>
     </div>

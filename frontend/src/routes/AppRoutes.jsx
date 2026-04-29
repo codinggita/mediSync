@@ -37,8 +37,8 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   
   if (loading) return <PremiumLoader message="Synchronizing Data" />;
   
-  // If no user, redirect to login
-  if (!user) return <Navigate to="/signup" replace />;
+  // If no user, redirect to login with a sync failure state
+  if (!user) return <Navigate to="/signup" state={{ reason: 'session_missing' }} replace />;
   
   // If route is restricted by role and user doesn't have it, redirect to dashboard
   if (allowedRoles && !allowedRoles.includes(user.role)) {

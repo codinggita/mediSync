@@ -48,8 +48,8 @@ const AdminPage = () => {
     : { bg: 'linear-gradient(180deg,#ffffff 0%,#f8fafc 100%)', border: 'rgba(0,0,0,0.07)', text: '#1e293b', sub: '#94a3b8', profileBg: 'rgba(42,127,255,0.06)', profileBorder: 'rgba(42,127,255,0.15)' };
 
   const main = isDarkMode
-    ? { bg: '#090E1A', breadcrumb: 'rgba(13,21,38,0.9)', breadcrumbBorder: 'rgba(255,255,255,0.05)' }
-    : { bg: '#F0F4F8', breadcrumb: 'rgba(248,250,252,0.95)', breadcrumbBorder: 'rgba(0,0,0,0.06)' };
+    ? { bg: '#0B1121', breadcrumb: 'rgba(13,21,38,0.9)', breadcrumbBorder: 'rgba(255,255,255,0.05)' }
+    : { bg: '#ecf0f3', breadcrumb: 'rgba(248,250,252,0.95)', breadcrumbBorder: 'rgba(0,0,0,0.06)' };
 
   return (
     <div className="flex h-screen overflow-hidden font-sans transition-colors duration-300" style={{ backgroundColor: main.bg }}>

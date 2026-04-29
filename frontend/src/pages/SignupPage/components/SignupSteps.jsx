@@ -46,7 +46,7 @@ const SignupSteps = ({
       />
 
       {/* Navigation for steps 1 and 2 */}
-      <SignupNavigation step={step} setStep={setStep} />
+      <SignupNavigation step={step} setStep={setStep} formik={formik} />
     </>
   );
 };

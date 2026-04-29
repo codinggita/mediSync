@@ -6,12 +6,17 @@ import NearbyPharmacies from './components/NearbyPharmacies';
 import SavedMedicinesPanel from './components/SavedMedicinesPanel';
 import PharmacyDecorations from './components/PharmacyDecorations';
 import PharmacyHubHeader from './components/PharmacyHubHeader';
+import SEO from '../../components/SEO';
 
 const PharmacyPage = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
     <div className="flex h-screen overflow-hidden bg-[#ecf0f3] dark:bg-[#0f141f] transition-colors duration-500 font-sans relative">
+      <SEO 
+        title="Pharmacy Hub" 
+        description="Search medicines, compare prices across local pharmacies, and seamlessly route your clinical prescriptions."
+      />
       <PharmacyDecorations />
 
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />

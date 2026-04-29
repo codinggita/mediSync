@@ -11,9 +11,12 @@ import api from '../../utils/api';
 const UploadRecordPage = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [file, setFile] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (meta) => {
+    if (isLoading) return;
+    setIsLoading(true);
     try {
       let fileDataUrl = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
 
@@ -27,17 +30,21 @@ const UploadRecordPage = () => {
       }
 
       const recordData = {
-        title: meta.hospital || 'Medical Record',
+        title: meta.title || 'Medical Record',
         type: meta.category,
         description: meta.notes,
         hospital: meta.hospital,
         date: meta.date,
         fileUrl: fileDataUrl
       };
+      
       await api.post('/records', recordData);
       navigate('/records');
     } catch (error) {
-      console.error('Error uploading record:', error);
+      console.error('Error in upload flow:', error);
+      alert('Clinical synchronization failed. Please verify your connection and try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -71,6 +78,7 @@ const UploadRecordPage = () => {
                 file={file}
                 onSubmit={handleSubmit}
                 onCancel={handleCancel}
+                isLoading={isLoading}
               />
             </div>
           </div>

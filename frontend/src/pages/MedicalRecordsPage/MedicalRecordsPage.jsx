@@ -16,7 +16,8 @@ const MedicalRecordsPage = () => {
     selectedId,
     setSelectedId,
     loading,
-    selectedRecord
+    selectedRecord,
+    deleteRecord
   } = useMedicalRecords(user);
 
   return (
@@ -38,6 +39,7 @@ const MedicalRecordsPage = () => {
               selectedId={selectedId}
               setSelectedId={setSelectedId}
               selectedRecord={selectedRecord}
+              onDelete={deleteRecord}
             />
           </main>
         )}

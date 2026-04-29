@@ -5,16 +5,18 @@ import SettingsHeader from './components/SettingsHeader';
 import PasswordUpdateModal from './components/PasswordUpdateModal';
 import { User, Bell, Shield, Database } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import { useSettings } from './hooks/useSettings';
 import SettingsTabControl from './components/SettingsTabControl';
 import ProfileSettingsPanel from './components/ProfileSettingsPanel';
 import SettingsRecordsPanel from './components/SettingsRecordsPanel';
 import SettingsSecurityPanel from './components/SettingsSecurityPanel';
 import SettingsTelemetryPanel from './components/SettingsTelemetryPanel';
+import SEO from '../../components/SEO';
 
 const SettingsPage = () => {
-  const { user } = useSettings();
-  const isDoctor = user?.role === 'Doctor' || user?.role === 'Admin';
+  const { user: authUser } = useAuth();
+  const isDoctor = authUser?.role === 'Doctor' || authUser?.role === 'Admin';
   
   const tabs = [
     { id: 'profile', label: isDoctor ? 'Doctor Profile' : 'Clinical Profile', icon: User },
@@ -37,6 +39,7 @@ const SettingsPage = () => {
   const fileInputRef = useRef(null);
 
   const {
+    user,
     isSaving,
     filterMode, setFilterMode,
     telemetryState, handleToggle,
@@ -47,7 +50,11 @@ const SettingsPage = () => {
   } = useSettings(isDoctor);
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#F0F4F8] dark:bg-[#090E1A] transition-colors duration-500 font-sans relative">
+    <div className="flex h-screen overflow-hidden bg-[#ecf0f3] dark:bg-[#0f141f] transition-colors duration-500 font-sans relative">
+      <SEO 
+        title="Settings & System Config" 
+        description="Manage your clinical profile, security preferences, system telemetry, and data archive within MediSync."
+      />
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
 
       <div className="flex flex-col flex-1 overflow-hidden min-w-0 relative z-10">
@@ -64,7 +71,7 @@ const SettingsPage = () => {
               onTerminate={handleTerminate}
             />
 
-            <div className="flex-1 bg-white dark:bg-[#151E32] rounded-[3.5rem] border border-white dark:border-white/5 shadow-2xl p-12 min-h-[650px] relative overflow-hidden transition-all duration-700">
+            <div className="flex-1 bg-[#ecf0f3] dark:bg-[#151E32] rounded-[3.5rem] border border-white dark:border-white/5 shadow-[20px_20px_40px_#cbced1,-20px_-20px_40px_#ffffff] dark:shadow-[20px_20px_40px_#0a0f1d] p-12 min-h-[650px] relative overflow-hidden transition-all duration-700">
                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(42,127,255,0.03),transparent)] pointer-events-none"></div>
 
                {activeTab === 'profile' && (

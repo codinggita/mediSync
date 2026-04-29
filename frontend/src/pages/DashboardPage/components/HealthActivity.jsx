@@ -1,11 +1,15 @@
 import React from 'react';
 import { Activity, TrendingUp, Heart, Droplets, ArrowRight } from 'lucide-react';
+import { useDashboardStats } from '../../../hooks/useDashboardStats';
 
 const HealthActivity = ({ user }) => {
-  const stats = [
-    { label: 'Heart Rate', value: user?.vitals?.heartRate?.value || 72, max: 120, unit: 'bpm', color: '#EF4444', icon: Heart, status: 'Normal' },
-    { label: 'SpO2 Level', value: user?.vitals?.spO2?.value || 98, max: 100, unit: '%', color: '#2A7FFF', icon: Activity, status: 'Excellent' },
-    { label: 'Hydration', value: 1.8, max: 3, unit: 'L', color: '#2ECC71', icon: Droplets, status: 'Hydrated' }
+  const { stats } = useDashboardStats();
+  const hasData = stats.medicines > 0 || stats.records > 0;
+
+  const activityStats = [
+    { label: 'Heart Rate', value: user?.vitals?.heartRate?.value || (hasData ? 72 : 0), max: 120, unit: 'bpm', color: '#EF4444', icon: Heart, status: user?.vitals?.heartRate?.value ? 'Normal' : 'Syncing' },
+    { label: 'SpO2 Level', value: user?.vitals?.spO2?.value || (hasData ? 98 : 0), max: 100, unit: '%', color: '#2A7FFF', icon: Activity, status: user?.vitals?.spO2?.value ? 'Excellent' : 'Syncing' },
+    { label: 'Clinical Artifacts', value: stats.medicines + stats.records, max: 20, unit: 'Total', color: '#2ECC71', icon: Droplets, status: hasData ? 'Active' : 'Empty' }
   ];
 
   return (
@@ -21,7 +25,7 @@ const HealthActivity = ({ user }) => {
       </div>
       
       <div className="space-y-8">
-        {stats.map((stat, i) => (
+        {activityStats.map((stat, i) => (
           <div key={i} className="group">
             <div className="flex items-center justify-between mb-2.5">
               <div className="flex items-center gap-3">

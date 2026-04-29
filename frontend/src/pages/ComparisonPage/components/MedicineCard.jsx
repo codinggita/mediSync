@@ -88,12 +88,12 @@ const MedicineCard = ({ medicine, isWishlisted, onWishlist }) => {
   );
 
   return (
-    <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[3rem] shadow-[10px_10px_20px_#cbced1,-10px_-10px_20px_#ffffff] dark:shadow-[10px_10px_20px_#0a0f1d,-10px_-10px_20px_#202d47] hover:shadow-[15px_15px_30px_#cbced1,-15px_-15px_30px_#ffffff] transition-all duration-500 overflow-hidden group">
+    <div className="nm-flat rounded-[3rem] transition-all duration-500 overflow-hidden group hover:scale-[1.01]">
       {/* Card Header */}
       <div className="p-6">
         <div className="flex items-start justify-between gap-4 mb-4">
           <div className="flex items-center gap-5">
-            <div className="w-16 h-16 rounded-2xl bg-[#ecf0f3] dark:bg-[#151E32] flex items-center justify-center shadow-[4px_4px_8px_#cbced1,-4px_-4px_8px_#ffffff] dark:shadow-[4px_4px_8px_#0a0f1d] p-2 overflow-hidden shrink-0">
+            <div className="w-16 h-16 rounded-2xl flex items-center justify-center nm-inset p-2 overflow-hidden shrink-0">
               <img 
                 src={medicine.category === 'Analgesic' ? vitaminsImg : medBoxImg} 
                 alt={medicine.name} 
@@ -122,15 +122,15 @@ const MedicineCard = ({ medicine, isWishlisted, onWishlist }) => {
 
         {/* Price Summary Bar */}
         <div className="grid grid-cols-3 gap-4 mb-6">
-          <div className="p-4 rounded-[2rem] bg-[#ecf0f3] dark:bg-[#151E32] shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0a0f1d,inset_-4px_-4px_8px_#202d47] text-center">
+          <div className="p-4 rounded-[2rem] nm-inset text-center">
             <p className="text-[0.6rem] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-1">Best Price</p>
             <p className="text-[1.2rem] font-black text-emerald-600 dark:text-emerald-400">₹{bestPrice}</p>
           </div>
-          <div className="p-4 rounded-[2rem] bg-[#ecf0f3] dark:bg-[#151E32] shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0a0f1d,inset_-4px_-4px_8px_#202d47] text-center">
+          <div className="p-4 rounded-[2rem] nm-inset text-center">
             <p className="text-[0.6rem] font-black text-slate-400 uppercase tracking-widest mb-1">Highest</p>
             <p className="text-[1.2rem] font-black text-slate-700 dark:text-slate-200">₹{maxPrice}</p>
           </div>
-          <div className="p-4 rounded-[2rem] bg-[#ecf0f3] dark:bg-[#151E32] shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0a0f1d,inset_-4px_-4px_8px_#202d47] text-center">
+          <div className="p-4 rounded-[2rem] nm-inset text-center">
             <p className="text-[0.6rem] font-black text-[#2A7FFF] uppercase tracking-widest mb-1">Avg Save</p>
             <p className="text-[1.2rem] font-black text-[#2A7FFF]">₹{avgSave}</p>
           </div>

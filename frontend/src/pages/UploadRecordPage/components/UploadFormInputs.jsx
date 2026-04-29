@@ -4,6 +4,19 @@ import { Hospital, CalendarDays, Tag, StickyNote, ChevronDown } from 'lucide-rea
 const UploadFormInputs = ({ form, set, categories, inputCls, labelCls }) => {
   return (
     <div className="flex flex-col gap-6">
+      {/* Title */}
+      <div>
+        <label className={labelCls}><StickyNote size={14} /> Report Title</label>
+        <input
+          type="text"
+          value={form.title}
+          onChange={e => set('title', e.target.value)}
+          placeholder="e.g. Cardiology Report, Blood Test"
+          className={inputCls}
+          required
+        />
+      </div>
+
       {/* Hospital */}
       <div>
         <label className={labelCls}><Hospital size={14} /> Source Institution</label>

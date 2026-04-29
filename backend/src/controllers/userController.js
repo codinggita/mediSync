@@ -25,6 +25,7 @@ export const getUserProfile = async (req, res, next) => {
       name: user.name,
       email: user.email,
       role: user.role,
+      phone: user.phone,
       patientId: user.patientId,
       bloodGroup: user.bloodGroup,
       gender: user.gender,
@@ -32,6 +33,7 @@ export const getUserProfile = async (req, res, next) => {
       specialty: user.specialty,
       hospital: user.hospital,
       vitals: user.vitals,
+      preferences: user.preferences,
       createdAt: user.createdAt,
     });
   } catch (error) {
@@ -52,16 +54,23 @@ export const updateUserProfile = async (req, res, next) => {
       throw new Error('User not found');
     }
 
-    const { name, email, password, bloodGroup, gender, dateOfBirth, specialty, hospital } = req.body;
+    const { name, email, password, phone, bloodGroup, gender, dateOfBirth, specialty, hospital, preferences } = req.body;
 
     if (name)        user.name        = name;
     if (email)       user.email       = email;
+    if (phone)       user.phone       = phone;
     if (bloodGroup)  user.bloodGroup  = bloodGroup;
     if (gender)      user.gender      = gender;
     if (dateOfBirth) user.dateOfBirth = dateOfBirth;
     if (specialty)   user.specialty   = specialty;
     if (hospital)    user.hospital    = hospital;
-    if (password)    user.password    = password; // pre-save hook will hash it
+    if (password)    user.password    = password;
+    if (preferences) {
+      user.preferences = { 
+        ...(user.preferences?.toObject ? user.preferences.toObject() : (user.preferences || {})), 
+        ...preferences 
+      };
+    }
 
     const updatedUser = await user.save();
     logger.info('User profile updated', { userId: updatedUser._id });

@@ -17,15 +17,34 @@ const __dirname = path.dirname(__filename);
 
 // Middlewares
 app.use(helmet({
-  contentSecurityPolicy: false, // Required for some development tools
+  contentSecurityPolicy: false,
 }));
 app.use(compression());
-// High-Stability CORS Configuration
+
+// 🌐 Universal Production CORS (Supports Vercel Previews & Main Site)
+const allowedOrigins = [
+  'https://medi-sync-rho.vercel.app',
+  'http://localhost:5173',
+  'http://localhost:5174'
+];
+
 app.use(cors({
-  origin: ['https://medi-sync-rho.vercel.app', 'http://localhost:5173', 'http://localhost:5174'],
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl)
+    if (!origin) return callback(null, true);
+    
+    const isVercel = origin.endsWith('.vercel.app');
+    const isLocal = origin.startsWith('http://localhost');
+    
+    if (allowedOrigins.indexOf(origin) !== -1 || isVercel || isLocal) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS Policy: Origin not authorized by MediSync Security'));
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 
 app.use(express.json());

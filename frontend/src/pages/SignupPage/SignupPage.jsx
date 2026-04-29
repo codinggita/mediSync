@@ -71,10 +71,15 @@ const SignupPage = () => {
         }
 
         const { data } = await api.post('/auth/register', payload);
+        
+        // 🔒 Phase 1: Secure Persistence
+        signup(data);
+        
+        // 🚀 Phase 2: Success Animation
         setIsLoading('success');
 
+        // ⏱️ Phase 3: Stability Buffer (Ensure localStorage is flushed)
         setTimeout(() => {
-          signup(data);
           if (data.role === 'Doctor') {
             navigate('/doctor-portal');
           } else if (data.role === 'Admin') {
@@ -82,7 +87,7 @@ const SignupPage = () => {
           } else {
             navigate('/dashboard');
           }
-        }, 800);
+        }, 1200);
       } catch (err) {
         setError(err.response?.data?.message || err.message || 'Registration failed.');
         setIsLoading(false);

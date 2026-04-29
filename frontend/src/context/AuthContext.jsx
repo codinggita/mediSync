@@ -76,9 +76,10 @@ export const AuthProvider = ({ children }) => {
 
   // Called after successful signup — clears onboarding so the tour shows
   const signup = (userData) => {
-    setUser(userData);
     localStorage.setItem('mediSync_user', JSON.stringify(userData));
+    setUser(userData);
     localStorage.removeItem('mediSync_onboarding_done'); // reset tour for new account
+    refreshUser(); // 🔄 Immediately sync fresh profile data
   };
 
   const logout = () => {

@@ -20,9 +20,21 @@ app.use(helmet({
   contentSecurityPolicy: false, // Required for some development tools
 }));
 app.use(compression());
-app.use(cors());
+// High-Stability CORS Configuration
+app.use(cors({
+  origin: ['https://medi-sync-rho.vercel.app', 'http://localhost:5173', 'http://localhost:5174'],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// 🩺 Clinical Health Check
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ status: 'active', message: 'MediSync Clinical Backend is Synchronized' });
+});
 
 if (process.env.NODE_ENV === 'development' || !process.env.NODE_ENV) {
   app.use(morgan('dev'));

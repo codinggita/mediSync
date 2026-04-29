@@ -1,11 +1,24 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  baseURL: import.meta.env.VITE_API_URL || 
+    (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+      ? 'http://localhost:5000' 
+      : 'https://medisync-gxiy.onrender.com'),
 });
 
-// Add token to requests if available
+// ── Smart Route Interceptor ──────────────────────────────────────────────────
+// Automatically ensures all local routes are prefixed with /api
 api.interceptors.request.use((config) => {
+  // 🛡️ Double-Prefix Guard: Only add /api if it's not already in the URL 
+  // AND not already in the baseURL
+  const hasApiInBase = config.baseURL?.endsWith('/api') || config.baseURL?.endsWith('/api/');
+  const hasApiInUrl = config.url?.startsWith('/api') || config.url?.startsWith('api/');
+  
+  if (!hasApiInBase && !hasApiInUrl && config.url && !config.url.startsWith('http')) {
+    config.url = `/api${config.url.startsWith('/') ? '' : '/'}${config.url}`;
+  }
+  
   try {
     const stored = localStorage.getItem('mediSync_user');
     if (stored) {

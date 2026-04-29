@@ -51,7 +51,8 @@ const MedicineComparison = forwardRef((props, ref) => {
     }
 
     try {
-      const { data: meds } = await api.get(`/medicines?search=${name}`);
+      // 🚀 High-Efficiency Sourcing: Fetch med and prices in one call
+      const { data: meds } = await api.get(`/medicines?search=${name}&includePrices=true`);
 
       const medsArray = Array.isArray(meds) ? meds : [];
       const medicine =
@@ -68,13 +69,12 @@ const MedicineComparison = forwardRef((props, ref) => {
         return;
       }
 
-      const { data: priceEntries } = await api.get(`/medicines/${medicine._id}/prices`);
       setSelectedMed({
         name: medicine.name,
         brand: medicine.manufacturer || 'Verified Generic',
         type: medicine.category || 'Clinical Protocol',
-        pharmacies: Array.isArray(priceEntries)
-          ? priceEntries.map((p) => ({
+        pharmacies: Array.isArray(medicine.prices)
+          ? medicine.prices.map((p) => ({
               name: p.pharmacy?.name || 'Local Hub',
               price: Number(p.price || 0) - (Number(p.price || 0) * (p.discount || 0)) / 100,
               distance: (Math.random() * 5).toFixed(1) + ' km',

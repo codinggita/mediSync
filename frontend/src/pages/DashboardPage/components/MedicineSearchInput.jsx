@@ -19,45 +19,54 @@ const MedicineSearchInput = ({
         className="flex flex-col sm:flex-row gap-4"
       >
         <div className="relative flex-1 group">
-          <div className="absolute inset-0 bg-[#ecf0f3] dark:bg-[#0B1121] rounded-2xl shadow-[inset_6px_6px_12px_#cbced1,inset_-6px_-6px_12px_#ffffff] dark:shadow-[inset_6px_6px_12px_#050810,inset_-6px_-6px_12px_#1e2d4d]" />
-          <div className="relative flex items-center px-6 py-4 sm:py-5">
-            <Search
-              className="text-slate-400 group-focus-within:text-[#2A7FFF] transition-colors"
-              size={20}
-            />
+          <div className="absolute inset-0 bg-[#ecf0f3] dark:bg-[#0B1121] rounded-[24px] shadow-[inset_8px_8px_16px_#cbced1,inset_-8px_-8px_16px_#ffffff] dark:shadow-[inset_8px_8px_16px_#050810,inset_-8px_-8px_16px_#1e2d4d] transition-shadow duration-500 group-focus-within:shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff] dark:group-focus-within:shadow-[inset_4px_4px_8px_#050810,inset_-4px_-4px_8px_#1e2d4d]" />
+          <div className="relative flex items-center px-8 py-5 sm:py-6">
+            <div className="relative">
+              <Search
+                className="text-slate-400 group-focus-within:text-[#2A7FFF] transition-all duration-300 transform group-focus-within:scale-110"
+                size={22}
+              />
+              <div className="absolute inset-0 bg-[#2A7FFF]/20 blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity" />
+            </div>
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search for Paracetamol, Insulin..."
-              className="w-full bg-transparent border-none outline-none pl-4 text-[0.9rem] sm:text-[1rem] font-bold text-slate-700 dark:text-slate-200 placeholder:text-slate-400/60"
+              placeholder="Search for Clinical Formulas..."
+              className="w-full bg-transparent border-none outline-none pl-5 text-[1rem] sm:text-[1.1rem] font-bold text-slate-800 dark:text-white placeholder:text-slate-400/40"
             />
           </div>
 
-          {/* Dynamic Suggestions Overlay */}
+          {/* Dynamic Suggestions Overlay with Glassmorphism */}
           {suggestions.length > 0 && (
-            <div className="absolute top-full left-0 w-full mt-4 bg-white dark:bg-[#151E32] border border-slate-200 dark:border-slate-800 rounded-[24px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] z-50 overflow-hidden animate-in slide-in-from-top-4 duration-300">
-              {suggestions.map((name, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  onClick={() => handleSelectMed(name)}
-                  className="w-full text-left px-8 py-5 hover:bg-slate-50 dark:hover:bg-white/5 border-b border-slate-50 dark:border-white/5 last:border-0 flex items-center justify-between group/item"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-white/5 flex items-center justify-center group-hover/item:bg-[#2A7FFF]/10 transition-colors">
-                      <Pill size={18} className="text-slate-400 group-hover/item:text-[#2A7FFF]" />
+            <div className="absolute top-full left-0 w-full mt-6 bg-white/80 dark:bg-[#151E32]/80 backdrop-blur-3xl border border-white/60 dark:border-white/10 rounded-[32px] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.4)] z-50 overflow-hidden animate-in zoom-in-95 duration-300">
+              <div className="p-2">
+                {suggestions.map((name, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => handleSelectMed(name)}
+                    className="w-full text-left px-8 py-6 hover:bg-[#2A7FFF]/5 dark:hover:bg-white/5 rounded-[24px] transition-all flex items-center justify-between group/item"
+                  >
+                    <div className="flex items-center gap-5">
+                      <div className="w-12 h-12 rounded-[18px] bg-[#ecf0f3] dark:bg-[#0B1121] shadow-sm flex items-center justify-center group-hover/item:text-[#2A7FFF] transition-colors">
+                        <Pill size={20} className="text-slate-400 group-hover/item:scale-110 transition-transform" />
+                      </div>
+                      <div>
+                        <span className="block text-[1.1rem] font-black text-slate-800 dark:text-white group-hover/item:text-[#2A7FFF] transition-colors">
+                          {name}
+                        </span>
+                        <span className="text-[0.65rem] font-bold text-slate-400 uppercase tracking-widest">
+                          Sourcing Verified
+                        </span>
+                      </div>
                     </div>
-                    <span className="text-[1rem] font-black text-slate-700 dark:text-slate-200">
-                      {name}
-                    </span>
-                  </div>
-                  <ChevronRight
-                    size={18}
-                    className="text-slate-300 group-hover/item:translate-x-1 transition-all"
-                  />
-                </button>
-              ))}
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center border border-transparent group-hover/item:border-[#2A7FFF]/20 group-hover/item:bg-white dark:group-hover/item:bg-white/5 transition-all">
+                      <ArrowRight size={18} className="text-[#2A7FFF] opacity-0 group-hover/item:opacity-100 -translate-x-2 group-hover/item:translate-x-0 transition-all" />
+                    </div>
+                  </button>
+                ))}
+              </div>
             </div>
           )}
         </div>

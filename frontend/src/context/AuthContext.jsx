@@ -1,20 +1,11 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import React, { createContext, useState, useEffect, useContext, useCallback, useMemo } from 'react';
 import api from '../utils/api';
 
-const AuthContext = createContext({
-  user: null,
-  login: () => {},
-  signup: () => {},
-  logout: () => {},
-  refreshUser: () => {},
-  loading: true,
-});
+const AuthContext = createContext(null);
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
+  if (!context) throw new Error('useAuth must be used within an AuthProvider');
   return context;
 };
 
@@ -22,79 +13,87 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const refreshUser = async () => {
-    try {
-      const storedUser = localStorage.getItem('mediSync_user');
-      if (!storedUser) return;
+  const logout = useCallback(() => {
+    setUser(null);
+    localStorage.removeItem('mediSync_user');
+    localStorage.removeItem('mediSync_onboarding_done');
+  }, []);
 
-      const currentUser = JSON.parse(storedUser);
-      const { token } = currentUser;
+  const refreshUser = useCallback(async () => {
+    try {
+      const stored = localStorage.getItem('mediSync_user');
+      if (!stored) return;
+
+      const { token } = JSON.parse(stored);
       if (!token) return;
 
       const { data } = await api.get('/auth/me');
       if (data) {
-        // Persistence Guard: Merge fresh data with existing token
-        const updatedUser = {
-          ...data,
-          token: data.token || token,
-        };
+        const updatedUser = { ...data, token: data.token || token };
         setUser(updatedUser);
         localStorage.setItem('mediSync_user', JSON.stringify(updatedUser));
       }
     } catch (err) {
-      console.error('Failed to refresh user data', err);
-      if (err.response?.status === 401 || err.response?.status === 403) {
-        logout();
-      }
+      if (err.response?.status === 401) logout();
     }
-  };
+  }, [logout]);
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem('mediSync_user');
-    if (storedUser) {
-      try {
-        const parsed = JSON.parse(storedUser);
-        if (parsed && parsed.token) {
-          setUser(parsed);
-          refreshUser(); // Sync with backend
-        } else {
-          // If token is missing, the session is invalid
-          logout();
-        }
-      } catch (err) {
-        logout();
-      }
-    }
-
-    setLoading(false);
+  const login = useCallback((userData) => {
+    setUser(userData);
+    localStorage.setItem('mediSync_user', JSON.stringify(userData));
   }, []);
 
-  const login = (userData) => {
-    setUser(userData);
+  const signup = useCallback((userData) => {
     localStorage.setItem('mediSync_user', JSON.stringify(userData));
-  };
-
-  // Called after successful signup — clears onboarding so the tour shows
-  const signup = (userData) => {
     setUser(userData);
-    localStorage.setItem('mediSync_user', JSON.stringify(userData));
-    localStorage.removeItem('mediSync_onboarding_done'); // reset tour for new account
-  };
+    localStorage.removeItem('mediSync_onboarding_done');
+    refreshUser();
+  }, [refreshUser]);
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('mediSync_user');
-    localStorage.removeItem('mediSync_onboarding_done'); // next person gets the tour
-  };
+  useEffect(() => {
+    const initAuth = async () => {
+      const stored = localStorage.getItem('mediSync_user');
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          if (parsed?.token) {
+            setUser(parsed);
+            await refreshUser();
+          } else {
+            logout();
+          }
+        } catch {
+          logout();
+        }
+      }
+      setLoading(false);
+    };
 
-  const value = {
+    initAuth();
+
+    // ── Multi-Tab Logout Sync ──
+    const handleStorageChange = (e) => {
+      if (e.key === 'mediSync_user' && !e.newValue) {
+        logout();
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, [logout, refreshUser]);
+
+  const value = useMemo(() => ({
     user,
+    isAuthenticated: !!user,
     login,
     signup,
     logout,
     refreshUser,
     loading,
-  };
+  }), [user, login, signup, logout, refreshUser, loading]);
 
-  return <AuthContext.Provider value={value}>{!loading && children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={value}>
+      {!loading && children}
+    </AuthContext.Provider>
+  );
 };

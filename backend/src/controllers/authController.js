@@ -1,48 +1,24 @@
 import User from '../models/User.js';
 import generateToken from '../utils/generateToken.js';
 
-// @desc    Register a new user
-// @route   POST /api/auth/register
-// @access  Public
+// ── Registration Logic ──────────────────────────────────────────────────────
 const registerUser = async (req, res, next) => {
   try {
-    const {
-      name,
-      email,
-      password,
-      role,
-      specialty,
-      hospital,
-      dateOfBirth,
-      bloodGroup,
-      gender,
-      medicalLicenseId,
-      orgEmail,
-      licenseCertificateUrl,
-      plan,
-      phone,
-    } = req.body;
+    const { email, phone, role, password, name, ...otherDetails } = req.body;
 
-    // Check if email exists
-    const userExists = await User.findOne({ email });
-    if (userExists) {
-      res.status(400);
-      throw new Error('Email already registered');
-    }
+    // Parallel validation for performance
+    const [emailExists, phoneExists] = await Promise.all([
+      User.findOne({ email }),
+      phone ? User.findOne({ phone }) : Promise.resolve(null)
+    ]);
 
-    // Check if phone exists
-    if (phone) {
-      const phoneExists = await User.findOne({ phone });
-      if (phoneExists) {
-        res.status(400);
-        throw new Error('Mobile number already registered');
-      }
-    }
+    if (emailExists) { res.status(400); throw new Error('Email already registered'); }
+    if (phoneExists) { res.status(400); throw new Error('Mobile number already registered'); }
 
-    // Generate patientId if Patient
+    // Auto-generate Patient ID if applicable
     let patientId;
     if (!role || role === 'Patient') {
-      patientId = 'MS-' + Math.floor(10000 + Math.random() * 90000);
+      patientId = `MS-${Math.floor(10000 + Math.random() * 90000)}`;
     }
 
     const user = await User.create({
@@ -50,17 +26,9 @@ const registerUser = async (req, res, next) => {
       email,
       password,
       role: role || 'Patient',
-      specialty,
-      hospital,
-      patientId,
-      dateOfBirth,
-      bloodGroup,
-      gender,
-      medicalLicenseId,
-      orgEmail,
-      licenseCertificateUrl,
       phone,
-      plan: plan || 'Free',
+      patientId,
+      ...otherDetails
     });
 
     if (user) {
@@ -74,21 +42,18 @@ const registerUser = async (req, res, next) => {
       });
     } else {
       res.status(400);
-      throw new Error('Invalid user data');
+      throw new Error('Invalid user creation protocol');
     }
   } catch (error) {
     next(error);
   }
 };
 
-// @desc    Auth user & get token
-// @route   POST /api/auth/login
-// @access  Public
+// ── Login Logic ─────────────────────────────────────────────────────────────
 const loginUser = async (req, res, next) => {
   try {
     const { email: identifier, password } = req.body;
 
-    // Check for user by email OR phone
     const user = await User.findOne({
       $or: [{ email: identifier }, { phone: identifier }],
     }).select('+password');
@@ -105,72 +70,63 @@ const loginUser = async (req, res, next) => {
       });
     } else {
       res.status(401);
-      throw new Error('Invalid credentials');
+      throw new Error('Invalid authentication credentials');
     }
   } catch (error) {
     next(error);
   }
 };
 
-// @desc    Get user profile
-// @route   GET /api/auth/me
-// @access  Private
+// ── Profile Logic ───────────────────────────────────────────────────────────
 const getMe = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id);
+    if (!user) { res.status(404); throw new Error('User not found'); }
 
-    if (user) {
-      res.json({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        phone: user.phone,
-        patientId: user.patientId,
-        bloodGroup: user.bloodGroup,
-        dateOfBirth: user.dateOfBirth,
-        preferences: user.preferences,
-        token: generateToken(user._id),
-      });
-    } else {
-      res.status(404);
-      throw new Error('User not found');
-    }
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      phone: user.phone,
+      patientId: user.patientId,
+      bloodGroup: user.bloodGroup,
+      dateOfBirth: user.dateOfBirth,
+      preferences: user.preferences,
+      token: generateToken(user._id),
+    });
   } catch (error) {
     next(error);
   }
 };
 
-// @desc    Google Login
-// @route   POST /api/auth/google-login
-// @access  Public
+// ── Google Authentication ───────────────────────────────────────────────────
 const googleLogin = async (req, res, next) => {
   try {
     const { email } = req.body;
-
     const user = await User.findOne({ email });
 
-    if (user) {
-      if (user.isBanned) {
-        return res
-          .status(403)
-          .json({ message: 'This account has been suspended by the administrator.' });
-      }
-
-      res.status(200).json({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        patientId: user.patientId,
-        specialty: user.specialty,
-        hospital: user.hospital,
-        token: generateToken(user._id),
+    if (!user) {
+      return res.status(404).json({ 
+        message: 'Identity not found. Registration required.', 
+        isNewUser: true 
       });
-    } else {
-      // User doesn't exist, tell frontend to redirect to signup
-      res.status(404).json({ message: 'User not found. Please register.', isNewUser: true });
     }
+
+    if (user.isBanned) {
+      return res.status(403).json({ 
+        message: 'Access denied. Account suspended.' 
+      });
+    }
+
+    res.status(200).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      patientId: user.patientId,
+      token: generateToken(user._id),
+    });
   } catch (error) {
     next(error);
   }

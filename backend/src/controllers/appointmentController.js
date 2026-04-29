@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import Appointment from '../models/Appointment.js';
 import User from '../models/User.js';
 
@@ -33,6 +34,12 @@ const getAppointments = async (req, res, next) => {
 const createAppointment = async (req, res, next) => {
   try {
     const { doctorId, date, time, type, location } = req.body;
+
+    // 🛡️ ID Validation Guard
+    if (!mongoose.Types.ObjectId.isValid(doctorId)) {
+      res.status(400);
+      throw new Error('Invalid Doctor ID Format');
+    }
 
     const doctor = await User.findById(doctorId);
     if (!doctor || doctor.role !== 'Doctor') {
@@ -71,7 +78,15 @@ const createAppointment = async (req, res, next) => {
 const updateAppointmentStatus = async (req, res, next) => {
   try {
     const { status } = req.body;
-    const appointment = await Appointment.findById(req.params.id);
+    const { id } = req.params;
+
+    // 🛡️ ID Validation Guard
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      res.status(400);
+      throw new Error('Invalid Appointment ID Format');
+    }
+
+    const appointment = await Appointment.findById(id);
 
     if (appointment) {
       // Check authorization

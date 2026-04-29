@@ -53,6 +53,14 @@ const DoctorAppointmentsPage = () => {
   }, []);
 
   const handleStatusChange = async (id, newStatus) => {
+    // 🛡️ Mock Protection: Prevent synthetic IDs from hitting the real database
+    if (id.startsWith('mock_')) {
+      setAppointments((prev) => 
+        prev.map((app) => (app._id === id ? { ...app, status: newStatus } : app))
+      );
+      return;
+    }
+
     try {
       const { data } = await api.patch(`/appointments/${id}/status`, { status: newStatus });
       setAppointments((prev) => prev.map((app) => (app._id === id ? data : app)));

@@ -7,6 +7,7 @@ import AdminTabContent from './components/AdminTabContent';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
+import SEO from '../../components/SEO';
 import {
   LayoutDashboard, Building2, Pill, DollarSign, Users,
   BarChart3, Bell
@@ -53,6 +54,7 @@ const AdminPage = () => {
 
   return (
     <div className="flex h-screen overflow-hidden font-sans transition-colors duration-300" style={{ backgroundColor: main.bg }}>
+      <SEO title={`${activeTabData?.label} | Admin Control`} />
       <AdminGlows isDarkMode={isDarkMode} />
 
       <AdminSidebar

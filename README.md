@@ -10,8 +10,8 @@
 
 [![Version](https://img.shields.io/badge/Version-1.0.0-8B5CF6?style=for-the-badge&logo=gitbook&logoColor=white)](https://github.com/priyabratasahoo780/mediSync)
 [![Security](https://img.shields.io/badge/Security-Post--Quantum-2ECC71?style=for-the-badge&logo=shippable&logoColor=white)](https://github.com/priyabratasahoo780/mediSync)
+[![Postman](https://img.shields.io/badge/Postman-Documentation-FF6C37?style=for-the-badge&logo=postman&logoColor=white)](https://documenter.getpostman.com/view/50839186/2sBXqJLgPy)
 [![Status](https://img.shields.io/badge/Status-Operational-06B6D4?style=for-the-badge&logo=statuspage&logoColor=white)](https://github.com/priyabratasahoo780/mediSync)
-[![License](https://img.shields.io/badge/License-MIT-F59E0B?style=for-the-badge&logo=openedx&logoColor=white)](https://github.com/priyabratasahoo780/mediSync)
 
 <br />
 
@@ -74,10 +74,18 @@ MediSync is meticulously engineered using the **Clinical Atelier** design philos
 
 ---
 
-## 🔌 API Registry & Operational Endpoints
+## 🔌 API Registry & Developer Intelligence Hub
+
+MediSync provides a high-fidelity RESTful API registry. For the most interactive experience, visit our **Live API Documentation**:
+
+<div align="center">
+
+[![Postman Documentation](https://img.shields.io/badge/View_Full_API_Documentation-Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)](https://documenter.getpostman.com/view/50839186/2sBXqJLgPy)
+
+</div>
 
 <details>
-<summary><b>📂 Expand Identity & Authentication Registry</b></summary>
+<summary><b>📂 Quick Reference: Identity & Authentication</b></summary>
 
 | Method | Endpoint                 | Tactical Purpose                       |
 | :----- | :----------------------- | :------------------------------------- |

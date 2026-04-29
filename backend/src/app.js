@@ -1,5 +1,7 @@
-import express from 'express';
 import dotenv from 'dotenv';
+dotenv.config();
+
+import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import morgan from 'morgan';
@@ -7,8 +9,6 @@ import helmet from 'helmet';
 import compression from 'compression';
 import { fileURLToPath } from 'url';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
-
-dotenv.config();
 
 const app = express();
 

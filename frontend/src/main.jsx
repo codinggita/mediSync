@@ -7,6 +7,8 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import store from './store';
 import './index.css';
 import App from './App.jsx';
+import { AuthProvider } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '630892395767-encpcdgnt6ogeqnuo3j2qk01od73ggn2.apps.googleusercontent.com';
 
@@ -15,7 +17,11 @@ createRoot(document.getElementById('root')).render(
     <StrictMode>
       <Provider store={store}>
         <HelmetProvider>
-          <App />
+          <AuthProvider>
+            <ThemeProvider>
+              <App />
+            </ThemeProvider>
+          </AuthProvider>
           <Toaster
             position="top-right"
             toastOptions={{

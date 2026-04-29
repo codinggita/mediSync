@@ -19,16 +19,12 @@ function App() {
 
   return (
     <ErrorBoundary FallbackComponent={GlobalErrorUI} onReset={() => window.location.reload()}>
-      <ThemeProvider>
-          <AuthProvider>
-            <Router>
-              <AnalyticsTracker />
-              <div className="min-h-screen bg-[#ecf0f3] dark:bg-[#121826] transition-colors duration-300">
-                <AppRoutes />
-              </div>
-            </Router>
-          </AuthProvider>
-      </ThemeProvider>
+      <Router>
+        <AnalyticsTracker />
+        <div className="min-h-screen bg-[#ecf0f3] dark:bg-[#121826] transition-colors duration-300">
+          <AppRoutes />
+        </div>
+      </Router>
     </ErrorBoundary>
   );
 }

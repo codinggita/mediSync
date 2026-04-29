@@ -5,7 +5,10 @@ import axios from 'axios';
  * Automatically attaches the JWT Bearer token from localStorage on every request.
  */
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  baseURL: import.meta.env.VITE_API_URL || 
+    (window.location.hostname === 'localhost' 
+      ? 'http://localhost:5000/api' 
+      : 'https://medisync-gxiy.onrender.com/api'),
   headers: {
     'Content-Type': 'application/json',
   },

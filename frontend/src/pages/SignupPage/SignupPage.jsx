@@ -129,20 +129,6 @@ const SignupPage = () => {
           <div className="w-full max-w-[400px] mx-auto">
             <SignupHeader />
 
-            {isSyncFailure && !error && (
-              <div className="mb-6 p-4 bg-amber-500/10 border border-amber-500/20 rounded-[20px] flex flex-col gap-2 text-amber-600 dark:text-amber-400 animate-in fade-in slide-in-from-top-4">
-                <div className="flex items-center gap-2.5">
-                  <ShieldAlert size={20} className="shrink-0" />
-                  <span className="text-[0.85rem] font-black uppercase tracking-widest">
-                    Sync Protocol Failed
-                  </span>
-                </div>
-                <p className="text-[0.75rem] font-bold leading-relaxed opacity-80">
-                  Session credentials missing. Please re-login to synchronize your clinical profile.
-                </p>
-              </div>
-            )}
-
             <SignupErrorAlert error={error} />
 
             <SignupProgressDots step={step} />

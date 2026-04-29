@@ -26,20 +26,24 @@ const UploadHeader = () => {
             Biological <span className="text-[#2A7FFF]">Vault</span>
           </h1>
           <div className="text-[0.85rem] text-slate-400 font-bold uppercase tracking-[0.3em] mt-2 flex items-center gap-3">
-             <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-             Secure Artifact Synchronization
+            <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+            Secure Artifact Synchronization
           </div>
         </div>
       </div>
-      
+
       <div className="flex items-center gap-4 px-8 py-4 bg-white/40 dark:bg-white/5 backdrop-blur-3xl border border-white/50 dark:border-white/10 rounded-[2rem] shadow-2xl">
-         <div className="flex flex-col items-end">
-            <span className="text-[0.7rem] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Status Protocol</span>
-            <span className="text-[0.8rem] font-black text-emerald-500 uppercase">End-to-End Encrypted</span>
-         </div>
-         <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-500">
-            <ShieldCheck size={24} />
-         </div>
+        <div className="flex flex-col items-end">
+          <span className="text-[0.7rem] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">
+            Status Protocol
+          </span>
+          <span className="text-[0.8rem] font-black text-emerald-500 uppercase">
+            End-to-End Encrypted
+          </span>
+        </div>
+        <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-500">
+          <ShieldCheck size={24} />
+        </div>
       </div>
     </div>
   );

@@ -13,8 +13,8 @@ const PharmacyPage = () => {
 
   return (
     <div className="flex h-screen overflow-hidden bg-[#ecf0f3] dark:bg-[#0f141f] transition-colors duration-500 font-sans relative">
-      <SEO 
-        title="Pharmacy Hub" 
+      <SEO
+        title="Pharmacy Hub"
         description="Search medicines, compare prices across local pharmacies, and seamlessly route your clinical prescriptions."
       />
       <PharmacyDecorations />
@@ -37,7 +37,6 @@ const PharmacyPage = () => {
 
           {/* 3. Saved Medicines (Full width) */}
           <SavedMedicinesPanel />
-
         </main>
       </div>
     </div>
@@ -45,4 +44,3 @@ const PharmacyPage = () => {
 };
 
 export default PharmacyPage;
-

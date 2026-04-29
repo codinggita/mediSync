@@ -41,11 +41,17 @@ const InventoryAlertsPanel = () => {
             <AlertCircle size={18} className="text-[#EF4444]" />
           </div>
           <div>
-            <h3 className="font-black text-[#1F2937] dark:text-white text-[0.92rem]">Inventory Alerts</h3>
-            <p className="text-[0.6rem] text-gray-400 font-bold uppercase tracking-wider">Critical system monitors</p>
+            <h3 className="font-black text-[#1F2937] dark:text-white text-[0.92rem]">
+              Inventory Alerts
+            </h3>
+            <p className="text-[0.6rem] text-gray-400 font-bold uppercase tracking-wider">
+              Critical system monitors
+            </p>
           </div>
         </div>
-        <span className="text-[0.6rem] font-black bg-red-50 text-red-500 px-2 py-0.5 rounded-full animate-pulse">4 New</span>
+        <span className="text-[0.6rem] font-black bg-red-50 text-red-500 px-2 py-0.5 rounded-full animate-pulse">
+          4 New
+        </span>
       </div>
 
       <div className="flex-1 overflow-y-auto p-4 space-y-3">
@@ -53,24 +59,36 @@ const InventoryAlertsPanel = () => {
           <div
             key={a.id}
             className={`p-3.5 rounded-xl border transition-all hover:translate-x-1 group ${
-              a.severity === 'red' ? 'bg-red-50/30 dark:bg-red-500/5 border-red-100/50 dark:border-red-500/10' :
-              a.severity === 'orange' ? 'bg-amber-50/30 dark:bg-amber-500/5 border-amber-100/50 dark:border-amber-500/10' :
-              'bg-blue-50/30 dark:bg-blue-500/5 border-blue-100/50 dark:border-blue-500/10'
+              a.severity === 'red'
+                ? 'bg-red-50/30 dark:bg-red-500/5 border-red-100/50 dark:border-red-500/10'
+                : a.severity === 'orange'
+                  ? 'bg-amber-50/30 dark:bg-amber-500/5 border-amber-100/50 dark:border-amber-500/10'
+                  : 'bg-blue-50/30 dark:bg-blue-500/5 border-blue-100/50 dark:border-blue-500/10'
             }`}
           >
             <div className="flex gap-3">
-              <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 border transition-transform group-hover:scale-110 ${
-                a.severity === 'red' ? 'bg-white dark:bg-[#151E32] border-red-100 text-red-500' :
-                a.severity === 'orange' ? 'bg-white dark:bg-[#151E32] border-amber-100 text-amber-500' :
-                'bg-white dark:bg-[#151E32] border-blue-100 text-[#2A7FFF]'
-              }`}>
+              <div
+                className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 border transition-transform group-hover:scale-110 ${
+                  a.severity === 'red'
+                    ? 'bg-white dark:bg-[#151E32] border-red-100 text-red-500'
+                    : a.severity === 'orange'
+                      ? 'bg-white dark:bg-[#151E32] border-amber-100 text-amber-500'
+                      : 'bg-white dark:bg-[#151E32] border-blue-100 text-[#2A7FFF]'
+                }`}
+              >
                 <a.icon size={14} />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between">
-                  <span className={`text-[0.62rem] font-black uppercase tracking-tighter ${
-                    a.severity === 'red' ? 'text-red-400' : a.severity === 'orange' ? 'text-amber-400' : 'text-blue-400'
-                  }`}>
+                  <span
+                    className={`text-[0.62rem] font-black uppercase tracking-tighter ${
+                      a.severity === 'red'
+                        ? 'text-red-400'
+                        : a.severity === 'orange'
+                          ? 'text-amber-400'
+                          : 'text-blue-400'
+                    }`}
+                  >
                     {a.type} Alert
                   </span>
                   <span className="text-[0.6rem] text-gray-400 font-medium">14m ago</span>
@@ -86,7 +104,10 @@ const InventoryAlertsPanel = () => {
 
       <div className="p-4 border-t border-gray-50 dark:border-slate-800 bg-white dark:bg-[#151E32]">
         <button className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#1F2937] dark:bg-[#0B1121] text-white text-[0.8rem] font-black hover:bg-black transition-all shadow-lg active:scale-95 group">
-          <PackageCheck size={16} className="text-[#2ECC71] group-hover:rotate-12 transition-transform" />
+          <PackageCheck
+            size={16}
+            className="text-[#2ECC71] group-hover:rotate-12 transition-transform"
+          />
           Manage Global Catalog
         </button>
       </div>

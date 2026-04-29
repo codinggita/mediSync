@@ -55,7 +55,7 @@ const VitalStatsRow = ({ patient }) => {
     heartRate: { value: 78, unit: 'bpm' },
     bloodPressure: { value: '120/80', unit: 'mmHg' },
     glucose: { value: 110, unit: 'mg/dL' },
-    spO2: { value: 98, unit: '%' }
+    spO2: { value: 98, unit: '%' },
   };
 
   const { heartRate, bloodPressure, glucose, spO2 } = vitalsSource;
@@ -68,8 +68,8 @@ const VitalStatsRow = ({ patient }) => {
       icon: Heart,
       color: '#EF4444',
       bg: '#EF444410',
-      status: (heartRate?.value > 100 || heartRate?.value < 60) ? 'Elevated' : 'Normal',
-      statusType: (heartRate?.value > 100 || heartRate?.value < 60) ? 'elevated' : 'normal',
+      status: heartRate?.value > 100 || heartRate?.value < 60 ? 'Elevated' : 'Normal',
+      statusType: heartRate?.value > 100 || heartRate?.value < 60 ? 'elevated' : 'normal',
     },
     {
       label: 'Blood Pressure',
@@ -113,7 +113,11 @@ const VitalStatsRow = ({ patient }) => {
             className="bg-white dark:bg-[#151E32] border border-gray-100 dark:border-slate-700/50 rounded-[14px] p-5 shadow-sm hover:shadow-md transition-all duration-300 group relative overflow-hidden"
           >
             {/* Background Icon Decoration */}
-            <Icon size={64} className="absolute -right-4 -bottom-4 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity duration-500" style={{ color }} />
+            <Icon
+              size={64}
+              className="absolute -right-4 -bottom-4 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity duration-500"
+              style={{ color }}
+            />
 
             <div className="flex items-center justify-between mb-4">
               <div
@@ -136,16 +140,19 @@ const VitalStatsRow = ({ patient }) => {
               </p>
               <p className="text-[0.8rem] font-bold text-gray-400">{unit}</p>
             </div>
-            
-            <p className="text-[0.85rem] font-bold text-gray-500 dark:text-slate-400 mt-1.5">{label}</p>
+
+            <p className="text-[0.85rem] font-bold text-gray-500 dark:text-slate-400 mt-1.5">
+              {label}
+            </p>
 
             {/* Micro-sparkline or visual hint */}
             <div className="mt-4 h-1 w-full bg-gray-50 dark:bg-[#0B1121] rounded-full overflow-hidden">
-              <div 
+              <div
                 className="h-full rounded-full transition-all duration-1000"
-                style={{ 
-                  width: statusType === 'normal' ? '70%' : statusType === 'elevated' ? '90%' : '65%',
-                  backgroundColor: s.color 
+                style={{
+                  width:
+                    statusType === 'normal' ? '70%' : statusType === 'elevated' ? '90%' : '65%',
+                  backgroundColor: s.color,
                 }}
               />
             </div>

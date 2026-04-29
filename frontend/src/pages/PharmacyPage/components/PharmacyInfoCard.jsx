@@ -2,18 +2,17 @@ import React from 'react';
 import { Phone, Mail, Clock3, Truck, ShieldCheck } from 'lucide-react';
 
 const INFO_ITEMS = [
-  { icon: Phone,       label: 'Phone',    value: '+91 98765 43210' },
-  { icon: Mail,        label: 'Email',    value: 'medplus.noida@pharmacy.in' },
-  { icon: Clock3,      label: 'Hours',    value: 'Mon–Sun: 8 AM – 10 PM' },
-  { icon: Truck,       label: 'Delivery', value: 'Same-day delivery available' },
-  { icon: ShieldCheck, label: 'License',  value: 'PHR-UP-2024-00123' },
+  { icon: Phone, label: 'Phone', value: '+91 98765 43210' },
+  { icon: Mail, label: 'Email', value: 'medplus.noida@pharmacy.in' },
+  { icon: Clock3, label: 'Hours', value: 'Mon–Sun: 8 AM – 10 PM' },
+  { icon: Truck, label: 'Delivery', value: 'Same-day delivery available' },
+  { icon: ShieldCheck, label: 'License', value: 'PHR-UP-2024-00123' },
 ];
 
 const PharmacyInfoCard = () => {
   return (
     <div className="bg-white rounded-[14px] shadow-sm border border-gray-100 overflow-hidden pharmacy-section">
       <div className="flex flex-col md:flex-row">
-
         {/* Pharmacy Image */}
         <div className="md:w-72 h-52 md:h-auto overflow-hidden flex-shrink-0">
           <img
@@ -25,15 +24,16 @@ const PharmacyInfoCard = () => {
 
         {/* Details */}
         <div className="flex-1 p-6 flex flex-col gap-5">
-
           {/* Description */}
           <div>
-            <h2 className="text-sm font-bold text-gray-800 mb-1.5 uppercase tracking-wide">About this Pharmacy</h2>
+            <h2 className="text-sm font-bold text-gray-800 mb-1.5 uppercase tracking-wide">
+              About this Pharmacy
+            </h2>
             <p className="text-sm text-gray-500 leading-relaxed">
-              MedPlus Pharmacy is a trusted healthcare provider offering a comprehensive range
-              of medicines, health products, and wellness essentials. With certified pharmacists
-              and same-day delivery, we ensure you receive the right medication at the best
-              price — every time.
+              MedPlus Pharmacy is a trusted healthcare provider offering a comprehensive range of
+              medicines, health products, and wellness essentials. With certified pharmacists and
+              same-day delivery, we ensure you receive the right medication at the best price —
+              every time.
             </p>
           </div>
 

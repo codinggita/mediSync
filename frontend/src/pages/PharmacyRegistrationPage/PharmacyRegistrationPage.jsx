@@ -17,12 +17,12 @@ const PharmacyRegistrationPage = () => {
     phone: '',
     location: '',
     licenseNumber: '',
-    document: null
+    document: null,
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
@@ -42,7 +42,7 @@ const PharmacyRegistrationPage = () => {
   return (
     <div className="flex h-screen overflow-hidden bg-[#ecf0f3] dark:bg-[#0f141f]">
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
-      
+
       <div className="flex-1 flex flex-col overflow-hidden relative">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(16,185,129,0.05),transparent)] pointer-events-none" />
         <TopBar />
@@ -61,11 +61,12 @@ const PharmacyRegistrationPage = () => {
                   Register Your <span className="text-emerald-500">Pharmacy</span>
                 </h1>
                 <p className="text-slate-400 font-black uppercase tracking-[0.3em] text-[0.85rem] mt-4 flex items-center gap-3">
-                  <ShieldCheck size={16} className="text-emerald-500" /> Join our verified healthcare network
+                  <ShieldCheck size={16} className="text-emerald-500" /> Join our verified
+                  healthcare network
                 </p>
               </div>
 
-              <PharmacyRegistrationForm 
+              <PharmacyRegistrationForm
                 formData={formData}
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}

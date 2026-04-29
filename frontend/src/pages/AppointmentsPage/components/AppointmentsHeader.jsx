@@ -21,9 +21,12 @@ const AppointmentsHeader = ({ onBookClick }) => {
         </div>
       </div>
 
-      <button onClick={onBookClick} className="hidden lg:flex items-center gap-4 px-10 py-5 bg-[#2A7FFF] text-white rounded-[1.8rem] font-black text-[1rem] shadow-[0_20px_40px_rgba(42,127,255,0.3)] hover:shadow-[0_25px_50px_rgba(42,127,255,0.4)] hover:-translate-y-1 transition-all active:scale-95 group">
-         <Plus size={22} className="group-hover:rotate-90 transition-transform duration-500" />
-         Book New Session
+      <button
+        onClick={onBookClick}
+        className="hidden lg:flex items-center gap-4 px-10 py-5 bg-[#2A7FFF] text-white rounded-[1.8rem] font-black text-[1rem] shadow-[0_20px_40px_rgba(42,127,255,0.3)] hover:shadow-[0_25px_50px_rgba(42,127,255,0.4)] hover:-translate-y-1 transition-all active:scale-95 group"
+      >
+        <Plus size={22} className="group-hover:rotate-90 transition-transform duration-500" />
+        Book New Session
       </button>
     </div>
   );

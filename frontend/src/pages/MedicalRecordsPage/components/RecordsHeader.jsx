@@ -13,8 +13,8 @@ const RecordsHeader = () => {
 
       <div className="flex items-center gap-4">
         <RecordsSearch />
-        
-        <button 
+
+        <button
           onClick={() => navigate('/upload-record')}
           className="flex items-center gap-3 px-8 py-3.5 bg-[#2A7FFF] text-white text-[0.9rem] font-black rounded-[1.8rem] shadow-[0_12px_24px_rgba(42,127,255,0.4)] hover:scale-105 active:scale-95 transition-all"
         >

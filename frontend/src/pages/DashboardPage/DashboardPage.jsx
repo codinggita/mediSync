@@ -13,7 +13,7 @@ const DashboardPage = () => {
 
   return (
     <div className="flex h-screen overflow-hidden bg-[#ecf0f3] dark:bg-[#0f141f] transition-colors duration-300 font-sans">
-      <SEO 
+      <SEO
         title={user?.role === 'Doctor' ? 'Doctor Dashboard' : 'Patient Dashboard'}
         description={`Securely manage your ${user?.role === 'Doctor' ? 'clinical appointments and patient cases' : 'medical records, vitals, and pharmacy connections'}.`}
       />
@@ -30,5 +30,3 @@ const DashboardPage = () => {
 };
 
 export default DashboardPage;
-
-

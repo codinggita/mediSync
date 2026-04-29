@@ -25,22 +25,24 @@ const DoctorPortalPage = () => {
   const [showRadiologyModal, setShowRadiologyModal] = useState(false);
   const [showLabModal, setShowLabModal] = useState(false);
   const [showUploadModal, setShowUploadModal] = useState(false);
-  const [prescriptionData, setPrescriptionData] = useState({ medicine: '', dosage: '', instructions: '' });
+  const [prescriptionData, setPrescriptionData] = useState({
+    medicine: '',
+    dosage: '',
+    instructions: '',
+  });
 
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-        const [appRes, recRes] = await Promise.all([
-          api.get('/appointments'),
-          api.get('/records')
-        ]);
-        
+        const [appRes, recRes] = await Promise.all([api.get('/appointments'), api.get('/records')]);
+
         const uniquePatients = [];
         const seenIds = new Set();
-        
-        const getPatientObj = (item) => (item && typeof item === 'object' && item._id) ? item : null;
 
-        appRes.data.forEach(app => {
+        const getPatientObj = (item) =>
+          item && typeof item === 'object' && item._id ? item : null;
+
+        appRes.data.forEach((app) => {
           const patientObj = getPatientObj(app.patient);
           if (patientObj && !seenIds.has(String(patientObj._id))) {
             uniquePatients.push(patientObj);
@@ -49,8 +51,22 @@ const DoctorPortalPage = () => {
         });
 
         if (uniquePatients.length === 0) {
-           uniquePatients.push({ _id: 'dummy1', name: 'James Wilson', gender: 'Male', bloodGroup: 'O+', dateOfBirth: '1985-06-15T00:00:00.000Z', patientId: 'MS-891-W' });
-           uniquePatients.push({ _id: 'dummy2', name: 'Elena Rodriguez', gender: 'Female', bloodGroup: 'A-', dateOfBirth: '1992-11-20T00:00:00.000Z', patientId: 'MS-922-R' });
+          uniquePatients.push({
+            _id: 'dummy1',
+            name: 'James Wilson',
+            gender: 'Male',
+            bloodGroup: 'O+',
+            dateOfBirth: '1985-06-15T00:00:00.000Z',
+            patientId: 'MS-891-W',
+          });
+          uniquePatients.push({
+            _id: 'dummy2',
+            name: 'Elena Rodriguez',
+            gender: 'Female',
+            bloodGroup: 'A-',
+            dateOfBirth: '1992-11-20T00:00:00.000Z',
+            patientId: 'MS-922-R',
+          });
         }
 
         setPatients(uniquePatients);
@@ -77,8 +93,10 @@ const DoctorPortalPage = () => {
     }
   };
 
-  const activePatient = patients.find(p => String(p._id) === String(selectedPatientId));
-  const activeAppointment = appointments.find(app => String(app.patient?._id || app.patient) === String(selectedPatientId));
+  const activePatient = patients.find((p) => String(p._id) === String(selectedPatientId));
+  const activeAppointment = appointments.find(
+    (app) => String(app.patient?._id || app.patient) === String(selectedPatientId)
+  );
 
   const handlePrescriptionSubmit = (e) => {
     e.preventDefault();
@@ -95,48 +113,53 @@ const DoctorPortalPage = () => {
       <div className="flex flex-col flex-1 overflow-hidden min-w-0 relative z-10">
         <TopBar />
         <main className="flex-1 overflow-y-auto px-6 py-6 flex flex-col gap-10 scrollbar-hide pb-24 md:pb-20">
-          
-          <ClinicalHeader 
-            refreshing={refreshing} 
-            handleRefresh={handleRefresh} 
-            activeAppointment={activeAppointment} 
-            patients={patients} 
-            selectedPatientId={selectedPatientId} 
-            setSelectedPatientId={setSelectedPatientId} 
+          <ClinicalHeader
+            refreshing={refreshing}
+            handleRefresh={handleRefresh}
+            activeAppointment={activeAppointment}
+            patients={patients}
+            selectedPatientId={selectedPatientId}
+            setSelectedPatientId={setSelectedPatientId}
           />
 
           {loading ? (
             <ClinicalLoader />
           ) : activePatient ? (
             <div className="grid grid-cols-1 xl:grid-cols-12 gap-10">
-               <div className="xl:col-span-8 flex flex-col gap-10">
-                  <PatientProfileCard 
-                    patient={activePatient} 
-                    onPrescribe={() => setShowPrescriptionModal(true)}
-                    onAiDiagnosis={() => setShowAiModal(true)}
-                    onAddRecord={() => setShowUploadModal(true)}
-                  />
-                  <ClinicalStatsDisplay activePatient={activePatient} />
-               </div>
+              <div className="xl:col-span-8 flex flex-col gap-10">
+                <PatientProfileCard
+                  patient={activePatient}
+                  onPrescribe={() => setShowPrescriptionModal(true)}
+                  onAiDiagnosis={() => setShowAiModal(true)}
+                  onAddRecord={() => setShowUploadModal(true)}
+                />
+                <ClinicalStatsDisplay activePatient={activePatient} />
+              </div>
 
-               <ScheduleSidebar 
-                 appointments={appointments} 
-                 activePatient={activePatient} 
-                 selectedPatientId={selectedPatientId} 
-                 setSelectedPatientId={setSelectedPatientId} 
-               />
+              <ScheduleSidebar
+                appointments={appointments}
+                activePatient={activePatient}
+                selectedPatientId={selectedPatientId}
+                setSelectedPatientId={setSelectedPatientId}
+              />
             </div>
           ) : null}
         </main>
       </div>
 
-      <ClinicalModals 
-        showAiModal={showAiModal} setShowAiModal={setShowAiModal}
-        showPrescriptionModal={showPrescriptionModal} setShowPrescriptionModal={setShowPrescriptionModal}
-        showRadiologyModal={showRadiologyModal} setShowRadiologyModal={setShowRadiologyModal}
-        showLabModal={showLabModal} setShowLabModal={setShowLabModal}
-        showUploadModal={showUploadModal} setShowUploadModal={setShowUploadModal}
-        prescriptionData={prescriptionData} setPrescriptionData={setPrescriptionData}
+      <ClinicalModals
+        showAiModal={showAiModal}
+        setShowAiModal={setShowAiModal}
+        showPrescriptionModal={showPrescriptionModal}
+        setShowPrescriptionModal={setShowPrescriptionModal}
+        showRadiologyModal={showRadiologyModal}
+        setShowRadiologyModal={setShowRadiologyModal}
+        showLabModal={showLabModal}
+        setShowLabModal={setShowLabModal}
+        showUploadModal={showUploadModal}
+        setShowUploadModal={setShowUploadModal}
+        prescriptionData={prescriptionData}
+        setPrescriptionData={setPrescriptionData}
         handlePrescriptionSubmit={handlePrescriptionSubmit}
         activePatient={activePatient}
       />

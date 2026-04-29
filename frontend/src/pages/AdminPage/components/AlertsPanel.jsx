@@ -58,7 +58,9 @@ const AlertsPanel = () => {
               <a.icon size={15} className={a.iconColor} />
             </div>
             <div className="flex-1 min-w-0 flex flex-col gap-1">
-              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border w-fit ${a.tagBg}`}>
+              <span
+                className={`text-[10px] font-bold px-2 py-0.5 rounded-full border w-fit ${a.tagBg}`}
+              >
                 {a.tag}
               </span>
               <p className="text-xs text-gray-700 leading-relaxed">{a.message}</p>

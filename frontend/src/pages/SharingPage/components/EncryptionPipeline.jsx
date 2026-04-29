@@ -41,14 +41,18 @@ const EncryptionPipeline = () => {
             <h3 className="text-[0.92rem] font-extrabold text-[#1F2937] dark:text-white leading-none">
               Encryption Pipeline
             </h3>
-            <p className="text-[0.65rem] text-gray-400 mt-0.5">End-to-end secure transfer protocol</p>
+            <p className="text-[0.65rem] text-gray-400 mt-0.5">
+              End-to-end secure transfer protocol
+            </p>
           </div>
         </div>
 
         {/* AES Badge */}
         <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#8B5CF6]/10 border border-[#8B5CF6]/30">
           <Lock size={11} className="text-[#8B5CF6]" />
-          <span className="text-[0.65rem] font-extrabold text-[#8B5CF6] tracking-wider">AES-256</span>
+          <span className="text-[0.65rem] font-extrabold text-[#8B5CF6] tracking-wider">
+            AES-256
+          </span>
           <CheckCircle size={11} className="text-[#2ECC71]" />
         </div>
       </div>
@@ -75,7 +79,9 @@ const EncryptionPipeline = () => {
                 >
                   Step {step}
                 </p>
-                <p className="text-[0.88rem] font-bold text-[#1F2937] dark:text-white leading-snug">{label}</p>
+                <p className="text-[0.88rem] font-bold text-[#1F2937] dark:text-white leading-snug">
+                  {label}
+                </p>
                 <p className="text-[0.72rem] text-gray-400 mt-0.5">{desc}</p>
               </div>
             </div>
@@ -99,7 +105,8 @@ const EncryptionPipeline = () => {
       <div className="mt-4 flex items-center gap-2 px-3 py-2 rounded-xl bg-[#2ECC71]/8 border border-[#2ECC71]/20">
         <ShieldCheck size={14} className="text-[#2ECC71] shrink-0" />
         <p className="text-[0.72rem] text-[#2ECC71] font-semibold">
-          All records are encrypted locally before transmission. Zero-knowledge architecture ensures your data is never readable by MediSync servers.
+          All records are encrypted locally before transmission. Zero-knowledge architecture ensures
+          your data is never readable by MediSync servers.
         </p>
       </div>
     </div>

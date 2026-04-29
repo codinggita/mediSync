@@ -3,7 +3,7 @@ import {
   getUserProfile,
   updateUserProfile,
   updateVitals,
-  getDoctors
+  getDoctors,
 } from '../controllers/userController.js';
 import { protect } from '../middleware/authMiddleware.js';
 
@@ -12,9 +12,7 @@ const router = express.Router();
 // All user routes require authentication
 router.use(protect);
 
-router.route('/profile')
-  .get(getUserProfile)
-  .put(updateUserProfile);
+router.route('/profile').get(getUserProfile).put(updateUserProfile);
 
 router.put('/vitals', updateVitals);
 router.get('/doctors', getDoctors);

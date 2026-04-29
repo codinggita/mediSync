@@ -13,11 +13,7 @@ const authorize = (...roles) => {
 
     if (!roles.includes(req.user.role)) {
       res.status(403);
-      return next(
-        new Error(
-          `Role '${req.user.role}' is not authorized to access this resource`
-        )
-      );
+      return next(new Error(`Role '${req.user.role}' is not authorized to access this resource`));
     }
 
     next();

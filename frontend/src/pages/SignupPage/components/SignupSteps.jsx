@@ -5,44 +5,37 @@ import BasicInfo from './BasicInfo';
 import SecurityAgreement from './SecurityAgreement';
 import SignupNavigation from './SignupNavigation';
 
-const SignupSteps = ({ 
-  step, 
-  setStep, 
-  formik, 
-  selectedPlan, 
-  setSelectedPlan, 
+const SignupSteps = ({
+  step,
+  setStep,
+  formik,
+  selectedPlan,
+  setSelectedPlan,
   isLoading,
-  setError
+  setError,
 }) => {
   return (
     <>
       {/* Step 0: Plan Selection */}
-      <PlanSelection 
+      <PlanSelection
         selectedPlan={selectedPlan}
         setSelectedPlan={setSelectedPlan}
         setStep={setStep}
       />
 
       {/* Step 1: Basic Info */}
-      <BasicInfo 
-        step={step} 
-        formik={formik} 
-        setStep={setStep} 
-      />
+      <BasicInfo step={step} formik={formik} setStep={setStep} />
 
       {/* Step 2: Role Details */}
-      <RoleDetails 
-        step={step} 
-        formik={formik} 
-      />
+      <RoleDetails step={step} formik={formik} />
 
       {/* Step 3: Security & Agreement */}
-      <SecurityAgreement 
-        step={step} 
-        formik={formik} 
-        setStep={setStep} 
-        isLoading={isLoading} 
-        setError={setError} 
+      <SecurityAgreement
+        step={step}
+        formik={formik}
+        setStep={setStep}
+        isLoading={isLoading}
+        setError={setError}
       />
 
       {/* Navigation for steps 1 and 2 */}

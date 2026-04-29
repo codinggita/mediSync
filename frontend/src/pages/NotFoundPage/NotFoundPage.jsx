@@ -10,7 +10,7 @@ const NotFoundPage = () => {
     <div className="min-h-screen bg-[#ecf0f3] flex items-center justify-center p-6 font-sans overflow-hidden relative">
       {/* Ambient background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#2A7FFF]/5 rounded-full blur-[120px] pointer-events-none" />
-      
+
       <div className="max-w-xl w-full text-center relative z-10 animate-in zoom-in duration-700">
         <div className="flex flex-col items-center">
           {/* Logo Section */}
@@ -24,27 +24,32 @@ const NotFoundPage = () => {
               404
             </h1>
             <div className="absolute inset-0 flex items-center justify-center">
-               <div className="px-6 py-2 bg-white/40 backdrop-blur-md rounded-2xl border border-white shadow-xl flex items-center gap-3">
-                  <AlertCircle size={20} className="text-rose-500" />
-                  <span className="text-[0.9rem] font-black text-slate-800 uppercase tracking-widest">Protocol Failure</span>
-               </div>
+              <div className="px-6 py-2 bg-white/40 backdrop-blur-md rounded-2xl border border-white shadow-xl flex items-center gap-3">
+                <AlertCircle size={20} className="text-rose-500" />
+                <span className="text-[0.9rem] font-black text-slate-800 uppercase tracking-widest">
+                  Protocol Failure
+                </span>
+              </div>
             </div>
           </div>
 
-          <h2 className="text-[2.2rem] font-black text-slate-900 mb-4 leading-tight">Registry Node Not Found</h2>
+          <h2 className="text-[2.2rem] font-black text-slate-900 mb-4 leading-tight">
+            Registry Node Not Found
+          </h2>
           <p className="text-slate-500 text-[1.05rem] font-bold leading-relaxed mb-12 max-w-sm mx-auto">
-            The clinical route you are trying to access has been decentralized or doesn't exist in our current medical directory.
+            The clinical route you are trying to access has been decentralized or doesn't exist in
+            our current medical directory.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center gap-6 w-full">
-            <button 
+            <button
               onClick={() => navigate(-1)}
               className="flex-1 flex items-center justify-center gap-3 py-5 bg-[#ecf0f3] text-slate-600 rounded-[2rem] font-black text-[1rem] shadow-[10px_10px_20px_#cbced1,-10px_-10px_20px_#ffffff] hover:shadow-[6px_6px_12px_#cbced1,-6px_-6px_12px_#ffffff] active:shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff] transition-all group"
             >
               <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
               Return Back
             </button>
-            <button 
+            <button
               onClick={() => navigate('/')}
               className="flex-1 flex items-center justify-center gap-3 py-5 bg-[#2A7FFF] text-white rounded-[2rem] font-black text-[1rem] shadow-[0_15px_30px_rgba(42,127,255,0.3)] hover:shadow-[0_20px_40px_rgba(42,127,255,0.4)] hover:-translate-y-1 transition-all active:scale-95"
             >
@@ -55,7 +60,7 @@ const NotFoundPage = () => {
 
           {/* Compliance Footer */}
           <div className="mt-16 flex items-center gap-3 px-6 py-3 bg-white/30 backdrop-blur-sm rounded-2xl border border-white/50 text-[0.7rem] font-black text-slate-400 uppercase tracking-widest shadow-sm">
-             <Shield size={14} className="text-[#2ECC71]" /> Secure Navigation Guaranteed
+            <Shield size={14} className="text-[#2ECC71]" /> Secure Navigation Guaranteed
           </div>
         </div>
       </div>

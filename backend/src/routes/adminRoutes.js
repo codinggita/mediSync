@@ -1,13 +1,26 @@
 import express from 'express';
 import {
-  getAllUsers, getUserById, updateUserByAdmin, deleteUser, getPlatformStats, toggleUserBan,
+  getAllUsers,
+  getUserById,
+  updateUserByAdmin,
+  deleteUser,
+  getPlatformStats,
+  toggleUserBan,
   addDoctorByAdmin,
-  getAllPharmacies, verifyPharmacy, deletePharmacy,
+  getAllPharmacies,
+  verifyPharmacy,
+  deletePharmacy,
 } from '../controllers/adminController.js';
 import {
-  getAdminMedicines, createAdminMedicine, updateAdminMedicine, deleteAdminMedicine,
-  getAllPrices, upsertPrice, comparePrices,
-  getAnalytics, getAlerts,
+  getAdminMedicines,
+  createAdminMedicine,
+  updateAdminMedicine,
+  deleteAdminMedicine,
+  getAllPrices,
+  upsertPrice,
+  comparePrices,
+  getAnalytics,
+  getAlerts,
 } from '../controllers/adminServiceController.js';
 import { protect, admin } from '../middleware/authMiddleware.js';
 

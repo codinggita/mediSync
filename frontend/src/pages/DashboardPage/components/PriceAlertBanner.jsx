@@ -6,7 +6,7 @@ const PriceAlertBanner = () => {
   const navigate = useNavigate();
 
   return (
-    <div 
+    <div
       onClick={() => navigate('/comparison')}
       className="bg-emerald-500/10 border border-emerald-500/20 rounded-[2.5rem] p-6 flex items-center justify-between cursor-pointer hover:bg-emerald-500/20 hover:scale-[1.01] transition-all group shadow-sm"
     >

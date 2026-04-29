@@ -8,23 +8,23 @@ export const useDashboardStats = () => {
   const refreshStats = useCallback(async () => {
     try {
       const [prescRes, recordRes, apptRes] = await Promise.all([
-        api.get('/prescriptions/my').catch(e => ({ data: { medicines: [] } })), 
-        api.get('/records').catch(e => ({ data: [] })), 
-        api.get('/appointments').catch(e => ({ data: [] }))
+        api.get('/prescriptions/my').catch((e) => ({ data: { medicines: [] } })),
+        api.get('/records').catch((e) => ({ data: [] })),
+        api.get('/appointments').catch((e) => ({ data: [] })),
       ]);
-      
-      const medicinesCount = Array.isArray(prescRes?.data) 
-        ? prescRes.data.length 
-        : (prescRes?.data?.medicines?.length || 0);
+
+      const medicinesCount = Array.isArray(prescRes?.data)
+        ? prescRes.data.length
+        : prescRes?.data?.medicines?.length || 0;
 
       setStats({
         medicines: medicinesCount,
         records: Array.isArray(recordRes?.data) ? recordRes.data.length : 0,
         appointments: Array.isArray(apptRes?.data) ? apptRes.data.length : 0,
-        alerts: medicinesCount === 0 ? 1 : 3 // Dynamic alert if no meds saved
+        alerts: medicinesCount === 0 ? 1 : 3, // Dynamic alert if no meds saved
       });
-    } catch (error) { 
-      console.error('Error refreshing dashboard stats:', error); 
+    } catch (error) {
+      console.error('Error refreshing dashboard stats:', error);
     } finally {
       setLoading(false);
     }

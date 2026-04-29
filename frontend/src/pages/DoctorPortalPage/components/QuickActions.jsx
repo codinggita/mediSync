@@ -22,7 +22,9 @@ const ACTIONS = [
 const QuickActions = () => {
   return (
     <div className="bg-white rounded-[14px] border border-gray-100 shadow-sm p-5 doctor-card">
-      <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wide mb-3">Quick Actions</h3>
+      <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wide mb-3">
+        Quick Actions
+      </h3>
 
       <div className="flex flex-col gap-2">
         {ACTIONS.map(({ icon: Icon, label, color }) => (

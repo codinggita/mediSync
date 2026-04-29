@@ -11,10 +11,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Please add an email'],
       unique: true,
-      match: [
-        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
-        'Please add a valid email',
-      ],
+      match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Please add a valid email'],
     },
     password: {
       type: String,
@@ -33,15 +30,21 @@ const userSchema = new mongoose.Schema(
     // Doctor Specific Fields
     specialty: {
       type: String,
-      required: function() { return this.role === 'Doctor'; }
+      required: function () {
+        return this.role === 'Doctor';
+      },
     },
     hospital: {
       type: String,
-      required: function() { return this.role === 'Doctor'; }
+      required: function () {
+        return this.role === 'Doctor';
+      },
     },
     medicalLicenseId: {
       type: String,
-      required: function() { return this.role === 'Doctor'; }
+      required: function () {
+        return this.role === 'Doctor';
+      },
     },
     phone: {
       type: String,
@@ -87,14 +90,14 @@ const userSchema = new mongoose.Schema(
     plan: {
       type: String,
       enum: ['Free', 'Pro'],
-      default: 'Free'
+      default: 'Free',
     },
     preferences: {
-      vitals:       { type: Boolean, default: true },
-      priceDrops:   { type: Boolean, default: false },
+      vitals: { type: Boolean, default: true },
+      priceDrops: { type: Boolean, default: false },
       appointments: { type: Boolean, default: true },
-      records:      { type: Boolean, default: false },
-      passwordLastChanged: { type: String, default: '3 months ago' }
+      records: { type: Boolean, default: false },
+      passwordLastChanged: { type: String, default: '3 months ago' },
     },
     resetPasswordToken: String,
     resetPasswordExpire: Date,

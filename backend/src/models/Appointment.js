@@ -43,7 +43,7 @@ const appointmentSchema = new mongoose.Schema(
     },
     meetingLink: {
       type: String,
-    }
+    },
   },
   {
     timestamps: true,

@@ -1,14 +1,27 @@
 import User from '../models/User.js';
 import generateToken from '../utils/generateToken.js';
-import sendEmail from '../utils/sendEmail.js';
-import crypto from 'crypto';
 
 // @desc    Register a new user
 // @route   POST /api/auth/register
 // @access  Public
 const registerUser = async (req, res, next) => {
   try {
-    const { name, email, password, role, specialty, hospital, dateOfBirth, bloodGroup, gender, medicalLicenseId, orgEmail, licenseCertificateUrl, plan, phone } = req.body;
+    const {
+      name,
+      email,
+      password,
+      role,
+      specialty,
+      hospital,
+      dateOfBirth,
+      bloodGroup,
+      gender,
+      medicalLicenseId,
+      orgEmail,
+      licenseCertificateUrl,
+      plan,
+      phone,
+    } = req.body;
 
     // Check if email exists
     const userExists = await User.findOne({ email });
@@ -29,7 +42,7 @@ const registerUser = async (req, res, next) => {
     // Generate patientId if Patient
     let patientId;
     if (!role || role === 'Patient') {
-       patientId = 'MS-' + Math.floor(10000 + Math.random() * 90000);
+      patientId = 'MS-' + Math.floor(10000 + Math.random() * 90000);
     }
 
     const user = await User.create({
@@ -47,7 +60,7 @@ const registerUser = async (req, res, next) => {
       orgEmail,
       licenseCertificateUrl,
       phone,
-      plan: plan || 'Free'
+      plan: plan || 'Free',
     });
 
     if (user) {
@@ -77,10 +90,7 @@ const loginUser = async (req, res, next) => {
 
     // Check for user by email OR phone
     const user = await User.findOne({
-      $or: [
-        { email: identifier },
-        { phone: identifier }
-      ]
+      $or: [{ email: identifier }, { phone: identifier }],
     }).select('+password');
 
     if (user && (await user.matchPassword(password))) {
@@ -136,13 +146,15 @@ const getMe = async (req, res, next) => {
 // @access  Public
 const googleLogin = async (req, res, next) => {
   try {
-    const { email, name } = req.body;
+    const { email } = req.body;
 
     const user = await User.findOne({ email });
 
     if (user) {
       if (user.isBanned) {
-        return res.status(403).json({ message: 'This account has been suspended by the administrator.' });
+        return res
+          .status(403)
+          .json({ message: 'This account has been suspended by the administrator.' });
       }
 
       res.status(200).json({
@@ -153,7 +165,7 @@ const googleLogin = async (req, res, next) => {
         patientId: user.patientId,
         specialty: user.specialty,
         hospital: user.hospital,
-        token: generateToken(user._id)
+        token: generateToken(user._id),
       });
     } else {
       // User doesn't exist, tell frontend to redirect to signup

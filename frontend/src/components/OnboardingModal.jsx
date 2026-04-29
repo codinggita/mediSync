@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  X, ArrowRight, ArrowLeft, Shield, Sparkles
-} from 'lucide-react';
+import { X, ArrowRight, ArrowLeft, Shield, Sparkles } from 'lucide-react';
 import { steps } from './onboardingData';
 
 const ONBOARDING_KEY = 'mediSync_onboarding_done';
@@ -24,15 +22,24 @@ const OnboardingModal = ({ userName }) => {
   };
 
   const goNext = () => {
-    if (step === steps.length - 1) { dismiss(); return; }
+    if (step === steps.length - 1) {
+      dismiss();
+      return;
+    }
     setAnimating(true);
-    setTimeout(() => { setStep(s => s + 1); setAnimating(false); }, 250);
+    setTimeout(() => {
+      setStep((s) => s + 1);
+      setAnimating(false);
+    }, 250);
   };
 
   const goPrev = () => {
     if (step === 0) return;
     setAnimating(true);
-    setTimeout(() => { setStep(s => s - 1); setAnimating(false); }, 250);
+    setTimeout(() => {
+      setStep((s) => s - 1);
+      setAnimating(false);
+    }, 250);
   };
 
   if (!visible) return null;
@@ -53,14 +60,10 @@ const OnboardingModal = ({ userName }) => {
       </div>
 
       {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-slate-900/40 backdrop-blur-[8px]"
-        onClick={dismiss}
-      />
+      <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-[8px]" onClick={dismiss} />
 
       {/* Modal Card */}
       <div className="relative z-10 w-full max-w-lg bg-white/90 dark:bg-[#0F172A]/90 backdrop-blur-2xl rounded-[40px] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.2)] overflow-hidden border border-white/50 dark:border-white/10 animate-[premiumFadeIn_0.5s_cubic-bezier(0.16,1,0.3,1)]">
-        
         {/* Progress Bar (Glow) */}
         <div className="absolute top-0 left-0 right-0 h-[3px] bg-gray-100/50 dark:bg-white/5 overflow-hidden">
           <div
@@ -78,36 +81,42 @@ const OnboardingModal = ({ userName }) => {
         </button>
 
         {/* Header Section */}
-        <div className={`relative px-10 pt-14 pb-8 flex flex-col items-center text-center transition-all duration-500 ${animating ? 'translate-y-4 opacity-0 scale-95' : 'translate-y-0 opacity-100 scale-100'}`}>
+        <div
+          className={`relative px-10 pt-14 pb-8 flex flex-col items-center text-center transition-all duration-500 ${animating ? 'translate-y-4 opacity-0 scale-95' : 'translate-y-0 opacity-100 scale-100'}`}
+        >
           {/* Animated Icon Container */}
           <div className="relative mb-8">
-            <div 
+            <div
               className="absolute inset-0 rounded-[32px] blur-2xl opacity-40 animate-pulse"
               style={{ backgroundColor: current.color }}
             />
             <div
               className="w-24 h-24 rounded-[32px] flex items-center justify-center relative z-10 animate-[float_4s_ease-in-out_infinite] shadow-[inset_0_2px_4px_rgba(255,255,255,0.4)] border border-white/40 dark:border-white/10"
-              style={{ 
+              style={{
                 background: `linear-gradient(135deg, ${current.color}15, ${current.color}35)`,
-                backdropFilter: 'blur(8px)'
+                backdropFilter: 'blur(8px)',
               }}
             >
-              <Icon size={44} className="drop-shadow-[0_4px_8px_rgba(0,0,0,0.1)]" style={{ color: current.color }} />
+              <Icon
+                size={44}
+                className="drop-shadow-[0_4px_8px_rgba(0,0,0,0.1)]"
+                style={{ color: current.color }}
+              />
             </div>
-            
+
             {/* Sparkle decorative icons */}
             <div className="absolute -top-2 -right-2 animate-bounce">
-               <Sparkles size={20} className="text-amber-400 opacity-60" />
+              <Sparkles size={20} className="text-amber-400 opacity-60" />
             </div>
           </div>
 
           {/* Subtitle / Badge */}
-          <div 
+          <div
             className="px-4 py-1.5 rounded-full text-[0.7rem] font-black uppercase tracking-[0.25em] mb-4 shadow-sm border"
-            style={{ 
-              color: current.color, 
+            style={{
+              color: current.color,
               backgroundColor: `${current.color}10`,
-              borderColor: `${current.color}20`
+              borderColor: `${current.color}20`,
             }}
           >
             {current.subtitle}
@@ -116,13 +125,18 @@ const OnboardingModal = ({ userName }) => {
           {/* Title */}
           <h2 className="text-[2.2rem] font-black text-slate-900 dark:text-white leading-[1.1] tracking-tight drop-shadow-sm">
             {title.split('!').map((part, i) => (
-              <span key={i}>{part}{i === 0 && title.includes('!') ? '!' : ''}</span>
+              <span key={i}>
+                {part}
+                {i === 0 && title.includes('!') ? '!' : ''}
+              </span>
             ))}
           </h2>
         </div>
 
         {/* Body Section */}
-        <div className={`px-12 pb-10 flex flex-col items-center transition-all duration-500 delay-75 ${animating ? 'translate-y-4 opacity-0' : 'translate-y-0 opacity-100'}`}>
+        <div
+          className={`px-12 pb-10 flex flex-col items-center transition-all duration-500 delay-75 ${animating ? 'translate-y-4 opacity-0' : 'translate-y-0 opacity-100'}`}
+        >
           <p className="text-[1.05rem] text-slate-500 dark:text-slate-400 font-medium leading-relaxed text-center max-w-[90%] mb-10">
             {description}
           </p>
@@ -158,13 +172,19 @@ const OnboardingModal = ({ userName }) => {
             {steps.map((_, i) => (
               <button
                 key={i}
-                onClick={() => { setAnimating(true); setTimeout(() => { setStep(i); setAnimating(false); }, 250); }}
+                onClick={() => {
+                  setAnimating(true);
+                  setTimeout(() => {
+                    setStep(i);
+                    setAnimating(false);
+                  }, 250);
+                }}
                 className="transition-all duration-500 rounded-full"
                 style={{
                   width: i === step ? '32px' : '8px',
                   height: '8px',
                   backgroundColor: i === step ? current.color : '#cbd5e140',
-                  boxShadow: i === step ? `0 0 12px ${current.color}60` : 'none'
+                  boxShadow: i === step ? `0 0 12px ${current.color}60` : 'none',
                 }}
               />
             ))}
@@ -192,4 +212,3 @@ const OnboardingModal = ({ userName }) => {
 };
 
 export default OnboardingModal;
-

@@ -37,7 +37,9 @@ const CreateShareLink = () => {
           <h3 className="text-[0.92rem] font-extrabold text-[#1F2937] dark:text-white leading-none">
             Create Access Link
           </h3>
-          <p className="text-[0.65rem] text-gray-400 mt-0.5">Generate an encrypted link for a recipient</p>
+          <p className="text-[0.65rem] text-gray-400 mt-0.5">
+            Generate an encrypted link for a recipient
+          </p>
         </div>
       </div>
 
@@ -50,7 +52,7 @@ const CreateShareLink = () => {
           <input
             type="email"
             value={email}
-            onChange={e => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="doctor@hospital.com"
             className="w-full text-[0.85rem] px-3.5 py-2.5 rounded-xl border border-gray-200 dark:border-slate-700/50 bg-[#F8FAFC] dark:bg-[#0B1121] text-[#1F2937] dark:text-slate-200 placeholder:text-gray-400 outline-none focus:border-[#2A7FFF] focus:ring-2 focus:ring-[#2A7FFF]/20 transition-all"
           />
@@ -64,12 +66,17 @@ const CreateShareLink = () => {
           <div className="relative">
             <select
               value={record}
-              onChange={e => setRecord(e.target.value)}
+              onChange={(e) => setRecord(e.target.value)}
               className="w-full appearance-none text-[0.85rem] px-3.5 py-2.5 pr-9 rounded-xl border border-gray-200 dark:border-slate-700/50 bg-[#F8FAFC] dark:bg-[#0B1121] text-[#1F2937] dark:text-slate-200 outline-none focus:border-[#2A7FFF] focus:ring-2 focus:ring-[#2A7FFF]/20 transition-all cursor-pointer"
             >
-              {records.map(r => <option key={r}>{r}</option>)}
+              {records.map((r) => (
+                <option key={r}>{r}</option>
+              ))}
             </select>
-            <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+            <ChevronDown
+              size={14}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+            />
           </div>
         </div>
 
@@ -79,7 +86,7 @@ const CreateShareLink = () => {
             <Clock size={12} /> Access Duration
           </label>
           <div className="flex gap-2 flex-wrap">
-            {durations.map(d => (
+            {durations.map((d) => (
               <button
                 key={d}
                 onClick={() => setDuration(d)}
@@ -100,7 +107,9 @@ const CreateShareLink = () => {
           <div className="flex items-center gap-2">
             <KeyRound size={14} className="text-[#8B5CF6]" />
             <div>
-              <p className="text-[0.82rem] font-bold text-[#1F2937] dark:text-white">PIN Verification</p>
+              <p className="text-[0.82rem] font-bold text-[#1F2937] dark:text-white">
+                PIN Verification
+              </p>
               <p className="text-[0.68rem] text-gray-400">Require PIN code to open link</p>
             </div>
           </div>

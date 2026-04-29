@@ -4,7 +4,6 @@ import { AlertTriangle, PackageX } from 'lucide-react';
 const EmergencyHero = () => {
   return (
     <div className="flex flex-col gap-4 em-card">
-
       {/* Alert Icon + Title */}
       <div className="flex flex-col items-center gap-3 py-6">
         {/* Pulsing Icon */}
@@ -25,7 +24,6 @@ const EmergencyHero = () => {
 
       {/* Main Card */}
       <div className="bg-white rounded-[14px] border border-red-100 shadow-md overflow-hidden">
-
         {/* No medicine warning */}
         <div className="flex items-center gap-3 px-5 py-4 bg-red-50 border-b border-red-100">
           <PackageX size={20} className="text-[#D32F2F] flex-shrink-0" />

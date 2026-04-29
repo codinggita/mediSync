@@ -8,7 +8,7 @@ const NotificationsList = ({ notifications, onMarkRead, onDelete }) => {
   return (
     <div className="max-w-4xl space-y-4">
       {notifications.map((notif) => (
-        <NotificationCard 
+        <NotificationCard
           key={notif.id}
           notif={notif}
           onMarkRead={onMarkRead}

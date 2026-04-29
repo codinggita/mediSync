@@ -25,21 +25,19 @@ import PremiumLoader from '../components/PremiumLoader';
 
 const PlaceholderPage = ({ title }) => (
   <div className="min-h-screen flex items-center justify-center bg-[#ecf0f3] dark:bg-[#121826] text-2xl font-black text-slate-800 dark:text-white transition-colors">
-    <div className="p-16 neu-flat rounded-[3rem]">
-      {title} Page (Coming Soon)
-    </div>
+    <div className="p-16 neu-flat rounded-[3rem]">{title} Page (Coming Soon)</div>
   </div>
 );
 
 // RBAC Route Protection
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const { user, loading } = useAuth();
-  
+
   if (loading) return <PremiumLoader message="Synchronizing Data" />;
-  
+
   // If no user, redirect to login with a sync failure state
   if (!user) return <Navigate to="/signup" state={{ reason: 'session_missing' }} replace />;
-  
+
   // If route is restricted by role and user doesn't have it, redirect to dashboard
   if (allowedRoles && !allowedRoles.includes(user.role)) {
     return <Navigate to="/dashboard" replace />;
@@ -52,37 +50,126 @@ const AppRoutes = () => {
   return (
     <Routes>
       {/* Public Routes */}
-      <Route path="/"                 element={<LandingPage />} />
-      <Route path="/login"            element={<LoginPage />} />
-      <Route path="/signup"           element={<SignupPage />} />
-      <Route path="/forgot-password"  element={<ForgotPasswordPage />} />
-      <Route path="/reset-password/:token"  element={<ResetPasswordPage />} />
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/signup" element={<SignupPage />} />
+      <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+      <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
 
       {/* General Protected Routes */}
-      <Route path="/dashboard"        element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
-      <Route path="/pharmacy"         element={<ProtectedRoute><PharmacyPage /></ProtectedRoute>} />
-      <Route path="/sharing"          element={<ProtectedRoute><SharingPage /></ProtectedRoute>} />
-      <Route path="/pharmacy-registration" element={<ProtectedRoute><PharmacyRegistrationPage /></ProtectedRoute>} />
-      <Route path="/upload-record"    element={<ProtectedRoute><UploadRecordPage /></ProtectedRoute>} />
-      <Route path="/records"          element={<ProtectedRoute><MedicalRecordsPage /></ProtectedRoute>} />
-      <Route path="/appointments"     element={<ProtectedRoute><AppointmentsPage /></ProtectedRoute>} />
-      <Route path="/settings"         element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
-      <Route path="/doctor/:id"       element={<ProtectedRoute><DoctorProfilePage /></ProtectedRoute>} />
-      <Route path="/comparison"       element={<ProtectedRoute><ComparisonPage /></ProtectedRoute>} />
-      <Route path="/notifications"    element={<ProtectedRoute><NotificationsPage /></ProtectedRoute>} />
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <DashboardPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/pharmacy"
+        element={
+          <ProtectedRoute>
+            <PharmacyPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/sharing"
+        element={
+          <ProtectedRoute>
+            <SharingPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/pharmacy-registration"
+        element={
+          <ProtectedRoute>
+            <PharmacyRegistrationPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/upload-record"
+        element={
+          <ProtectedRoute>
+            <UploadRecordPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/records"
+        element={
+          <ProtectedRoute>
+            <MedicalRecordsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/appointments"
+        element={
+          <ProtectedRoute>
+            <AppointmentsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/settings"
+        element={
+          <ProtectedRoute>
+            <SettingsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/doctor/:id"
+        element={
+          <ProtectedRoute>
+            <DoctorProfilePage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/comparison"
+        element={
+          <ProtectedRoute>
+            <ComparisonPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/notifications"
+        element={
+          <ProtectedRoute>
+            <NotificationsPage />
+          </ProtectedRoute>
+        }
+      />
 
       {/* Role-Specific Protected Routes */}
       <Route
         path="/doctor-portal"
-        element={<ProtectedRoute allowedRoles={['Doctor', 'Admin']}><DoctorPortalPage /></ProtectedRoute>}
+        element={
+          <ProtectedRoute allowedRoles={['Doctor', 'Admin']}>
+            <DoctorPortalPage />
+          </ProtectedRoute>
+        }
       />
       <Route
         path="/admin"
-        element={<ProtectedRoute allowedRoles={['Admin']}><AdminPage /></ProtectedRoute>}
+        element={
+          <ProtectedRoute allowedRoles={['Admin']}>
+            <AdminPage />
+          </ProtectedRoute>
+        }
       />
       <Route
         path="/emergency"
-        element={<ProtectedRoute allowedRoles={['Patient']}><EmergencyPage /></ProtectedRoute>}
+        element={
+          <ProtectedRoute allowedRoles={['Patient']}>
+            <EmergencyPage />
+          </ProtectedRoute>
+        }
       />
 
       {/* Catch-all */}

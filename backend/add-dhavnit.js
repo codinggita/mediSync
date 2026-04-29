@@ -7,7 +7,7 @@ dotenv.config();
 const addDoctor = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
-    
+
     const exists = await User.findOne({ email: 'dhavnit.psy@medisync.app' });
     if (exists) {
       console.log('Dr. Dhavnit already exists.');
@@ -25,7 +25,8 @@ const addDoctor = async () => {
       phone: '+91 88492 99052',
       whatsapp: '+91 88492 99052',
       address: 'Rajkot, Gujarat, India',
-      profilePic: 'https://images.unsplash.com/photo-1559839734-2b71f1536783?auto=format&fit=crop&q=80&w=200&h=200'
+      profilePic:
+        'https://images.unsplash.com/photo-1559839734-2b71f1536783?auto=format&fit=crop&q=80&w=200&h=200',
     });
 
     console.log('Dr. Dhavnit added successfully!');

@@ -5,10 +5,13 @@ const RecordsSearch = () => {
   return (
     <div className="flex items-center gap-4">
       <div className="relative group">
-        <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#2A7FFF] transition-colors" />
-        <input 
-          type="text" 
-          placeholder="Search vault..." 
+        <Search
+          size={16}
+          className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#2A7FFF] transition-colors"
+        />
+        <input
+          type="text"
+          placeholder="Search vault..."
           className="pl-12 pr-6 py-3.5 neu-input text-[0.85rem] text-slate-800 dark:text-white w-full sm:w-64"
         />
       </div>

@@ -10,7 +10,9 @@ const SharedRecordCard = ({ record, onDownload }) => {
             <FileText size={28} />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-[1.3rem] font-black text-slate-800 dark:text-white leading-tight mb-2 truncate">{record.title}</p>
+            <p className="text-[1.3rem] font-black text-slate-800 dark:text-white leading-tight mb-2 truncate">
+              {record.title}
+            </p>
             <div className="flex flex-wrap items-center gap-4">
               <span className="flex items-center gap-2 text-[0.7rem] font-black text-[#2A7FFF] uppercase tracking-[0.15em]">
                 <User size={14} /> {record.patient?.name || 'Unknown Patient'}
@@ -24,13 +26,13 @@ const SharedRecordCard = ({ record, onDownload }) => {
         </div>
 
         <div className="flex items-center gap-4 shrink-0 w-full md:w-auto">
-          <button 
+          <button
             onClick={() => window.open(record.fileUrl, '_blank')}
             className="flex-1 md:flex-none flex items-center justify-center gap-3 px-8 py-4 bg-[#ecf0f3] dark:bg-[#151E32] text-slate-600 dark:text-slate-300 rounded-[1.5rem] font-black text-[0.8rem] uppercase tracking-widest border border-white/40 shadow-md hover:text-[#2A7FFF] hover:border-[#2A7FFF]/30 transition-all"
           >
             <Eye size={18} /> Preview
           </button>
-          <button 
+          <button
             onClick={() => onDownload(record.fileUrl, record.title)}
             className="flex-1 md:flex-none flex items-center justify-center gap-3 px-8 py-4 bg-[#2A7FFF] text-white rounded-[1.5rem] font-black text-[0.8rem] uppercase tracking-widest shadow-lg shadow-[#2A7FFF]/25 hover:shadow-xl hover:scale-105 transition-all"
           >

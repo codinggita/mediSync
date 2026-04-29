@@ -29,7 +29,8 @@ const SignupPage = () => {
 
   // Check both state and query params for sync failure
   const queryParams = new URLSearchParams(location.search);
-  const isSyncFailure = location.state?.reason === 'session_missing' || queryParams.get('reason') === 'session_missing';
+  const isSyncFailure =
+    location.state?.reason === 'session_missing' || queryParams.get('reason') === 'session_missing';
 
   // Handle pre-fill from Google if redirected from Login page
   useEffect(() => {
@@ -71,7 +72,7 @@ const SignupPage = () => {
 
         const { data } = await api.post('/auth/register', payload);
         setIsLoading('success');
-        
+
         setTimeout(() => {
           signup(data);
           if (data.role === 'Doctor') {
@@ -86,7 +87,7 @@ const SignupPage = () => {
         setError(err.response?.data?.message || err.message || 'Registration failed.');
         setIsLoading(false);
       }
-    }
+    },
   });
 
   const handleGoogleSuccess = (credentialResponse) => {
@@ -104,21 +105,21 @@ const SignupPage = () => {
   const handleGoogleError = () => setError('Google sign-in failed.');
 
   return (
-    <div 
+    <div
       className="min-h-screen w-full flex items-center justify-center font-sans relative overflow-hidden bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: `url(${loginBg})` }}
     >
-      <SEO 
-        title="Create Account" 
+      <SEO
+        title="Create Account"
         description="Join MediSync's advanced clinical network. Create an account to synchronize your health data securely."
       />
       <div className="absolute inset-0 bg-white/60 backdrop-blur-[2px]" />
-      
+
       <SignupSuccessOverlay show={isLoading === 'success'} />
 
       <div className="flex flex-col md:flex-row w-full max-w-4xl overflow-hidden z-10 m-4 max-h-[90vh] skeuo-card">
         <SignupBranding />
-        
+
         <div className="flex-[1.2] px-6 py-6 md:px-10 flex flex-col justify-start bg-transparent overflow-y-auto scrollbar-hide z-10">
           <div className="w-full max-w-[400px] mx-auto">
             <SignupHeader />
@@ -126,8 +127,10 @@ const SignupPage = () => {
             {isSyncFailure && !error && (
               <div className="mb-6 p-4 bg-amber-500/10 border border-amber-500/20 rounded-[20px] flex flex-col gap-2 text-amber-600 dark:text-amber-400 animate-in fade-in slide-in-from-top-4">
                 <div className="flex items-center gap-2.5">
-                   <ShieldAlert size={20} className="shrink-0" />
-                   <span className="text-[0.85rem] font-black uppercase tracking-widest">Sync Protocol Failed</span>
+                  <ShieldAlert size={20} className="shrink-0" />
+                  <span className="text-[0.85rem] font-black uppercase tracking-widest">
+                    Sync Protocol Failed
+                  </span>
                 </div>
                 <p className="text-[0.75rem] font-bold leading-relaxed opacity-80">
                   Session credentials missing. Please re-login to synchronize your clinical profile.
@@ -140,7 +143,7 @@ const SignupPage = () => {
             <SignupProgressDots step={step} />
 
             <form onSubmit={formik.handleSubmit} className="flex flex-col gap-4">
-              <SignupSteps 
+              <SignupSteps
                 step={step}
                 setStep={setStep}
                 formik={formik}
@@ -151,7 +154,7 @@ const SignupPage = () => {
               />
             </form>
 
-            <SignupGoogleAuth 
+            <SignupGoogleAuth
               role={formik.values.role}
               onSuccess={handleGoogleSuccess}
               onError={handleGoogleError}

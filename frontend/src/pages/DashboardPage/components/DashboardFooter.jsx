@@ -7,9 +7,12 @@ const DashboardFooter = () => {
       {[
         { text: 'End-to-End Encrypted', icon: ShieldCheck },
         { text: 'HIPAA Compliant Protocol', icon: Check },
-        { text: 'Biometric Secure Node', icon: ShieldCheck }
+        { text: 'Biometric Secure Node', icon: ShieldCheck },
       ].map((item, i) => (
-        <div key={i} className="flex items-center gap-3 px-6 py-3 bg-white/40 dark:bg-[#151E32]/40 backdrop-blur-xl rounded-2xl border border-white/20 text-[0.75rem] font-black text-slate-400 uppercase tracking-widest shadow-sm">
+        <div
+          key={i}
+          className="flex items-center gap-3 px-6 py-3 bg-white/40 dark:bg-[#151E32]/40 backdrop-blur-xl rounded-2xl border border-white/20 text-[0.75rem] font-black text-slate-400 uppercase tracking-widest shadow-sm"
+        >
           <item.icon size={16} className="text-[#2ECC71]" /> {item.text}
         </div>
       ))}

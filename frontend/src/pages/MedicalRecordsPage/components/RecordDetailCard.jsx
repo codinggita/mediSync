@@ -16,7 +16,11 @@ const RecordDetailCard = ({ record, onDelete }) => {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleDelete = async () => {
-    if (window.confirm('Are you sure you want to remove this clinical artifact from your vault? This action cannot be undone.')) {
+    if (
+      window.confirm(
+        'Are you sure you want to remove this clinical artifact from your vault? This action cannot be undone.'
+      )
+    ) {
       setIsDeleting(true);
       const res = await onDelete(record._id);
       setIsDeleting(false);
@@ -28,8 +32,8 @@ const RecordDetailCard = ({ record, onDelete }) => {
     if (showPreview && record?.fileUrl) {
       if (record.fileUrl.startsWith('data:application/pdf')) {
         fetch(record.fileUrl)
-          .then(res => res.blob())
-          .then(blob => {
+          .then((res) => res.blob())
+          .then((blob) => {
             const url = URL.createObjectURL(blob);
             setPdfBlobUrl(url);
           });
@@ -49,18 +53,25 @@ const RecordDetailCard = ({ record, onDelete }) => {
       case 'prescription':
       case 'lab report':
       case 'x-ray':
-      case 'scan': return FileText;
-      default: return FileText;
+      case 'scan':
+        return FileText;
+      default:
+        return FileText;
     }
   };
 
   const getColor = (type) => {
     switch (type?.toLowerCase()) {
-      case 'prescription': return '#8B5CF6';
-      case 'lab report': return '#F59E0B';
-      case 'x-ray': return '#2A7FFF';
-      case 'scan': return '#2ECC71';
-      default: return '#2A7FFF';
+      case 'prescription':
+        return '#8B5CF6';
+      case 'lab report':
+        return '#F59E0B';
+      case 'x-ray':
+        return '#2A7FFF';
+      case 'scan':
+        return '#2ECC71';
+      default:
+        return '#2A7FFF';
     }
   };
 
@@ -68,7 +79,9 @@ const RecordDetailCard = ({ record, onDelete }) => {
   const color = getColor(record.type);
   const rawDate = record.date || record.createdAt;
   const dateObj = rawDate ? new Date(rawDate) : new Date();
-  const dateStr = isNaN(dateObj.getTime()) ? 'Recent Report' : dateObj.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  const dateStr = isNaN(dateObj.getTime())
+    ? 'Recent Report'
+    : dateObj.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
   const shareLink = `https://medisync.app/secure/${record._id}`;
 
   const handleCopy = () => {
@@ -81,30 +94,34 @@ const RecordDetailCard = ({ record, onDelete }) => {
     <div className="flex flex-col gap-6 animate-in slide-in-from-right-8 duration-700 pb-10 relative">
       <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[3rem] p-8 shadow-[12px_12px_24px_#cbced1,-12px_-12px_24px_#ffffff] dark:shadow-[12px_12px_24px_#0a0f1d,-12px_-12px_24px_#202d47] relative overflow-hidden group">
         <div className="absolute top-0 right-0 p-12 opacity-[0.03] dark:opacity-10 group-hover:opacity-20 transition-opacity">
-           <Icon size={180} style={{ color }} />
+          <Icon size={180} style={{ color }} />
         </div>
-        
+
         <div className="relative z-10">
-          <RecordDetailHeader 
-            record={record} 
-            dateStr={dateStr} 
-            onShare={() => setShowShareModal(true)} 
+          <RecordDetailHeader
+            record={record}
+            dateStr={dateStr}
+            onShare={() => setShowShareModal(true)}
             onDelete={handleDelete}
             isDeleting={isDeleting}
           />
 
           <div className="flex items-start gap-6">
             <div className="w-20 h-20 rounded-[2rem] bg-[#ecf0f3] dark:bg-[#151E32] flex items-center justify-center shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0a0f1d,inset_-4px_-4px_8px_#202d47]">
-               <Icon size={32} style={{ color }} className="drop-shadow-md" />
+              <Icon size={32} style={{ color }} className="drop-shadow-md" />
             </div>
             <div>
-               <h2 className="text-[2.2rem] font-black text-slate-900 dark:text-white leading-tight tracking-tight mb-2">{record.title}</h2>
-               <div className="flex items-center gap-3 flex-wrap">
-                  <span className="px-3 py-1 bg-[#2A7FFF]/10 text-[#2A7FFF] text-[0.7rem] font-black rounded-md uppercase tracking-widest border border-[#2A7FFF]/20">{record.type}</span>
-                  <span className="flex items-center gap-2 text-[0.7rem] font-black text-slate-400 uppercase tracking-widest">
-                     <Microscope size={14} /> {record.doctor?.name || 'Self Authenticated'}
-                  </span>
-               </div>
+              <h2 className="text-[2.2rem] font-black text-slate-900 dark:text-white leading-tight tracking-tight mb-2">
+                {record.title}
+              </h2>
+              <div className="flex items-center gap-3 flex-wrap">
+                <span className="px-3 py-1 bg-[#2A7FFF]/10 text-[#2A7FFF] text-[0.7rem] font-black rounded-md uppercase tracking-widest border border-[#2A7FFF]/20">
+                  {record.type}
+                </span>
+                <span className="flex items-center gap-2 text-[0.7rem] font-black text-slate-400 uppercase tracking-widest">
+                  <Microscope size={14} /> {record.doctor?.name || 'Self Authenticated'}
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -114,14 +131,20 @@ const RecordDetailCard = ({ record, onDelete }) => {
       <RecordDossier description={record.description} />
       <RecordArtifactsVault record={record} onShowPreview={() => setShowPreview(true)} />
 
-      <RecordPreviewModal 
-        show={showPreview} onClose={() => setShowPreview(false)} 
-        record={record} dateStr={dateStr} pdfBlobUrl={pdfBlobUrl} 
+      <RecordPreviewModal
+        show={showPreview}
+        onClose={() => setShowPreview(false)}
+        record={record}
+        dateStr={dateStr}
+        pdfBlobUrl={pdfBlobUrl}
       />
 
-      <RecordShareModal 
-        show={showShareModal} onClose={() => setShowShareModal(false)} 
-        shareLink={shareLink} copied={copied} handleCopy={handleCopy} 
+      <RecordShareModal
+        show={showShareModal}
+        onClose={() => setShowShareModal(false)}
+        shareLink={shareLink}
+        copied={copied}
+        handleCopy={handleCopy}
       />
     </div>
   );

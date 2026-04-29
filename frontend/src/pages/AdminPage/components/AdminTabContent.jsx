@@ -9,14 +9,22 @@ import AdminAlertsTab from './AdminAlertsTab';
 
 const AdminTabContent = ({ activeTab, setAlertCount }) => {
   switch (activeTab) {
-    case 'overview':  return <AdminOverviewTab />;
-    case 'pharmacy':  return <AdminPharmacyTab />;
-    case 'medicines': return <AdminMedicineTab />;
-    case 'prices':    return <AdminPriceTab />;
-    case 'users':     return <AdminUsersTab />;
-    case 'analytics': return <AdminAnalyticsTab />;
-    case 'alerts':    return <AdminAlertsTab onCountChange={setAlertCount} />;
-    default:          return <AdminOverviewTab />;
+    case 'overview':
+      return <AdminOverviewTab />;
+    case 'pharmacy':
+      return <AdminPharmacyTab />;
+    case 'medicines':
+      return <AdminMedicineTab />;
+    case 'prices':
+      return <AdminPriceTab />;
+    case 'users':
+      return <AdminUsersTab />;
+    case 'analytics':
+      return <AdminAnalyticsTab />;
+    case 'alerts':
+      return <AdminAlertsTab onCountChange={setAlertCount} />;
+    default:
+      return <AdminOverviewTab />;
   }
 };
 

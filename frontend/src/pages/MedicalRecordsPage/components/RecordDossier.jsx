@@ -9,7 +9,8 @@ const RecordDossier = ({ description }) => {
         Clinical Dossier
       </h3>
       <p className="text-[0.95rem] text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
-        {description || 'No additional clinical observations were recorded for this timestamp. The data remains verified and synchronized with your main health profile.'}
+        {description ||
+          'No additional clinical observations were recorded for this timestamp. The data remains verified and synchronized with your main health profile.'}
       </p>
     </div>
   );

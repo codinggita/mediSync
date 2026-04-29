@@ -1,16 +1,18 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
-const SEO = ({ 
-  title, 
-  description = "Access your premium clinical dashboard. Sync medical records, track realtime diagnostics, and discover verified local pharmacies with intelligent price comparison.", 
-  name = 'MediSync', 
-  type = 'website', 
-  image = 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=1200&h=630', 
-  url = 'https://medisync.app/' 
+const SEO = ({
+  title,
+  description = 'Access your premium clinical dashboard. Sync medical records, track realtime diagnostics, and discover verified local pharmacies with intelligent price comparison.',
+  name = 'MediSync',
+  type = 'website',
+  image = 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=1200&h=630',
+  url = 'https://medisync.app/',
 }) => {
-  const fullTitle = title ? `${title} | ${name}` : `${name} | Advanced Clinical Intelligence Matrix`;
-  
+  const fullTitle = title
+    ? `${title} | ${name}`
+    : `${name} | Advanced Clinical Intelligence Matrix`;
+
   return (
     <Helmet>
       {/* Standard metadata tags */}
@@ -32,7 +34,7 @@ const SEO = ({
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />
-      
+
       {/* Meta Labels */}
       <meta name="apple-mobile-web-app-title" content={name} />
       <meta name="application-name" content={name} />

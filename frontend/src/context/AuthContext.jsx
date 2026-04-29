@@ -7,7 +7,7 @@ const AuthContext = createContext({
   signup: () => {},
   logout: () => {},
   refreshUser: () => {},
-  loading: true
+  loading: true,
 });
 
 export const useAuth = () => {
@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const storedUser = localStorage.getItem('mediSync_user');
       if (!storedUser) return;
-      
+
       const currentUser = JSON.parse(storedUser);
       const { token } = currentUser;
       if (!token) return;
@@ -34,9 +34,9 @@ export const AuthProvider = ({ children }) => {
       const { data } = await api.get('/auth/me');
       if (data) {
         // Persistence Guard: Merge fresh data with existing token
-        const updatedUser = { 
-          ...data, 
-          token: data.token || token 
+        const updatedUser = {
+          ...data,
+          token: data.token || token,
         };
         setUser(updatedUser);
         localStorage.setItem('mediSync_user', JSON.stringify(updatedUser));
@@ -65,7 +65,7 @@ export const AuthProvider = ({ children }) => {
         logout();
       }
     }
-    
+
     setLoading(false);
   }, []);
 
@@ -93,12 +93,8 @@ export const AuthProvider = ({ children }) => {
     signup,
     logout,
     refreshUser,
-    loading
+    loading,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {!loading && children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{!loading && children}</AuthContext.Provider>;
 };

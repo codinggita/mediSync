@@ -1,10 +1,6 @@
 import React from 'react';
 import { X, FileImage, FileText } from 'lucide-react';
 
-const fileIcon = (type) => {
-  if (type?.startsWith('image/')) return FileImage;
-  return FileText;
-};
 
 const formatBytes = (bytes) => {
   if (bytes < 1024) return `${bytes} B`;
@@ -13,21 +9,25 @@ const formatBytes = (bytes) => {
 };
 
 const UploadedFileCard = ({ file, progress, onClear }) => {
-  const Icon = fileIcon(file.type);
+  const isImage = file.type?.startsWith('image/');
 
   return (
     <div className="w-full animate-in zoom-in-95 duration-500">
       <div className="bg-white/40 dark:bg-black/20 backdrop-blur-xl border border-white/60 dark:border-white/10 rounded-3xl p-6 flex flex-col sm:flex-row items-center gap-6 relative group/card">
         <div className="w-20 h-20 rounded-2xl bg-[#2A7FFF] flex items-center justify-center text-white shadow-[0_10px_20px_rgba(42,127,255,0.3)] shrink-0 transform group-hover/card:rotate-6 transition-transform">
-          <Icon size={32} />
+          {isImage ? <FileImage size={32} /> : <FileText size={32} />}
         </div>
-        
+
         <div className="flex-1 min-w-0 text-center sm:text-left">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
-             <p className="text-[1rem] font-black text-slate-900 dark:text-white truncate">{file.name}</p>
-             <span className="px-3 py-1 bg-[#2ECC71]/10 text-[#2ECC71] text-[0.6rem] font-black rounded-full uppercase tracking-widest self-center sm:self-start">Verified Checksum</span>
+            <p className="text-[1rem] font-black text-slate-900 dark:text-white truncate">
+              {file.name}
+            </p>
+            <span className="px-3 py-1 bg-[#2ECC71]/10 text-[#2ECC71] text-[0.6rem] font-black rounded-full uppercase tracking-widest self-center sm:self-start">
+              Verified Checksum
+            </span>
           </div>
-          
+
           <div className="flex items-center gap-4 text-[0.75rem] font-bold text-slate-400 uppercase tracking-widest mb-4">
             <span>{formatBytes(file.size)}</span>
             <span className="w-1 h-1 bg-slate-300 rounded-full" />
@@ -55,7 +55,10 @@ const UploadedFileCard = ({ file, progress, onClear }) => {
         </div>
 
         <button
-          onClick={(e) => { e.stopPropagation(); onClear(); }}
+          onClick={(e) => {
+            e.stopPropagation();
+            onClear();
+          }}
           className="absolute -top-3 -right-3 w-10 h-10 rounded-full bg-white dark:bg-[#151E32] shadow-xl flex items-center justify-center text-slate-400 hover:text-red-500 hover:scale-110 transition-all border border-gray-100 dark:border-slate-800"
         >
           <X size={18} />

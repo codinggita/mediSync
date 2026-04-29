@@ -1,5 +1,13 @@
 import React from 'react';
-import { Building2, Users, ClipboardCheck, AlertTriangle, TrendingUp, TrendingDown, DollarSign } from 'lucide-react';
+import {
+  Building2,
+  Users,
+  ClipboardCheck,
+  AlertTriangle,
+  TrendingUp,
+  TrendingDown,
+  DollarSign,
+} from 'lucide-react';
 
 const metrics = [
   {
@@ -72,12 +80,22 @@ const AdminOverview = () => {
                 >
                   <Icon size={20} style={{ color: m.color }} />
                 </div>
-                <div className={`flex items-center gap-1 text-[0.7rem] font-black px-2 py-1 rounded-lg ${
-                  m.alert ? 'bg-red-50 text-red-500' :
-                  m.warning ? 'bg-amber-50 text-amber-500' :
-                  m.up ? 'bg-green-50 text-green-500' : 'bg-gray-50 text-gray-400'
-                }`}>
-                  {m.up ? <TrendingUp size={10} /> : m.alert || m.warning ? null : <TrendingDown size={10} />}
+                <div
+                  className={`flex items-center gap-1 text-[0.7rem] font-black px-2 py-1 rounded-lg ${
+                    m.alert
+                      ? 'bg-red-50 text-red-500'
+                      : m.warning
+                        ? 'bg-amber-50 text-amber-500'
+                        : m.up
+                          ? 'bg-green-50 text-green-500'
+                          : 'bg-gray-50 text-gray-400'
+                  }`}
+                >
+                  {m.up ? (
+                    <TrendingUp size={10} />
+                  ) : m.alert || m.warning ? null : (
+                    <TrendingDown size={10} />
+                  )}
                   {m.trend}
                 </div>
               </div>
@@ -87,14 +105,18 @@ const AdminOverview = () => {
                   {m.value}
                 </p>
                 <div className="flex items-center gap-1.5 mt-2">
-                  <p className="text-[0.75rem] font-bold text-gray-400 uppercase tracking-widest leading-none">{m.label}</p>
+                  <p className="text-[0.75rem] font-bold text-gray-400 uppercase tracking-widest leading-none">
+                    {m.label}
+                  </p>
                 </div>
-                <p className="text-[0.6rem] text-gray-400 font-medium mt-1.5 italic">vs last month</p>
+                <p className="text-[0.6rem] text-gray-400 font-medium mt-1.5 italic">
+                  vs last month
+                </p>
               </div>
             </div>
 
             {/* Decorative background circle */}
-            <div 
+            <div
               className="absolute -right-4 -bottom-4 w-20 h-20 rounded-full opacity-[0.03] group-hover:opacity-[0.06] transition-opacity duration-500"
               style={{ backgroundColor: m.color }}
             />

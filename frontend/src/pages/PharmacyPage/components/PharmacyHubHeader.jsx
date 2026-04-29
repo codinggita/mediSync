@@ -13,7 +13,9 @@ const PharmacyHubHeader = () => {
         <div>
           <h1 className="text-[1.8rem] font-black text-slate-900 dark:text-white leading-none tracking-tight flex items-center gap-3">
             Pharmacy Hub
-            <span className="px-3 py-1 bg-emerald-500/10 text-emerald-500 text-[0.6rem] rounded-full font-black uppercase tracking-widest border border-emerald-500/20">Active Intelligence</span>
+            <span className="px-3 py-1 bg-emerald-500/10 text-emerald-500 text-[0.6rem] rounded-full font-black uppercase tracking-widest border border-emerald-500/20">
+              Active Intelligence
+            </span>
           </h1>
           <p className="text-[0.8rem] text-slate-400 mt-2 font-bold uppercase tracking-[0.2em] flex items-center gap-2">
             <Zap size={12} className="text-amber-500" />

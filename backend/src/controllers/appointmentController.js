@@ -8,11 +8,18 @@ const getAppointments = async (req, res, next) => {
   try {
     let appointments;
     if (req.user.role === 'Patient') {
-      appointments = await Appointment.find({ patient: req.user._id }).populate('doctor', 'name phone whatsapp address specialty hospital').sort({ createdAt: -1 });
+      appointments = await Appointment.find({ patient: req.user._id })
+        .populate('doctor', 'name phone whatsapp address specialty hospital')
+        .sort({ createdAt: -1 });
     } else if (req.user.role === 'Doctor') {
-      appointments = await Appointment.find({ doctor: req.user._id }).populate('patient', 'name email patientId phone vitals gender bloodGroup dateOfBirth').sort({ createdAt: -1 });
+      appointments = await Appointment.find({ doctor: req.user._id })
+        .populate('patient', 'name email patientId phone vitals gender bloodGroup dateOfBirth')
+        .sort({ createdAt: -1 });
     } else {
-      appointments = await Appointment.find({}).populate('patient', 'name patientId').populate('doctor', 'name specialty hospital').sort({ createdAt: -1 });
+      appointments = await Appointment.find({})
+        .populate('patient', 'name patientId')
+        .populate('doctor', 'name specialty hospital')
+        .sort({ createdAt: -1 });
     }
     res.json(appointments);
   } catch (error) {
@@ -41,8 +48,11 @@ const createAppointment = async (req, res, next) => {
       date,
       time,
       type,
-      location: type === 'In Person' ? (location || doctor.hospital) : undefined,
-      meetingLink: type === 'Video Consult' ? `https://medisync.app/meet/${Math.random().toString(36).substring(7)}` : undefined
+      location: type === 'In Person' ? location || doctor.hospital : undefined,
+      meetingLink:
+        type === 'Video Consult'
+          ? `https://medisync.app/meet/${Math.random().toString(36).substring(7)}`
+          : undefined,
     });
 
     const populatedAppointment = await Appointment.findById(appointment._id)
@@ -72,11 +82,11 @@ const updateAppointmentStatus = async (req, res, next) => {
       ) {
         appointment.status = status;
         const updatedAppointment = await appointment.save();
-        
+
         const populatedAppointment = await Appointment.findById(updatedAppointment._id)
           .populate('doctor', 'name phone whatsapp address specialty hospital')
           .populate('patient', 'name email patientId phone vitals gender bloodGroup dateOfBirth');
-          
+
         res.json(populatedAppointment);
       } else {
         res.status(401);

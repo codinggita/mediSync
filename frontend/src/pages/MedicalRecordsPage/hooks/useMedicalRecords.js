@@ -28,12 +28,12 @@ const useMedicalRecords = (user) => {
     fetchRecords();
   }, []);
 
-  const selectedRecord = records.find(r => r._id === selectedId);
+  const selectedRecord = records.find((r) => r._id === selectedId);
 
   const deleteRecord = async (id) => {
     try {
       await api.delete(`/records/${id}`);
-      const updatedRecords = records.filter(r => r._id !== id);
+      const updatedRecords = records.filter((r) => r._id !== id);
       setRecords(updatedRecords);
       if (selectedId === id) {
         setSelectedId(updatedRecords.length > 0 ? updatedRecords[0]._id : null);
@@ -51,7 +51,7 @@ const useMedicalRecords = (user) => {
     setSelectedId,
     loading,
     selectedRecord,
-    deleteRecord
+    deleteRecord,
   };
 };
 

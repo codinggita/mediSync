@@ -19,10 +19,7 @@ export const forgotPassword = async (req, res, next) => {
     const resetToken = crypto.randomBytes(20).toString('hex');
 
     // Hash token and set to resetPasswordToken field
-    user.resetPasswordToken = crypto
-      .createHash('sha256')
-      .update(resetToken)
-      .digest('hex');
+    user.resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex');
 
     // Set expire (10 minutes)
     user.resetPasswordExpire = Date.now() + 10 * 60 * 1000;
@@ -47,7 +44,7 @@ export const forgotPassword = async (req, res, next) => {
             <a href="${resetUrl}" style="display: inline-block; padding: 12px 24px; background: #2A7FFF; color: white; text-decoration: none; border-radius: 12px; font-weight: bold;">Synchronize Password</a>
             <p style="margin-top: 30px; font-size: 0.8rem; color: #9CA3AF;">If you didn't request this, please ignore this email.</p>
           </div>
-        `
+        `,
       });
 
       res.status(200).json({ success: true, data: 'Email sent' });
@@ -59,7 +56,7 @@ export const forgotPassword = async (req, res, next) => {
       await user.save({ validateBeforeSave: false });
 
       res.status(500);
-      throw new Error('Email could not be sent');
+      throw new Error('Email could not be sent', { cause: err });
     }
   } catch (error) {
     next(error);

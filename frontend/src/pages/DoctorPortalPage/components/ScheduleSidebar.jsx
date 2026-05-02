@@ -27,7 +27,7 @@ const ScheduleSidebar = ({
     </div>
 
     {}
-    <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[3.5rem] p-8 shadow-[20px_20px_40px_#cbced1,-20px_-20px_40px_#ffffff] dark:shadow-[20px_20px_40px_#0a0f1d,-20px_-20px_40px_#202d47] border border-white/40 dark:border-white/5 relative overflow-hidden">
+    <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[2rem] sm:rounded-[3.5rem] p-6 sm:p-8 shadow-[20px_20px_40px_#cbced1,-20px_-20px_40px_#ffffff] dark:shadow-[20px_20px_40px_#0a0f1d,-20px_-20px_40px_#202d47] border border-white/40 dark:border-white/5 relative overflow-hidden">
       <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-[#2A7FFF]/5 rounded-full blur-3xl pointer-events-none" />
 
       <h3 className="text-[1.1rem] font-black text-slate-900 dark:text-white uppercase tracking-widest mb-6 flex items-center gap-3 relative z-10">
@@ -82,7 +82,7 @@ const ScheduleSidebar = ({
     </div>
 
     {}
-    <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[3.5rem] p-8 shadow-[20px_20px_40px_#cbced1,-20px_-20px_40px_#ffffff] dark:shadow-[20px_20px_40px_#0a0f1d,-20px_-20px_40px_#202d47] border border-white/40 dark:border-white/5 relative overflow-hidden">
+    <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[2rem] sm:rounded-[3.5rem] p-6 sm:p-8 shadow-[20px_20px_40px_#cbced1,-20px_-20px_40px_#ffffff] dark:shadow-[20px_20px_40px_#0a0f1d,-20px_-20px_40px_#202d47] border border-white/40 dark:border-white/5 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-32 h-32 bg-[#2ECC71]/5 rounded-full blur-2xl pointer-events-none" />
 
       <div className="flex items-center justify-between mb-8 relative z-10">

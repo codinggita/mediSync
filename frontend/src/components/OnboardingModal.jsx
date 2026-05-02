@@ -82,7 +82,7 @@ const OnboardingModal = ({ userName }) => {
 
         {}
         <div
-          className={`relative px-10 pt-14 pb-8 flex flex-col items-center text-center transition-all duration-500 ${animating ? 'translate-y-4 opacity-0 scale-95' : 'translate-y-0 opacity-100 scale-100'}`}
+          className={`relative px-6 sm:px-10 pt-14 pb-8 flex flex-col items-center text-center transition-all duration-500 ${animating ? 'translate-y-4 opacity-0 scale-95' : 'translate-y-0 opacity-100 scale-100'}`}
         >
           {}
           <div className="relative mb-8">
@@ -91,15 +91,15 @@ const OnboardingModal = ({ userName }) => {
               style={{ backgroundColor: current.color }}
             />
             <div
-              className="w-24 h-24 rounded-[32px] flex items-center justify-center relative z-10 animate-[float_4s_ease-in-out_infinite] shadow-[inset_0_2px_4px_rgba(255,255,255,0.4)] border border-white/40 dark:border-white/10"
+              className="w-20 h-20 sm:w-24 sm:h-24 rounded-[32px] flex items-center justify-center relative z-10 animate-[float_4s_ease-in-out_infinite] shadow-[inset_0_2px_4px_rgba(255,255,255,0.4)] border border-white/40 dark:border-white/10"
               style={{
                 background: `linear-gradient(135deg, ${current.color}15, ${current.color}35)`,
                 backdropFilter: 'blur(8px)',
               }}
             >
               <Icon
-                size={44}
-                className="drop-shadow-[0_4px_8px_rgba(0,0,0,0.1)]"
+                size={38}
+                className="drop-shadow-[0_4px_8px_rgba(0,0,0,0.1)] sm:size-[44px]"
                 style={{ color: current.color }}
               />
             </div>
@@ -123,7 +123,7 @@ const OnboardingModal = ({ userName }) => {
           </div>
 
           {}
-          <h2 className="text-[2.2rem] font-black text-slate-900 dark:text-white leading-[1.1] tracking-tight drop-shadow-sm">
+          <h2 className="text-[1.8rem] sm:text-[2.2rem] font-black text-slate-900 dark:text-white leading-[1.1] tracking-tight drop-shadow-sm">
             {title.split('!').map((part, i) => (
               <span key={i}>
                 {part}
@@ -135,9 +135,9 @@ const OnboardingModal = ({ userName }) => {
 
         {}
         <div
-          className={`px-12 pb-10 flex flex-col items-center transition-all duration-500 delay-75 ${animating ? 'translate-y-4 opacity-0' : 'translate-y-0 opacity-100'}`}
+          className={`px-8 sm:px-12 pb-10 flex flex-col items-center transition-all duration-500 delay-75 ${animating ? 'translate-y-4 opacity-0' : 'translate-y-0 opacity-100'}`}
         >
-          <p className="text-[1.05rem] text-slate-500 dark:text-slate-400 font-medium leading-relaxed text-center max-w-[90%] mb-10">
+          <p className="text-[0.9rem] sm:text-[1.05rem] text-slate-500 dark:text-slate-400 font-medium leading-relaxed text-center max-w-[90%] mb-10">
             {description}
           </p>
 

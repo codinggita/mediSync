@@ -13,7 +13,7 @@ const PlatformSection = () => {
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#2A7FFF]/10 text-[#2A7FFF] text-[0.7rem] font-black uppercase tracking-[0.2em] mb-8 border border-[#2A7FFF]/20">
               The Core Protocol
             </div>
-            <h2 className="text-[3rem] font-black text-slate-900 dark:text-white leading-[1.1] mb-6 tracking-tight">
+            <h2 className="text-[2rem] sm:text-[3rem] font-black text-slate-900 dark:text-white leading-[1.1] mb-6 tracking-tight">
               The Operating System <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-400 to-slate-600 dark:from-slate-500 dark:to-slate-300">
                 for Modern Care.

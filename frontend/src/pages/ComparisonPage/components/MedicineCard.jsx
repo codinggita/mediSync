@@ -25,23 +25,23 @@ const PriceRow = ({ entry, isBest }) => {
 
   return (
     <div
-      className={`flex items-center justify-between p-4 rounded-2xl border transition-all group ${
+      className={`flex flex-col xs:flex-row items-start xs:items-center justify-between p-4 rounded-2xl border transition-all gap-4 group ${
         isBest
           ? 'bg-emerald-50 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/30'
           : 'bg-slate-50 dark:bg-[#0B1121]/60 border-slate-100 dark:border-slate-800 hover:border-[#2A7FFF]/30'
       }`}
     >
-      <div className="flex items-center gap-3 min-w-0">
+      <div className="flex items-center gap-3 min-w-0 w-full xs:w-auto">
         {isBest && (
           <span className="shrink-0 flex items-center gap-1 px-2.5 py-1 bg-emerald-500 text-white text-[0.6rem] font-black rounded-full uppercase tracking-widest">
             <Zap size={10} /> Best
           </span>
         )}
-        <div className="min-w-0">
+        <div className="min-w-0 flex-1">
           <p className="text-[0.85rem] font-black text-slate-900 dark:text-white truncate">
             {entry.pharmacy}
           </p>
-          <div className="flex items-center gap-2 mt-0.5">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-0.5">
             <span className="text-[0.7rem] text-slate-400 flex items-center gap-1">
               <MapPin size={10} /> {entry.distance}
             </span>
@@ -57,10 +57,10 @@ const PriceRow = ({ entry, isBest }) => {
         </div>
       </div>
 
-      <div className="flex items-center gap-4 shrink-0">
-        <div className="text-right">
-          <p className="text-[1.1rem] font-black text-slate-900 dark:text-white">₹{entry.price}</p>
-          <div className="flex items-center gap-1.5">
+      <div className="flex items-center justify-between xs:justify-end gap-4 w-full xs:w-auto shrink-0 border-t xs:border-t-0 border-slate-200 dark:border-slate-800 pt-3 xs:pt-0">
+        <div className="text-left xs:text-right">
+          <p className="text-[1.1rem] font-black text-slate-900 dark:text-white leading-none">₹{entry.price}</p>
+          <div className="flex items-center gap-1.5 mt-1">
             <p className="text-[0.7rem] text-slate-400 line-through">₹{entry.original}</p>
             {pct > 0 && <span className="text-[0.65rem] font-black text-emerald-500">-{pct}%</span>}
           </div>
@@ -70,14 +70,14 @@ const PriceRow = ({ entry, isBest }) => {
             e.stopPropagation();
             alert(`Sourcing Request Initiated: ${entry.pharmacy} hub is processing your order for delivery.`);
           }}
-          className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all ${
+          className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
             entry.inStock
               ? 'bg-[#2A7FFF] text-white hover:bg-[#1565C0] shadow-lg shadow-[#2A7FFF]/20 active:scale-90'
               : 'bg-slate-100 dark:bg-slate-800 text-slate-300 cursor-not-allowed'
           }`}
           disabled={!entry.inStock}
         >
-          <ShoppingCart size={15} />
+          <ShoppingCart size={16} />
         </button>
       </div>
     </div>

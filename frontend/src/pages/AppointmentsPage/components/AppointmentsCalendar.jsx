@@ -37,7 +37,7 @@ const AppointmentsCalendar = ({
 }) => {
   return (
     <div className="xl:col-span-4 flex flex-col gap-8">
-      <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[3.5rem] p-10 shadow-[16px_16px_32px_#cbced1,-16px_-16px_32px_#ffffff] dark:shadow-[16px_16px_32px_#0a0f1d] border border-white/40">
+      <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[2.5rem] sm:rounded-[3.5rem] p-6 sm:p-10 shadow-[16px_16px_32px_#cbced1,-16px_-16px_32px_#ffffff] dark:shadow-[16px_16px_32px_#0a0f1d] border border-white/40">
         <div className="flex items-center justify-between mb-8">
           <h3 className="text-[1.3rem] font-black text-slate-900 dark:text-white flex items-center gap-3">
             <CalendarIcon size={20} className="text-[#2A7FFF]" />
@@ -81,7 +81,7 @@ const AppointmentsCalendar = ({
         </div>
       </div>
 
-      <div className="bg-[#ecf0f3] dark:bg-[#1a2235] p-10 rounded-[3rem] shadow-[12px_12px_24px_#cbced1,-12px_-12px_24px_#ffffff] dark:shadow-none border border-white/40">
+      <div className="bg-[#ecf0f3] dark:bg-[#1a2235] p-6 sm:p-10 rounded-[2rem] sm:rounded-[3rem] shadow-[12px_12px_24px_#cbced1,-12px_-12px_24px_#ffffff] dark:shadow-none border border-white/40">
         <h3 className="text-[1rem] font-black text-slate-500 uppercase tracking-[0.2em] mb-8 flex items-center gap-3">
           <Filter size={18} className="text-[#2A7FFF]" /> Status Filters
         </h3>

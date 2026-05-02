@@ -29,11 +29,11 @@ const EmergencyPage = () => {
       <div className="flex flex-col flex-1 overflow-hidden min-w-0 relative z-10">
         <TopBar />
 
-        <main className="flex-1 overflow-y-auto px-8 py-8 scrollbar-hide pb-24 md:pb-10">
+        <main className="flex-1 overflow-y-auto px-4 sm:px-8 py-6 sm:py-8 scrollbar-hide pb-24 md:pb-10">
           <div className="max-w-6xl mx-auto flex flex-col gap-10">
             {}
             <div>
-              <h1 className="text-[2.8rem] font-black text-slate-900 dark:text-white leading-none tracking-tight">
+              <h1 className="text-[2rem] sm:text-[2.8rem] font-black text-slate-900 dark:text-white leading-none tracking-tight">
                 Emergency <span className="text-red-500">Protocols</span>
               </h1>
               <p className="text-slate-500 font-bold mt-3 uppercase tracking-[0.3em] text-[0.85rem]">
@@ -51,7 +51,7 @@ const EmergencyPage = () => {
                 <EmergencyContactList />
               </div>
 
-              <div className="lg:col-span-4 bg-[#ecf0f3] dark:bg-[#151E32] rounded-[3rem] p-10 shadow-2xl border border-white/40 flex flex-col items-center justify-center text-center group cursor-pointer overflow-hidden relative" onClick={!isUnlocked ? handleAuthenticate : null}>
+              <div className="lg:col-span-4 bg-[#ecf0f3] dark:bg-[#151E32] rounded-[3rem] p-6 sm:p-10 shadow-2xl border border-white/40 flex flex-col items-center justify-center text-center group cursor-pointer overflow-hidden relative" onClick={!isUnlocked ? handleAuthenticate : null}>
                 {isUnlocked && <div className="absolute inset-0 bg-emerald-500/5 animate-in fade-in duration-500" />}
                 
                 <div className={`w-24 h-24 rounded-full flex items-center justify-center mb-6 transition-all duration-500 ${isUnlocked ? 'bg-emerald-500 text-white scale-110 shadow-[0_0_30px_rgba(16,185,129,0.4)]' : 'bg-red-500/10 text-red-500 group-hover:scale-110'}`}>

@@ -10,14 +10,14 @@ const SolutionsSection = () => {
       <div className="absolute -bottom-20 -right-20 w-[600px] h-[600px] bg-[#8B5CF6]/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-32">
+        <div className="text-center mb-16 sm:mb-32">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#8B5CF6]/10 text-[#8B5CF6] text-[0.7rem] font-black uppercase tracking-[0.2em] mb-6 border border-[#8B5CF6]/20">
             The Ecosystem
           </div>
-          <h2 className="text-[3rem] font-black text-slate-900 dark:text-white mb-4 tracking-tight leading-none">
+          <h2 className="text-[2.2rem] sm:text-[3rem] font-black text-slate-900 dark:text-white mb-4 tracking-tight leading-none">
             Integrated <span className="text-[#8B5CF6]">Verticals.</span>
           </h2>
-          <p className="text-[1.1rem] font-bold text-slate-500 uppercase tracking-[0.3em] max-w-2xl mx-auto opacity-60">
+          <p className="text-[0.9rem] sm:text-[1.1rem] font-bold text-slate-500 uppercase tracking-[0.3em] max-w-2xl mx-auto opacity-60">
             Modular power. Unified control.
           </p>
         </div>
@@ -67,7 +67,7 @@ const SolutionsSection = () => {
               style={{ perspective: '1000px' }}
             >
               <div
-                className="relative nm-flat p-12 md:p-16 rounded-[4rem] border border-white/60 dark:border-white/5 transition-all duration-300 transform-gpu overflow-hidden inner-card"
+                className="relative nm-flat p-8 sm:p-12 md:p-16 rounded-[2.5rem] sm:rounded-[4rem] border border-white/60 dark:border-white/5 transition-all duration-300 transform-gpu overflow-hidden inner-card"
                 style={{ transformStyle: 'preserve-3d' }}
               >
                 {}

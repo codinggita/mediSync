@@ -69,7 +69,7 @@ const DeepDiveSection = () => {
         </div>
 
         <div className="max-w-7xl mx-auto px-8 text-center mb-16 relative z-20">
-          <h2 className="text-[4rem] md:text-[5rem] font-black text-slate-900 dark:text-white tracking-tighter leading-none mb-6">
+          <h2 className="text-[2.5rem] sm:text-[4rem] md:text-[5rem] font-black text-slate-900 dark:text-white tracking-tighter leading-none mb-6">
             Unrivaled{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2A7FFF] to-[#2ECC71]">
               Power.

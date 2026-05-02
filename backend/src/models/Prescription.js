@@ -10,7 +10,7 @@ const prescriptionSchema = new mongoose.Schema(
         customName: String,
         dosage: String,
         frequency: String,
-        time: String, // e.g., "08:00 AM"
+        time: String, 
         taken: { type: Boolean, default: false },
         startDate: Date,
         endDate: Date,

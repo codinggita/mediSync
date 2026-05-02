@@ -6,7 +6,7 @@ export const ThemeProvider = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const saved = localStorage.getItem('medisync-theme');
     if (saved) return saved === 'dark';
-    return false; // default: light mode
+    return false; 
   });
 
   useEffect(() => {

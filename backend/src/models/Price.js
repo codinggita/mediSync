@@ -28,7 +28,7 @@ const priceSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Prevent duplicate prices for the same medicine in the same pharmacy
+
 priceSchema.index({ medicine: 1, pharmacy: 1 }, { unique: true });
 
 export default mongoose.model('Price', priceSchema);

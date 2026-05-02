@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { toast } from 'react-hot-toast';
 
 const useFetch = (url, options = {}) => {
@@ -10,7 +10,7 @@ const useFetch = (url, options = {}) => {
   const fetchData = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await axios.get(url, options);
+      const response = await api.get(url, options);
       setData(response.data);
       setError(null);
     } catch (err) {

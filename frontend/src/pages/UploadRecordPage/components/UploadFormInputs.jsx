@@ -4,7 +4,7 @@ import { Hospital, CalendarDays, Tag, StickyNote, ChevronDown } from 'lucide-rea
 const UploadFormInputs = ({ form, set, categories, inputCls, labelCls }) => {
   return (
     <div className="flex flex-col gap-6">
-      {/* Title */}
+      {}
       <div>
         <label className={labelCls}>
           <StickyNote size={14} /> Report Title
@@ -19,7 +19,7 @@ const UploadFormInputs = ({ form, set, categories, inputCls, labelCls }) => {
         />
       </div>
 
-      {/* Hospital */}
+      {}
       <div>
         <label className={labelCls}>
           <Hospital size={14} /> Source Institution
@@ -34,7 +34,7 @@ const UploadFormInputs = ({ form, set, categories, inputCls, labelCls }) => {
         />
       </div>
 
-      {/* Date + Category Row */}
+      {}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className={labelCls}>
@@ -70,7 +70,7 @@ const UploadFormInputs = ({ form, set, categories, inputCls, labelCls }) => {
         </div>
       </div>
 
-      {/* Notes */}
+      {}
       <div>
         <label className={labelCls}>
           <StickyNote size={14} /> Biological Observations

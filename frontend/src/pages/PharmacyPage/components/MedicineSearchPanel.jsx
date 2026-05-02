@@ -55,7 +55,7 @@ const MedicineSearchPanel = () => {
       let medicine =
         medsArray.find((m) => m.name?.toLowerCase() === name.toLowerCase()) || medsArray[0];
 
-      // Premium Mock Fallback for Search
+      
       if (!medicine) {
         const fallbacks = {
           aspirin: {
@@ -99,10 +99,19 @@ const MedicineSearchPanel = () => {
         };
       }
 
-      const { data: priceEntries } = await api.get(`/medicines/${medicine._id}/prices`);
+      let priceEntries = [];
+      if (medicine._id && !medicine._id.startsWith('mock_')) {
+        try {
+          const response = await api.get(`/medicines/${medicine._id}/prices`);
+          priceEntries = response.data;
+        } catch (priceErr) {
+          console.warn('Live Price Fetch Failed, using fallback protocol:', priceErr.message);
+        }
+      }
+
       let prices = Array.isArray(priceEntries) ? priceEntries : [];
 
-      // Inject Mock Prices if empty
+      
       if (prices.length === 0) {
         prices = [
           {

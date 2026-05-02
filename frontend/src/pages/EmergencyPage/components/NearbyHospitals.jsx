@@ -50,7 +50,7 @@ const NearbyHospitals = () => {
             key={i}
             className="flex items-center gap-4 py-3.5 hover:bg-red-50/50 transition-colors duration-150 rounded-[10px] px-2 -mx-2 group text-left w-full"
           >
-            {/* Distance badge */}
+            {}
             <div
               className={`w-12 h-12 rounded-[10px] flex flex-col items-center justify-center flex-shrink-0 ${h.open ? 'bg-red-50' : 'bg-gray-100'}`}
             >
@@ -62,7 +62,7 @@ const NearbyHospitals = () => {
               </span>
             </div>
 
-            {/* Info */}
+            {}
             <div className="flex-1 min-w-0">
               <p className="text-sm font-bold text-gray-800 truncate">{h.name}</p>
               <p className="text-xs text-gray-400 truncate mt-0.5">{h.address}</p>
@@ -81,7 +81,7 @@ const NearbyHospitals = () => {
               </div>
             </div>
 
-            {/* Arrow */}
+            {}
             <ChevronRight
               size={16}
               className="text-gray-300 group-hover:text-[#D32F2F] transition-colors flex-shrink-0"

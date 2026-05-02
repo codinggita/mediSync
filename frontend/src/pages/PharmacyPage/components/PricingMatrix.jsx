@@ -12,7 +12,7 @@ const PRICING_DATA = [
 const PricingMatrix = () => {
   return (
     <div className="bg-white rounded-[14px] shadow-sm border border-gray-100 p-6 pharmacy-section">
-      {/* Header */}
+      {}
       <div className="flex items-center justify-between mb-5">
         <div>
           <h2 className="text-base font-bold text-gray-800">Pricing Matrix</h2>
@@ -24,7 +24,7 @@ const PricingMatrix = () => {
         </span>
       </div>
 
-      {/* Table */}
+      {}
       <div className="overflow-x-auto rounded-[10px] border border-gray-100">
         <table className="w-full text-sm">
           <thead>

@@ -33,7 +33,7 @@ const ForgotPasswordPage = () => {
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#0B1121] flex flex-col items-center justify-center p-6 transition-colors duration-500 font-sans relative overflow-hidden">
-      {/* Premium Background Elements */}
+      {}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#2A7FFF]/5 rounded-full blur-[120px] animate-pulse" />
         <div

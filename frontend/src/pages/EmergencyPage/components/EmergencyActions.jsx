@@ -11,7 +11,7 @@ const EmergencyActions = () => {
 
   return (
     <div className="flex flex-col gap-3 em-card2">
-      {/* Emergency Call Button */}
+      {}
       <button
         onClick={handleCall}
         disabled={calling}
@@ -32,13 +32,13 @@ const EmergencyActions = () => {
         )}
       </button>
 
-      {/* Contact Doctor Button */}
+      {}
       <button className="w-full flex items-center justify-center gap-3 bg-white border-[2px] border-[#D32F2F] text-[#D32F2F] py-3.5 rounded-[14px] font-bold text-base hover:bg-red-50 active:scale-[0.98] transition-all duration-200 shadow-sm">
         <Stethoscope size={20} />
         Contact Your Doctor
       </button>
 
-      {/* Disclaimer */}
+      {}
       <p className="text-center text-[11px] text-red-400 font-medium leading-relaxed">
         If this is a life-threatening emergency, call <strong>112</strong> immediately.
         <br />

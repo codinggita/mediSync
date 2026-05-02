@@ -15,7 +15,7 @@ const PharmacyRegistrationForm = ({ formData, handleChange, handleSubmit, loadin
   return (
     <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[4rem] p-16 shadow-[20px_20px_60px_#cbced1,-20px_-20px_60px_#ffffff] dark:shadow-[20px_20px_60px_#0a0f1d] border border-white/40">
       <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-10">
-        {/* Pharmacy Name */}
+        {}
         <div className="space-y-3">
           <label className="text-[0.75rem] font-black text-slate-500 uppercase tracking-widest ml-4 flex items-center gap-2">
             <Building2 size={14} className="text-emerald-500" /> Pharmacy Name
@@ -31,7 +31,7 @@ const PharmacyRegistrationForm = ({ formData, handleChange, handleSubmit, loadin
           />
         </div>
 
-        {/* Owner Name */}
+        {}
         <div className="space-y-3">
           <label className="text-[0.75rem] font-black text-slate-500 uppercase tracking-widest ml-4 flex items-center gap-2">
             <User size={14} className="text-emerald-500" /> Owner Name
@@ -47,7 +47,7 @@ const PharmacyRegistrationForm = ({ formData, handleChange, handleSubmit, loadin
           />
         </div>
 
-        {/* Email Address */}
+        {}
         <div className="space-y-3">
           <label className="text-[0.75rem] font-black text-slate-500 uppercase tracking-widest ml-4 flex items-center gap-2">
             <Mail size={14} className="text-emerald-500" /> Email Address
@@ -63,7 +63,7 @@ const PharmacyRegistrationForm = ({ formData, handleChange, handleSubmit, loadin
           />
         </div>
 
-        {/* Phone Number */}
+        {}
         <div className="space-y-3">
           <label className="text-[0.75rem] font-black text-slate-500 uppercase tracking-widest ml-4 flex items-center gap-2">
             <Phone size={14} className="text-emerald-500" /> Phone Number
@@ -79,7 +79,7 @@ const PharmacyRegistrationForm = ({ formData, handleChange, handleSubmit, loadin
           />
         </div>
 
-        {/* License Number */}
+        {}
         <div className="space-y-3">
           <label className="text-[0.75rem] font-black text-slate-500 uppercase tracking-widest ml-4 flex items-center gap-2">
             <FileBadge size={14} className="text-emerald-500" /> License Number
@@ -95,7 +95,7 @@ const PharmacyRegistrationForm = ({ formData, handleChange, handleSubmit, loadin
           />
         </div>
 
-        {/* Location */}
+        {}
         <div className="space-y-3">
           <label className="text-[0.75rem] font-black text-slate-500 uppercase tracking-widest ml-4 flex items-center gap-2">
             <MapPin size={14} className="text-emerald-500" /> Pharmacy Location
@@ -111,7 +111,7 @@ const PharmacyRegistrationForm = ({ formData, handleChange, handleSubmit, loadin
           />
         </div>
 
-        {/* Document Upload */}
+        {}
         <div className="md:col-span-2 space-y-3">
           <label className="text-[0.75rem] font-black text-slate-500 uppercase tracking-widest ml-4">
             License Document (Optional)
@@ -127,7 +127,7 @@ const PharmacyRegistrationForm = ({ formData, handleChange, handleSubmit, loadin
           </div>
         </div>
 
-        {/* Submit Button */}
+        {}
         <div className="md:col-span-2 mt-6">
           <button
             disabled={loading}

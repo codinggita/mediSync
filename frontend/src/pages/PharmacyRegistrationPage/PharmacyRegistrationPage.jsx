@@ -52,7 +52,7 @@ const PharmacyRegistrationPage = () => {
             <RegistrationSuccess />
           ) : (
             <div className="max-w-4xl mx-auto">
-              {/* Header Section */}
+              {}
               <div className="flex flex-col items-center text-center mb-16">
                 <div className="w-20 h-20 bg-emerald-500/10 rounded-[2rem] flex items-center justify-center mb-6 shadow-sm border border-emerald-500/20">
                   <Pill size={40} className="text-emerald-500" />

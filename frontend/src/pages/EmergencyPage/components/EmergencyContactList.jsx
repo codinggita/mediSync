@@ -52,10 +52,16 @@ const EmergencyContactList = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <button className="w-14 h-14 rounded-2xl bg-emerald-500 text-white flex items-center justify-center shadow-lg shadow-emerald-500/20 hover:scale-110 active:scale-95 transition-all">
+              <button
+                onClick={() => (window.location.href = `tel:${c.phone.replace(/\s+/g, '')}`)}
+                className="w-14 h-14 rounded-2xl bg-emerald-500 text-white flex items-center justify-center shadow-lg shadow-emerald-500/20 hover:scale-110 active:scale-95 transition-all"
+              >
                 <Phone size={24} />
               </button>
-              <button className="w-14 h-14 rounded-2xl bg-[#2A7FFF] text-white flex items-center justify-center shadow-lg shadow-[#2A7FFF]/20 hover:scale-110 active:scale-95 transition-all">
+              <button
+                onClick={() => (window.location.href = `sms:${c.phone.replace(/\s+/g, '')}?body=EMERGENCY SOS: Please contact me immediately.`)}
+                className="w-14 h-14 rounded-2xl bg-[#2A7FFF] text-white flex items-center justify-center shadow-lg shadow-[#2A7FFF]/20 hover:scale-110 active:scale-95 transition-all"
+              >
                 <MessageSquare size={24} />
               </button>
             </div>

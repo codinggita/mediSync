@@ -8,6 +8,8 @@ import Pharmacy from './models/Pharmacy.js';
 import Medicine from './models/Medicine.js';
 import Price from './models/Price.js';
 
+import { MOCK_PHARMACIES, MOCK_MEDICINES } from './utils/seedData.js';
+
 dotenv.config();
 
 const seedData = async () => {
@@ -15,7 +17,7 @@ const seedData = async () => {
     await mongoose.connect(process.env.MONGO_URI);
     console.log('Connected to MongoDB...');
 
-    // Clear existing
+    
     await User.deleteMany();
     await Prescription.deleteMany();
     await MedicalRecord.deleteMany();
@@ -24,7 +26,7 @@ const seedData = async () => {
     await Medicine.deleteMany();
     await Price.deleteMany();
 
-    // Create Test Patient
+    
     const testUser = await User.create({
       name: 'Priyabrata Sahoo',
       email: 'test@test.com',
@@ -42,7 +44,7 @@ const seedData = async () => {
       },
     });
 
-    // Create Admin User
+    
     await User.create({
       name: 'Admin MediSync',
       email: 'admin@medisync.com',
@@ -50,7 +52,7 @@ const seedData = async () => {
       role: 'Admin',
     });
 
-    // Create Doctor User
+    
     const doctorUser = await User.create({
       name: 'Dr. Anjali Mehta',
       email: 'anjali@medisync.app',
@@ -64,7 +66,7 @@ const seedData = async () => {
       address: 'Apollo Hospital, Sector 62, New Delhi',
     });
 
-    // Create Dr. Kamlesh - Orthopedic Specialist
+    
     const doctorKamlesh = await User.create({
       name: 'Dr. Kamlesh',
       email: 'kamlesh@medisync.app',
@@ -110,7 +112,7 @@ const seedData = async () => {
         'https://images.unsplash.com/photo-1559839734-2b71f1536783?auto=format&fit=crop&q=80&w=200&h=200',
     });
 
-    // Create Appointment
+    
     await Appointment.create([
       {
         patient: testUser._id,
@@ -136,83 +138,13 @@ const seedData = async () => {
       },
     ]);
 
-    // Create Pharmacies
-    const pharmacies = await Pharmacy.insertMany([
-      {
-        name: 'Apollo Pharmacy',
-        address: 'Sector 14, Main Market',
-        phone: '+91 98765 11111',
-        rating: 4.8,
-        distance: '0.8 km',
-        status: 'Open',
-        closes: '10 PM',
-        verificationStatus: 'Verified',
-        location: { coordinates: [77.1, 28.5] },
-      },
-      {
-        name: 'MedPlus',
-        address: 'DLF Phase 3',
-        phone: '+91 98765 22222',
-        rating: 4.5,
-        distance: '1.2 km',
-        status: 'Open',
-        closes: '9 PM',
-        verificationStatus: 'Pending',
-        location: { coordinates: [77.12, 28.52] },
-      },
-      {
-        name: 'HealthFirst Pharma',
-        address: 'Connaught Place',
-        phone: '+91 98765 33333',
-        rating: 4.2,
-        distance: '2.5 km',
-        status: 'Open',
-        closes: '11 PM',
-        verificationStatus: 'Pending',
-        location: { coordinates: [77.22, 28.63] },
-      },
-    ]);
+    
+    const pharmacies = await Pharmacy.insertMany(MOCK_PHARMACIES);
 
-    // Create Medicines
-    const medicines = await Medicine.insertMany([
-      {
-        name: 'Metformin',
-        dosage: '500mg',
-        manufacturer: 'Sun Pharma',
-        category: 'Diabetes',
-        description: 'Anti-diabetic medication',
-      },
-      {
-        name: 'Lisinopril',
-        dosage: '10mg',
-        manufacturer: 'Cipla',
-        category: 'Blood Pressure',
-        description: 'Used to treat high blood pressure',
-      },
-      {
-        name: 'Vitamin D3',
-        dosage: '60K',
-        manufacturer: 'Abbott',
-        category: 'Supplements',
-        description: 'Vitamin supplement',
-      },
-      {
-        name: 'Paracetamol',
-        dosage: '500mg',
-        manufacturer: 'GSK',
-        category: 'Pain Relief',
-        description: 'Common pain reliever and fever reducer',
-      },
-      {
-        name: 'Amoxicillin',
-        dosage: '250mg',
-        manufacturer: 'Pfizer',
-        category: 'Antibiotics',
-        description: 'Common antibiotic medication',
-      },
-    ]);
+    
+    const medicines = await Medicine.insertMany(MOCK_MEDICINES);
 
-    // Create Prescription for Test User
+    
     await Prescription.create({
       patient: testUser._id,
       status: 'Active',
@@ -241,7 +173,7 @@ const seedData = async () => {
       ],
     });
 
-    // Create Medical Records for Test User
+    
     await MedicalRecord.create([
       {
         patient: testUser._id,
@@ -273,7 +205,7 @@ const seedData = async () => {
       },
     ]);
 
-    // Create Prices
+    
     await Price.insertMany([
       { pharmacy: pharmacies[0]._id, medicine: medicines[0]._id, price: 45, discount: 5 },
       { pharmacy: pharmacies[1]._id, medicine: medicines[0]._id, price: 42, discount: 2 },

@@ -44,6 +44,30 @@ MediSync provides a **Unified Clinical Intelligence Matrix**. It aggregates medi
 
 ---
 
+## 🔐 Z+ Hardened Backend Security
+MediSync implements a **Zero-Trust Security Architecture** to protect sensitive clinical data.
+
+| Security Layer | Technology | Impact |
+| :--- | :--- | :--- |
+| **Request Guard** | `Helmet.js` | Hardens HTTP headers & enforces strict CSP policies. |
+| **Injection Shield** | `express-mongo-sanitize` | Absolute protection against NoSQL injection patterns. |
+| **XSS Firewall** | `Custom Sanitizer` | Strips malicious scripts while preserving clinical Data URIs. |
+| **Traffic Control** | `express-rate-limit` | Multi-tier limiting for Auth, Admin, and General API nodes. |
+| **Session Integrity** | `JWT + Secure Cookies` | Stateless, signed session orchestration with automated expiry. |
+| **Payload Guard** | `Body-Parser Limits` | Strict 5MB limit to prevent Buffer Overflow & DDoS. |
+
+---
+
+## 🧬 Clinical Intelligence Models (Data Schema)
+The backend is driven by high-fidelity Mongoose models designed for clinical precision:
+- **Identity Matrix (User)**: RBAC-ready profiles for Patients, Doctors, and Admins.
+- **Clinical Dossier (Record)**: Secure storage for medical artifacts with ownership tracking.
+- **Pharmacy Node (Pharmacy)**: Verified directory of pharmacies with geolocation data.
+- **Price Matrix (Medicine)**: Dynamic medicine registry with cross-pharmacy pricing.
+- **Session Registry (Appointment)**: Spatial booking data for clinical consultations.
+
+---
+
 ## 🚀 Strategic Orchestration Nodes (Features)
 
 ### 📊 Strategic Intelligence Matrix

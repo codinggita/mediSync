@@ -127,7 +127,7 @@ const LandingFooter = () => {
         </div>
       </div>
 
-      {/* Decorative background blur */}
+      {}
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#2A7FFF]/5 rounded-full blur-[120px] translate-y-1/2 translate-x-1/2 pointer-events-none" />
     </footer>
   );

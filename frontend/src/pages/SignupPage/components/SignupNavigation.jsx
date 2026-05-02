@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 
-// Fields required at each step before advancing
+
 const STEP_FIELDS = {
   1: ['role', 'name', 'email', 'phone'],
   2: ['bloodGroup', 'gender', 'specialty', 'hospital', 'medicalLicenseId'],
@@ -12,14 +12,14 @@ const SignupNavigation = ({ step, setStep, formik }) => {
 
   const handleNext = async () => {
     const fieldsToValidate = STEP_FIELDS[step] || [];
-    // Touch all relevant fields to trigger error messages
+    
     const touchedFields = {};
     fieldsToValidate.forEach((f) => {
       touchedFields[f] = true;
     });
     await formik.setTouched({ ...formik.touched, ...touchedFields }, true);
 
-    // Check if any of these fields have errors
+    
     const currentErrors = await formik.validateForm();
     const hasErrors = fieldsToValidate.some((field) => currentErrors[field]);
 

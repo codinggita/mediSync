@@ -6,7 +6,7 @@ const AnalyticsTracker = () => {
   const location = useLocation();
 
   useEffect(() => {
-    // Record high-fidelity page view on location change
+    
     ReactGA.send({
       hitType: 'pageview',
       page: location.pathname + location.search,

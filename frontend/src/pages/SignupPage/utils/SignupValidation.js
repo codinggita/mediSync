@@ -15,7 +15,7 @@ export const SignupSchema = Yup.object({
     .required('Mobile number is required'),
   agreeTerms: Yup.boolean().oneOf([true], 'You must agree to the terms'),
 
-  // Patient Specific
+  
   bloodGroup: Yup.string().when('role', {
     is: 'Patient',
     then: (schema) => schema.required('Blood group is required'),
@@ -27,7 +27,7 @@ export const SignupSchema = Yup.object({
     otherwise: (schema) => schema.notRequired(),
   }),
 
-  // Doctor Specific
+  
   specialty: Yup.string().when('role', {
     is: 'Doctor',
     then: (schema) => schema.required('Specialty is required'),

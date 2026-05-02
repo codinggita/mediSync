@@ -18,21 +18,24 @@ import { SignupSchema } from './utils/SignupValidation';
 import { INITIAL_SIGNUP_VALUES } from './utils/SignupConstants';
 import SEO from '../../components/SEO';
 
+import storage from '../../utils/storage';
+
 const SignupPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [step, setStep] = useState(0); // 0: Plan Selection, 1: Basic Info, 2: Details, 3: Security
-  const [selectedPlan, setSelectedPlan] = useState('Free');
+  
+  const [step, setStep] = useState(() => storage.getSession('mediSync_signup_step') || 0);
+  const [selectedPlan, setSelectedPlan] = useState(() => storage.getSession('mediSync_signup_plan') || 'Free');
+  
   const navigate = useNavigate();
   const location = useLocation();
   const { signup } = useAuth();
 
-  // Check both state and query params for sync failure
-  const queryParams = new URLSearchParams(location.search);
-  const isSyncFailure =
-    location.state?.reason === 'session_missing' || queryParams.get('reason') === 'session_missing';
+  useEffect(() => {
+    storage.setSession('mediSync_signup_step', step);
+    storage.setSession('mediSync_signup_plan', selectedPlan);
+  }, [step, selectedPlan]);
 
-  // Handle pre-fill from Google if redirected from Login page
   useEffect(() => {
     if (location.state?.googleData) {
       const { name, email } = location.state.googleData;
@@ -72,13 +75,10 @@ const SignupPage = () => {
 
         const { data } = await api.post('/auth/register', payload);
         
-        // 🔒 Phase 1: Secure Persistence
         signup(data);
         
-        // 🚀 Phase 2: Success Animation
         setIsLoading('success');
 
-        // ⏱️ Phase 3: Stability Buffer (Ensure localStorage is flushed)
         setTimeout(() => {
           if (data.role === 'Doctor') {
             navigate('/doctor-portal');

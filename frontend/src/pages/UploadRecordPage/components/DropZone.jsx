@@ -29,7 +29,7 @@ const DropZone = ({ onFileSelected, file, onClear }) => {
       if (!validate(f)) return;
       setProgress(0);
       onFileSelected(f);
-      // Simulate upload progress animation
+      
       let p = 0;
       const timer = setInterval(() => {
         p += Math.random() * 18 + 5;

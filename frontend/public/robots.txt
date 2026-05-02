@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /doctor-portal
+
+Sitemap: https://medisync.app/sitemap.xml

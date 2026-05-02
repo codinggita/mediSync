@@ -62,14 +62,14 @@ const UploadRecordPage = () => {
         <main className="flex-1 overflow-y-auto px-8 py-8 scrollbar-hide pb-24 md:pb-6">
           <UploadHeader />
 
-          {/* Main Layout - Neumorphic Cards */}
+          {}
           <div className="flex flex-col lg:flex-row gap-12 max-w-7xl mx-auto w-full pb-20">
-            {/* Left: Tactical Drop Zone */}
+            {}
             <div className="flex-1 min-w-0">
               <UploadSelectionContainer file={file} setFile={setFile} />
             </div>
 
-            {/* Right: Metadata Form */}
+            {}
             <div className="w-full lg:w-[480px] shrink-0">
               <UploadMetaForm
                 file={file}

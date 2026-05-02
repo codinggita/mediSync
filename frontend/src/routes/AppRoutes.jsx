@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import PremiumLoader from '../components/PremiumLoader';
 
-// 🚀 Dynamic Module Loading (Code Splitting)
+
 const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage'));
 const SignupPage = lazy(() => import('../pages/SignupPage/SignupPage'));
 const LandingPage = lazy(() => import('../pages/LandingPage/LandingPage'));
@@ -32,19 +32,30 @@ const PlaceholderPage = ({ title }) => (
   </div>
 );
 
-// RBAC Route Protection
+
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const { user, loading } = useAuth();
 
   if (loading) return <PremiumLoader message="Synchronizing Data" />;
 
-  // If no user, redirect to login with a sync failure state
-  if (!user) return <Navigate to="/signup" state={{ reason: 'session_missing' }} replace />;
 
-  // If route is restricted by role and user doesn't have it, redirect to dashboard
+  if (!user) return <Navigate to="/login" state={{ reason: 'session_missing' }} replace />;
+
+
   if (allowedRoles && !allowedRoles.includes(user.role)) {
     return <Navigate to="/dashboard" replace />;
   }
+
+  return children;
+};
+
+
+const PublicRoute = ({ children }) => {
+  const { user, loading } = useAuth();
+
+  if (loading) return <PremiumLoader message="Verifying Identity" />;
+
+  if (user) return <Navigate to="/dashboard" replace />;
 
   return children;
 };
@@ -53,14 +64,42 @@ const AppRoutes = () => {
   return (
     <Suspense fallback={<PremiumLoader message="Synchronizing Modules" />}>
       <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
 
-        {/* General Protected Routes */}
+        <Route path="/" element={<LandingPage />} />
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <LoginPage />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <PublicRoute>
+              <SignupPage />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/forgot-password"
+          element={
+            <PublicRoute>
+              <ForgotPasswordPage />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/reset-password/:token"
+          element={
+            <PublicRoute>
+              <ResetPasswordPage />
+            </PublicRoute>
+          }
+        />
+
+
         <Route
           path="/dashboard"
           element={
@@ -150,7 +189,7 @@ const AppRoutes = () => {
           }
         />
 
-        {/* Role-Specific Protected Routes */}
+
         <Route
           path="/doctor-portal"
           element={
@@ -176,7 +215,7 @@ const AppRoutes = () => {
           }
         />
 
-        {/* Catch-all */}
+
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Suspense>

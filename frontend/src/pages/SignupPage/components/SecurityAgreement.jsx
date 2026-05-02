@@ -46,7 +46,7 @@ const SecurityAgreement = ({ step, formik, setStep, isLoading, setError }) => {
           type="submit"
           disabled={isLoading === true || isLoading === 'success'}
           onClick={async () => {
-            // Touch all fields to show all validation errors
+            
             await formik.setTouched({
               password: true,
               confirmPassword: true,

@@ -6,13 +6,13 @@ import vitaminsImg from '../../../assets/images/vitamins.png';
 const ComparisonHero = ({ medicinesCount, totalSavings }) => {
   return (
     <div className="bg-gradient-to-br from-[#2A7FFF] to-[#1a5fd8] rounded-[3rem] p-8 lg:p-10 mb-10 text-white relative overflow-hidden shadow-2xl shadow-[#2A7FFF]/30">
-      {/* Background Graphic Composition */}
+      {}
       <div className="absolute right-0 top-0 bottom-0 w-1/2 hidden lg:block pointer-events-none">
-        {/* Glow effects */}
+        {}
         <div className="absolute top-10 right-40 w-48 h-48 bg-white/20 rounded-full blur-[60px]"></div>
         <div className="absolute bottom-[-20px] right-10 w-56 h-56 bg-emerald-400/30 rounded-full blur-[60px]"></div>
 
-        {/* Image composition */}
+        {}
         <img
           src={medBoxImg}
           alt="Medicine Box"

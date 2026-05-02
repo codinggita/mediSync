@@ -11,7 +11,7 @@ const AdminGlowCard = ({ label, value, icon: Icon, color, sub, trend, delay = 0 
       className="relative overflow-hidden rounded-[2rem] p-7 transition-all duration-500 hover:scale-[1.02] group cursor-pointer nm-flat"
       style={{ animationDelay: `${delay}ms` }}
     >
-      {/* Background Accent Image */}
+      {}
       <div className="absolute -right-6 -bottom-6 w-32 h-32 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity pointer-events-none group-hover:scale-125 transition-transform duration-700">
         <img src={healthAbstractImg} alt="Abstract" className="w-full h-full object-contain" />
       </div>

@@ -69,7 +69,7 @@ const AdminOverview = () => {
             key={i}
             className={`relative overflow-hidden bg-white dark:bg-[#151E32] border border-gray-100 dark:border-slate-700/50 rounded-[14px] p-5 shadow-sm transition-all hover:shadow-md group`}
           >
-            {/* Glass Effect Layer */}
+            {}
             <div className="absolute inset-0 bg-white/40 dark:bg-transparent backdrop-blur-[2px] pointer-events-none" />
 
             <div className="relative z-10">
@@ -115,7 +115,7 @@ const AdminOverview = () => {
               </div>
             </div>
 
-            {/* Decorative background circle */}
+            {}
             <div
               className="absolute -right-4 -bottom-4 w-20 h-20 rounded-full opacity-[0.03] group-hover:opacity-[0.06] transition-opacity duration-500"
               style={{ backgroundColor: m.color }}

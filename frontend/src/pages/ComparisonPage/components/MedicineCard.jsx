@@ -66,9 +66,13 @@ const PriceRow = ({ entry, isBest }) => {
           </div>
         </div>
         <button
+          onClick={(e) => {
+            e.stopPropagation();
+            alert(`Sourcing Request Initiated: ${entry.pharmacy} hub is processing your order for delivery.`);
+          }}
           className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all ${
             entry.inStock
-              ? 'bg-[#2A7FFF] text-white hover:bg-[#1565C0] shadow-lg shadow-[#2A7FFF]/20'
+              ? 'bg-[#2A7FFF] text-white hover:bg-[#1565C0] shadow-lg shadow-[#2A7FFF]/20 active:scale-90'
               : 'bg-slate-100 dark:bg-slate-800 text-slate-300 cursor-not-allowed'
           }`}
           disabled={!entry.inStock}
@@ -80,7 +84,7 @@ const PriceRow = ({ entry, isBest }) => {
   );
 };
 
-const MedicineCard = ({ medicine, isWishlisted, onWishlist }) => {
+const MedicineCard = React.memo(({ medicine, isWishlisted, onWishlist }) => {
   const [expanded, setExpanded] = useState(false);
 
   const sorted = [...medicine.prices].sort((a, b) => a.price - b.price);
@@ -92,7 +96,7 @@ const MedicineCard = ({ medicine, isWishlisted, onWishlist }) => {
 
   return (
     <div className="nm-flat rounded-[3rem] transition-all duration-500 overflow-hidden group hover:scale-[1.01]">
-      {/* Card Header */}
+      {}
       <div className="p-6">
         <div className="flex items-start justify-between gap-4 mb-4">
           <div className="flex items-center gap-5">
@@ -127,7 +131,7 @@ const MedicineCard = ({ medicine, isWishlisted, onWishlist }) => {
           </div>
         </div>
 
-        {/* Price Summary Bar */}
+        {}
         <div className="grid grid-cols-3 gap-4 mb-6">
           <div className="p-4 rounded-[2rem] nm-inset text-center">
             <p className="text-[0.6rem] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-1">
@@ -153,7 +157,7 @@ const MedicineCard = ({ medicine, isWishlisted, onWishlist }) => {
           </div>
         </div>
 
-        {/* Expand toggle */}
+        {}
         <button
           onClick={() => setExpanded(!expanded)}
           className="w-full flex items-center justify-between px-4 py-2.5 rounded-2xl bg-slate-50 dark:bg-[#0B1121]/60 border border-slate-100 dark:border-slate-800 text-[0.75rem] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest hover:border-[#2A7FFF]/30 transition-all"
@@ -168,7 +172,7 @@ const MedicineCard = ({ medicine, isWishlisted, onWishlist }) => {
         </button>
       </div>
 
-      {/* Expanded Price List */}
+      {}
       {expanded && (
         <div className="px-6 pb-6 space-y-3 border-t border-slate-100 dark:border-slate-800/50 pt-4">
           {sorted.map((entry, i) => (
@@ -178,6 +182,6 @@ const MedicineCard = ({ medicine, isWishlisted, onWishlist }) => {
       )}
     </div>
   );
-};
+});
 
 export default MedicineCard;

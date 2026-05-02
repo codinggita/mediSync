@@ -35,7 +35,7 @@ const SettingsRecordsPanel = ({
         </div>
       </div>
 
-      {/* Storage Telemetry */}
+      {}
       <div className="bg-slate-50 dark:bg-[#0B1121] p-8 rounded-[2.5rem] mb-10 border border-slate-100 dark:border-white/5 shadow-inner">
         <div className="flex items-center justify-between mb-4">
           <span className="text-[0.75rem] font-black text-slate-500 uppercase tracking-widest">
@@ -74,7 +74,7 @@ const SettingsRecordsPanel = ({
         </div>
       </div>
 
-      {/* Action Controls */}
+      {}
       <div className="flex flex-col md:flex-row items-center justify-between mb-8 gap-6">
         <div className="flex bg-slate-50 dark:bg-[#0B1121] p-1.5 rounded-[1.5rem] border border-slate-100 dark:border-white/5 w-full md:w-auto">
           {['All', 'Legacy', 'Large Files'].map((f) => (

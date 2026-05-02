@@ -33,30 +33,15 @@ MediSync provides a **Unified Clinical Intelligence Matrix**. It aggregates medi
 
 ## 🛠️ Technology Stack & Architecture
 
-### **Frontend (Clinical Interface)**
-- **Core**: 
-  [![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://react.dev/) 
-  [![Vite](https://img.shields.io/badge/Vite-8.0-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
-- **Styling**: 
-  [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/) 
-  [![Material UI](https://img.shields.io/badge/Material_UI-9.0-007FFF?style=for-the-badge&logo=mui&logoColor=white)](https://mui.com/)
-- **Animations**: 
-  [![Framer Motion](https://img.shields.io/badge/Framer_Motion-12.0-ff69b4?style=for-the-badge&logo=framer&logoColor=white)](https://www.framer.com/motion/) 
-  [![GSAP](https://img.shields.io/badge/GSAP-3.15-88CE02?style=for-the-badge&logo=greensock&logoColor=white)](https://greensock.com/gsap/)
-- **State**: 
-  [![Redux Toolkit](https://img.shields.io/badge/Redux_Toolkit-2.0-764ABC?style=for-the-badge&logo=redux&logoColor=white)](https://redux-toolkit.js.org/)
-
-### **Backend (Clinical Intelligence API)**
-- **Runtime**: 
-  [![Node.js](https://img.shields.io/badge/Node.js-20+-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
-- **Server**: 
-  [![Express.js](https://img.shields.io/badge/Express.js-5.0-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
-- **Database**: 
-  [![MongoDB](https://img.shields.io/badge/MongoDB-9.0-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/) 
-  [![Mongoose](https://img.shields.io/badge/Mongoose-ODM-880000?style=for-the-badge)](https://mongoosejs.com/)
-- **Security**: 
-  [![JWT](https://img.shields.io/badge/JWT-Auth-black?style=for-the-badge&logo=json-web-tokens&logoColor=white)](https://jwt.io/) 
-  [![Bcrypt](https://img.shields.io/badge/Bcrypt-Hashing-blue?style=for-the-badge)](https://www.npmjs.com/package/bcrypt)
+| System Layer | Intelligence Node | Core Technology Stack |
+| :--- | :--- | :--- |
+| **Frontend Core** | Clinical Interface | [![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://react.dev/) [![Vite](https://img.shields.io/badge/Vite-8.0-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/) |
+| **Styling & UI** | Visual Architecture | [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/) [![Material UI](https://img.shields.io/badge/Material_UI-9.0-007FFF?style=for-the-badge&logo=mui&logoColor=white)](https://mui.com/) |
+| **Motion Physics** | Animations | [![Framer Motion](https://img.shields.io/badge/Framer_Motion-12.0-ff69b4?style=for-the-badge&logo=framer&logoColor=white)](https://www.framer.com/motion/) [![GSAP](https://img.shields.io/badge/GSAP-3.15-88CE02?style=for-the-badge&logo=greensock&logoColor=white)](https://greensock.com/gsap/) |
+| **State Matrix** | Logic Layer | [![Redux Toolkit](https://img.shields.io/badge/Redux_Toolkit-2.0-764ABC?style=for-the-badge&logo=redux&logoColor=white)](https://redux-toolkit.js.org/) |
+| **Backend Runtime** | Clinical API | [![Node.js](https://img.shields.io/badge/Node.js-20+-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/) [![Express.js](https://img.shields.io/badge/Express.js-5.0-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/) |
+| **Data Dossier** | Intelligence Storage | [![MongoDB](https://img.shields.io/badge/MongoDB-9.0-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/) [![Mongoose](https://img.shields.io/badge/Mongoose-ODM-880000?style=for-the-badge)](https://mongoosejs.com/) |
+| **Z+ Security** | Auth & Encryption | [![JWT](https://img.shields.io/badge/JWT-Auth-black?style=for-the-badge&logo=json-web-tokens&logoColor=white)](https://jwt.io/) [![Bcrypt](https://img.shields.io/badge/Bcrypt-Hashing-blue?style=for-the-badge)](https://www.npmjs.com/package/bcrypt) |
 
 ---
 

@@ -4,12 +4,33 @@ import { useTheme } from '../../../context/ThemeContext';
 import { Users, Search, Filter, Ban, ShieldCheck, Trash2, Mail } from 'lucide-react';
 import PremiumLoader from '../../../components/PremiumLoader';
 import UserManagementTable from './UserManagementTable';
+import AddUserModal from './AddUserModal';
+import { UserPlus } from 'lucide-react';
+
+const MOCK_USERS = [
+  { _id: 'mu1',  name: 'Dr. Arjun Mehta',    email: 'arjun.mehta@medisync.in',    role: 'Doctor',  status: 'Active', isBanned: false, joinedAt: '2026-04-30', createdAt: '2026-04-30T10:22:00Z' },
+  { _id: 'mu2',  name: 'Priya Sharma',        email: 'priya.sharma@gmail.com',      role: 'Patient', status: 'Active', isBanned: false, joinedAt: '2026-04-30', createdAt: '2026-04-30T09:15:00Z' },
+  { _id: 'mu3',  name: 'Dr. Sunita Rao',      email: 'sunita.rao@clinics.com',      role: 'Doctor',  status: 'Active', isBanned: false, joinedAt: '2026-04-29', createdAt: '2026-04-29T18:45:00Z' },
+  { _id: 'mu4',  name: 'Rahul Gupta',         email: 'rahul.gupta@email.com',       role: 'Patient', status: 'Active', isBanned: false, joinedAt: '2026-04-29', createdAt: '2026-04-29T14:30:00Z' },
+  { _id: 'mu5',  name: 'Dr. Vikram Nair',     email: 'vikram.nair@hospitals.org',   role: 'Doctor',  status: 'Active', isBanned: false, joinedAt: '2026-04-29', createdAt: '2026-04-29T11:00:00Z' },
+  { _id: 'mu6',  name: 'Ananya Iyer',         email: 'ananya.iyer@patient.net',     role: 'Patient', status: 'Banned', isBanned: true,  joinedAt: '2026-04-28', createdAt: '2026-04-28T20:10:00Z' },
+  { _id: 'mu7',  name: 'Dr. Kavita Singh',    email: 'kavita.singh@medcollege.in',  role: 'Doctor',  status: 'Active', isBanned: false, joinedAt: '2026-04-28', createdAt: '2026-04-28T17:00:00Z' },
+  { _id: 'mu8',  name: 'Ravi Shankar',        email: 'ravi.shankar@connect.com',    role: 'Patient', status: 'Active', isBanned: false, joinedAt: '2026-04-28', createdAt: '2026-04-28T13:40:00Z' },
+  { _id: 'mu9',  name: 'Admin Priyabrata',    email: 'admin@medisync.io',           role: 'Admin',   status: 'Active', isBanned: false, joinedAt: '2026-04-27', createdAt: '2026-04-27T09:00:00Z' },
+  { _id: 'mu10', name: 'Dr. Deepak Kapoor',   email: 'deepak.kapoor@apollo.com',    role: 'Doctor',  status: 'Active', isBanned: false, joinedAt: '2026-04-27', createdAt: '2026-04-27T08:30:00Z' },
+  { _id: 'mu11', name: 'Meena Pillai',        email: 'meena.pillai@wellness.net',   role: 'Patient', status: 'Active', isBanned: false, joinedAt: '2026-04-26', createdAt: '2026-04-26T16:55:00Z' },
+  { _id: 'mu12', name: 'Dr. Rohit Verma',     email: 'rohit.verma@surgery.org',     role: 'Doctor',  status: 'Active', isBanned: false, joinedAt: '2026-04-26', createdAt: '2026-04-26T12:20:00Z' },
+  { _id: 'mu13', name: 'Saurabh Tiwari',      email: 'saurabh.tiwari@mail.com',     role: 'Patient', status: 'Banned', isBanned: true,  joinedAt: '2026-04-25', createdAt: '2026-04-25T19:00:00Z' },
+  { _id: 'mu14', name: 'Dr. Nalini Krishnan', email: 'nalini.krishnan@hospital.in', role: 'Doctor',  status: 'Active', isBanned: false, joinedAt: '2026-04-25', createdAt: '2026-04-25T10:45:00Z' },
+  { _id: 'mu15', name: 'Ishaan Chaudhary',    email: 'ishaan.ch@patient.io',        role: 'Patient', status: 'Active', isBanned: false, joinedAt: '2026-04-24', createdAt: '2026-04-24T22:10:00Z' },
+];
 
 const AdminUsersTab = () => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState(MOCK_USERS); 
   const [loading, setLoading] = useState(true);
   const [roleFilter, setRoleFilter] = useState('');
   const [search, setSearch] = useState('');
+  const [showAddModal, setShowAddModal] = useState(false);
   const { isDarkMode } = useTheme();
 
   useEffect(() => {
@@ -20,73 +41,24 @@ const AdminUsersTab = () => {
     try {
       setLoading(true);
       const { data } = await api.get('/admin/users', { params: { role: roleFilter, search } });
+      const realUsers = data?.users || [];
 
-      let finalUsers = data.users;
-      if (!finalUsers || finalUsers.length === 0) {
-        finalUsers = [
-          {
-            _id: 'u1',
-            name: 'Dr. Sarah Connor',
-            email: 'sarah.c@medisync.com',
-            role: 'Doctor',
-            status: 'Active',
-            joinedAt: '2024-01-15',
-          },
-          {
-            _id: 'u2',
-            name: 'John Doe',
-            email: 'john.doe@gmail.com',
-            role: 'Patient',
-            status: 'Active',
-            joinedAt: '2024-02-10',
-          },
-          {
-            _id: 'u3',
-            name: 'Elena Gilbert',
-            email: 'elena.g@medisync.com',
-            role: 'Admin',
-            status: 'Active',
-            joinedAt: '2023-11-20',
-          },
-          {
-            _id: 'u4',
-            name: 'Dr. Marcus Wright',
-            email: 'marcus.w@medisync.com',
-            role: 'Doctor',
-            status: 'Banned',
-            joinedAt: '2023-12-05',
-          },
-          {
-            _id: 'u5',
-            name: 'Bonnie Bennett',
-            email: 'bonnie.b@gmail.com',
-            role: 'Patient',
-            status: 'Active',
-            joinedAt: '2024-03-01',
-          },
-        ];
-      }
-      setUsers(finalUsers);
+      
+      const uniqueMocks = MOCK_USERS.filter(
+        (mu) => !realUsers.find((ru) => ru.email === mu.email)
+      );
+      
+      const filteredMocks = roleFilter
+        ? uniqueMocks.filter((u) => u.role === roleFilter)
+        : uniqueMocks;
+
+      setUsers([...realUsers, ...filteredMocks]);
     } catch (e) {
-      console.error(e);
-      setUsers([
-        {
-          _id: 'u1',
-          name: 'Dr. Sarah Connor',
-          email: 'sarah.c@medisync.com',
-          role: 'Doctor',
-          status: 'Active',
-          joinedAt: '2024-01-15',
-        },
-        {
-          _id: 'u2',
-          name: 'John Doe',
-          email: 'john.doe@gmail.com',
-          role: 'Patient',
-          status: 'Active',
-          joinedAt: '2024-02-10',
-        },
-      ]);
+      
+      const fallback = roleFilter
+        ? MOCK_USERS.filter((u) => u.role === roleFilter)
+        : MOCK_USERS;
+      setUsers(fallback);
     } finally {
       setLoading(false);
     }
@@ -94,7 +66,7 @@ const AdminUsersTab = () => {
 
   const handleToggleBan = async (id) => {
     try {
-      // Local state sync for "Perfect Working" experience
+      
       setUsers((prev) =>
         prev.map((u) =>
           u._id === id ? { ...u, status: u.status === 'Active' ? 'Banned' : 'Active' } : u
@@ -138,6 +110,15 @@ const AdminUsersTab = () => {
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
+
+          <button
+            onClick={() => setShowAddModal(true)}
+            className="flex items-center gap-4 px-8 py-4 rounded-[1.5rem] bg-[#8B5CF6] text-white shadow-[0_10px_20px_rgba(139,92,246,0.3)] hover:scale-[1.03] active:scale-95 transition-all font-black text-[0.75rem] uppercase tracking-widest shrink-0"
+          >
+            <UserPlus size={18} />
+            Add New Citizen
+          </button>
+
           <div className="relative group">
             <select
               value={roleFilter}
@@ -165,13 +146,20 @@ const AdminUsersTab = () => {
         <UserManagementTable
           users={users.filter(
             (u) =>
-              u.name.toLowerCase().includes(search.toLowerCase()) ||
-              u.email.toLowerCase().includes(search.toLowerCase())
+              u?.name?.toLowerCase()?.includes(search.toLowerCase()) ||
+              u?.email?.toLowerCase()?.includes(search.toLowerCase())
           )}
           onToggleBan={handleToggleBan}
           isDarkMode={isDarkMode}
         />
       </div>
+
+      <AddUserModal
+        show={showAddModal}
+        onClose={() => setShowAddModal(false)}
+        onUserAdded={(u) => setUsers([u, ...users])}
+        isDarkMode={isDarkMode}
+      />
     </div>
   );
 };

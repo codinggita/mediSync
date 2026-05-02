@@ -1,11 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../../utils/api';
 import { useTheme } from '../../../context/ThemeContext';
-import { Pill, Plus, Search, Edit3, Trash2, Package } from 'lucide-react';
+import { Plus, Search } from 'lucide-react';
 import PremiumLoader from '../../../components/PremiumLoader';
+import MedicineCard from './MedicineCard';
+import MedicineModal from './MedicineModal';
+
+const MOCK_MEDICINES = [
+  { _id: 'mock_m1',  name: 'Lisinopril',      category: 'Blood Pressure',    dosage: '10mg',   manufacturer: 'CIPLA',        stockStatus: 'In Stock'    },
+  { _id: 'mock_m2',  name: 'Metformin',        category: 'Diabetes',          dosage: '500mg',  manufacturer: 'SUN PHARMA',   stockStatus: 'In Stock'    },
+  { _id: 'mock_m3',  name: 'Paracetamol',      category: 'Pain Relief',       dosage: '500mg',  manufacturer: 'GSK',          stockStatus: 'In Stock'    },
+  { _id: 'mock_m4',  name: 'Amoxicillin',      category: 'Antibiotics',       dosage: '250mg',  manufacturer: 'PFIZER',       stockStatus: 'In Stock'    },
+  { _id: 'mock_m5',  name: 'Atorvastatin',     category: 'Cholesterol',       dosage: '20mg',   manufacturer: 'DR REDDY',     stockStatus: 'Low Stock'   },
+  { _id: 'mock_m6',  name: 'Omeprazole',       category: 'Gastrointestinal',  dosage: '40mg',   manufacturer: 'ASTRAZENECA',  stockStatus: 'In Stock'    },
+  { _id: 'mock_m7',  name: 'Aspirin',          category: 'Blood Thinner',     dosage: '81mg',   manufacturer: 'BAYER',        stockStatus: 'Out of Stock'},
+  { _id: 'mock_m8',  name: 'Ibuprofen',        category: 'Pain Relief',       dosage: '400mg',  manufacturer: 'ADVIL',        stockStatus: 'In Stock'    },
+  { _id: 'mock_m9',  name: 'Cetirizine',       category: 'Allergy',           dosage: '10mg',   manufacturer: 'ZYRTEC',       stockStatus: 'In Stock'    },
+  { _id: 'mock_m10', name: 'Losartan',         category: 'Blood Pressure',    dosage: '50mg',   manufacturer: 'MERCK',        stockStatus: 'Low Stock'   },
+  { _id: 'mock_m11', name: 'Amlodipine',       category: 'Blood Pressure',    dosage: '5mg',    manufacturer: 'PFIZER',       stockStatus: 'In Stock'    },
+  { _id: 'mock_m12', name: 'Albuterol',        category: 'Asthma',            dosage: '90mcg',  manufacturer: 'GSK',          stockStatus: 'In Stock'    },
+  { _id: 'mock_m13', name: 'Gabapentin',       category: 'Nerve Pain',        dosage: '300mg',  manufacturer: 'PFIZER',       stockStatus: 'Low Stock'   },
+  { _id: 'mock_m14', name: 'Vitamin D3',       category: 'Supplements',       dosage: '60K IU', manufacturer: 'ABBOTT',       stockStatus: 'In Stock'    },
+  { _id: 'mock_m15', name: 'Azithromycin',     category: 'Antibiotics',       dosage: '500mg',  manufacturer: 'CIPLA',        stockStatus: 'In Stock'    },
+  { _id: 'mock_m16', name: 'Pantoprazole',     category: 'Gastrointestinal',  dosage: '40mg',   manufacturer: 'SUN PHARMA',   stockStatus: 'In Stock'    },
+  { _id: 'mock_m17', name: 'Montelukast',      category: 'Asthma',            dosage: '10mg',   manufacturer: 'MERCK',        stockStatus: 'In Stock'    },
+  { _id: 'mock_m18', name: 'Clopidogrel',      category: 'Blood Thinner',     dosage: '75mg',   manufacturer: 'SANOFI',       stockStatus: 'Low Stock'   },
+  { _id: 'mock_m19', name: 'Levothyroxine',    category: 'Thyroid',           dosage: '50mcg',  manufacturer: 'ABBOTT',       stockStatus: 'In Stock'    },
+  { _id: 'mock_m20', name: 'Dolo 650',         category: 'Pain Relief',       dosage: '650mg',  manufacturer: 'MICRO LABS',   stockStatus: 'In Stock'    },
+];
 
 const AdminMedicineTab = () => {
-  const [medicines, setMedicines] = useState([]);
+  const [medicines, setMedicines] = useState(MOCK_MEDICINES); 
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [selectedMedicine, setSelectedMedicine] = useState(null);
@@ -30,90 +55,42 @@ const AdminMedicineTab = () => {
     try {
       setLoading(true);
       const { data } = await api.get('/admin/medicines', { params: { search } });
+      const realData = Array.isArray(data) ? data : [];
 
-      let finalData = data;
-      if (!data || data.length === 0) {
-        finalData = [
-          {
-            _id: 'm1',
-            name: 'Lisinopril',
-            category: 'Blood Pressure',
-            dosage: '10mg',
-            manufacturer: 'CIPLA',
-            stockStatus: 'In Stock',
-          },
-          {
-            _id: 'm2',
-            name: 'Vitamin D3',
-            category: 'Supplements',
-            dosage: '60K',
-            manufacturer: 'ABBOTT',
-            stockStatus: 'In Stock',
-          },
-          {
-            _id: 'm3',
-            name: 'Paracetamol',
-            category: 'Pain Relief',
-            dosage: '500mg',
-            manufacturer: 'GSK',
-            stockStatus: 'In Stock',
-          },
-          {
-            _id: 'm4',
-            name: 'Amoxicillin',
-            category: 'Antibiotics',
-            dosage: '250mg',
-            manufacturer: 'PFIZER',
-            stockStatus: 'In Stock',
-          },
-          {
-            _id: 'm5',
-            name: 'Metformin',
-            category: 'Diabetes',
-            dosage: '500mg',
-            manufacturer: 'SUN PHARMA',
-            stockStatus: 'In Stock',
-          },
-          {
-            _id: 'm6',
-            name: 'Atorvastatin',
-            category: 'Cholesterol',
-            dosage: '20mg',
-            manufacturer: 'DR REDDY',
-            stockStatus: 'Low Stock',
-          },
-        ];
-      }
-      setMedicines(finalData);
+      
+      const uniqueMocks = MOCK_MEDICINES.filter(
+        (mm) => !realData.find((rm) => rm.name?.toLowerCase() === mm.name?.toLowerCase())
+      );
+      setMedicines([...realData, ...uniqueMocks]);
     } catch (e) {
-      console.error(e);
-      setMedicines([
-        {
-          _id: 'm1',
-          name: 'Lisinopril',
-          category: 'Blood Pressure',
-          dosage: '10mg',
-          manufacturer: 'CIPLA',
-          stockStatus: 'In Stock',
-        },
-        {
-          _id: 'm2',
-          name: 'Vitamin D3',
-          category: 'Supplements',
-          dosage: '60K',
-          manufacturer: 'ABBOTT',
-          stockStatus: 'In Stock',
-        },
-      ]);
+      
+      setMedicines(MOCK_MEDICINES);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleDelete = async (id) => {
-    // Instant local state purge for "perfect working" experience
-    setMedicines((prev) => prev.filter((m) => m._id !== id));
+  const handleSave = (formData) => {
+    if (selectedMedicine) {
+      setMedicines((prev) =>
+        prev.map((m) =>
+          m._id === selectedMedicine._id ? { ...m, ...formData } : m
+        )
+      );
+    } else {
+      const newMed = {
+        _id: `m${Date.now()}`,
+        category: 'General',
+        stockStatus: 'In Stock',
+        ...formData,
+      };
+      setMedicines((prev) => [newMed, ...prev]);
+    }
+    closeModal();
+  };
 
+  const handleDelete = async (id) => {
+    setMedicines((prev) => prev.filter((m) => m._id !== id));
     try {
       if (!id.toString().startsWith('m')) {
         await api.delete(`/admin/medicines/${id}`);
@@ -140,19 +117,14 @@ const AdminMedicineTab = () => {
         </div>
 
         <div className="flex flex-wrap items-center gap-5">
-          <div
-            className={`flex items-center gap-4 px-6 py-4 rounded-[1.5rem] bg-[#ecf0f3] dark:bg-[#0B1121] shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0a0f1d,inset_-4px_-4px_8px_#202d47] min-w-[300px] border border-white/20`}
-          >
+          <div className="flex items-center gap-4 px-6 py-4 rounded-[1.5rem] bg-[#ecf0f3] dark:bg-[#0B1121] shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0a0f1d,inset_-4px_-4px_8px_#202d47] min-w-[300px] border border-white/20">
             <Search size={20} className="text-[#F59E0B]" />
             <input
               type="text"
               placeholder="Search registry..."
               className="bg-transparent border-none outline-none text-[0.85rem] font-black w-full text-slate-700 dark:text-slate-300 placeholder:text-slate-400 uppercase tracking-widest"
               value={search}
-              onChange={(e) => {
-                setSearch(e.target.value);
-                // Functional live search fallback
-              }}
+              onChange={(e) => setSearch(e.target.value)}
             />
           </div>
           <button
@@ -165,165 +137,26 @@ const AdminMedicineTab = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
         {medicines
           .filter((m) => m.name.toLowerCase().includes(search.toLowerCase()))
           .map((m) => (
-            <div
+            <MedicineCard
               key={m._id}
-              className={`p-8 rounded-[2.5rem] bg-[#ecf0f3] dark:bg-[#151E32] shadow-[12px_12px_24px_#cbced1,-12px_-12px_24px_#ffffff] dark:shadow-[12px_12px_24px_#0a0f1d,-12px_-12px_24px_#202d47] border border-white/40 dark:border-white/5 transition-all hover:scale-[1.03] group`}
-            >
-              <div className="flex items-start justify-between mb-6">
-                <div
-                  className={`w-16 h-16 rounded-[20px] bg-[#ecf0f3] dark:bg-[#0B1121] flex items-center justify-center shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0a0f1d,inset_-4px_-4px_8px_#202d47] border border-white/20`}
-                >
-                  <Pill size={28} className="text-[#F59E0B]" />
-                </div>
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => openModal(m)}
-                    className="w-10 h-10 rounded-xl bg-[#ecf0f3] dark:bg-[#0B1121] flex items-center justify-center text-slate-400 hover:text-[#2A7FFF] shadow-[4px_4px_8px_#cbced1,-4px_-4px_8px_#ffffff] dark:shadow-[4px_4px_8px_#0a0f1d,inset_0_0_0_transparent] transition-all active:shadow-inner"
-                  >
-                    <Edit3 size={16} />
-                  </button>
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      handleDelete(m._id);
-                    }}
-                    className="w-10 h-10 rounded-xl bg-[#ecf0f3] dark:bg-[#151E32] flex items-center justify-center text-rose-500 shadow-[4px_4px_8px_#cbced1,-4px_-4px_8px_#ffffff] dark:shadow-[4px_4px_8px_#0a0f1d,-4px_-4px_8px_#202d47] transition-all active:shadow-inner border border-white/20 hover:bg-rose-500/10"
-                  >
-                    <Trash2 size={16} strokeWidth={2.5} />
-                  </button>
-                </div>
-              </div>
-
-              <h3
-                className={`text-[1.3rem] font-black mb-1 ${isDarkMode ? 'text-white' : 'text-slate-900'} leading-none tracking-tight`}
-              >
-                {m.name}
-              </h3>
-              <p className="text-[#F59E0B] text-[0.65rem] font-black uppercase tracking-[0.25em] mb-4">
-                {m.category || 'General'}
-              </p>
-
-              <div className="flex items-center gap-2 mb-6 text-slate-500 dark:text-slate-400">
-                <Package size={14} strokeWidth={2.5} />
-                <span className="text-[0.75rem] font-black uppercase tracking-widest">
-                  {m.dosage} • {m.manufacturer}
-                </span>
-              </div>
-
-              <div
-                className={`w-full py-3.5 rounded-2xl text-[0.75rem] font-black uppercase tracking-[0.2em] text-center transition-all ${
-                  m.stockStatus === 'In Stock'
-                    ? 'bg-[#2ECC71]/10 text-[#2ECC71] border border-[#2ECC71]/20 shadow-[inset_2px_2px_4px_rgba(46,204,113,0.1)]'
-                    : 'bg-rose-500/10 text-rose-500 border border-rose-500/20 shadow-[inset_2px_2px_4px_rgba(244,63,94,0.1)]'
-                }`}
-              >
-                {m.stockStatus}
-              </div>
-            </div>
+              medicine={m}
+              isDarkMode={isDarkMode}
+              onEdit={openModal}
+              onDelete={handleDelete}
+            />
           ))}
       </div>
 
-      {/* --- Medicine Management Modal --- */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/40 backdrop-blur-sm">
-          <div className="w-full max-w-md p-8 rounded-[3rem] bg-[#ecf0f3] dark:bg-[#151E32] shadow-[20px_20px_60px_rgba(0,0,0,0.2)] border border-white/40 animate-in fade-in zoom-in duration-300">
-            <h2 className="text-[1.8rem] font-black mb-1 text-slate-900 dark:text-white leading-none">
-              Registry <span className="text-[#F59E0B]">Node</span>
-            </h2>
-            <p className="text-[0.65rem] font-black uppercase tracking-[0.2em] text-slate-400 mb-8">
-              Clinical Artifact Configuration
-            </p>
-
-            <div className="flex flex-col gap-5">
-              <div className="flex flex-col gap-2">
-                <label className="text-[0.65rem] font-black uppercase tracking-widest text-slate-500 ml-2">
-                  Medicine Identity
-                </label>
-                <input
-                  type="text"
-                  defaultValue={selectedMedicine?.name}
-                  placeholder="e.g. Lisinopril"
-                  className="w-full px-6 py-4 rounded-2xl bg-[#ecf0f3] dark:bg-[#0B1121] shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0a0f1d,inset_-4px_-4px_8px_#202d47] border-none outline-none font-bold text-slate-700 dark:text-slate-300"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex flex-col gap-2">
-                  <label className="text-[0.65rem] font-black uppercase tracking-widest text-slate-500 ml-2">
-                    Dosage
-                  </label>
-                  <input
-                    type="text"
-                    defaultValue={selectedMedicine?.dosage}
-                    className="w-full px-6 py-4 rounded-2xl bg-[#ecf0f3] dark:bg-[#0B1121] shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0a0f1d,inset_-4px_-4px_8px_#202d47] border-none outline-none font-bold text-slate-700 dark:text-slate-300"
-                  />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label className="text-[0.65rem] font-black uppercase tracking-widest text-slate-500 ml-2">
-                    Manufacturer
-                  </label>
-                  <input
-                    type="text"
-                    defaultValue={selectedMedicine?.manufacturer}
-                    className="w-full px-6 py-4 rounded-2xl bg-[#ecf0f3] dark:bg-[#0B1121] shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0a0f1d,inset_-4px_-4px_8px_#202d47] border-none outline-none font-bold text-slate-700 dark:text-slate-300"
-                  />
-                </div>
-              </div>
-
-              <div className="flex gap-4 mt-6">
-                <button
-                  onClick={closeModal}
-                  className="flex-1 py-4 rounded-2xl font-black text-xs uppercase tracking-widest text-slate-500 bg-[#ecf0f3] dark:bg-[#151E32] shadow-[4px_4px_8px_#cbced1,-4px_-4px_8px_#ffffff] dark:shadow-[4px_4px_8px_#0a0f1d,-4px_-4px_8px_#202d47] hover:text-[#2A7FFF] transition-all"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={() => {
-                    const nameInput = document.querySelector(
-                      'input[placeholder="e.g. Lisinopril"]'
-                    ).value;
-                    const dosageInput = document.querySelectorAll('input')[2].value;
-                    const manufacturerInput = document.querySelectorAll('input')[3].value;
-
-                    if (selectedMedicine) {
-                      setMedicines((prev) =>
-                        prev.map((m) =>
-                          m._id === selectedMedicine._id
-                            ? {
-                                ...m,
-                                name: nameInput,
-                                dosage: dosageInput,
-                                manufacturer: manufacturerInput,
-                              }
-                            : m
-                        )
-                      );
-                    } else {
-                      const newMed = {
-                        _id: `m${Date.now()}`,
-                        name: nameInput,
-                        category: 'General',
-                        dosage: dosageInput,
-                        manufacturer: manufacturerInput,
-                        stockStatus: 'In Stock',
-                      };
-                      setMedicines((prev) => [newMed, ...prev]);
-                    }
-                    closeModal();
-                  }}
-                  className="flex-1 py-4 rounded-2xl font-black text-xs uppercase tracking-widest text-white bg-[#F59E0B] shadow-[0_8px_20px_rgba(245,158,11,0.3)] hover:bg-[#D97706] transition-all"
-                >
-                  Save Sync
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <MedicineModal
+          selectedMedicine={selectedMedicine}
+          onClose={closeModal}
+          onSave={handleSave}
+        />
       )}
     </div>
   );

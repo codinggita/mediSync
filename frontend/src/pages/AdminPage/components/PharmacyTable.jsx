@@ -98,7 +98,7 @@ const PharmacyTable = () => {
         </table>
       </div>
 
-      {/* Pagination */}
+      {}
       <div className="flex items-center justify-between mt-4 pt-3 border-t border-gray-50">
         <p className="text-xs text-gray-400">
           Showing {page * PAGE_SIZE + 1}–{Math.min(page * PAGE_SIZE + PAGE_SIZE, total)} of {total}

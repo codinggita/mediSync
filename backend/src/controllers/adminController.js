@@ -1,15 +1,14 @@
 import User from '../models/User.js';
 import Medicine from '../models/Medicine.js';
-import Pharmacy from '../models/Pharmacy.js';
-import Price from '../models/Price.js';
 import Appointment from '../models/Appointment.js';
+import Pharmacy from '../models/Pharmacy.js';
 import logger from '../utils/logger.js';
 
-// ─────────────────────────────────────────────────────────────────────────────
-//  ADMIN CONTROLLER — Full authority over platform resources
-// ─────────────────────────────────────────────────────────────────────────────
 
-/** GET /api/admin/stats */
+
+
+
+
 export const getPlatformStats = async (req, res, next) => {
   try {
     const [
@@ -39,7 +38,7 @@ export const getPlatformStats = async (req, res, next) => {
       .sort({ createdAt: -1 })
       .limit(10);
 
-    // User growth data (last 6 months)
+    
     const sixMonthsAgo = new Date();
     sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 5);
     const userGrowth = await User.aggregate([
@@ -74,7 +73,7 @@ export const getPlatformStats = async (req, res, next) => {
   }
 };
 
-/** GET /api/admin/users */
+
 export const getAllUsers = async (req, res, next) => {
   try {
     const { role, page = 1, limit = 50, search } = req.query;
@@ -99,7 +98,7 @@ export const getAllUsers = async (req, res, next) => {
   }
 };
 
-/** GET /api/admin/users/:id */
+
 export const getUserById = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id).select('-password');
@@ -113,7 +112,7 @@ export const getUserById = async (req, res, next) => {
   }
 };
 
-/** PUT /api/admin/users/:id */
+
 export const updateUserByAdmin = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id);
@@ -142,7 +141,7 @@ export const updateUserByAdmin = async (req, res, next) => {
   }
 };
 
-/** POST /api/admin/doctors */
+
 export const addDoctorByAdmin = async (req, res, next) => {
   try {
     const {
@@ -166,7 +165,7 @@ export const addDoctorByAdmin = async (req, res, next) => {
     const doctor = await User.create({
       name,
       email,
-      password, // hashed by pre-save hook
+      password, 
       role: 'Doctor',
       specialty,
       hospital,
@@ -183,7 +182,7 @@ export const addDoctorByAdmin = async (req, res, next) => {
   }
 };
 
-/** PATCH /api/admin/users/:id/ban */
+
 export const toggleUserBan = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id);
@@ -210,7 +209,7 @@ export const toggleUserBan = async (req, res, next) => {
   }
 };
 
-/** DELETE /api/admin/users/:id */
+
 export const deleteUser = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id);
@@ -230,47 +229,5 @@ export const deleteUser = async (req, res, next) => {
   }
 };
 
-// ── PHARMACY MANAGEMENT ────────────────────────────────────────────────────────
 
-/** GET /api/admin/pharmacies */
-export const getAllPharmacies = async (req, res, next) => {
-  try {
-    const { status } = req.query;
-    const filter = status ? { verificationStatus: status } : {};
-    const pharmacies = await Pharmacy.find(filter).sort({ createdAt: -1 });
-    res.json(pharmacies);
-  } catch (error) {
-    next(error);
-  }
-};
 
-/** PATCH /api/admin/pharmacies/:id/verify */
-export const verifyPharmacy = async (req, res, next) => {
-  try {
-    const { action } = req.body; // 'Verified' or 'Rejected'
-    const pharmacy = await Pharmacy.findById(req.params.id);
-    if (!pharmacy) {
-      res.status(404);
-      throw new Error('Pharmacy not found');
-    }
-    pharmacy.verificationStatus = action;
-    await pharmacy.save();
-    res.json({ message: `Pharmacy ${action}`, pharmacy });
-  } catch (error) {
-    next(error);
-  }
-};
-
-/** DELETE /api/admin/pharmacies/:id */
-export const deletePharmacy = async (req, res, next) => {
-  try {
-    const pharmacy = await Pharmacy.findByIdAndDelete(req.params.id);
-    if (!pharmacy) {
-      res.status(404);
-      throw new Error('Pharmacy not found');
-    }
-    res.json({ message: 'Pharmacy deleted' });
-  } catch (error) {
-    next(error);
-  }
-};

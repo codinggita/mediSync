@@ -35,7 +35,7 @@ export const addMedication = async (req, res) => {
     if (!prescription) {
       prescription = await Prescription.create({
         patient: req.user._id,
-        doctor: req.user._id, // Self-managed for now
+        doctor: req.user._id, 
         medicines: [],
       });
     }

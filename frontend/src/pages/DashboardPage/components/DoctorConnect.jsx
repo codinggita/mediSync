@@ -44,7 +44,7 @@ const DoctorConnect = () => {
       try {
         const { data } = await api.get('/users/doctors');
         if (Array.isArray(data) && data.length > 0) {
-          // If API succeeds, try to find our specific doctors first, or use the first 2
+          
           const kamlesh = data.find((d) => d.name.includes('Kamlesh')) || fallbackDoctors[0];
           const dhavnit = data.find((d) => d.name.includes('Dhavnit')) || fallbackDoctors[1];
           setDoctors([kamlesh, dhavnit]);
@@ -76,7 +76,7 @@ const DoctorConnect = () => {
 
   return (
     <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[32px] p-6 shadow-[8px_8px_16px_#cbced1,-8px_-8px_16px_#ffffff] dark:shadow-[8px_8px_16px_#0a0f1d,-8px_-8px_16px_#202d47] flex flex-col transition-all relative overflow-hidden group">
-      {/* Decorative Background Glow */}
+      {}
       <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-[#8B5CF6]/10 rounded-full blur-3xl group-hover:bg-[#8B5CF6]/20 transition-colors" />
 
       <div className="flex items-center justify-between mb-10 relative z-10">

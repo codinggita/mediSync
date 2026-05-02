@@ -6,16 +6,16 @@ import healthAbstractImg from '../../../assets/images/health_abstract.png';
 const WelcomeBanner = ({ user, stats, greeting, firstAidImg }) => {
   return (
     <div className="relative bg-gradient-to-br from-[#2A7FFF] via-[#1C71E1] to-[#1565C0] rounded-[2rem] sm:rounded-[40px] p-6 sm:p-10 mb-2 overflow-hidden shadow-[20px_20px_40px_rgba(42,127,255,0.15)] group">
-      {/* Animated Background Blobs */}
+      {}
       <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-white/10 rounded-full blur-[80px] animate-pulse" />
       <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-60 h-60 bg-blue-400/20 rounded-full blur-[60px] animate-bounce duration-[10s]" />
 
-      {/* Background Hero Image */}
+      {}
       <div className="absolute inset-0 opacity-20 pointer-events-none group-hover:scale-110 transition-transform duration-[10s]">
         <img src={medicalHeroImg} alt="Hero" className="w-full h-full object-cover" />
       </div>
 
-      {/* Floating Abstract Elements */}
+      {}
       <div className="absolute -right-20 -bottom-20 w-[400px] h-[400px] opacity-30 pointer-events-none animate-pulse">
         <img
           src={healthAbstractImg}

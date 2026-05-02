@@ -40,7 +40,7 @@ const LandingHero = () => {
           '-=0.6'
         );
 
-      // Continuous float animation for badges
+      
       gsap.to('.floating-badge', {
         y: -15,
         duration: 2.5,
@@ -59,7 +59,7 @@ const LandingHero = () => {
       ref={comp}
       className="pt-24 sm:pt-32 pb-12 sm:pb-20 px-6 sm:px-8 relative overflow-hidden bg-[#ecf0f3] dark:bg-[#090E1A]"
     >
-      {/* Dynamic Background Elements */}
+      {}
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#2A7FFF]/5 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#2ECC71]/5 rounded-full blur-[150px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
@@ -87,14 +87,20 @@ const LandingHero = () => {
               Start Protocol{' '}
               <ArrowRight className="group-hover:translate-x-2 transition-transform" />
             </Link>
-            <button className="w-full sm:w-auto px-10 sm:px-12 py-5 sm:py-7 nm-button text-slate-900 dark:text-white rounded-[2rem] sm:rounded-[2.5rem] font-black text-[0.9rem] sm:text-[1.1rem] uppercase tracking-[0.2em] hover:bg-white/40 transition-all">
+            <button 
+              onClick={() => {
+                const element = document.getElementById('platform');
+                if (element) element.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="w-full sm:w-auto px-10 sm:px-12 py-5 sm:py-7 nm-button text-slate-900 dark:text-white rounded-[2rem] sm:rounded-[2.5rem] font-black text-[0.9rem] sm:text-[1.1rem] uppercase tracking-[0.2em] hover:bg-white/40 transition-all"
+            >
               Watch Vision
             </button>
           </div>
         </div>
 
         <div className="hero-image-container w-full lg:w-1/2 relative group mt-12 lg:mt-0">
-          {/* Neumorphic Image Wrapper */}
+          {}
           <div className="relative p-6 sm:p-10 nm-flat rounded-[3rem] sm:rounded-[5rem] border border-white/40 dark:border-white/5 transition-transform duration-700 hover:scale-[1.02]">
             <div className="rounded-[2.5rem] sm:rounded-[4rem] overflow-hidden nm-inset p-3 sm:p-4 relative group">
               <img
@@ -105,7 +111,7 @@ const LandingHero = () => {
               <div className="absolute inset-0 bg-gradient-to-tr from-[#2A7FFF]/20 to-transparent z-20 pointer-events-none" />
             </div>
 
-            {/* Floating Tactical Badges - Hidden on very small screens to avoid clutter */}
+            {}
             <div className="hidden sm:block hero-badge floating-badge absolute -top-6 -right-6 p-6 nm-flat rounded-[2rem] border border-white/60 z-30">
               <Shield size={32} className="text-[#2ECC71]" />
             </div>

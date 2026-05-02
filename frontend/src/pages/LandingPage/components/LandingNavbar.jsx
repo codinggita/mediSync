@@ -20,19 +20,20 @@ const LandingNavbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 py-4 sm:py-6">
       <div className="max-w-7xl mx-auto flex items-center justify-between bg-white/40 dark:bg-black/20 backdrop-blur-2xl px-6 sm:px-10 py-3 sm:py-5 rounded-[2rem] sm:rounded-[2.5rem] border border-white/40 shadow-2xl transition-all hover:border-white/60">
-        <div
-          className="flex items-center gap-3 sm:gap-4 cursor-pointer hover:opacity-80 transition-opacity shrink-0"
+        <button
+          className="flex items-center gap-3 sm:gap-4 cursor-pointer hover:opacity-80 transition-opacity shrink-0 border-none bg-transparent focus:outline-none focus:ring-2 focus:ring-[#2A7FFF]/40 rounded-xl"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          aria-label="Back to top"
         >
           <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white dark:bg-[#151E32] rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg p-1 sm:p-1.5">
-            <img src={logoImg} alt="MediSync" className="w-full h-full object-contain" />
+            <img src={logoImg} alt="MediSync Logo" className="w-full h-full object-contain" />
           </div>
           <span className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tighter">
             Medi<span className="text-[#2A7FFF]">Sync</span>
           </span>
-        </div>
+        </button>
 
-        {/* Desktop Nav */}
+
         <div className="hidden lg:flex items-center gap-8 xl:gap-10">
           {['Platform', 'Solutions', 'Security', 'Enterprise'].map((item) => (
             <a
@@ -70,7 +71,7 @@ const LandingNavbar = () => {
             </Link>
           </div>
 
-          {/* Mobile Menu Toggle */}
+
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="lg:hidden w-10 h-10 rounded-lg nm-button flex items-center justify-center text-slate-600 dark:text-slate-400"
@@ -80,7 +81,7 @@ const LandingNavbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
+
       {isMobileMenuOpen && (
         <div className="fixed inset-0 top-0 left-0 w-full h-screen bg-[#ecf0f3]/95 dark:bg-[#090E1A]/95 backdrop-blur-xl z-[60] lg:hidden animate-in fade-in duration-300 p-8 pt-32">
           <button

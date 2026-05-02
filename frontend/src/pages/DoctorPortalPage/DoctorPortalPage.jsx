@@ -19,7 +19,7 @@ const DoctorPortalPage = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [appointments, setAppointments] = useState([]);
 
-  // New Modals State
+  
   const [showAiModal, setShowAiModal] = useState(false);
   const [showPrescriptionModal, setShowPrescriptionModal] = useState(false);
   const [showRadiologyModal, setShowRadiologyModal] = useState(false);
@@ -58,6 +58,10 @@ const DoctorPortalPage = () => {
             bloodGroup: 'O+',
             dateOfBirth: '1985-06-15T00:00:00.000Z',
             patientId: 'MS-891-W',
+            records: [
+              { title: 'Lab Report — HbA1c Test', type: 'Lab Report', description: 'HbA1c level at 7.8%. Indicates poor glycemic control over past 3 months.', createdAt: new Date(Date.now() - 3600000 * 24 * 5).toISOString() },
+              { title: 'Clinical Consultation', type: 'Clinical Note', description: 'Patient presented with dizziness and elevated BP (148/94). Adjusted antihypertensive dosage.', createdAt: new Date(Date.now() - 3600000 * 24 * 12).toISOString() }
+            ]
           });
           uniquePatients.push({
             _id: 'dummy2',
@@ -66,6 +70,9 @@ const DoctorPortalPage = () => {
             bloodGroup: 'A-',
             dateOfBirth: '1992-11-20T00:00:00.000Z',
             patientId: 'MS-922-R',
+            records: [
+              { title: 'ECG Report', type: 'Imaging', description: 'Sinus rhythm. No significant ST-segment changes. Left ventricular hypertrophy noted.', createdAt: new Date(Date.now() - 3600000 * 24 * 2).toISOString() }
+            ]
           });
         }
 

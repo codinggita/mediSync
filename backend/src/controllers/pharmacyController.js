@@ -1,8 +1,8 @@
 import Pharmacy from '../models/Pharmacy.js';
 
-// @desc    Register a new pharmacy
-// @route   POST /api/pharmacy/register
-// @access  Private (Logged-in User)
+
+
+
 const registerPharmacy = async (req, res, next) => {
   try {
     const { name, ownerName, email, phone, location, licenseNumber, document } = req.body;
@@ -38,9 +38,9 @@ const registerPharmacy = async (req, res, next) => {
   }
 };
 
-// @desc    Get all verified pharmacies
-// @route   GET /api/pharmacy/verified
-// @access  Public
+
+
+
 const getVerifiedPharmacies = async (req, res, next) => {
   try {
     const pharmacies = await Pharmacy.find({ verificationStatus: 'Verified' }).sort({
@@ -52,9 +52,9 @@ const getVerifiedPharmacies = async (req, res, next) => {
   }
 };
 
-// @desc    Get all pending pharmacy requests
-// @route   GET /api/pharmacy/pending
-// @access  Private/Admin
+
+
+
 const getPendingPharmacies = async (req, res, next) => {
   try {
     const pharmacies = await Pharmacy.find({ verificationStatus: 'Pending' })
@@ -66,9 +66,9 @@ const getPendingPharmacies = async (req, res, next) => {
   }
 };
 
-// @desc    Update pharmacy status (Verify/Reject)
-// @route   PATCH /api/pharmacy/:id/status
-// @access  Private/Admin
+
+
+
 const updatePharmacyStatus = async (req, res, next) => {
   try {
     const { status } = req.body;

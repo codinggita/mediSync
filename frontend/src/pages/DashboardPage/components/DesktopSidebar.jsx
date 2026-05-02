@@ -15,7 +15,7 @@ const DesktopSidebar = ({
     <div
       className={`hidden md:flex relative flex-col h-screen bg-[#ecf0f3] dark:bg-[#121826] border-none shadow-[8px_0_16px_#cbced1,-8px_0_16px_#ffffff] dark:shadow-[8px_0_16px_#0a0f1d,-8px_0_16px_#1a2133] transition-all duration-300 z-[60] shrink-0 ${collapsed ? 'w-[80px]' : 'w-[260px]'}`}
     >
-      {/* Logo Header */}
+      {}
       <div
         className={`flex items-center h-[70px] border-b border-[#cbced1] dark:border-slate-800/60 ${collapsed ? 'justify-center px-0' : 'px-5 gap-3'}`}
       >
@@ -40,7 +40,7 @@ const DesktopSidebar = ({
         </button>
       </div>
 
-      {/* User Profile Area */}
+      {}
       <div className={`mt-5 mb-2 mx-3 ${collapsed ? 'hidden' : 'block'}`}>
         <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[1.2rem] p-3.5 flex items-center gap-3 transition-all shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0a0f1d,inset_-4px_-4px_8px_#202d47]">
           {user?.profilePic ? (
@@ -83,7 +83,7 @@ const DesktopSidebar = ({
         </p>
       )}
 
-      {/* Navigation List */}
+      {}
       <div className="flex-1 overflow-y-auto overflow-x-hidden px-3 scrollbar-hide">
         <div className="flex flex-col gap-1">
           {filteredNavItems.map(({ label, icon: Icon, path, badge }) => {

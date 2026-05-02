@@ -8,14 +8,14 @@ const TimelineNode = ({ rec, isSelected, isLast, onSelect, Icon, color }) => {
 
   return (
     <div className="flex gap-4 group cursor-pointer relative" onClick={() => onSelect(rec._id)}>
-      {/* Spine Connector */}
+      {}
       {!isLast && (
         <div
           className={`absolute left-5 top-10 bottom-0 w-[2px] ${isSelected ? 'bg-gradient-to-b from-[#2A7FFF] to-transparent' : 'bg-slate-200 dark:bg-slate-800'} transition-colors duration-500`}
         />
       )}
 
-      {/* Node Icon */}
+      {}
       <div className="flex flex-col items-center shrink-0 z-10">
         <div
           className={`w-10 h-10 rounded-2xl flex items-center justify-center transition-all duration-500 ${
@@ -35,7 +35,7 @@ const TimelineNode = ({ rec, isSelected, isLast, onSelect, Icon, color }) => {
         </div>
       </div>
 
-      {/* Card Content */}
+      {}
       <div
         className={`flex-1 min-w-0 mb-6 p-4 rounded-[1.8rem] transition-all duration-500 border ${
           isSelected

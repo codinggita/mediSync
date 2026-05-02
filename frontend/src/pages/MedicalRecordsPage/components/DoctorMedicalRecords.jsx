@@ -49,7 +49,6 @@ const DoctorMedicalRecords = () => {
 
         let groupedPatients = Object.values(patientMap);
 
-        // Inject Premium Mock Data if DB is empty so the user can test the search!
         if (groupedPatients.length === 0) {
           groupedPatients = [
             {
@@ -57,17 +56,23 @@ const DoctorMedicalRecords = () => {
               name: 'James Wilson',
               patientId: 'MS-891-W',
               gender: 'Male',
-              age: '40',
+              age: 42,
               conditions: ['Hypertension', 'Type 2 Diabetes'],
-              lastUpdate: new Date().toLocaleDateString(),
+              lastUpdate: 'Today, 09:30 AM',
               records: [
                 {
-                  id: 'rec_1',
-                  date: 'Oct 12, 2023',
-                  type: 'Imaging',
-                  title: 'Cardiac MRI Scan',
-                  description: 'Detailed MRI of the heart looking for arterial blockages.',
-                  hospital: 'City General Hospital',
+                  id: 'r1',
+                  date: 'Today',
+                  type: 'Lab Report',
+                  title: 'HbA1c & Lipid Panel',
+                  hospital: 'City General',
+                },
+                {
+                  id: 'r2',
+                  date: '15 Mar 2026',
+                  type: 'Clinical Note',
+                  title: 'Cardiology Follow-up',
+                  hospital: 'HeartCare Clinic',
                 },
               ],
             },
@@ -76,16 +81,15 @@ const DoctorMedicalRecords = () => {
               name: 'Sarah Connor',
               patientId: 'MS-442-C',
               gender: 'Female',
-              age: '32',
+              age: 34,
               conditions: ['Asthma'],
-              lastUpdate: new Date().toLocaleDateString(),
+              lastUpdate: 'Yesterday',
               records: [
                 {
-                  id: 'rec_2',
-                  date: 'Nov 05, 2023',
-                  type: 'Lab Result',
-                  title: 'Complete Blood Count',
-                  description: 'Routine CBC test showing slight elevation in WBC.',
+                  id: 'r3',
+                  date: 'Yesterday',
+                  type: 'Imaging',
+                  title: 'Chest X-Ray (PA View)',
                   hospital: 'MediSync Central',
                 },
               ],
@@ -109,12 +113,12 @@ const DoctorMedicalRecords = () => {
     const lowerQuery = searchQuery.toLowerCase().trim();
 
     return patients.filter((p) => {
-      // Check core patient data
+      
       const matchName = p.name?.toLowerCase().includes(lowerQuery);
       const matchId = p.patientId?.toLowerCase().includes(lowerQuery);
       const matchCondition = p.conditions?.some((c) => c.toLowerCase().includes(lowerQuery));
 
-      // Check if any of their records match the query (title, type, hospital)
+      
       const matchRecord = p.records?.some(
         (r) =>
           r.title?.toLowerCase().includes(lowerQuery) ||
@@ -126,7 +130,7 @@ const DoctorMedicalRecords = () => {
     });
   }, [patients, searchQuery]);
 
-  // Ensure active patient stays valid or defaults to first in filtered list
+  
   useEffect(() => {
     if (filteredPatients.length > 0) {
       if (!filteredPatients.find((p) => p.id === selectedPatientId)) {
@@ -141,7 +145,7 @@ const DoctorMedicalRecords = () => {
 
   return (
     <main className="flex-1 overflow-y-auto bg-[#ecf0f3] dark:bg-[#0B1121] px-6 lg:px-8 py-6 flex flex-col gap-8 pb-24 md:pb-6 scrollbar-hide">
-      {/* Header Section */}
+      {}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 p-8 bg-[#ecf0f3] dark:bg-[#151E32] rounded-[3rem] shadow-[20px_20px_40px_#cbced1,-20px_-20px_40px_#ffffff] dark:shadow-[20px_20px_40px_#0a0f1d,-20px_-20px_40px_#202d47] border border-white/40 dark:border-white/5 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-[#2A7FFF]/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -176,12 +180,17 @@ const DoctorMedicalRecords = () => {
               className="pl-14 pr-10 py-4 bg-[#ecf0f3] dark:bg-[#0B1121] border-none rounded-2xl text-[0.85rem] text-slate-800 dark:text-white w-full sm:w-96 outline-none shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0a0f1d,inset_-4px_-4px_8px_#202d47] focus:ring-2 focus:ring-[#2A7FFF]/30 transition-all font-medium"
             />
             {searchQuery && (
-              <button
-                onClick={() => setSearchQuery('')}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-red-500 transition-colors"
-              >
-                <X size={16} />
-              </button>
+              <div className="absolute right-10 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                <div className="text-[0.6rem] font-bold text-slate-400 bg-slate-200 dark:bg-slate-700 px-1.5 py-0.5 rounded shadow-sm pointer-events-none">
+                  ENTER
+                </div>
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="text-slate-400 hover:text-red-500 transition-colors"
+                >
+                  <X size={16} />
+                </button>
+              </div>
             )}
           </div>
           <button className="w-14 h-14 shrink-0 rounded-2xl bg-[#ecf0f3] dark:bg-[#151E32] flex items-center justify-center shadow-[8px_8px_16px_#cbced1,-8px_-8px_16px_#ffffff] dark:shadow-[8px_8px_16px_#0a0f1d,-8px_-8px_16px_#202d47] text-slate-500 hover:text-[#2A7FFF] active:shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff] dark:active:shadow-[inset_4px_4px_8px_#0a0f1d,inset_-4px_-4px_8px_#202d47] transition-all border border-white/40 dark:border-white/5">
@@ -218,10 +227,16 @@ const DoctorMedicalRecords = () => {
           <h2 className="text-[1.8rem] font-black text-slate-900 dark:text-white mb-2 tracking-tight">
             No Matching Patients
           </h2>
-          <p className="text-slate-500 font-bold text-[0.9rem] max-w-md text-center">
+          <p className="text-slate-500 font-bold text-[0.9rem] max-w-md text-center mb-8">
             We couldn't find any patients matching "{searchQuery}". Try adjusting your search
             criteria.
           </p>
+          <button
+            onClick={() => setSearchQuery('')}
+            className="px-8 py-3 rounded-2xl bg-[#ecf0f3] dark:bg-[#151E32] text-[#2A7FFF] font-black uppercase tracking-widest text-[0.8rem] shadow-[8px_8px_16px_#cbced1,-8px_-8px_16px_#ffffff] dark:shadow-[8px_8px_16px_#0a0f1d,-8px_-8px_16px_#202d47] active:shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff] dark:active:shadow-[inset_4px_4px_8px_#0a0f1d,inset_-4px_-4px_8px_#202d47] transition-all border border-white/40 dark:border-white/5"
+          >
+            Clear Search
+          </button>
         </div>
       ) : (
         <div className="flex flex-col lg:flex-row gap-8 pb-4 h-[calc(100vh-280px)] min-h-[500px]">

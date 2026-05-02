@@ -44,7 +44,7 @@ const CreateShareLink = () => {
       </div>
 
       <div className="flex flex-col gap-3">
-        {/* Email */}
+        {}
         <div>
           <label className="text-[0.72rem] font-bold text-gray-500 dark:text-slate-400 mb-1.5 flex items-center gap-1.5">
             <Mail size={12} /> Recipient Email
@@ -58,7 +58,7 @@ const CreateShareLink = () => {
           />
         </div>
 
-        {/* Record Selection */}
+        {}
         <div>
           <label className="text-[0.72rem] font-bold text-gray-500 dark:text-slate-400 mb-1.5 flex items-center gap-1.5">
             <FileText size={12} /> Select Record
@@ -80,7 +80,7 @@ const CreateShareLink = () => {
           </div>
         </div>
 
-        {/* Duration */}
+        {}
         <div>
           <label className="text-[0.72rem] font-bold text-gray-500 dark:text-slate-400 mb-1.5 flex items-center gap-1.5">
             <Clock size={12} /> Access Duration
@@ -102,7 +102,7 @@ const CreateShareLink = () => {
           </div>
         </div>
 
-        {/* PIN Toggle */}
+        {}
         <div className="flex items-center justify-between p-3.5 rounded-xl border border-gray-100 dark:border-slate-700/50 bg-[#F8FAFC] dark:bg-[#0B1121]">
           <div className="flex items-center gap-2">
             <KeyRound size={14} className="text-[#8B5CF6]" />
@@ -123,7 +123,7 @@ const CreateShareLink = () => {
           </button>
         </div>
 
-        {/* Generated Link Preview */}
+        {}
         {generated && link && (
           <div className="flex items-center gap-2 p-3 rounded-xl border border-[#2ECC71]/30 bg-[#2ECC71]/8 animate-pulse">
             <Link2 size={14} className="text-[#2ECC71] shrink-0" />
@@ -131,7 +131,7 @@ const CreateShareLink = () => {
           </div>
         )}
 
-        {/* Generate Button */}
+        {}
         <button
           onClick={handleGenerate}
           className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-[#2A7FFF] hover:bg-[#1565C0] text-white text-[0.85rem] font-bold transition-all hover:shadow-lg hover:shadow-[#2A7FFF]/30 hover:-translate-y-0.5 active:scale-[0.98]"

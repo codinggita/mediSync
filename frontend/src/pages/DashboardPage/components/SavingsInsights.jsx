@@ -6,7 +6,7 @@ const SavingsInsights = () => {
   const { stats, loading } = useDashboardStats();
   const hasData = stats.medicines > 0;
 
-  // Calculate dynamic data based on clinical averages if user has no data yet
+  
   const displaySavings = hasData ? stats.medicines * 420 + 240 : 1240;
   const displayPercentage = hasData ? stats.medicines * 4 : 12;
   const displayAvoidance = hasData ? stats.medicines * 310 : 860;

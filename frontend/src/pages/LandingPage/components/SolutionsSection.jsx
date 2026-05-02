@@ -70,7 +70,7 @@ const SolutionsSection = () => {
                 className="relative nm-flat p-12 md:p-16 rounded-[4rem] border border-white/60 dark:border-white/5 transition-all duration-300 transform-gpu overflow-hidden inner-card"
                 style={{ transformStyle: 'preserve-3d' }}
               >
-                {/* Decorative inner light */}
+                {}
                 <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
 
                 <div

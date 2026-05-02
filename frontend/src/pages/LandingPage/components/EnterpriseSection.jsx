@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ENTERPRISE_STATS = [
   { label: 'Uptime', val: '99.99%' },
@@ -8,6 +9,7 @@ const ENTERPRISE_STATS = [
 ];
 
 const EnterpriseSection = () => {
+  const navigate = useNavigate();
   return (
     <section id="enterprise" className="py-10 px-8 text-center relative overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-transparent via-[#2A7FFF]/5 to-transparent pointer-events-none" />
@@ -24,15 +26,21 @@ const EnterpriseSection = () => {
           of enterprise-level clinical operations.
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-8 mb-32">
-          <button className="px-16 py-8 bg-[#2A7FFF] text-white rounded-[2.5rem] font-black text-[1.2rem] uppercase tracking-[0.2em] shadow-[0_30px_60px_rgba(42,127,255,0.4)] nm-button hover:bg-[#1C71E1] hover:-translate-y-2 active:scale-95 transition-all">
+          <button 
+            onClick={() => navigate('/signup')}
+            className="px-16 py-8 bg-[#2A7FFF] text-white rounded-[2.5rem] font-black text-[1.2rem] uppercase tracking-[0.2em] shadow-[0_30px_60px_rgba(42,127,255,0.4)] nm-button hover:bg-[#1C71E1] hover:-translate-y-2 active:scale-95 transition-all"
+          >
             Request Demo
           </button>
-          <button className="px-16 py-8 bg-[#ecf0f3] dark:bg-white/5 text-slate-900 dark:text-white rounded-[2.5rem] font-black text-[1.2rem] uppercase tracking-[0.2em] border border-slate-200 dark:border-white/10 nm-button hover:bg-slate-50 transition-all">
+          <button 
+            onClick={() => window.open('https://github.com/priyabratasahoo780/mediSync', '_blank')}
+            className="px-16 py-8 bg-[#ecf0f3] dark:bg-white/5 text-slate-900 dark:text-white rounded-[2.5rem] font-black text-[1.2rem] uppercase tracking-[0.2em] border border-slate-200 dark:border-white/10 nm-button hover:bg-slate-50 transition-all"
+          >
             Read Whitepaper
           </button>
         </div>
 
-        {/* 📊 Global Stats Bar - NEUMORPHIC UPGRADE */}
+        {}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-12 p-12 rounded-[3rem] nm-inset border border-white/20 dark:border-white/5">
           {ENTERPRISE_STATS.map((s) => (
             <div key={s.label}>

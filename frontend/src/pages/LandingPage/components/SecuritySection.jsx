@@ -8,7 +8,7 @@ const SecuritySection = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-[#2A7FFF] to-[#2ECC71] rounded-[6rem] blur-[80px] opacity-10 group-hover:opacity-20 transition-opacity duration-1000" />
 
         <div className="security-inner relative bg-[#1F2937] dark:bg-[#151E32] rounded-[3rem] p-10 md:p-12 overflow-hidden border border-white/5 shadow-2xl">
-          {/* Cyber Grid Pattern */}
+          {}
           <div
             className="absolute inset-0 opacity-[0.03] pointer-events-none"
             style={{

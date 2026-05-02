@@ -4,7 +4,7 @@ import { Zap, Activity, Plus } from 'lucide-react';
 const PlatformSection = () => {
   return (
     <section id="platform" className="py-6 px-8 relative overflow-hidden">
-      {/* Decorative background blur */}
+      {}
       <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-[#2ECC71]/10 rounded-full blur-[120px] -translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto">
@@ -58,10 +58,10 @@ const PlatformSection = () => {
           </div>
 
           <div className="lg:w-[55%] relative">
-            {/* 🖥️ Advanced Dashboard Mockup - NEUMORPHIC UPGRADE */}
+            {}
             <div className="relative z-10 p-8 bg-[#ecf0f3] dark:bg-[#151E32] rounded-[4rem] nm-flat border border-white/20 dark:border-white/5 shadow-2xl">
               <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[3rem] overflow-hidden nm-inset p-8">
-                {/* Mock UI Header */}
+                {}
                 <div className="flex items-center justify-between mb-10">
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 rounded-2xl bg-[#2A7FFF] nm-button flex items-center justify-center text-white shadow-lg">
@@ -81,7 +81,7 @@ const PlatformSection = () => {
                   </div>
                 </div>
 
-                {/* Mock UI Grid */}
+                {}
                 <div className="grid grid-cols-2 gap-6 mb-10">
                   <div className="p-6 rounded-3xl nm-flat">
                     <p className="text-[0.55rem] font-black text-slate-400 uppercase tracking-widest mb-4">
@@ -115,7 +115,7 @@ const PlatformSection = () => {
                   </div>
                 </div>
 
-                {/* Mock UI Bottom */}
+                {}
                 <div className="p-6 rounded-3xl nm-flat">
                   <div className="flex items-center justify-between mb-4">
                     <h5 className="text-[0.7rem] font-black text-slate-900 dark:text-white uppercase tracking-widest">
@@ -147,7 +147,7 @@ const PlatformSection = () => {
               </div>
             </div>
 
-            {/* Floating Decorations */}
+            {}
             <div className="absolute -top-12 -left-12 w-32 h-32 bg-[#2A7FFF] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" />
             <div className="absolute -bottom-12 -right-12 w-48 h-48 bg-[#2ECC71] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" />
           </div>

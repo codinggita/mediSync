@@ -38,7 +38,7 @@ const RecordsTimeline = ({ records, selectedId, onSelect }) => {
     <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[2.5rem] p-7 shadow-[8px_8px_16px_#cbced1,-8px_-8px_16px_#ffffff] dark:shadow-[8px_8px_16px_#0a0f1d,-8px_-8px_16px_#202d47] h-full flex flex-col transition-all duration-500">
       <TimelineHeader count={records.length} />
 
-      {/* Timeline */}
+      {}
       <div className="flex flex-col relative flex-1 space-y-2 overflow-y-auto pr-2 scrollbar-hide">
         {records.length > 0 ? (
           records.map((rec, i) => (

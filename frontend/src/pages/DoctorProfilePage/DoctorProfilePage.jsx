@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Sidebar from '../DashboardPage/components/Sidebar';
 import TopBar from '../DashboardPage/components/TopBar';
@@ -10,6 +10,7 @@ import DoctorLocationCard from './components/DoctorLocationCard';
 import DoctorProfileHero from './components/DoctorProfileHero';
 
 const DoctorProfilePage = () => {
+  const [collapsed, setCollapsed] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -58,7 +59,7 @@ const DoctorProfilePage = () => {
 
   return (
     <div className="flex h-screen bg-[#F0F4F8] dark:bg-[#0B1121] transition-colors duration-300 overflow-hidden font-sans">
-      <Sidebar />
+      <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <TopBar />
         <main className="flex-1 overflow-y-auto p-8 lg:p-12 scrollbar-hide pb-24 md:pb-6">

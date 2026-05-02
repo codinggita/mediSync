@@ -50,7 +50,7 @@ const DeepDiveSection = () => {
       id="deep-dive"
       className="min-h-screen w-full relative bg-[#ecf0f3] dark:bg-black/20 overflow-hidden flex flex-col justify-center py-20"
     >
-      {/* Background Parallax Elements */}
+      {}
       <div className="absolute inset-0 pointer-events-none z-0">
         <span className="absolute top-[35%] left-[-5%] text-[18rem] font-black text-slate-900/5 dark:text-white/5 uppercase tracking-tighter select-none parallax-bg-text">
           Neural
@@ -63,7 +63,7 @@ const DeepDiveSection = () => {
       </div>
 
       <div className="relative w-full z-10 flex flex-col justify-center">
-        {/* Scroll Progress Bar */}
+        {}
         <div className="absolute top-[-5rem] left-0 w-full h-1 bg-slate-200 dark:bg-white/5 z-50">
           <div className="h-full bg-gradient-to-r from-[#2A7FFF] to-[#2ECC71] w-0 horizontal-progress-bar shadow-[0_0_10px_#2A7FFF]" />
         </div>
@@ -137,7 +137,7 @@ const DeepDiveSection = () => {
           ))}
         </div>
 
-        {/* 📊 Bottom Clinical Status Bar */}
+        {}
         <div className="absolute bottom-0 left-0 w-full bg-white/40 dark:bg-[#0B1121]/80 backdrop-blur-2xl border-t border-white/60 dark:border-white/10 py-6">
           <div className="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex gap-8 md:gap-16">

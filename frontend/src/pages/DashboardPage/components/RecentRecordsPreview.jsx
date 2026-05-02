@@ -39,11 +39,33 @@ const RecentRecordsPreview = (props) => {
     const fetchRecords = async () => {
       try {
         const { data } = await api.get('/records');
-        if (Array.isArray(data)) {
-          setRecords(data.slice(0, 3)); // show only top 3
+        let finalRecords = Array.isArray(data) ? data : [];
+
+        
+        if (finalRecords.length === 0) {
+          finalRecords = [
+            {
+              _id: 'sample-rec-1',
+              title: 'Cardiology Assessment',
+              hospital: 'Apollo Heart Center',
+              createdAt: new Date(Date.now() - 86400000 * 2).toISOString(),
+              type: 'Diagnostic',
+              fileUrl: '', 
+            },
+            {
+              _id: 'sample-rec-2',
+              title: 'Lipid Profile Analysis',
+              hospital: 'MediSync Diagnostic Lab',
+              createdAt: new Date(Date.now() - 86400000 * 5).toISOString(),
+              type: 'Diagnostic',
+              fileUrl: '', 
+            },
+          ];
         }
+        setRecords(finalRecords.slice(0, 3));
       } catch (err) {
         console.error('Failed to fetch records', err);
+        setRecords([]);
       } finally {
         setLoading(false);
       }
@@ -57,8 +79,8 @@ const RecentRecordsPreview = (props) => {
 
     setIsUploading(true);
     try {
-      // For the clinical demo, we'll convert the local file to a Data URL (base64)
-      // so it can be viewed immediately in the overlay without a complex S3 backend setup
+      
+      
       const reader = new FileReader();
       reader.onloadend = async () => {
         const base64data = reader.result;
@@ -73,7 +95,7 @@ const RecentRecordsPreview = (props) => {
         await api.post('/records', payload);
         setUploadSuccess(true);
 
-        // Refresh local list and global stats
+        
         const { data } = await api.get('/records');
         if (Array.isArray(data)) setRecords(data.slice(0, 3));
         if (props.onRefresh) props.onRefresh();

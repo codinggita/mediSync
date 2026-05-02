@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, useContext, useCallback, useMemo } from 'react';
 import api from '../utils/api';
+import storage from '../utils/storage';
 
 const AuthContext = createContext(null);
 
@@ -15,23 +16,22 @@ export const AuthProvider = ({ children }) => {
 
   const logout = useCallback(() => {
     setUser(null);
-    localStorage.removeItem('mediSync_user');
-    localStorage.removeItem('mediSync_onboarding_done');
+    storage.clearAll();
   }, []);
 
   const refreshUser = useCallback(async () => {
     try {
-      const stored = localStorage.getItem('mediSync_user');
+      const stored = storage.getLocal('mediSync_user');
       if (!stored) return;
 
-      const { token } = JSON.parse(stored);
+      const { token } = stored;
       if (!token) return;
 
       const { data } = await api.get('/auth/me');
       if (data) {
         const updatedUser = { ...data, token: data.token || token };
         setUser(updatedUser);
-        localStorage.setItem('mediSync_user', JSON.stringify(updatedUser));
+        storage.setLocal('mediSync_user', updatedUser);
       }
     } catch (err) {
       if (err.response?.status === 401) logout();
@@ -40,36 +40,34 @@ export const AuthProvider = ({ children }) => {
 
   const login = useCallback((userData) => {
     setUser(userData);
-    localStorage.setItem('mediSync_user', JSON.stringify(userData));
+    storage.setLocal('mediSync_user', userData);
   }, []);
 
   const signup = useCallback((userData) => {
-    localStorage.setItem('mediSync_user', JSON.stringify(userData));
+    storage.setLocal('mediSync_user', userData);
     setUser(userData);
-    localStorage.removeItem('mediSync_onboarding_done');
+    storage.removeLocal('mediSync_onboarding_done');
     refreshUser();
   }, [refreshUser]);
 
   useEffect(() => {
     const initAuth = async () => {
-      const stored = localStorage.getItem('mediSync_user');
+      const stored = storage.getLocal('mediSync_user');
       if (stored) {
         try {
-          const parsed = JSON.parse(stored);
-          if (parsed?.token) {
-            // Set user immediately for UI responsiveness
-            setUser(parsed);
-            // 🛡️ Silent Background Refresh: Don't show errors if this fails
+          if (stored?.token) {
+            setUser(stored);
+
             try {
               const { data } = await api.get('/auth/me');
               if (data) {
-                const updatedUser = { ...data, token: data.token || parsed.token };
+                const updatedUser = { ...data, token: data.token || stored.token };
                 setUser(updatedUser);
-                localStorage.setItem('mediSync_user', JSON.stringify(updatedUser));
+                storage.setLocal('mediSync_user', updatedUser);
               }
             } catch (refreshErr) {
               console.warn('📡 [AUTH SYNC]: Background refresh failed, keeping local session.');
-              // Only logout if the server explicitly says 401
+
               if (refreshErr.response?.status === 401) logout();
             }
           }
@@ -83,7 +81,7 @@ export const AuthProvider = ({ children }) => {
 
     initAuth();
 
-    // ── Multi-Tab Logout Sync ──
+
     const handleStorageChange = (e) => {
       if (e.key === 'mediSync_user' && !e.newValue) {
         logout();

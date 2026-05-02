@@ -15,12 +15,12 @@ const SEO = ({
 
   return (
     <Helmet>
-      {/* Standard metadata tags */}
+      {}
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
       <link rel="canonical" href={url} />
 
-      {/* Open Graph / Facebook tags */}
+      {}
       <meta property="og:type" content={type} />
       <meta property="og:url" content={url} />
       <meta property="og:title" content={fullTitle} />
@@ -28,14 +28,14 @@ const SEO = ({
       <meta property="og:image" content={image} />
       <meta property="og:site_name" content={name} />
 
-      {/* Twitter tags */}
+      {}
       <meta name="twitter:creator" content="@medisync_core" />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />
 
-      {/* Meta Labels */}
+      {}
       <meta name="apple-mobile-web-app-title" content={name} />
       <meta name="application-name" content={name} />
       <meta name="msapplication-TileColor" content="#2A7FFF" />

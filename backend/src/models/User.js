@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Please add a password'],
       minlength: 6,
-      select: false, // Don't return password by default
+      select: false, 
     },
     role: {
       type: String,
@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema(
     profilePic: {
       type: String,
     },
-    // Doctor Specific Fields
+    
     specialty: {
       type: String,
       required: function () {
@@ -63,7 +63,7 @@ const userSchema = new mongoose.Schema(
     licenseCertificateUrl: {
       type: String,
     },
-    // Patient Specific Fields
+    
     patientId: {
       type: String,
       unique: true,
@@ -79,7 +79,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ['Male', 'Female', 'Other'],
     },
-    // Vitals tracking
+    
     vitals: {
       heartRate: { value: Number, unit: { type: String, default: 'bpm' } },
       bloodPressure: { value: String, unit: { type: String, default: 'mmHg' } },
@@ -107,7 +107,7 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-// Encrypt password using bcrypt
+
 userSchema.pre('save', async function () {
   if (!this.isModified('password')) {
     return;
@@ -116,7 +116,7 @@ userSchema.pre('save', async function () {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-// Match user entered password to hashed password in database
+
 userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };

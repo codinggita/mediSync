@@ -21,11 +21,11 @@ const appointmentSchema = new mongoose.Schema(
       required: true,
     },
     date: {
-      type: String, // e.g. "Today", "Tomorrow", or ISO string
+      type: String, 
       required: true,
     },
     time: {
-      type: String, // e.g. "10:00 AM - 10:30 AM"
+      type: String, 
       required: true,
     },
     type: {

@@ -23,7 +23,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Check both state and query params for sync failure
+  
   const queryParams = new URLSearchParams(location.search);
   const isSyncFailure =
     location.state?.reason === 'session_missing' || queryParams.get('reason') === 'session_missing';

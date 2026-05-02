@@ -21,7 +21,7 @@ export const useDashboardStats = () => {
         medicines: medicinesCount,
         records: Array.isArray(recordRes?.data) ? recordRes.data.length : 0,
         appointments: Array.isArray(apptRes?.data) ? apptRes.data.length : 0,
-        alerts: medicinesCount === 0 ? 1 : 3, // Dynamic alert if no meds saved
+        alerts: medicinesCount === 0 ? 1 : 3, 
       });
     } catch (error) {
       console.error('Error refreshing dashboard stats:', error);

@@ -40,7 +40,7 @@ const AdminPage = () => {
 
   const activeTabData = TABS.find((t) => t.id === activeTab);
 
-  // Mode-aware style tokens
+  
   const sidebar = isDarkMode
     ? {
         bg: 'linear-gradient(180deg,#0D1526 0%,#0B1121 100%)',
@@ -91,14 +91,14 @@ const AdminPage = () => {
         }}
       />
 
-      {/* ── MAIN ── */}
+      {}
       <div className="flex flex-col flex-1 overflow-hidden relative z-10">
         <TopBar />
 
         <AdminBreadcrumb activeTabData={activeTabData} sidebar={sidebar} main={main} />
 
         <main className="flex-1 overflow-y-auto px-4 sm:px-8 py-6 scrollbar-hide pb-24 md:pb-6">
-          {/* Mobile Tab Selector */}
+          {}
           <div className="lg:hidden flex items-center gap-2 overflow-x-auto pb-6 scrollbar-hide mb-4">
             {TABS.map((tab) => (
               <button

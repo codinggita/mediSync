@@ -11,7 +11,7 @@ const FloatingSupport = () => {
 
   return (
     <div className="fixed bottom-10 right-10 z-[100] flex flex-col items-end gap-6">
-      {/* Expanded Menu */}
+      {}
       {isOpen && (
         <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[3rem] p-8 shadow-[20px_20px_60px_#cbced1,-20px_-20px_60px_#ffffff] dark:shadow-[20px_20px_60px_#0a0f1d] border border-white/40 mb-4 animate-in slide-in-from-bottom-10 fade-in duration-500 w-80">
           <div className="flex items-center justify-between mb-8">
@@ -74,7 +74,7 @@ const FloatingSupport = () => {
         </div>
       )}
 
-      {/* Main Trigger Button */}
+      {}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={`w-20 h-20 rounded-[2rem] flex items-center justify-center transition-all duration-500 shadow-[10px_10px_30px_rgba(42,127,255,0.4)] ${isOpen ? 'bg-[#1F2937] rotate-90 scale-90' : 'bg-[#2A7FFF] hover:scale-110 hover:shadow-[10px_10px_40px_rgba(42,127,255,0.6)] animate-bounce'}`}
@@ -85,7 +85,7 @@ const FloatingSupport = () => {
           <Zap size={32} className="text-white fill-white" />
         )}
 
-        {/* Radar Ring Animation */}
+        {}
         {!isOpen && (
           <div className="absolute inset-0 rounded-[2rem] border-4 border-[#2A7FFF] animate-ping opacity-20"></div>
         )}

@@ -120,7 +120,7 @@ const AdminAnalyticsTab = () => {
         ))}
       </div>
 
-      <AdminAnalytics isDarkMode={isDarkMode} />
+      <AdminAnalytics isDarkMode={isDarkMode} data={data} />
     </div>
   );
 };

@@ -5,10 +5,17 @@ import reportPreviewImg from '../../../assets/images/medical_report_preview.png'
 const RecordPreviewModal = ({ show, onClose, record, dateStr, pdfBlobUrl }) => {
   if (!show || !record) return null;
 
+  const unmangleUrl = (url) => {
+    if (!url) return url;
+    // Fix corruption caused by previous backend XSS filters
+    return url.replace(/&#x2F;/g, '/');
+  };
+
   const isImage = (url) => {
     if (!url) return false;
-    if (url.startsWith('data:image/')) return true;
-    return url.match(/\.(jpeg|jpg|gif|png)$/i) != null;
+    const cleanUrl = unmangleUrl(url);
+    if (cleanUrl.startsWith('data:image/')) return true;
+    return cleanUrl.match(/\.(jpeg|jpg|gif|png)$/i) != null;
   };
 
   return (
@@ -53,7 +60,7 @@ const RecordPreviewModal = ({ show, onClose, record, dateStr, pdfBlobUrl }) => {
           <div className="w-full max-w-2xl bg-white dark:bg-[#151E32] rounded-[32px] shadow-2xl overflow-hidden relative group min-h-[400px] flex items-center justify-center">
             {isImage(record.fileUrl) ? (
               <img
-                src={record.fileUrl}
+                src={unmangleUrl(record.fileUrl)}
                 alt="Clinical Document"
                 className="w-full h-auto object-contain animate-in fade-in zoom-in duration-500 max-h-[60vh]"
                 onError={(e) => {
@@ -64,7 +71,7 @@ const RecordPreviewModal = ({ show, onClose, record, dateStr, pdfBlobUrl }) => {
               <div className="w-full h-[60vh] relative bg-slate-100 dark:bg-[#1A2235]">
                 {pdfBlobUrl ? (
                   <iframe
-                    src={pdfBlobUrl}
+                    src={unmangleUrl(pdfBlobUrl)}
                     title={record.title}
                     className="w-full h-full border-0 animate-in fade-in duration-500"
                   />

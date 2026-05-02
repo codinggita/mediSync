@@ -6,6 +6,7 @@ import RecordsHeader from './components/RecordsHeader';
 import RecordsContent from './components/RecordsContent';
 import { useAuth } from '../../context/AuthContext';
 import useMedicalRecords from './hooks/useMedicalRecords';
+import SEO from '../../components/SEO';
 
 const MedicalRecordsPage = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -16,6 +17,10 @@ const MedicalRecordsPage = () => {
 
   return (
     <div className="flex h-screen overflow-hidden bg-[#ecf0f3] dark:bg-[#121826] transition-colors duration-300 font-sans relative">
+      <SEO 
+        title="Secured Medical Record Vault" 
+        description="Access and manage your complete clinical history within a high-fidelity, post-quantum encrypted repository."
+      />
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
 
       <div className="flex flex-col flex-1 overflow-hidden min-w-0">

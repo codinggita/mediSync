@@ -23,7 +23,7 @@ const DashboardPage = () => {
         {user?.role === 'Doctor' ? <DoctorDashboardContent /> : <DashboardContent />}
       </div>
 
-      {/* Onboarding tour — only shown once per account */}
+      {}
       <OnboardingModal userName={user?.name?.split(' ')[0]} />
     </div>
   );

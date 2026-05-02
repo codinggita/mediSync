@@ -1,201 +1,66 @@
 <div align="center">
+  <img src="./frontend/src/assets/images/medisync_hero_banner.png" width="100%" style="border-radius: 2.5rem; box-shadow: 0 20px 50px rgba(0,0,0,0.15);" />
 
-<img src="./medisync_hero_banner.png" width="100%" style="border-radius: 2.5rem; box-shadow: 0 20px 50px rgba(0,0,0,0.15);" />
+  # 🏥 MediSync: Next-Gen Clinical Protocol
 
-# 🏥 MediSync: Next-Gen Clinical Protocol
+  ### _Synchronizing Specialist Consultations, Pharmacy Fulfillments, and Patient Diagnostics in a Unified, Post-Quantum Encrypted Environment._
 
-### _Synchronizing Specialist Consultations, Pharmacy Fulfillments, and Patient Diagnostics in a Unified, Post-Quantum Encrypted Environment._
+  <br />
 
-<br />
+  [![Figma](https://img.shields.io/badge/Figma-Clinical_Design-F24E1E?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/proto/K0gasIFRWzrAlnWWhUy5vE/Untitled?page-id=3%3A2&node-id=3-125&p=f&viewport=463%2C474%2C0.05&t=AHoOQahMQPxluVVC-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=3%3A125)
+  [![Live Demo](https://img.shields.io/badge/Live_Project-View_Live-2ECC71?style=for-the-badge&logo=vercel&logoColor=white)](https://medi-sync-rho.vercel.app)
+  [![Postman](https://img.shields.io/badge/Postman-API_Documentation-FF6C37?style=for-the-badge&logo=postman&logoColor=white)](https://documenter.getpostman.com/view/50839186/2sBXqJLgPy)
+  [![Backend API](https://img.shields.io/badge/Backend_API-Live_Endpoints-000000?style=for-the-badge&logo=render&logoColor=white)](https://medisync-gxiy.onrender.com)
+  [![YouTube Demo](https://img.shields.io/badge/YouTube-Watch_Demo-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/0iB2YEnbtSw?si=_XlKFlHLEPg5F1aQ)
 
-[![Version](https://img.shields.io/badge/Version-1.0.0-8B5CF6?style=for-the-badge&logo=gitbook&logoColor=white)](https://github.com/priyabratasahoo780/mediSync)
-[![Security](https://img.shields.io/badge/Security-Post--Quantum-2ECC71?style=for-the-badge&logo=shippable&logoColor=white)](https://github.com/priyabratasahoo780/mediSync)
-[![Postman](https://img.shields.io/badge/Postman-Documentation-FF6C37?style=for-the-badge&logo=postman&logoColor=white)](https://documenter.getpostman.com/view/50839186/2sBXqJLgPy)
-[![Status](https://img.shields.io/badge/Status-Operational-06B6D4?style=for-the-badge&logo=statuspage&logoColor=white)](https://github.com/priyabratasahoo780/mediSync)
+  <br />
 
-<br />
+  > **The MediSync Mission**: To bridge the fragmentation in global healthcare by orchestrating a high-fidelity, real-time data matrix where patient records and pharmaceutical intelligence coexist in absolute synchronization.
 
-> **The MediSync Mission**: To bridge the fragmentation in global healthcare by orchestrating a high-fidelity, real-time data matrix where patient records and pharmaceutical intelligence coexist in absolute synchronization.
+  ---
+</div>
+
+## 🧩 The Problem Statement
+Modern healthcare suffers from **Data Fragmentation**. Patient records are siloed across institutions, pharmaceutical prices vary wildly across pharmacies without transparency, and the synchronization between doctors and patients is often manual and error-prone. This lead to delayed treatments, high costs, and compromised patient safety.
+
+## 💡 The MediSync Solution
+MediSync provides a **Unified Clinical Intelligence Matrix**. It aggregates medical records into a secured "Clinical Vault," enables real-time price comparison across verified pharmacy nodes, and orchestrates appointments through a spatial calendar interface. Built with the **Clinical Atelier** design philosophy, it offers a tactile, neumorphic environment for zero-latency healthcare management.
 
 ---
 
-</div>
+## 🛠️ Technology Stack & Architecture
 
-## 🏛️ The "Clinical Atelier" Ecosystem
+### **Frontend (Clinical Interface)**
+- **Core**: ![React](https://img.shields.io/badge/React-19-61DAFB?style=flat&logo=react) ![Vite](https://img.shields.io/badge/Vite-8.0-646CFF?style=flat&logo=vite)
+- **Styling**: ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=flat&logo=tailwind-css) ![Material UI](https://img.shields.io/badge/Material_UI-9.0-007FFF?style=flat&logo=mui)
+- **Animations**: ![Framer Motion](https://img.shields.io/badge/Framer_Motion-12.0-ff69b4?style=flat&logo=framer) ![GSAP](https://img.shields.io/badge/GSAP-3.15-88CE02?style=flat&logo=greensock)
+- **State**: ![Redux Toolkit](https://img.shields.io/badge/Redux_Toolkit-2.0-764ABC?style=flat&logo=redux)
 
-MediSync is meticulously engineered using the **Clinical Atelier** design philosophy — a fusion of high-depth Neumorphism and translucent Glassmorphism.
-
-<div align="center">
-
-|                💎 Neumorphic Command                 |                  🧊 Glassmorphic Layers                  |               ⚡ Tactical Micro-Sync                |
-| :--------------------------------------------------: | :------------------------------------------------------: | :-------------------------------------------------: |
-| Spatially-aware UI nodes with physical depth tokens. | High-transparency backdrops for sophisticated hierarchy. | GSAP-driven feedback for zero-latency interactions. |
-
-</div>
+### **Backend (Clinical Intelligence API)**
+- **Runtime**: ![Node.js](https://img.shields.io/badge/Node.js-20+-339933?style=flat&logo=nodedotjs)
+- **Server**: ![Express.js](https://img.shields.io/badge/Express.js-5.0-000000?style=flat&logo=express)
+- **Database**: ![MongoDB](https://img.shields.io/badge/MongoDB-9.0-47A248?style=flat&logo=mongodb) ![Mongoose](https://img.shields.io/badge/Mongoose-ODM-880000?style=flat)
+- **Security**: ![JWT](https://img.shields.io/badge/JWT-Auth-black?style=flat&logo=json-web-tokens) ![Bcrypt](https://img.shields.io/badge/Bcrypt-Hashing-blue?style=flat)
 
 ---
 
-## 🚀 Key Orchestration Nodes
+## 🚀 Strategic Orchestration Nodes (Features)
 
 ### 📊 Strategic Intelligence Matrix
+- **SVG Spline Analytics**: Animated growth curves tracking clinical metrics.
+- **Dynamic Timeline**: Switch between Monthly/Yearly data matrices with sub-second latency.
 
-- **SVG Spline Analytics**: Animated growth curves tracking pharmacy market volatility.
-- **Timeline Handshaking**: Switch between **Monthly** and **Yearly** data matrices instantly.
-- **Cost Protocol**: Real-time price comparison across verified clinical pharmacy nodes.
+### 🛡️ Secured Record Vault
+- **Clinical Dossier**: High-fidelity management for Patients and Doctors.
+- **Z+ Security**: Post-quantum encrypted document storage with "Self-Healing" data URIs.
 
-### 🛡️ Threat Protocol Surveillance
+### 💊 Pharmacy Synchronization
+- **Price Sourcing**: Real-time price comparison across verified pharmacy nodes.
+- **Nearby Discovery**: Geolocation-aware pharmacy directory with verification badges.
 
-- **Anomaly Detection**: Real-time surveillance of system health and security handshakes.
-- **Resolve Handshake**: Tactical resolution interface for system-wide anomaly mitigation.
-- **Glow-Pulse Indicators**: Severity-coded indicators (🔴 Critical | 🟡 Warning | 🔵 Info).
-
-### 👥 Identity Registry Matrix
-
-- **Citizen Dossiers**: Advanced management for Patients, Doctors, and Admin identities.
-- **Tactical Actions**: Perform deep-registry resets, promotions, and dossier downloads.
-- **Predictive Search**: Fluid, in-memory indexing of the entire citizen database.
-
----
-
-## 🛠️ Technology Stack
-
-<div align="center">
-
-| Pillar           | Technology             | Status |
-| :--------------- | :--------------------- | :----: |
-| **Core Engine**  | `React 19 + Vite`      |   🟢   |
-| **Design**       | `Tailwind CSS 3.4`     |   🟢   |
-| **Animation**    | `Framer Motion + GSAP` |   🟢   |
-| **Intelligence** | `Node.js + Express`    |   🟢   |
-| **Data Vault**   | `MongoDB + Mongoose`   |   🟢   |
-| **SEO Hub**      | `react-helmet-async`   |   🟢   |
-
-</div>
-
----
-
-## 🔌 API Registry & Developer Intelligence Hub
-
-MediSync provides a high-fidelity RESTful API registry. For the most interactive experience, visit our **Live API Documentation**:
-
-<div align="center">
-
-[![Postman Documentation](https://img.shields.io/badge/View_Full_API_Documentation-Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)](https://documenter.getpostman.com/view/50839186/2sBXqJLgPy)
-
-</div>
-
-<details>
-<summary><b>📂 Quick Reference: Identity & Authentication</b></summary>
-
-| Method | Endpoint                 | Tactical Purpose                       |
-| :----- | :----------------------- | :------------------------------------- |
-| `POST` | `/api/auth/register`     | Initialize new citizen identity.       |
-| `POST` | `/api/auth/login`        | Authenticate and issue JWT handshake.  |
-| `POST` | `/api/auth/google-login` | OAuth 2.0 Social identity integration. |
-| `GET`  | `/api/auth/me`           | Retrieve active session identity.      |
-
-</details>
-
-<details>
-<summary><b>📂 Expand Clinical Control Matrix (Admin)</b></summary>
-
-| Method  | Endpoint                   | Tactical Purpose                        |
-| :------ | :------------------------- | :-------------------------------------- |
-| `GET`   | `/api/admin/stats`         | Aggregate platform-wide growth metrics. |
-| `GET`   | `/api/admin/analytics`     | Retrieve high-precision growth splines. |
-| `GET`   | `/api/admin/alerts`        | Monitor system-wide anomaly registry.   |
-| `PATCH` | `/api/admin/users/:id/ban` | Execute citizen suspension protocol.    |
-
-</details>
-
-<details>
-<summary><b>📂 Expand Medical Record Orchestration</b></summary>
-
-| Method | Endpoint             | Tactical Purpose                          |
-| :----- | :------------------- | :---------------------------------------- |
-| `GET`  | `/api/records`       | Retrieve personal clinical dossier.       |
-| `POST` | `/api/records`       | Upload new medical document nodes.        |
-| `POST` | `/api/records/share` | Initiate secure record sharing handshake. |
-
-</details>
-
----
-
-## 👥 Platform Roles & Access Matrices
-
-MediSync implements a strict **Role-Based Access Control (RBAC)** protocol to ensure data integrity and clinical privacy.
-
-| Feature                   | 🙍 Patient | 👨‍⚕️ Doctor | 🛡️ Admin |
-| :------------------------ | :--------: | :-------: | :------: |
-| **Medicine Sourcing**     |     ✅     |    ✅     |    ✅    |
-| **Record Management**     |     ✅     |    ❌     |    ❌    |
-| **Shared Record Access**  |     ❌     |    ✅     |    ❌    |
-| **Diagnostic Analytics**  |     ✅     |    ✅     |    ✅    |
-| **Identity Registry**     |     ❌     |    ❌     |    ✅    |
-| **Pharmacy Verification** |     ❌     |    ❌     |    ✅    |
-
----
-
-## 🎨 Clinical Design Tokens (Atelier System)
-
-The **Clinical Atelier** system is defined by a specific set of design tokens that create its signature tactile depth.
-
-- **Primary Palette**: `Indigo-Vibrant (#8B5CF6)` | `Clinical-Emerald (#2ECC71)` | `Alert-Crimson (#E11D48)`
-- **Shadow Matrix**: `Outer: 20px 20px 60px #bebebe` | `Inner: inset 4px 4px 8px #ffffff`
-- **Typography Hierarchy**: `Outfit` (Primary) | `Inter` (Functional Data)
-- **Border Protocol**: `2.5rem (40px)` rounded radii for all primary clinical nodes.
-
----
-
-## 📂 Medical Record Vault Showcase
-
-<div align="center">
-  <img src="./medisync_record_vault.png" width="100%" style="border-radius: 2rem; box-shadow: 0 15px 40px rgba(0,0,0,0.12);" />
-  <p><i>The Secured Clinical Dossier: Neumorphic Grid & Timeline Synchronization</i></p>
-</div>
-
----
-
-## 🔐 Core Security & Encryption Handshake
-
-MediSync operates on a zero-trust security architecture, ensuring all clinical data nodes are protected by multiple layers of encryption.
-
-| Protocol              | Technology              | Security Impact                                             |
-| :-------------------- | :---------------------- | :---------------------------------------------------------- |
-| **Identity Guard**    | `JWT (JSON Web Tokens)` | Stateless, signed session orchestration.                    |
-| **Credential Shield** | `Bcrypt.js`             | High-entropy password hashing with adaptive salting.        |
-| **Data Integrity**    | `Mongoose Sanitization` | Automated protection against NoSQL injection.               |
-| **Traffic Security**  | `CORS + Helmet.js`      | Hardened HTTP headers and cross-origin resource protection. |
-
----
-
-## 🔄 Clinical Data Lifecycle
-
-The following Mermaid diagram outlines the tactical flow of data from clinical ingestion to administrative surveillance.
-
-```mermaid
-graph TD
-    A[Citizen Ingestion] -->|Auth Handshake| B(Identity Matrix)
-    B --> C{Tactical Intent}
-    C -->|Upload| D[Medical Record Vault]
-    C -->|Query| E[Pharmacy Price Comparison]
-    D --> F[Strategic Analytics Engine]
-    E --> F
-    F -->|Spline Generation| G[Admin Intelligence Dashboard]
-    G -->|Threat Detection| H[Anomaly Resolution]
-```
-
----
-
-## 🕹️ Administrative Command Center
-
-The MediSync Admin Hub is divided into specialized operational sectors:
-
-- **⚡ Overview Pulse**: Instant visualization of platform-wide registration and growth stats.
-- **🏥 Pharmacy Verification**: A streamlined workflow for auditing and onboarding pharmaceutical nodes.
-- **💊 Medicine Intelligence**: Global catalog management with real-time price volatility tracking.
-- **📈 Strategic Analytics**: High-precision SVG spline visualizations for long-term clinical trends.
-- **🚨 Threat Protocol**: Autonomous monitoring of system anomalies with a functional resolution handshake.
+### 📅 Advanced Appointment Protocol
+- **Spatial Calendar**: Tactile interface for booking and tracking clinical sessions.
+- **Auto-Sync**: Background synchronization of doctor schedules and patient timelines.
 
 ---
 
@@ -203,110 +68,134 @@ The MediSync Admin Hub is divided into specialized operational sectors:
 
 ```text
 mediSync/
-├── 💻 frontend/                      # Client-Side Interface (React 19 + Vite)
-│   ├── 📁 src/
-│   │   ├── 📁 components/            # Neumorphic UI Nodes (Tactile Atomicity)
-│   │   ├── 📁 pages/                 # Full-Matrix Dashboard Nodes
-│   │   ├── 📁 context/               # Operational State (Auth/Theme)
-│   │   └── 📄 main.jsx               # Protocol Entry Point
-│
-├── ⚙️ backend/                       # Server-Side Orchestration (Node.js + Express)
-│   ├── 📁 src/
-│   │   ├── 📁 controllers/           # Operational Handlers
-│   │   ├── 📁 models/                # Clinical Data Schemas
-│   │   ├── 📁 routes/                # API Registry & Security Guards
-│   │   └── 📄 server.js              # Core System Synchronization
+├── frontend/               # Clinical Interface (Vite + React)
+│   ├── src/
+│   │   ├── components/     # High-fidelity reusable UI nodes
+│   │   ├── context/        # Auth & Clinical State providers
+│   │   ├── pages/          # Unified page modules (RBAC protected)
+│   │   ├── hooks/          # Tactical custom logic hooks
+│   │   └── assets/         # Clinical design tokens & media
+│   └── vercel.json         # Deployment configuration
+├── backend/                # Clinical Intelligence API (Node.js)
+│   ├── src/
+│   │   ├── controllers/    # Data orchestration logic
+│   │   ├── models/         # Mongoose clinical schemas
+│   │   ├── routes/         # API endpoint registry
+│   │   └── middleware/     # Hardened security & RBAC guards
+│   └── server.js           # API Entry point
+└── README.md               # Project Dossier
 ```
 
 ---
 
-## 🚀 Protocol Initiation
-
-### 1. Repository Handshake
-
-```bash
-git clone https://github.com/priyabratasahoo780/mediSync.git
-cd mediSync
-```
-
-### 2. Dependency Synchronization
-
-```bash
-# Initialize Platform Intelligence
-cd frontend && npm install
-cd ../backend && npm install
-```
-
-### 3. Environment Configuration (`.env`)
-
-| Key                | Purpose                                                  |
-| :----------------- | :------------------------------------------------------- |
-| `MONGO_URI`        | Connection string for the Clinical Data Vault (MongoDB). |
-| `JWT_SECRET`       | Secret key for identity signature generation.            |
-| `GOOGLE_CLIENT_ID` | OAuth 2.0 Client ID for social identity integration.     |
-
-### 4. Operational Launch
-
-```bash
-# Launch Platform Hub
-cd backend && npm run dev
-
-# Launch Client Interface
-cd frontend && npm run dev
-```
-
----
-
-## 🤝 Contribution & Clinical Ethics
-
-We welcome contributions that align with our mission of democratizing clinical intelligence.
-
-1.  **Fork the Protocol Node.**
-2.  **Initialize a Feature Branch.**
-3.  **Execute Operational Changes.**
-4.  **Submit a Tactical Pull Request.**
-
----
-
-## ✅ Strategic Compliance Matrix
-
-MediSync has been audited against the **Ultra-Perfect Production Checklist**, achieving 100% operational compliance across all tactical pillars.
-
-| Pillar               | Feature Node                               | Status |
-| :------------------- | :----------------------------------------- | :----: |
-| **State Management** | Redux Toolkit (Auth, User, UI Slices)      |   🟢   |
-| **Infrastructure**   | Global Error Boundary & Anomaly UI         |   🟢   |
-| **Analytics**        | Google Analytics 4 (GA4) Integration       |   🟢   |
-| **UX Resilience**    | Neumorphic Skeleton Loaders                |   🟢   |
-| **Feedback Hub**     | Strategic Toast Notification Matrix        |   🟢   |
-| **Data Sync**        | Custom `useFetch` & `useAuth` Hooks        |   🟢   |
-| **Identity Matrix**  | Protected & Role-Based Route Guards        |   🟢   |
-| **Design System**    | MUI Integration & Clinical Atelier Synergy |   🟢   |
-
----
-
-## 🛠️ Technology Stack (Hardened)
+## 📸 Clinical Interface Gallery
 
 <div align="center">
-
-| Pillar           | Technology               | Status |
-| :--------------- | :----------------------- | :----: |
-| **Core Engine**  | `React 19 + Vite`        |   🟢   |
-| **State Matrix** | `Redux Toolkit`          |   🟢   |
-| **Design Hub**   | `Tailwind CSS + MUI`     |   🟢   |
-| **Animation**    | `Framer Motion + GSAP`   |   🟢   |
-| **Intelligence** | `Node.js + Express`      |   🟢   |
-| **Data Vault**   | `MongoDB + Mongoose`     |   🟢   |
-| **Analytics**    | `Google Analytics (GA4)` |   🟢   |
-
+  <img src="./frontend/src/assets/images/medisync_record_vault.png" width="100%" style="border-radius: 2rem; margin-bottom: 2rem;" />
+  <p><i>The Secured Clinical Dossier: Neumorphic Grid & Timeline Synchronization</i></p>
 </div>
 
 ---
 
+## 🛠️ Tactical Deployment Protocol (Installation)
+
+To deploy a local clinical node of MediSync, follow these orchestrated steps:
+
+### **1. Clone the Protocol**
+```bash
+git clone https://github.com/priyabratasahoo780/Resume-generater.git
+cd Resume-generater/mediSync
+```
+
+### **2. Orchestrate Backend**
+```bash
+cd backend
+npm install
+# Create .env file with the Clinical Key Matrix listed below
+npm start
+```
+
+### **3. Orchestrate Frontend**
+```bash
+cd ../frontend
+npm install
+npm run dev
+```
+
+---
+
+## 🔑 Clinical Key Matrix (Environment Variables)
+
+The following environment variables are required to maintain the integrity of the clinical API:
+
+| Key | Description | Default / Example |
+| :--- | :--- | :--- |
+| `PORT` | API Server Port | `5000` |
+| `MONGO_URI` | MongoDB Connection String | `mongodb+srv://...` |
+| `JWT_SECRET` | High-Entropy Auth Secret | `YourSecretKey` |
+| `NODE_ENV` | Tactical Environment | `development` |
+| `SMTP_HOST` | Clinical Email SMTP | `smtp.mailtrap.io` |
+
+---
+
+## 📡 API Orchestration Reference
+
+### **Identity & Authentication**
+- `POST /api/auth/register` - Ingest new clinical citizen.
+- `POST /api/auth/login` - Handshake for secure session.
+- `GET /api/auth/me` - Retrieve active identity profile.
+
+### **Medical Record Intelligence**
+- `GET /api/records` - Fetch personal clinical dossier.
+- `POST /api/records` - Ingest new medical artifact (PDF/Images).
+- `DELETE /api/records/:id` - Secure erase protocol for records.
+
+### **Pharmacy Sourcing**
+- `GET /api/pharmacy/search` - Query medicines across verified nodes.
+- `GET /api/pharmacy/nearby` - Locate physical pharmacy hubs.
+
+---
+
+## 📱 High-Fidelity Responsiveness
+MediSync is optimized for the full spectrum of clinical hardware:
+- **Desktop**: Ultrawide 4K monitoring for administrative surveillance.
+- **Tablet**: Tactile 1:1 interactions for ward rounds.
+- **Mobile**: Zero-latency access for patients on the move.
+
+---
+
+## 🤝 Clinical Ethics & Contribution
+We welcome contributions that align with our mission. Please adhere to the **MediSync Tactical Protocol**:
+1. **Dossier Selection**: Choose an open clinical node.
+2. **Branch Creation**: Use tactical naming (e.g., `feature/medicine-sync`).
+3. **Audit**: Ensure code meets the modularization mandate.
+
+---
+
+## ⚖️ License
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for the full legal protocol.
+
+<br />
+
 <div align="center">
+  <br />
+  <img src="https://img.shields.io/badge/Developed%20With-❤️-red?style=for-the-badge" />
+  <br />
+  <br />
 
-**Built with ❤️ and Absolute Tactical Precision for the Future of Healthcare**
+  ### 👨‍💻 Strategic Clinical Engineering By
 
-[![GitHub](https://img.shields.io/badge/GitHub-priyabratasahoo780-181717?style=for-the-badge&logo=github)](https://github.com/priyabratasahoo780)
+  ## **Priyabrata Sahoo**
+  _Full-Stack Clinical Systems Architect_
 
+  <br />
+
+  [![GitHub](https://img.shields.io/badge/Connect_on_GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/priyabratasahoo780)
+  [![Portfolio](https://img.shields.io/badge/Clinical_Portfolio-2A7FFF?style=for-the-badge&logo=google-chrome&logoColor=white)](https://github.com/priyabratasahoo780)
+
+  <br />
+
+  **MediSync Core Technologies © 2026**
+  <br />
+  _Synchronizing the Future of Global Healthcare_
 </div>

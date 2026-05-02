@@ -16,20 +16,20 @@ const SignupSteps = ({
 }) => {
   return (
     <>
-      {/* Step 0: Plan Selection */}
+      {}
       <PlanSelection
         selectedPlan={selectedPlan}
         setSelectedPlan={setSelectedPlan}
         setStep={setStep}
       />
 
-      {/* Step 1: Basic Info */}
+      {}
       <BasicInfo step={step} formik={formik} setStep={setStep} />
 
-      {/* Step 2: Role Details */}
+      {}
       <RoleDetails step={step} formik={formik} />
 
-      {/* Step 3: Security & Agreement */}
+      {}
       <SecurityAgreement
         step={step}
         formik={formik}
@@ -38,7 +38,7 @@ const SignupSteps = ({
         setError={setError}
       />
 
-      {/* Navigation for steps 1 and 2 */}
+      {}
       <SignupNavigation step={step} setStep={setStep} formik={formik} />
     </>
   );

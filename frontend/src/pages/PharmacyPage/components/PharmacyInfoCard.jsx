@@ -13,7 +13,7 @@ const PharmacyInfoCard = () => {
   return (
     <div className="bg-white rounded-[14px] shadow-sm border border-gray-100 overflow-hidden pharmacy-section">
       <div className="flex flex-col md:flex-row">
-        {/* Pharmacy Image */}
+        {}
         <div className="md:w-72 h-52 md:h-auto overflow-hidden flex-shrink-0">
           <img
             src="https://images.unsplash.com/photo-1576602976047-174e57a47881?w=600&q=80"
@@ -22,9 +22,9 @@ const PharmacyInfoCard = () => {
           />
         </div>
 
-        {/* Details */}
+        {}
         <div className="flex-1 p-6 flex flex-col gap-5">
-          {/* Description */}
+          {}
           <div>
             <h2 className="text-sm font-bold text-gray-800 mb-1.5 uppercase tracking-wide">
               About this Pharmacy
@@ -37,7 +37,7 @@ const PharmacyInfoCard = () => {
             </p>
           </div>
 
-          {/* Info Grid */}
+          {}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {INFO_ITEMS.map(({ icon: Icon, label, value }) => (
               <div

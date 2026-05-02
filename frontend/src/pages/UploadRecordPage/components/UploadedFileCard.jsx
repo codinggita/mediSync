@@ -14,8 +14,16 @@ const UploadedFileCard = ({ file, progress, onClear }) => {
   return (
     <div className="w-full animate-in zoom-in-95 duration-500">
       <div className="bg-white/40 dark:bg-black/20 backdrop-blur-xl border border-white/60 dark:border-white/10 rounded-3xl p-6 flex flex-col sm:flex-row items-center gap-6 relative group/card">
-        <div className="w-20 h-20 rounded-2xl bg-[#2A7FFF] flex items-center justify-center text-white shadow-[0_10px_20px_rgba(42,127,255,0.3)] shrink-0 transform group-hover/card:rotate-6 transition-transform">
-          {isImage ? <FileImage size={32} /> : <FileText size={32} />}
+        <div className="w-20 h-20 rounded-2xl bg-[#2A7FFF] flex items-center justify-center text-white shadow-[0_10px_20px_rgba(42,127,255,0.3)] shrink-0 transform group-hover/card:rotate-6 transition-transform overflow-hidden">
+          {isImage ? (
+            <img
+              src={URL.createObjectURL(file)}
+              alt="Preview"
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <FileText size={32} />
+          )}
         </div>
 
         <div className="flex-1 min-w-0 text-center sm:text-left">
@@ -34,7 +42,7 @@ const UploadedFileCard = ({ file, progress, onClear }) => {
             <span>{file.type.split('/')[1]?.toUpperCase()}</span>
           </div>
 
-          {/* Tactical Progress Bar */}
+          {}
           <div className="space-y-2">
             <div className="flex justify-between text-[0.65rem] font-black uppercase tracking-widest">
               <span className={progress === 100 ? 'text-[#2ECC71]' : 'text-[#2A7FFF]'}>

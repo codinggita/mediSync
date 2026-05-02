@@ -4,7 +4,7 @@ import { AlertCircle, Phone, Navigation, Shield } from 'lucide-react';
 const EmergencyActionPanel = () => {
   return (
     <div className="bg-red-500 rounded-[4rem] p-12 text-white shadow-[0_20px_50px_rgba(239,68,68,0.4)] relative overflow-hidden group">
-      {/* Background Pulse Animation */}
+      {}
       <div className="absolute inset-0 bg-white/10 animate-pulse pointer-events-none" />
 
       <div className="relative z-10">
@@ -23,13 +23,16 @@ const EmergencyActionPanel = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <button className="bg-white text-red-500 p-8 rounded-[3rem] flex flex-col items-center gap-4 hover:scale-105 active:scale-95 transition-all shadow-xl group/btn">
+          <button
+            onClick={() => (window.location.href = 'tel:8799342780')}
+            className="bg-white text-red-500 p-8 rounded-[3rem] flex flex-col items-center gap-4 hover:scale-105 active:scale-95 transition-all shadow-xl group/btn"
+          >
             <div className="w-16 h-16 rounded-2xl bg-red-50 flex items-center justify-center group-hover/btn:bg-red-500 group-hover/btn:text-white transition-colors">
               <Phone size={32} />
             </div>
             <span className="text-[1.2rem] font-black uppercase">Emergency SOS</span>
             <p className="text-[0.7rem] font-bold opacity-60 uppercase tracking-widest">
-              Connect to 102/108
+              Connect to 8799342780
             </p>
           </button>
           <button className="bg-red-600 text-white p-8 rounded-[3rem] flex flex-col items-center gap-4 hover:scale-105 active:scale-95 transition-all shadow-xl border border-white/20 group/btn">

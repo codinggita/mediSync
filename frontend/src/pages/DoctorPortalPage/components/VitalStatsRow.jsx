@@ -10,7 +10,7 @@ const vitals = [
     color: '#EF4444',
     bg: '#EF444410',
     status: 'Normal',
-    statusType: 'normal', // normal, elevated, stable
+    statusType: 'normal', 
   },
   {
     label: 'Blood Pressure',
@@ -78,7 +78,7 @@ const VitalStatsRow = ({ patient }) => {
       icon: Activity,
       color: '#F59E0B',
       bg: '#F59E0B10',
-      status: 'Stable', // Simplified logic
+      status: 'Stable', 
       statusType: 'stable',
     },
     {
@@ -112,7 +112,7 @@ const VitalStatsRow = ({ patient }) => {
             key={label}
             className="bg-white dark:bg-[#151E32] border border-gray-100 dark:border-slate-700/50 rounded-[14px] p-5 shadow-sm hover:shadow-md transition-all duration-300 group relative overflow-hidden"
           >
-            {/* Background Icon Decoration */}
+            {}
             <Icon
               size={64}
               className="absolute -right-4 -bottom-4 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity duration-500"
@@ -145,7 +145,7 @@ const VitalStatsRow = ({ patient }) => {
               {label}
             </p>
 
-            {/* Micro-sparkline or visual hint */}
+            {}
             <div className="mt-4 h-1 w-full bg-gray-50 dark:bg-[#0B1121] rounded-full overflow-hidden">
               <div
                 className="h-full rounded-full transition-all duration-1000"

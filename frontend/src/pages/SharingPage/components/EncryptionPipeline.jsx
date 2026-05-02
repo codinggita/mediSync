@@ -31,7 +31,7 @@ const steps = [
 const EncryptionPipeline = () => {
   return (
     <div className="bg-white dark:bg-[#151E32] border border-gray-100 dark:border-slate-700/50 rounded-2xl p-5 shadow-sm transition-colors">
-      {/* Header */}
+      {}
       <div className="flex items-center justify-between mb-5">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-xl bg-[#2A7FFF]/10 flex items-center justify-center">
@@ -47,7 +47,7 @@ const EncryptionPipeline = () => {
           </div>
         </div>
 
-        {/* AES Badge */}
+        {}
         <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#8B5CF6]/10 border border-[#8B5CF6]/30">
           <Lock size={11} className="text-[#8B5CF6]" />
           <span className="text-[0.65rem] font-extrabold text-[#8B5CF6] tracking-wider">
@@ -57,11 +57,11 @@ const EncryptionPipeline = () => {
         </div>
       </div>
 
-      {/* Steps */}
+      {}
       <div className="flex flex-col sm:flex-row items-stretch gap-0">
         {steps.map(({ step, icon: Icon, label, desc, color, bg }, i) => (
           <div key={step} className="flex sm:flex-col items-center sm:items-stretch flex-1">
-            {/* Step Card */}
+            {}
             <div
               className="flex-1 flex flex-col sm:flex-row items-center gap-3 sm:gap-4 p-4 rounded-2xl border transition-all hover:shadow-md hover:-translate-y-0.5 group cursor-default"
               style={{ borderColor: `${color}25`, backgroundColor: bg }}
@@ -86,7 +86,7 @@ const EncryptionPipeline = () => {
               </div>
             </div>
 
-            {/* Connector Arrow */}
+            {}
             {i < steps.length - 1 && (
               <div className="flex items-center justify-center w-8 h-8 sm:w-auto sm:h-8 shrink-0">
                 <div className="w-6 h-0.5 sm:hidden bg-gradient-to-r from-gray-200 to-gray-300 dark:from-slate-700 dark:to-slate-600" />
@@ -101,7 +101,7 @@ const EncryptionPipeline = () => {
         ))}
       </div>
 
-      {/* Security Footer */}
+      {}
       <div className="mt-4 flex items-center gap-2 px-3 py-2 rounded-xl bg-[#2ECC71]/8 border border-[#2ECC71]/20">
         <ShieldCheck size={14} className="text-[#2ECC71] shrink-0" />
         <p className="text-[0.72rem] text-[#2ECC71] font-semibold">

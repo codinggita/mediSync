@@ -15,14 +15,14 @@ const DoctorSharingPage = () => {
         const { data } = await api.get('/records');
         let fetchedRecords = data;
 
-        // Inject Premium Mock Data if DB is empty
+        
         if (fetchedRecords.length === 0) {
           fetchedRecords = [
             {
               _id: 'shared_mock_1',
               title: 'MRI Brain Scan (Contrast)',
               type: 'Imaging',
-              createdAt: new Date(Date.now() - 3600000 * 2).toISOString(), // 2 hours ago
+              createdAt: new Date(Date.now() - 3600000 * 2).toISOString(),
               patient: { name: 'Sarah Connor' },
               fileUrl: '#',
             },
@@ -30,7 +30,7 @@ const DoctorSharingPage = () => {
               _id: 'shared_mock_2',
               title: 'Lipid Profile & HbA1c',
               type: 'Lab Report',
-              createdAt: new Date(Date.now() - 3600000 * 24).toISOString(), // Yesterday
+              createdAt: new Date(Date.now() - 3600000 * 24).toISOString(),
               patient: { name: 'James Wilson' },
               fileUrl: '#',
             },
@@ -38,7 +38,7 @@ const DoctorSharingPage = () => {
               _id: 'shared_mock_3',
               title: 'Cardiac Stress Test Result',
               type: 'Clinical Note',
-              createdAt: new Date(Date.now() - 3600000 * 48).toISOString(), // 2 days ago
+              createdAt: new Date(Date.now() - 3600000 * 48).toISOString(),
               patient: { name: 'Sarah Connor' },
               fileUrl: '#',
             },
@@ -47,7 +47,7 @@ const DoctorSharingPage = () => {
 
         setSharedRecords(fetchedRecords);
 
-        // Dynamically generate the audit log based on the real shared records
+        
         const dynamicHistory = fetchedRecords
           .map((record, index) => ({
             id: record._id || index,
@@ -85,7 +85,7 @@ const DoctorSharingPage = () => {
 
   return (
     <main className="flex-1 overflow-y-auto px-6 py-6 flex flex-col gap-10 scrollbar-hide pb-24 md:pb-20 text-slate-800 dark:text-white bg-[#ecf0f3] dark:bg-[#0B1121] transition-colors duration-500">
-      {/* Page Header */}
+      {}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-5">
           <div className="w-16 h-16 rounded-[2rem] bg-[#ecf0f3] dark:bg-[#151E32] flex items-center justify-center shadow-[6px_6px_12px_#cbced1,-6px_-6px_12px_#ffffff] dark:shadow-[6px_6px_12px_#0a0f1d,-6px_-6px_12px_#202d47] border border-white/40 dark:border-white/5">
@@ -109,7 +109,7 @@ const DoctorSharingPage = () => {
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-10">
-        {/* ── LEFT: Incoming Shared Records Panel ────────────────────────────────── */}
+        {}
         <div className="xl:col-span-8 flex flex-col gap-8">
           <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[4rem] p-12 shadow-[20px_20px_40px_#cbced1,-20px_-20px_40px_#ffffff] dark:shadow-[20px_20px_40px_#0a0f1d,-20px_-20px_40px_#202d47] border border-white/40 dark:border-white/5 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-[#2A7FFF]/5 rounded-full blur-3xl pointer-events-none" />
@@ -154,9 +154,9 @@ const DoctorSharingPage = () => {
           </div>
         </div>
 
-        {/* ── RIGHT: Access Audit & Stats ───────────────────────────────── */}
+        {}
         <div className="xl:col-span-4 flex flex-col gap-10">
-          {/* Security Status */}
+          {}
           <div className="bg-[#0B1121] p-10 rounded-[3rem] shadow-2xl border border-white/5 relative overflow-hidden group">
             <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-[#2ECC71]/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700" />
             <div className="flex items-center gap-4 mb-6 relative z-10">

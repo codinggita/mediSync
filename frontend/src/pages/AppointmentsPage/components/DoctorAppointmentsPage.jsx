@@ -16,7 +16,6 @@ const DoctorAppointmentsPage = () => {
         const { data } = await api.get('/appointments');
         let fetchedAppointments = data;
 
-        // Inject Premium Mock Data if DB is empty so the user can test the UI!
         if (fetchedAppointments.length === 0) {
           const today = new Date();
           fetchedAppointments = [
@@ -33,7 +32,7 @@ const DoctorAppointmentsPage = () => {
             {
               _id: 'mock_app_2',
               patient: { name: 'James Wilson', email: 'james@example.com' },
-              date: new Date(today.getTime() + 86400000).toISOString(), // Tomorrow
+              date: new Date(today.getTime() + 86400000).toISOString(),
               time: '09:00',
               type: 'In-Person',
               status: 'Confirmed',
@@ -49,11 +48,14 @@ const DoctorAppointmentsPage = () => {
         setLoading(false);
       }
     };
+
     fetchAppointments();
+    const interval = setInterval(fetchAppointments, 30000); 
+    return () => clearInterval(interval);
   }, []);
 
   const handleStatusChange = async (id, newStatus) => {
-    // 🛡️ Mock Protection: Prevent synthetic IDs from hitting the real database
+    
     if (id.startsWith('mock_')) {
       setAppointments((prev) => 
         prev.map((app) => (app._id === id ? { ...app, status: newStatus } : app))
@@ -84,7 +86,7 @@ const DoctorAppointmentsPage = () => {
       <ScheduleStatusHeader pendingCount={pendingCount} />
 
       <div className="grid grid-cols-1 gap-8">
-        {/* Main Appointment List */}
+        {}
         <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[4rem] p-12 shadow-[16px_16px_32px_#cbced1,-16px_-16px_32px_#ffffff] dark:shadow-[16px_16px_32px_#0a0f1d] border border-white/40">
           <div className="flex items-center justify-between mb-10">
             <h3 className="text-[1.6rem] font-black text-slate-900 dark:text-white flex items-center gap-4">

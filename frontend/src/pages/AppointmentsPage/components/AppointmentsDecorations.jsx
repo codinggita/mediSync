@@ -7,7 +7,7 @@ const AppointmentsDecorations = () => {
     <>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(42,127,255,0.03),transparent)] pointer-events-none" />
 
-      {/* Floating 3D Artifacts */}
+      {}
       <div className="absolute top-[15%] right-[5%] animate-float opacity-30 pointer-events-none">
         <img src={medicineBoxImg} alt="" className="w-56 object-contain drop-shadow-2xl" />
       </div>

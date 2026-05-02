@@ -59,7 +59,7 @@ const ActiveNotesPanel = () => {
         Active Notes
       </h3>
 
-      {/* Notes list */}
+      {}
       <div className="flex flex-col gap-5 max-h-64 overflow-y-auto pr-2 scrollbar-hide relative z-10">
         {notes.map((n, i) => (
           <div
@@ -86,7 +86,7 @@ const ActiveNotesPanel = () => {
         ))}
       </div>
 
-      {/* Input */}
+      {}
       <div className="flex items-center gap-3 bg-[#ecf0f3] dark:bg-[#0B1121] rounded-[1.5rem] p-2 shadow-[inset_6px_6px_12px_#cbced1,inset_-6px_-6px_12px_#ffffff] dark:shadow-[inset_6px_6px_12px_#0a0f1d,inset_-6px_-6px_12px_#202d47] relative z-10">
         <input
           type="text"

@@ -61,6 +61,8 @@ const SettingsPage = () => {
     setRecords,
     handleDeleteRecord,
     handleTerminate,
+    lastSyncTime,
+    syncSuccess,
   } = useSettings(isDoctor);
 
   return (
@@ -75,7 +77,12 @@ const SettingsPage = () => {
         <TopBar />
 
         <main className="flex-1 overflow-y-auto px-8 py-8 flex flex-col gap-8 scrollbar-hide pb-32">
-          <SettingsHeader isSaving={isSaving} onSave={handleSaveChanges} />
+          <SettingsHeader 
+            isSaving={isSaving} 
+            syncSuccess={syncSuccess}
+            lastSyncTime={lastSyncTime}
+            onSave={handleSaveChanges} 
+          />
 
           <div className="flex flex-col lg:flex-row gap-10">
             <SettingsTabControl

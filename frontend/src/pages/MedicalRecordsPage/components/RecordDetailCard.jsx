@@ -28,17 +28,23 @@ const RecordDetailCard = ({ record, onDelete }) => {
     }
   };
 
+  const unmangleUrl = (url) => {
+    if (!url) return url;
+    return url.replace(/&#x2F;/g, '/');
+  };
+
   useEffect(() => {
     if (showPreview && record?.fileUrl) {
-      if (record.fileUrl.startsWith('data:application/pdf')) {
-        fetch(record.fileUrl)
+      const cleanUrl = unmangleUrl(record.fileUrl);
+      if (cleanUrl.startsWith('data:application/pdf')) {
+        fetch(cleanUrl)
           .then((res) => res.blob())
           .then((blob) => {
             const url = URL.createObjectURL(blob);
             setPdfBlobUrl(url);
           });
       } else {
-        setPdfBlobUrl(record.fileUrl);
+        setPdfBlobUrl(cleanUrl);
       }
     }
     return () => {

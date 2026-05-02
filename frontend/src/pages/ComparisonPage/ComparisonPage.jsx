@@ -6,214 +6,12 @@ import ComparisonHero from './components/ComparisonHero';
 import MedicineCard from './components/MedicineCard';
 import ComparisonFilters from './components/ComparisonFilters';
 import ComparisonMetaBar from './components/ComparisonMetaBar';
+import SEO from '../../components/SEO';
 
-// ── Static medicine data ────────────────────────────────────────────────────
-const MEDICINES = [
-  {
-    id: 1,
-    name: 'Metformin 500mg',
-    category: 'Diabetes',
-    generic: 'Metformin HCl',
-    prices: [
-      {
-        pharmacy: 'Apollo Pharmacy',
-        price: 38,
-        original: 52,
-        rating: 4.8,
-        distance: '0.8 km',
-        inStock: true,
-      },
-      {
-        pharmacy: 'MediPlus',
-        price: 42,
-        original: 52,
-        rating: 4.5,
-        distance: '1.2 km',
-        inStock: true,
-      },
-      {
-        pharmacy: 'HealthMart',
-        price: 50,
-        original: 52,
-        rating: 4.2,
-        distance: '2.1 km',
-        inStock: false,
-      },
-      {
-        pharmacy: 'CareFirst Pharma',
-        price: 45,
-        original: 52,
-        rating: 4.6,
-        distance: '3.4 km',
-        inStock: true,
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: 'Atorvastatin 10mg',
-    category: 'Cardiac',
-    generic: 'Atorvastatin Calcium',
-    prices: [
-      {
-        pharmacy: 'Apollo Pharmacy',
-        price: 120,
-        original: 145,
-        rating: 4.8,
-        distance: '0.8 km',
-        inStock: true,
-      },
-      {
-        pharmacy: 'MediPlus',
-        price: 135,
-        original: 145,
-        rating: 4.5,
-        distance: '1.2 km',
-        inStock: true,
-      },
-      {
-        pharmacy: 'HealthMart',
-        price: 110,
-        original: 145,
-        rating: 4.2,
-        distance: '2.1 km',
-        inStock: true,
-      },
-      {
-        pharmacy: 'CareFirst Pharma',
-        price: 142,
-        original: 145,
-        rating: 4.6,
-        distance: '3.4 km',
-        inStock: false,
-      },
-    ],
-  },
-  {
-    id: 3,
-    name: 'Paracetamol 650mg',
-    category: 'Analgesic',
-    generic: 'Acetaminophen',
-    prices: [
-      {
-        pharmacy: 'Apollo Pharmacy',
-        price: 18,
-        original: 25,
-        rating: 4.8,
-        distance: '0.8 km',
-        inStock: true,
-      },
-      {
-        pharmacy: 'MediPlus',
-        price: 20,
-        original: 25,
-        rating: 4.5,
-        distance: '1.2 km',
-        inStock: true,
-      },
-      {
-        pharmacy: 'HealthMart',
-        price: 22,
-        original: 25,
-        rating: 4.2,
-        distance: '2.1 km',
-        inStock: true,
-      },
-      {
-        pharmacy: 'CareFirst Pharma',
-        price: 15,
-        original: 25,
-        rating: 4.6,
-        distance: '3.4 km',
-        inStock: true,
-      },
-    ],
-  },
-  {
-    id: 4,
-    name: 'Omeprazole 20mg',
-    category: 'Gastro',
-    generic: 'Omeprazole',
-    prices: [
-      {
-        pharmacy: 'Apollo Pharmacy',
-        price: 95,
-        original: 120,
-        rating: 4.8,
-        distance: '0.8 km',
-        inStock: true,
-      },
-      {
-        pharmacy: 'MediPlus',
-        price: 88,
-        original: 120,
-        rating: 4.5,
-        distance: '1.2 km',
-        inStock: false,
-      },
-      {
-        pharmacy: 'HealthMart',
-        price: 102,
-        original: 120,
-        rating: 4.2,
-        distance: '2.1 km',
-        inStock: true,
-      },
-      {
-        pharmacy: 'CareFirst Pharma',
-        price: 90,
-        original: 120,
-        rating: 4.6,
-        distance: '3.4 km',
-        inStock: true,
-      },
-    ],
-  },
-  {
-    id: 5,
-    name: 'Amlodipine 5mg',
-    category: 'Cardiac',
-    generic: 'Amlodipine Besylate',
-    prices: [
-      {
-        pharmacy: 'Apollo Pharmacy',
-        price: 55,
-        original: 70,
-        rating: 4.8,
-        distance: '0.8 km',
-        inStock: true,
-      },
-      {
-        pharmacy: 'MediPlus',
-        price: 62,
-        original: 70,
-        rating: 4.5,
-        distance: '1.2 km',
-        inStock: true,
-      },
-      {
-        pharmacy: 'HealthMart',
-        price: 48,
-        original: 70,
-        rating: 4.2,
-        distance: '2.1 km',
-        inStock: true,
-      },
-      {
-        pharmacy: 'CareFirst Pharma',
-        price: 58,
-        original: 70,
-        rating: 4.6,
-        distance: '3.4 km',
-        inStock: false,
-      },
-    ],
-  },
-];
-
-const CATEGORIES = ['All', 'Diabetes', 'Cardiac', 'Analgesic', 'Gastro'];
+import { MEDICINES, CATEGORIES } from './components/comparisonData';
 
 const ComparisonPage = () => {
+  const [collapsed, setCollapsed] = useState(false);
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('All');
   const [sortBy, setSortBy] = useState('name');
@@ -258,11 +56,15 @@ const ComparisonPage = () => {
 
   return (
     <div className="flex h-screen bg-[#ecf0f3] dark:bg-[#121826] transition-colors duration-300 font-sans">
-      <Sidebar />
+      <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <TopBar />
 
         <main className="flex-1 overflow-y-auto p-6 lg:p-10 scrollbar-hide pb-24 md:pb-6">
+          <SEO 
+            title="Medicine Price Comparison Matrix" 
+            description="Analyze and compare medicine prices across verified pharmacy nodes with high-fidelity transparency."
+          />
           <ComparisonHero medicinesCount={MEDICINES.length} totalSavings={totalSavings} />
 
           <ComparisonFilters

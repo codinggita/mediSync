@@ -119,6 +119,17 @@ export const mongoSanitizer = (req, res, next) => {
 export const xssSanitizer = (req, res, next) => {
   const sanitizeValue = (val) => {
     if (typeof val === 'string') {
+      // Exempt Data URIs (Base64) from slash replacement to prevent image/PDF corruption
+      if (val.startsWith('data:')) {
+        return val
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#x27;')
+          .replace(/javascript:/gi, '')
+          .replace(/on\w+=/gi, '');
+      }
+
       return val
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')

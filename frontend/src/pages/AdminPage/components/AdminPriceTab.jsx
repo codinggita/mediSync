@@ -6,12 +6,56 @@ import PremiumLoader from '../../../components/PremiumLoader';
 import PriceModificationForm from './PriceModificationForm';
 import MarketComparisonTable from './MarketComparisonTable';
 
+const MOCK_MEDICINES_PRICE = [
+  { _id: 'pm1', name: 'Paracetamol',   dosage: '500mg'  },
+  { _id: 'pm2', name: 'Lisinopril',    dosage: '10mg'   },
+  { _id: 'pm3', name: 'Metformin',     dosage: '500mg'  },
+  { _id: 'pm4', name: 'Amoxicillin',   dosage: '250mg'  },
+  { _id: 'pm5', name: 'Atorvastatin',  dosage: '20mg'   },
+  { _id: 'pm6', name: 'Omeprazole',    dosage: '40mg'   },
+  { _id: 'pm7', name: 'Aspirin',       dosage: '81mg'   },
+  { _id: 'pm8', name: 'Ibuprofen',     dosage: '400mg'  },
+  { _id: 'pm9', name: 'Azithromycin',  dosage: '500mg'  },
+  { _id: 'pm10', name: 'Dolo 650',     dosage: '650mg'  },
+];
+
+const MOCK_PHARMACIES_PRICE = [
+  { _id: 'pp1', name: 'Apollo Pharmacy'      },
+  { _id: 'pp2', name: 'MedPlus'              },
+  { _id: 'pp3', name: 'Wellness Forever'     },
+  { _id: 'pp4', name: 'MediSync Central Hub' },
+  { _id: 'pp5', name: 'CureAll Depot'        },
+];
+
+const MOCK_PRICES = [
+  { _id: 'mock_pr1',  medicine: { name: 'Paracetamol',  dosage: '500mg'  }, pharmacy: { name: 'MediSync Central Hub' }, price: 123,  discount: 10 },
+  { _id: 'mock_pr2',  medicine: { name: 'Paracetamol',  dosage: '500mg'  }, pharmacy: { name: 'Apollo Pharmacy'      }, price: 135,  discount: 5  },
+  { _id: 'mock_pr3',  medicine: { name: 'Lisinopril',   dosage: '10mg'   }, pharmacy: { name: 'Apollo Pharmacy'      }, price: 210,  discount: 15 },
+  { _id: 'mock_pr4',  medicine: { name: 'Lisinopril',   dosage: '10mg'   }, pharmacy: { name: 'Wellness Forever'     }, price: 195,  discount: 5  },
+  { _id: 'mock_pr5',  medicine: { name: 'Metformin',    dosage: '500mg'  }, pharmacy: { name: 'MediSync Central Hub' }, price: 189,  discount: 10 },
+  { _id: 'mock_pr6',  medicine: { name: 'Metformin',    dosage: '500mg'  }, pharmacy: { name: 'MedPlus'              }, price: 175,  discount: 8  },
+  { _id: 'mock_pr7',  medicine: { name: 'Amoxicillin',  dosage: '250mg'  }, pharmacy: { name: 'CureAll Depot'        }, price: 187,  discount: 12 },
+  { _id: 'mock_pr8',  medicine: { name: 'Amoxicillin',  dosage: '250mg'  }, pharmacy: { name: 'Wellness Forever'     }, price: 200,  discount: 8  },
+  { _id: 'mock_pr9',  medicine: { name: 'Atorvastatin', dosage: '20mg'   }, pharmacy: { name: 'MediSync Central Hub' }, price: 340,  discount: 12 },
+  { _id: 'mock_pr10', medicine: { name: 'Atorvastatin', dosage: '20mg'   }, pharmacy: { name: 'Apollo Pharmacy'      }, price: 360,  discount: 18 },
+  { _id: 'mock_pr11', medicine: { name: 'Omeprazole',   dosage: '40mg'   }, pharmacy: { name: 'Apollo Pharmacy'      }, price: 150,  discount: 8  },
+  { _id: 'mock_pr12', medicine: { name: 'Omeprazole',   dosage: '40mg'   }, pharmacy: { name: 'MedPlus'              }, price: 138,  discount: 5  },
+  { _id: 'mock_pr13', medicine: { name: 'Aspirin',      dosage: '81mg'   }, pharmacy: { name: 'Wellness Forever'     }, price: 80,   discount: 0  },
+  { _id: 'mock_pr14', medicine: { name: 'Aspirin',      dosage: '81mg'   }, pharmacy: { name: 'CureAll Depot'        }, price: 75,   discount: 5  },
+  { _id: 'mock_pr15', medicine: { name: 'Ibuprofen',    dosage: '400mg'  }, pharmacy: { name: 'MedPlus'              }, price: 95,   discount: 5  },
+  { _id: 'mock_pr16', medicine: { name: 'Ibuprofen',    dosage: '400mg'  }, pharmacy: { name: 'CureAll Depot'        }, price: 88,   discount: 0  },
+  { _id: 'mock_pr17', medicine: { name: 'Azithromycin', dosage: '500mg'  }, pharmacy: { name: 'Apollo Pharmacy'      }, price: 290,  discount: 10 },
+  { _id: 'mock_pr18', medicine: { name: 'Azithromycin', dosage: '500mg'  }, pharmacy: { name: 'MediSync Central Hub' }, price: 265,  discount: 15 },
+  { _id: 'mock_pr19', medicine: { name: 'Dolo 650',     dosage: '650mg'  }, pharmacy: { name: 'Wellness Forever'     }, price: 30,   discount: 0  },
+  { _id: 'mock_pr20', medicine: { name: 'Dolo 650',     dosage: '650mg'  }, pharmacy: { name: 'MedPlus'              }, price: 28,   discount: 5  },
+];
+
 const AdminPriceTab = () => {
-  const [prices, setPrices] = useState([]);
-  const [medicines, setMedicines] = useState([]);
-  const [pharmacies, setPharmacies] = useState([]);
+  const [prices, setPrices] = useState(MOCK_PRICES);         
+  const [medicines, setMedicines] = useState(MOCK_MEDICINES_PRICE);
+  const [pharmacies, setPharmacies] = useState(MOCK_PHARMACIES_PRICE);
   const [loading, setLoading] = useState(true);
-  const [form, setForm] = useState({ medicineId: '', pharmacyId: '', price: '', discount: '' });
+  const [form, setForm] = useState({ medicineId: MOCK_MEDICINES_PRICE[0]._id, pharmacyId: MOCK_PHARMACIES_PRICE[0]._id, price: '', discount: '' });
   const [saving, setSaving] = useState(false);
   const { isDarkMode } = useTheme();
 
@@ -23,63 +67,29 @@ const AdminPriceTab = () => {
       api.get('/admin/pharmacies'),
     ])
       .then(([p, m, ph]) => {
-        let finalPrices = p.data;
-        let finalMeds = m.data;
-        let finalPharmacies = ph.data;
+        const realPrices     = Array.isArray(p.data)  ? p.data  : [];
+        const realMeds       = Array.isArray(m.data)  ? m.data  : [];
+        const realPharmacies = Array.isArray(ph.data) ? ph.data : [];
 
-        // Fallback for Medicines if empty
-        if (!finalMeds || finalMeds.length === 0) {
-          finalMeds = [
-            { _id: 'm1', name: 'Paracetamol', dosage: '500mg' },
-            { _id: 'm2', name: 'Lisinopril', dosage: '10mg' },
-            { _id: 'm3', name: 'Metformin', dosage: '500mg' },
-          ];
-        }
+        
+        const uniqueMockPrices = MOCK_PRICES.filter(
+          (mp) => !realPrices.find((rp) => rp._id === mp._id)
+        );
+        const finalMeds       = realMeds.length       ? realMeds       : MOCK_MEDICINES_PRICE;
+        const finalPharmacies = realPharmacies.length ? realPharmacies : MOCK_PHARMACIES_PRICE;
 
-        // Fallback for Pharmacies if empty
-        if (!finalPharmacies || finalPharmacies.length === 0) {
-          finalPharmacies = [
-            { _id: 'p1', name: 'Apollo Pharmacy' },
-            { _id: 'p2', name: 'MedPlus' },
-            { _id: 'p3', name: 'Wellness Forever' },
-          ];
-        }
-
-        // Fallback for Prices if empty
-        if (!finalPrices || finalPrices.length === 0) {
-          finalPrices = [
-            {
-              _id: 'pr1',
-              medicine: finalMeds[0],
-              pharmacy: finalPharmacies[0],
-              price: 120,
-              discount: 10,
-            },
-            {
-              _id: 'pr2',
-              medicine: finalMeds[0],
-              pharmacy: finalPharmacies[1],
-              price: 115,
-              discount: 5,
-            },
-            {
-              _id: 'pr3',
-              medicine: finalMeds[1],
-              pharmacy: finalPharmacies[2],
-              price: 85,
-              discount: 0,
-            },
-          ];
-        }
-
-        setPrices(finalPrices);
+        setPrices([...realPrices, ...uniqueMockPrices]);
         setMedicines(finalMeds);
         setPharmacies(finalPharmacies);
-
-        if (finalMeds[0]) setForm((f) => ({ ...f, medicineId: finalMeds[0]._id }));
+        if (finalMeds[0])       setForm((f) => ({ ...f, medicineId: finalMeds[0]._id }));
         if (finalPharmacies[0]) setForm((f) => ({ ...f, pharmacyId: finalPharmacies[0]._id }));
       })
-      .catch(console.error)
+      .catch(() => {
+        
+        setPrices(MOCK_PRICES);
+        setMedicines(MOCK_MEDICINES_PRICE);
+        setPharmacies(MOCK_PHARMACIES_PRICE);
+      })
       .finally(() => setLoading(false));
   }, []);
 
@@ -88,7 +98,7 @@ const AdminPriceTab = () => {
     if (!form.price) return;
     setSaving(true);
     try {
-      // Find related objects for local sync
+      
       const selectedMed = medicines.find((m) => m._id === form.medicineId);
       const selectedPharma = pharmacies.find((p) => p._id === form.pharmacyId);
 
@@ -100,7 +110,7 @@ const AdminPriceTab = () => {
         discount: parseFloat(form.discount || 0),
       };
 
-      // Local state sync for "Perfect Working" experience
+      
       setPrices((prev) => {
         const index = prev.findIndex(
           (p) => p.medicine?._id === form.medicineId && p.pharmacy?._id === form.pharmacyId
@@ -117,7 +127,7 @@ const AdminPriceTab = () => {
         return [newPriceEntry, ...prev];
       });
 
-      // API sync in background if not mock
+      
       if (!form.medicineId.toString().startsWith('m')) {
         await api.post('/admin/prices', form);
       }

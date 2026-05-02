@@ -3,9 +3,9 @@ import sendEmail from '../utils/sendEmail.js';
 import crypto from 'crypto';
 import generateToken from '../utils/generateToken.js';
 
-// @desc    Forgot password
-// @route   POST /api/auth/forgot-password
-// @access  Public
+
+
+
 export const forgotPassword = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
@@ -15,18 +15,18 @@ export const forgotPassword = async (req, res, next) => {
       throw new Error('User not found with this email');
     }
 
-    // Get reset token
+    
     const resetToken = crypto.randomBytes(20).toString('hex');
 
-    // Hash token and set to resetPasswordToken field
+    
     user.resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex');
 
-    // Set expire (10 minutes)
+    
     user.resetPasswordExpire = Date.now() + 10 * 60 * 1000;
 
     await user.save({ validateBeforeSave: false });
 
-    // Create reset URL
+    
     const resetUrl = `${req.protocol}://${req.get('host')}/reset-password/${resetToken}`;
 
     const message = `You are receiving this email because you (or someone else) has requested the reset of a password. Please make a PUT request to: \n\n ${resetUrl}`;
@@ -63,12 +63,12 @@ export const forgotPassword = async (req, res, next) => {
   }
 };
 
-// @desc    Reset password
-// @route   PUT /api/auth/reset-password/:resettoken
-// @access  Public
+
+
+
 export const resetPassword = async (req, res, next) => {
   try {
-    // Get hashed token
+    
     const resetPasswordToken = crypto
       .createHash('sha256')
       .update(req.params.resettoken)
@@ -84,7 +84,7 @@ export const resetPassword = async (req, res, next) => {
       throw new Error('Invalid token or token expired');
     }
 
-    // Set new password
+    
     user.password = req.body.password;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;

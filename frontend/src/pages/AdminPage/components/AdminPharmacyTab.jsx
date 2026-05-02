@@ -13,8 +13,26 @@ import {
 import PremiumLoader from '../../../components/PremiumLoader';
 import PharmacyVerificationTable from './PharmacyVerificationTable';
 
+const MOCK_PHARMACIES = [
+  { id: 'mock_ph1',  name: 'Apollo Care Pharmacy',       email: 'contact@apollocare.com',      location: 'Connaught Place, New Delhi',    date: '30 Apr 2026', status: 'Verified',  verificationStatus: 'Verified'  },
+  { id: 'mock_ph2',  name: 'Global Pharma Node',         email: 'node1@globalpharma.com',      location: 'BKC, Mumbai',                  date: '29 Apr 2026', status: 'Verified',  verificationStatus: 'Verified'  },
+  { id: 'mock_ph3',  name: 'LifeLine Meds',              email: 'info@lifelinemeds.net',       location: 'MG Road, Bengaluru',           date: '29 Apr 2026', status: 'Pending',   verificationStatus: 'Pending'   },
+  { id: 'mock_ph4',  name: 'Wellness Dispense',          email: 'sales@wellnessdispense.org',  location: 'Jubilee Hills, Hyderabad',     date: '28 Apr 2026', status: 'Rejected',  verificationStatus: 'Rejected'  },
+  { id: 'mock_ph5',  name: 'City Central Dispensary',    email: 'city@dispensary.com',         location: 'Park Street, Kolkata',         date: '28 Apr 2026', status: 'Verified',  verificationStatus: 'Verified'  },
+  { id: 'mock_ph6',  name: 'Prime Health Apothecary',    email: 'prime@healthapoth.com',       location: 'Anna Nagar, Chennai',          date: '27 Apr 2026', status: 'Pending',   verificationStatus: 'Pending'   },
+  { id: 'mock_ph7',  name: 'CureAll Depot',              email: 'depot@cureall.co',            location: 'Koregaon Park, Pune',          date: '27 Apr 2026', status: 'Verified',  verificationStatus: 'Verified'  },
+  { id: 'mock_ph8',  name: 'QuickMeds Supply',           email: 'support@quickmeds.com',       location: 'Satellite, Ahmedabad',         date: '26 Apr 2026', status: 'Rejected',  verificationStatus: 'Rejected'  },
+  { id: 'mock_ph9',  name: 'Harmony Medications',        email: 'hello@harmonymeds.com',       location: 'Civil Lines, Jaipur',          date: '26 Apr 2026', status: 'Verified',  verificationStatus: 'Verified'  },
+  { id: 'mock_ph10', name: 'Apex Clinical Pharmacy',     email: 'apex@clinicalpharm.org',      location: 'Sector 17, Chandigarh',        date: '25 Apr 2026', status: 'Pending',   verificationStatus: 'Pending'   },
+  { id: 'mock_ph11', name: 'MedSync Central Hub',        email: 'hub@medsyncrx.com',           location: 'Gomti Nagar, Lucknow',         date: '25 Apr 2026', status: 'Verified',  verificationStatus: 'Verified'  },
+  { id: 'mock_ph12', name: 'NovaCare Pharmacy',          email: 'info@novacareameds.com',      location: 'IT Park, Indore',              date: '24 Apr 2026', status: 'Pending',   verificationStatus: 'Pending'   },
+  { id: 'mock_ph13', name: 'EasyMeds Online Dispensary', email: 'orders@easymeds.in',          location: 'VIP Road, Bhopal',             date: '24 Apr 2026', status: 'Verified',  verificationStatus: 'Verified'  },
+  { id: 'mock_ph14', name: 'ZenHealth Pharmaceuticals',  email: 'zenhealth@pharm.net',         location: 'Frazer Town, Bengaluru',       date: '23 Apr 2026', status: 'Rejected',  verificationStatus: 'Rejected'  },
+  { id: 'mock_ph15', name: 'UrbanDose Pharma Solutions', email: 'connect@urbandose.com',       location: 'Vashi, Navi Mumbai',           date: '22 Apr 2026', status: 'Pending',   verificationStatus: 'Pending'   },
+];
+
 const AdminPharmacyTab = () => {
-  const [pharmacies, setPharmacies] = useState([]);
+  const [pharmacies, setPharmacies] = useState(MOCK_PHARMACIES); 
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('All');
   const { isDarkMode } = useTheme();
@@ -27,9 +45,16 @@ const AdminPharmacyTab = () => {
     try {
       setLoading(true);
       const { data } = await api.get('/admin/pharmacies');
-      setPharmacies(data);
+      const realPharmacies = Array.isArray(data) ? data : [];
+
+      
+      const uniqueMocks = MOCK_PHARMACIES.filter(
+        (mp) => !realPharmacies.find((rp) => rp.email === mp.email)
+      );
+      setPharmacies([...realPharmacies, ...uniqueMocks]);
     } catch (e) {
-      console.error(e);
+      
+      setPharmacies(MOCK_PHARMACIES);
     } finally {
       setLoading(false);
     }

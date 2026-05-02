@@ -49,7 +49,7 @@ const SystemHealth = () => {
     <div className="bg-white rounded-[14px] border border-gray-100 shadow-sm p-5 admin-card flex flex-col gap-4">
       <h3 className="text-sm font-bold text-gray-800">System Health</h3>
 
-      {/* Service rows */}
+      {}
       <div className="flex flex-col gap-2">
         {SERVICES.map(({ label, status, uptime, icon: Icon, color }) => (
           <div
@@ -74,7 +74,7 @@ const SystemHealth = () => {
         ))}
       </div>
 
-      {/* Error logs */}
+      {}
       <div>
         <p className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2">
           Recent Logs

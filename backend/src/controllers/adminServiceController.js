@@ -2,9 +2,9 @@ import Medicine from '../models/Medicine.js';
 import Price from '../models/Price.js';
 import Appointment from '../models/Appointment.js';
 
-// ── MEDICINE MANAGEMENT ────────────────────────────────────────────────────────
 
-/** GET /api/admin/medicines */
+
+
 export const getAdminMedicines = async (req, res, next) => {
   try {
     const { search } = req.query;
@@ -16,7 +16,7 @@ export const getAdminMedicines = async (req, res, next) => {
   }
 };
 
-/** POST /api/admin/medicines */
+
 export const createAdminMedicine = async (req, res, next) => {
   try {
     const { name, dosage, category, manufacturer, description } = req.body;
@@ -31,7 +31,7 @@ export const createAdminMedicine = async (req, res, next) => {
   }
 };
 
-/** PUT /api/admin/medicines/:id */
+
 export const updateAdminMedicine = async (req, res, next) => {
   try {
     const medicine = await Medicine.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -45,7 +45,7 @@ export const updateAdminMedicine = async (req, res, next) => {
   }
 };
 
-/** DELETE /api/admin/medicines/:id */
+
 export const deleteAdminMedicine = async (req, res, next) => {
   try {
     const medicine = await Medicine.findByIdAndDelete(req.params.id);
@@ -59,9 +59,9 @@ export const deleteAdminMedicine = async (req, res, next) => {
   }
 };
 
-// ── PRICE MANAGEMENT ────────────────────────────────────────────────────────
 
-/** GET /api/admin/prices */
+
+
 export const getAllPrices = async (req, res, next) => {
   try {
     const prices = await Price.find()
@@ -74,7 +74,7 @@ export const getAllPrices = async (req, res, next) => {
   }
 };
 
-/** POST /api/admin/prices */
+
 export const upsertPrice = async (req, res, next) => {
   try {
     const { medicineId, pharmacyId, price, discount } = req.body;
@@ -98,7 +98,7 @@ export const upsertPrice = async (req, res, next) => {
   }
 };
 
-/** GET /api/admin/prices/compare/:medicineId */
+
 export const comparePrices = async (req, res, next) => {
   try {
     const prices = await Price.find({ medicine: req.params.medicineId })
@@ -110,9 +110,9 @@ export const comparePrices = async (req, res, next) => {
   }
 };
 
-// ── ANALYTICS ────────────────────────────────────────────────────────────────
 
-/** GET /api/admin/analytics */
+
+
 export const getAnalytics = async (req, res, next) => {
   try {
     const medicineCategoryBreakdown = await Medicine.aggregate([
@@ -140,7 +140,7 @@ export const getAnalytics = async (req, res, next) => {
   }
 };
 
-/** GET /api/admin/alerts */
+
 export const getAlerts = async (req, res, next) => {
   try {
     const alerts = [];

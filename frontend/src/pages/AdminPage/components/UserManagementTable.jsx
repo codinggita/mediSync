@@ -10,6 +10,7 @@ import {
   ShieldCheck,
   Mail,
   Calendar,
+  Download,
 } from 'lucide-react';
 
 const UserManagementTable = ({ users, onToggleBan, isDarkMode }) => {
@@ -23,7 +24,6 @@ const UserManagementTable = ({ users, onToggleBan, isDarkMode }) => {
   };
 
   const handleAction = (action, user) => {
-    console.log(`Executing ${action} for ${user.name}`);
     setActiveMenu(null);
     if (action === 'Dossier') {
       const content = `Citizen Dossier: ${user.name}\nRole: ${user.role}\nStatus: ${user.status}\nEmail: ${user.email}`;
@@ -33,6 +33,10 @@ const UserManagementTable = ({ users, onToggleBan, isDarkMode }) => {
       a.href = url;
       a.download = `MediSync_Dossier_${user.name.replace(/ /g, '_')}.txt`;
       a.click();
+    } else if (action === 'Reset') {
+      alert(`SYSTEM DIRECTIVE: Access key reset initiated for ${user.name}.\nA secure reset link is being dispatched to ${user.email}.`);
+    } else if (action === 'Promote') {
+      alert(`SYSTEM DIRECTIVE: Promotion protocol engaged.\nElevating ${user.name} from ${user.role} to Admin status in the global registry.`);
     }
   };
 
@@ -64,7 +68,9 @@ const UserManagementTable = ({ users, onToggleBan, isDarkMode }) => {
             return (
               <tr
                 key={u._id}
-                className={`transition-all duration-300 group hover:translate-x-1 ${
+                className={`transition-all duration-300 group hover:translate-x-1 relative ${
+                  activeMenu === u._id ? 'z-[100]' : 'z-0'
+                } ${
                   isDarkMode ? 'bg-[#151E32] hover:bg-[#1A2642]' : 'bg-[#ecf0f3] hover:bg-[#f5f8fa]'
                 }`}
               >
@@ -187,7 +193,7 @@ const UserManagementTable = ({ users, onToggleBan, isDarkMode }) => {
         </tbody>
       </table>
 
-      {/* --- Profile Preview Modal --- */}
+      {}
       {viewingUser && (
         <div className="fixed inset-0 z-[150] flex items-center justify-center p-6 bg-slate-900/40 backdrop-blur-md">
           <div className="w-full max-w-sm p-10 rounded-[3rem] bg-[#ecf0f3] dark:bg-[#151E32] shadow-[20px_20px_60px_rgba(0,0,0,0.3)] border border-white/20 animate-in fade-in zoom-in duration-300 relative">

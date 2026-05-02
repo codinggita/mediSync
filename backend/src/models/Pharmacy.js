@@ -36,7 +36,7 @@ const pharmacySchema = new mongoose.Schema(
       trim: true,
     },
     document: {
-      type: String, // URL to PDF/Image
+      type: String, 
     },
     verificationStatus: {
       type: String,

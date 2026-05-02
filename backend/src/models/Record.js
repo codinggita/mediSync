@@ -1,9 +1,6 @@
 import mongoose from 'mongoose';
 
-/**
- * Record model — aliases MedicalRecord for backward-compatibility.
- * Stores patient-uploaded medical records (lab reports, scans, prescriptions).
- */
+
 const recordSchema = new mongoose.Schema(
   {
     patient: {
@@ -22,13 +19,13 @@ const recordSchema = new mongoose.Schema(
       default: 'Other',
     },
     fileUrl: {
-      type: String, // cloud / local path
+      type: String, 
     },
     fileName: {
       type: String,
     },
     fileType: {
-      type: String, // e.g. application/pdf, image/png
+      type: String, 
     },
     notes: {
       type: String,

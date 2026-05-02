@@ -53,18 +53,18 @@ const OnboardingModal = ({ userName }) => {
 
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
-      {/* Dynamic Background Elements */}
+      {}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-[10%] left-[10%] w-[400px] h-[400px] bg-[#2A7FFF]/10 rounded-full blur-[120px] animate-pulse" />
         <div className="absolute bottom-[10%] right-[10%] w-[400px] h-[400px] bg-[#8B5CF6]/10 rounded-full blur-[120px] animate-pulse delay-700" />
       </div>
 
-      {/* Backdrop */}
+      {}
       <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-[8px]" onClick={dismiss} />
 
-      {/* Modal Card */}
+      {}
       <div className="relative z-10 w-full max-w-lg bg-white/90 dark:bg-[#0F172A]/90 backdrop-blur-2xl rounded-[40px] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.2)] overflow-hidden border border-white/50 dark:border-white/10 animate-[premiumFadeIn_0.5s_cubic-bezier(0.16,1,0.3,1)]">
-        {/* Progress Bar (Glow) */}
+        {}
         <div className="absolute top-0 left-0 right-0 h-[3px] bg-gray-100/50 dark:bg-white/5 overflow-hidden">
           <div
             className="h-full bg-gradient-to-r from-[#2A7FFF] via-[#8B5CF6] to-[#2A7FFF] transition-all duration-700 ease-out shadow-[0_0_12px_rgba(42,127,255,0.8)]"
@@ -72,7 +72,7 @@ const OnboardingModal = ({ userName }) => {
           />
         </div>
 
-        {/* Close Button */}
+        {}
         <button
           onClick={dismiss}
           className="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-md flex items-center justify-center text-slate-400 hover:text-slate-900 dark:hover:text-white hover:scale-110 active:scale-95 transition-all z-20 border border-white/50 dark:border-slate-700/50"
@@ -80,11 +80,11 @@ const OnboardingModal = ({ userName }) => {
           <X size={18} />
         </button>
 
-        {/* Header Section */}
+        {}
         <div
           className={`relative px-10 pt-14 pb-8 flex flex-col items-center text-center transition-all duration-500 ${animating ? 'translate-y-4 opacity-0 scale-95' : 'translate-y-0 opacity-100 scale-100'}`}
         >
-          {/* Animated Icon Container */}
+          {}
           <div className="relative mb-8">
             <div
               className="absolute inset-0 rounded-[32px] blur-2xl opacity-40 animate-pulse"
@@ -104,13 +104,13 @@ const OnboardingModal = ({ userName }) => {
               />
             </div>
 
-            {/* Sparkle decorative icons */}
+            {}
             <div className="absolute -top-2 -right-2 animate-bounce">
               <Sparkles size={20} className="text-amber-400 opacity-60" />
             </div>
           </div>
 
-          {/* Subtitle / Badge */}
+          {}
           <div
             className="px-4 py-1.5 rounded-full text-[0.7rem] font-black uppercase tracking-[0.25em] mb-4 shadow-sm border"
             style={{
@@ -122,7 +122,7 @@ const OnboardingModal = ({ userName }) => {
             {current.subtitle}
           </div>
 
-          {/* Title */}
+          {}
           <h2 className="text-[2.2rem] font-black text-slate-900 dark:text-white leading-[1.1] tracking-tight drop-shadow-sm">
             {title.split('!').map((part, i) => (
               <span key={i}>
@@ -133,7 +133,7 @@ const OnboardingModal = ({ userName }) => {
           </h2>
         </div>
 
-        {/* Body Section */}
+        {}
         <div
           className={`px-12 pb-10 flex flex-col items-center transition-all duration-500 delay-75 ${animating ? 'translate-y-4 opacity-0' : 'translate-y-0 opacity-100'}`}
         >
@@ -141,7 +141,7 @@ const OnboardingModal = ({ userName }) => {
             {description}
           </p>
 
-          {/* Footer Actions */}
+          {}
           <div className="w-full flex items-center justify-between gap-4">
             <button
               onClick={goPrev}
@@ -167,7 +167,7 @@ const OnboardingModal = ({ userName }) => {
             </button>
           </div>
 
-          {/* Pagination Indicators */}
+          {}
           <div className="flex items-center justify-center gap-2 mt-10">
             {steps.map((_, i) => (
               <button
@@ -192,7 +192,7 @@ const OnboardingModal = ({ userName }) => {
         </div>
       </div>
 
-      {/* Advanced Animations */}
+      {}
       <style>{`
         @keyframes premiumFadeIn {
           from { opacity: 0; transform: scale(0.9) translateY(40px); filter: blur(10px); }

@@ -20,7 +20,7 @@ const LandingPage = () => {
 
   useLayoutEffect(() => {
     let ctx = gsap.context(() => {
-      // Platform Section Animation
+      
       gsap.from('.platform-content > *', {
         scrollTrigger: { trigger: '#platform', start: 'top 80%' },
         y: 60,
@@ -30,7 +30,7 @@ const LandingPage = () => {
         ease: 'power3.out',
       });
 
-      // Solutions Cards Animation
+      
       gsap.from('.solution-card', {
         scrollTrigger: { trigger: '#solutions', start: 'top 70%' },
         y: 100,
@@ -40,7 +40,7 @@ const LandingPage = () => {
         ease: 'back.out(1.2)',
       });
 
-      // Security Section
+      
       gsap.from('.security-inner', {
         scrollTrigger: { trigger: '#security', start: 'top 70%' },
         scale: 0.8,
@@ -49,7 +49,7 @@ const LandingPage = () => {
         ease: 'power4.out',
       });
 
-      // Enterprise Section
+      
       gsap.from('.enterprise-content > *', {
         scrollTrigger: { trigger: '#enterprise', start: 'top 80%' },
         y: 50,
@@ -59,7 +59,7 @@ const LandingPage = () => {
         ease: 'power3.out',
       });
 
-      // Footer Animation
+      
       gsap.from('.footer-content > *', {
         scrollTrigger: { trigger: 'footer', start: 'top 90%' },
         y: 30,
@@ -69,10 +69,10 @@ const LandingPage = () => {
         ease: 'power2.out',
       });
 
-      // Security Shield 3D Rotation
+      
       gsap.to('.security-shield', { rotateY: 360, duration: 20, repeat: -1, ease: 'none' });
 
-      // Solution Cards 3D Tilt Interaction
+      
       const sCards = document.querySelectorAll('.solution-card');
       sCards.forEach((card) => {
         const inner = card.querySelector('.inner-card');
@@ -87,7 +87,7 @@ const LandingPage = () => {
         });
       });
 
-      // Scroll Progress Logic
+      
       const updateProgress = () => {
         const winScroll = document.documentElement.scrollTop;
         const height =
@@ -97,7 +97,7 @@ const LandingPage = () => {
       };
       window.addEventListener('scroll', updateProgress);
 
-      // Horizontal Auto-Scroll Animation
+      
       const hSection = document.querySelector('#deep-dive');
       const hContainer = document.querySelector('.horizontal-scroll-container');
       if (hContainer && hSection) {
@@ -148,7 +148,7 @@ const LandingPage = () => {
       <main>
         <LandingHero />
 
-        {/* 🚀 Infinite Scroll Network Ticker */}
+        {}
         <div className="py-12 bg-white/30 dark:bg-black/10 backdrop-blur-md border-y border-white/40 dark:border-white/5 overflow-hidden relative group">
           <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-[#ecf0f3] dark:from-[#0B1121] to-transparent z-10 pointer-events-none" />
           <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-[#ecf0f3] dark:from-[#0B1121] to-transparent z-10 pointer-events-none" />

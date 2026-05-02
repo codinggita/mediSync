@@ -57,7 +57,7 @@ const LandingHero = () => {
   return (
     <section
       ref={comp}
-      className="pt-24 sm:pt-32 pb-12 sm:pb-20 px-6 sm:px-8 relative overflow-hidden bg-[#ecf0f3] dark:bg-[#090E1A]"
+      className="pt-24 sm:pt-32 pb-12 sm:pb-20 px-4 sm:px-8 relative overflow-hidden bg-[#ecf0f3] dark:bg-[#090E1A]"
     >
       {}
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#2A7FFF]/5 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
@@ -69,7 +69,7 @@ const LandingHero = () => {
             <span className="w-2 h-2 rounded-full bg-[#2ECC71] animate-ping" />
             System Status: Optimal
           </div>
-          <h1 className="hero-text-child text-[2.5rem] sm:text-[3.5rem] lg:text-[4.5rem] font-black text-slate-900 dark:text-white leading-[1] sm:leading-[0.95] mb-6 sm:mb-8 tracking-tighter">
+          <h1 className="hero-text-child text-[2rem] sm:text-[3.5rem] lg:text-[4.5rem] font-black text-slate-900 dark:text-white leading-[1] sm:leading-[0.95] mb-6 sm:mb-8 tracking-tighter">
             Next-Gen <br className="hidden sm:block" />
             <span className="text-[#2A7FFF]">Clinical</span> <br className="hidden sm:block" />
             Protocol.
@@ -82,7 +82,7 @@ const LandingHero = () => {
           <div className="hero-text-child flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 sm:gap-8">
             <Link
               to="/signup"
-              className="w-full sm:w-auto px-10 sm:px-12 py-5 sm:py-7 nm-button text-[#2A7FFF] dark:text-white rounded-[2rem] sm:rounded-[2.5rem] font-black text-[0.9rem] sm:text-[1.1rem] uppercase tracking-[0.2em] hover:-translate-y-2 active:scale-95 transition-all flex items-center justify-center gap-4 group"
+              className="w-full sm:w-auto px-6 sm:px-12 py-5 sm:py-7 nm-button text-[#2A7FFF] dark:text-white rounded-[2rem] sm:rounded-[2.5rem] font-black text-[0.9rem] sm:text-[1.1rem] uppercase tracking-[0.2em] hover:-translate-y-2 active:scale-95 transition-all flex items-center justify-center gap-4 group"
             >
               Start Protocol{' '}
               <ArrowRight className="group-hover:translate-x-2 transition-transform" />
@@ -92,7 +92,7 @@ const LandingHero = () => {
                 const element = document.getElementById('platform');
                 if (element) element.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="w-full sm:w-auto px-10 sm:px-12 py-5 sm:py-7 nm-button text-slate-900 dark:text-white rounded-[2rem] sm:rounded-[2.5rem] font-black text-[0.9rem] sm:text-[1.1rem] uppercase tracking-[0.2em] hover:bg-white/40 transition-all"
+              className="w-full sm:w-auto px-6 sm:px-12 py-5 sm:py-7 nm-button text-slate-900 dark:text-white rounded-[2rem] sm:rounded-[2.5rem] font-black text-[0.9rem] sm:text-[1.1rem] uppercase tracking-[0.2em] hover:bg-white/40 transition-all"
             >
               Watch Vision
             </button>

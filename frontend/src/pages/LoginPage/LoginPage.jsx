@@ -109,7 +109,7 @@ const LoginPage = () => {
         <div className="flex-[1.2] px-8 py-10 md:px-12 flex flex-col justify-center bg-transparent">
           <div className="w-full max-w-[420px] mx-auto">
             <div className="mb-8 animate-in fade-in slide-in-from-right-8 duration-700">
-              <h2 className="text-[2.2rem] font-black text-slate-900 dark:text-white leading-tight">
+              <h2 className="text-[1.8rem] sm:text-[2.2rem] font-black text-slate-900 dark:text-white leading-tight">
                 Welcome back
               </h2>
               <p className="text-[0.95rem] text-slate-500 dark:text-slate-400 font-bold mt-1 uppercase tracking-widest">

@@ -3,7 +3,7 @@ import React from 'react';
 const AdminBreadcrumb = ({ activeTabData, sidebar, main }) => {
   return (
     <div
-      className="px-8 py-3 flex items-center gap-3 border-b transition-colors"
+      className="px-4 sm:px-8 py-3 flex items-center gap-3 border-b transition-colors"
       style={{
         backgroundColor: main.breadcrumb,
         borderColor: main.breadcrumbBorder,

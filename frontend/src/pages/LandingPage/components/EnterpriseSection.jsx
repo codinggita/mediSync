@@ -15,7 +15,7 @@ const EnterpriseSection = () => {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-transparent via-[#2A7FFF]/5 to-transparent pointer-events-none" />
 
       <div className="max-w-5xl mx-auto relative z-10 enterprise-content">
-        <h2 className="text-[4rem] font-black text-slate-900 dark:text-white mb-8 tracking-tighter leading-none">
+        <h2 className="text-[2.2rem] sm:text-[3rem] lg:text-[4rem] font-black text-slate-900 dark:text-white mb-8 tracking-tighter leading-none">
           Scaled for{' '}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2A7FFF] to-[#2ECC71]">
             Global Healthcare.

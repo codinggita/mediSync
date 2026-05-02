@@ -21,10 +21,10 @@ const SecuritySection = () => {
             <div className="w-24 h-24 rounded-[2rem] bg-[#2ECC71]/10 flex items-center justify-center text-[#2ECC71] mb-12 animate-pulse security-shield">
               <Shield size={48} />
             </div>
-            <h2 className="text-[3.5rem] font-black text-white mb-6 tracking-tighter leading-none max-w-4xl">
+            <h2 className="text-[2.2rem] sm:text-[3rem] lg:text-[3.5rem] font-black text-white mb-6 tracking-tighter leading-none max-w-4xl">
               Security Without <span className="text-[#2ECC71]">Compromise.</span>
             </h2>
-            <p className="text-[1.3rem] font-medium text-slate-400 mb-16 max-w-3xl leading-relaxed">
+            <p className="text-[1rem] sm:text-[1.3rem] font-medium text-slate-400 mb-10 sm:mb-16 max-w-3xl leading-relaxed">
               MediSync utilizes post-quantum encryption standards to protect patient identity. Our
               zero-knowledge architecture ensures that even we cannot access your clinical history.
             </p>

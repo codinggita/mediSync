@@ -130,7 +130,7 @@ const AdminAnalytics = ({ isDarkMode, data }) => {
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
       {}
       <div
-        className={`rounded-[2.5rem] p-10 transition-all duration-500 relative overflow-hidden group ${
+        className={`rounded-[2.5rem] p-6 sm:p-10 transition-all duration-500 relative overflow-hidden group ${
           isDarkMode
             ? 'bg-[#151E32] shadow-[15px_15px_30px_#0a0f1d,-15px_-15px_30px_#202d47] border border-white/5'
             : 'bg-[#ecf0f3] shadow-[20px_20px_40px_#cbced1,-20px_-20px_40px_#ffffff] border border-white/40'
@@ -221,7 +221,7 @@ const AdminAnalytics = ({ isDarkMode, data }) => {
 
       {}
       <div
-        className={`rounded-[2.5rem] p-10 transition-all duration-500 relative overflow-hidden group ${
+        className={`rounded-[2.5rem] p-6 sm:p-10 transition-all duration-500 relative overflow-hidden group ${
           isDarkMode
             ? 'bg-[#151E32] shadow-[15px_15px_30px_#0a0f1d,-15px_-15px_30px_#202d47] border border-white/5'
             : 'bg-[#ecf0f3] shadow-[20px_20px_40px_#cbced1,-20px_-20px_40px_#ffffff] border border-white/40'

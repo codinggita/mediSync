@@ -18,8 +18,8 @@ const LandingNavbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 py-4 sm:py-6">
-      <div className="max-w-7xl mx-auto flex items-center justify-between bg-white/40 dark:bg-black/20 backdrop-blur-2xl px-6 sm:px-10 py-3 sm:py-5 rounded-[2rem] sm:rounded-[2.5rem] border border-white/40 shadow-2xl transition-all hover:border-white/60">
+    <nav className="fixed top-0 left-0 right-0 z-50 px-2 sm:px-8 py-3 sm:py-6">
+      <div className="max-w-7xl mx-auto flex items-center justify-between bg-white/40 dark:bg-black/20 backdrop-blur-2xl px-4 sm:px-10 py-2 sm:py-5 rounded-[1.5rem] sm:rounded-[2.5rem] border border-white/40 shadow-2xl transition-all hover:border-white/60">
         <button
           className="flex items-center gap-3 sm:gap-4 cursor-pointer hover:opacity-80 transition-opacity shrink-0 border-none bg-transparent focus:outline-none focus:ring-2 focus:ring-[#2A7FFF]/40 rounded-xl"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}

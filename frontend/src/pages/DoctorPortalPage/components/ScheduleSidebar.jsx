@@ -9,7 +9,7 @@ const ScheduleSidebar = ({
   setSelectedPatientId,
 }) => (
   <div className="xl:col-span-4 flex flex-col gap-10">
-    {/* Critical Alert Component */}
+    {}
     <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[2.5rem] p-6 shadow-[10px_10px_20px_#cbced1,-10px_-10px_20px_#ffffff] dark:shadow-[10px_10px_20px_#0a0f1d,-10px_-10px_20px_#202d47] border border-white/40 dark:border-white/5 flex items-start gap-5 relative overflow-hidden group">
       <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/10 rounded-full blur-2xl group-hover:bg-red-500/20 transition-colors pointer-events-none" />
       <div className="w-12 h-12 rounded-[1.5rem] bg-[#ecf0f3] dark:bg-[#151E32] shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff] dark:shadow-[inset_4px_4px_8px_#0a0f1d,inset_-4px_-4px_8px_#202d47] flex items-center justify-center text-red-500 shrink-0 relative z-10 border border-white/20 dark:border-white/5">
@@ -26,7 +26,7 @@ const ScheduleSidebar = ({
       </div>
     </div>
 
-    {/* Schedule Lineup */}
+    {}
     <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[3.5rem] p-8 shadow-[20px_20px_40px_#cbced1,-20px_-20px_40px_#ffffff] dark:shadow-[20px_20px_40px_#0a0f1d,-20px_-20px_40px_#202d47] border border-white/40 dark:border-white/5 relative overflow-hidden">
       <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-[#2A7FFF]/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -81,7 +81,7 @@ const ScheduleSidebar = ({
       </div>
     </div>
 
-    {/* Tele-Link Card */}
+    {}
     <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[3.5rem] p-8 shadow-[20px_20px_40px_#cbced1,-20px_-20px_40px_#ffffff] dark:shadow-[20px_20px_40px_#0a0f1d,-20px_-20px_40px_#202d47] border border-white/40 dark:border-white/5 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-32 h-32 bg-[#2ECC71]/5 rounded-full blur-2xl pointer-events-none" />
 

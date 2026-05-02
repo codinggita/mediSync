@@ -8,7 +8,7 @@ const DoctorStatCards = ({ statCards, loading }) => {
           key={index}
           className="relative bg-[#ecf0f3] dark:bg-[#151E32] p-8 rounded-[2.5rem] shadow-[10px_10px_20px_#cbced1,-10px_-10px_20px_#ffffff] dark:shadow-[8px_8px_16px_#0a0f1d,-8px_-8px_16px_#202d47] border border-white/40 dark:border-white/5 overflow-hidden group hover:-translate-y-2 transition-all duration-500"
         >
-          {/* Professional Gloss Overlay */}
+          {}
           <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
 
           <div

@@ -64,14 +64,17 @@ const DoctorDashboardContent = () => {
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
           <h1 className="text-[2.2rem] font-black text-slate-900 dark:text-white leading-tight tracking-tight">
-            {greeting}, Dr. {user?.name?.split(' ')[0] || 'Clinician'}
+            {greeting}, Dr. {user?.name?.replace(/^Dr\.\s*/i, '').split(' ')[0] || 'Clinician'}
           </h1>
           <p className="text-[0.85rem] text-[#2A7FFF] font-bold uppercase tracking-[0.2em] mt-1">
             Clinical Overview Dashboard
           </p>
         </div>
         <div className="flex items-center gap-4">
-          <div className="relative cursor-pointer group">
+          <div 
+            className="relative cursor-pointer group"
+            onClick={() => navigate('/notifications')}
+          >
             <div className="w-14 h-14 rounded-2xl bg-[#ecf0f3] dark:bg-[#151E32] shadow-[8px_8px_16px_#cbced1,-8px_-8px_16px_#ffffff] dark:shadow-[8px_8px_16px_#0a0f1d,-8px_-8px_16px_#202d47] flex items-center justify-center border border-white/40 dark:border-white/5 transition-all active:scale-95 group-hover:shadow-[inset_4px_4px_8px_#cbced1,inset_-4px_-4px_8px_#ffffff] dark:group-hover:shadow-[inset_4px_4px_8px_#0a0f1d,inset_-4px_-4px_8px_#202d47]">
               <Bell size={24} className="text-[#2A7FFF]" />
             </div>
@@ -87,7 +90,7 @@ const DoctorDashboardContent = () => {
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-10">
         <div className="xl:col-span-2 flex flex-col gap-10">
           <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[3rem] p-10 shadow-[20px_20px_40px_#cbced1,-20px_-20px_40px_#ffffff] dark:shadow-[20px_20px_40px_#0a0f1d,-20px_-20px_40px_#202d47] border border-white/40 dark:border-white/5 overflow-hidden relative">
-            {/* Decorative Background Blur */}
+            {}
             <div className="absolute top-0 right-0 w-64 h-64 bg-[#2A7FFF]/5 rounded-full blur-3xl pointer-events-none" />
 
             <div className="flex justify-between items-center mb-10 relative z-10">
@@ -104,7 +107,7 @@ const DoctorDashboardContent = () => {
               </div>
             </div>
             <div className="h-64 w-full flex items-end justify-between gap-4 px-4 relative z-10 border-b-2 border-slate-200/50 dark:border-slate-800/50 pb-4">
-              {[40, 65, 30, 85, 55, 90, 75].map((height, i) => (
+              {(stats.activityTrend || [0, 0, 0, 0, 0, 0, 0]).map((height, i) => (
                 <div
                   key={i}
                   className="w-full flex flex-col items-center gap-3 group cursor-pointer h-full justify-end"
@@ -127,7 +130,7 @@ const DoctorDashboardContent = () => {
           </div>
 
           <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[3rem] p-10 shadow-[20px_20px_40px_#cbced1,-20px_-20px_40px_#ffffff] dark:shadow-[20px_20px_40px_#0a0f1d,-20px_-20px_40px_#202d47] border border-white/40 dark:border-white/5 relative overflow-hidden">
-            {/* Decorative Background Blur */}
+            {}
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#2ECC71]/5 rounded-full blur-3xl pointer-events-none" />
 
             <h3 className="text-[1.5rem] font-black text-slate-900 dark:text-white flex items-center gap-4 mb-8 relative z-10">

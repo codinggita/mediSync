@@ -1,7 +1,4 @@
-/**
- * Generates an array of day objects for a 6-row calendar grid (42 cells)
- * based on the provided month and year.
- */
+
 export const generateCalendarDays = (currentMonth) => {
   const year = currentMonth.getFullYear();
   const month = currentMonth.getMonth();
@@ -11,7 +8,7 @@ export const generateCalendarDays = (currentMonth) => {
 
   const days = [];
 
-  // Padding from previous month
+  
   for (let i = firstDay - 1; i >= 0; i--) {
     days.push({
       day: daysInPrevMonth - i,
@@ -20,7 +17,7 @@ export const generateCalendarDays = (currentMonth) => {
     });
   }
 
-  // Days of current month
+  
   for (let i = 1; i <= daysInMonth; i++) {
     days.push({
       day: i,
@@ -28,7 +25,7 @@ export const generateCalendarDays = (currentMonth) => {
     });
   }
 
-  // Padding for next month to reach 42 cells (6 rows)
+  
   const totalCells = 42;
   const remaining = totalCells - days.length;
   for (let i = 1; i <= remaining; i++) {

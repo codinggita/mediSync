@@ -72,7 +72,7 @@ const ActiveSharesPanel = () => {
 
   return (
     <div className="bg-white dark:bg-[#151E32] border border-gray-100 dark:border-slate-700/50 rounded-2xl p-5 shadow-sm transition-colors">
-      {/* Header */}
+      {}
       <div className="flex items-center justify-between mb-5">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-xl bg-[#2A7FFF]/10 flex items-center justify-center">
@@ -92,7 +92,7 @@ const ActiveSharesPanel = () => {
         </span>
       </div>
 
-      {/* Shares List */}
+      {}
       {shares.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-10 gap-3">
           <div className="w-14 h-14 rounded-2xl bg-gray-50 dark:bg-[#0B1121] flex items-center justify-center">
@@ -126,7 +126,7 @@ const ActiveSharesPanel = () => {
                       : 'border-gray-100 dark:border-slate-700/50 bg-white dark:bg-[#1A2642]/40 hover:-translate-y-0.5'
                   }`}
                 >
-                  {/* Doctor Row */}
+                  {}
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#2A7FFF] to-[#2ECC71] flex items-center justify-center text-white text-[0.7rem] font-extrabold shrink-0">
                       {initials(doctor)}
@@ -148,7 +148,7 @@ const ActiveSharesPanel = () => {
                       </p>
                     </div>
 
-                    {/* Revoke */}
+                    {}
                     {status !== 'expired' && (
                       <button
                         onClick={() => revoke(id)}
@@ -160,7 +160,7 @@ const ActiveSharesPanel = () => {
                     )}
                   </div>
 
-                  {/* Record & Meta */}
+                  {}
                   <div className="mt-3 flex items-center gap-2 flex-wrap text-[0.7rem] text-gray-400">
                     <span className="flex items-center gap-1">
                       <Lock size={10} /> {record}
@@ -177,7 +177,7 @@ const ActiveSharesPanel = () => {
                     )}
                   </div>
 
-                  {/* Expiry Bar */}
+                  {}
                   <div className="mt-3">
                     <div className="flex items-center justify-between mb-1.5">
                       <span className="flex items-center gap-1 text-[0.65rem] text-gray-400 font-medium">

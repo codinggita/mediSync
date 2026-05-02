@@ -7,7 +7,7 @@ const CriticalCasesPanel = ({ criticalCases }) => {
 
   return (
     <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[3rem] p-10 shadow-[20px_20px_40px_#cbced1,-20px_-20px_40px_#ffffff] dark:shadow-[20px_20px_40px_#0a0f1d,-20px_-20px_40px_#202d47] border border-white/40 dark:border-white/5 relative overflow-hidden">
-      {/* Decorative Warning Background Blur */}
+      {}
       <div className="absolute top-0 right-0 w-64 h-64 bg-red-500/10 rounded-full blur-3xl pointer-events-none" />
 
       <h3 className="text-[1.5rem] font-black text-red-500 flex items-center gap-4 mb-8 uppercase tracking-widest relative z-10">

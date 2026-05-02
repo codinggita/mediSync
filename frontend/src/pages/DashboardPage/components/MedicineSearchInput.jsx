@@ -10,7 +10,7 @@ const MedicineSearchInput = ({
 }) => {
   return (
     <div className="space-y-8 mb-10">
-      {/* Search Action Container */}
+      {}
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -37,7 +37,7 @@ const MedicineSearchInput = ({
             />
           </div>
 
-          {/* Dynamic Suggestions Overlay with Glassmorphism */}
+          {}
           {suggestions.length > 0 && (
             <div className="absolute top-full left-0 w-full mt-6 bg-white/80 dark:bg-[#151E32]/80 backdrop-blur-3xl border border-white/60 dark:border-white/10 rounded-[32px] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.4)] z-50 overflow-hidden animate-in zoom-in-95 duration-300">
               <div className="p-2">
@@ -85,7 +85,7 @@ const MedicineSearchInput = ({
         </button>
       </form>
 
-      {/* Intelligence Guidance Section */}
+      {}
       <div className="flex flex-wrap items-center gap-4">
         <span className="text-[0.7rem] font-black text-slate-400 uppercase tracking-widest">
           Try Searching For:
@@ -102,7 +102,7 @@ const MedicineSearchInput = ({
         ))}
       </div>
 
-      {/* Quick Intelligence Tags */}
+      {}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {[
           {

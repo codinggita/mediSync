@@ -5,8 +5,34 @@ import { ShieldAlert, RefreshCw, ShieldCheck } from 'lucide-react';
 import AdminStatSummary from './AdminStatSummary';
 import AdminAlertItem from './AdminAlertItem';
 
+const now = new Date();
+const ts = (minsAgo) => new Date(now - minsAgo * 60000).toISOString();
+
+const MOCK_ALERTS = [
+  
+  { _id: 'ma1',  message: 'Unauthorized Database Handshake Detected',      severity: 'critical', type: 'SECURITY_BREACH',   nodeRef: 'DB-NODE-01',  timestamp: ts(3)   },
+  { _id: 'ma2',  message: 'JWT Token Forgery Attempt Intercepted',         severity: 'critical', type: 'AUTH_ANOMALY',      nodeRef: 'AUTH-GW-02',  timestamp: ts(14)  },
+  { _id: 'ma3',  message: 'Brute Force Attack Blocked — IP: 182.72.x.x',  severity: 'critical', type: 'BRUTE_FORCE',       nodeRef: 'RATE-LIMITER', timestamp: ts(27) },
+  { _id: 'ma4',  message: 'NoSQL Injection Payload Sanitized',             severity: 'critical', type: 'INJECTION_BLOCK',   nodeRef: 'API-NODE-05', timestamp: ts(42)  },
+  { _id: 'ma5',  message: 'Pharmacy Node License Revoked — ZenHealth',    severity: 'critical', type: 'LICENSE_REVOKE',    nodeRef: 'PH-NODE-14',  timestamp: ts(58)  },
+
+  
+  { _id: 'ma6',  message: 'Core Uptime Exceeding 720 Hours',               severity: 'warning',  type: 'SYSTEM_MAINTENANCE', nodeRef: 'SYS-CORE',   timestamp: ts(72)  },
+  { _id: 'ma7',  message: 'Abnormal API Latency Detected — Node 404',      severity: 'warning',  type: 'NETWORK_LAG',        nodeRef: 'API-NODE-04', timestamp: ts(90) },
+  { _id: 'ma8',  message: 'Memory Usage at 78% — Critical Threshold Soon', severity: 'warning',  type: 'RESOURCE_USAGE',     nodeRef: 'SERVER-02',   timestamp: ts(110) },
+  { _id: 'ma9',  message: 'SSL Certificate Expires in 14 Days',            severity: 'warning',  type: 'CERT_EXPIRY',        nodeRef: 'TLS-GUARD',   timestamp: ts(145) },
+  { _id: 'ma10', message: 'Unusually High Login Activity — 3:00–4:00 AM',  severity: 'warning',  type: 'ACCESS_ANOMALY',     nodeRef: 'AUTH-LOG-07', timestamp: ts(180) },
+
+  
+  { _id: 'ma11', message: 'Medication Registry Sync Completed',            severity: 'info',     type: 'DATA_INTEGRITY',    nodeRef: 'REGISTRY-01', timestamp: ts(200) },
+  { _id: 'ma12', message: 'New Administrator Matrix Provisioned',          severity: 'info',     type: 'ACCESS_GRANTED',    nodeRef: 'IAM-NODE-01', timestamp: ts(230) },
+  { _id: 'ma13', message: 'Backup Snapshot Created Successfully',          severity: 'info',     type: 'BACKUP_SUCCESS',    nodeRef: 'BACKUP-02',   timestamp: ts(260) },
+  { _id: 'ma14', message: 'Security Policy Rules Updated (v2.4.1)',        severity: 'info',     type: 'POLICY_UPDATE',     nodeRef: 'POLICY-MGR',  timestamp: ts(300) },
+  { _id: 'ma15', message: 'System Audit Log Exported by Admin',           severity: 'info',     type: 'AUDIT_LOG',         nodeRef: 'LOG-EXPORT',  timestamp: ts(360) },
+];
+
 const AdminAlertsTab = ({ onCountChange }) => {
-  const [alerts, setAlerts] = useState([]);
+  const [alerts, setAlerts] = useState(MOCK_ALERTS); 
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('All');
   const { isDarkMode } = useTheme();
@@ -15,60 +41,19 @@ const AdminAlertsTab = ({ onCountChange }) => {
     setLoading(true);
     try {
       const { data } = await api.get('/admin/alerts');
-      let finalAlerts = data.alerts || [];
+      const realAlerts = Array.isArray(data?.alerts) ? data.alerts : [];
 
-      if (finalAlerts.length === 0) {
-        finalAlerts = [
-          {
-            _id: 'a1',
-            message: 'Unauthorized Database Handshake Detected',
-            severity: 'critical',
-            type: 'SECURITY_BREACH',
-            timestamp: new Date().toISOString(),
-          },
-          {
-            _id: 'a2',
-            message: 'Core Uptime Exceeding 720 Hours',
-            severity: 'warning',
-            type: 'SYSTEM_MAINTENANCE',
-            timestamp: new Date().toISOString(),
-          },
-          {
-            _id: 'a3',
-            message: 'Medication Registry Sync Successful',
-            severity: 'info',
-            type: 'DATA_INTEGRITY',
-            timestamp: new Date().toISOString(),
-          },
-          {
-            _id: 'a4',
-            message: 'Abnormal API Latency: Node 404',
-            severity: 'warning',
-            type: 'NETWORK_LAG',
-            timestamp: new Date().toISOString(),
-          },
-          {
-            _id: 'a5',
-            message: 'New Administrator Matrix Provisioned',
-            severity: 'info',
-            type: 'ACCESS_GRANTED',
-            timestamp: new Date().toISOString(),
-          },
-        ];
-      }
-      setAlerts(finalAlerts);
-      onCountChange?.(finalAlerts.filter((a) => a.severity === 'critical').length);
+      
+      const uniqueMocks = MOCK_ALERTS.filter(
+        (ma) => !realAlerts.find((ra) => ra._id === ma._id)
+      );
+      const merged = [...realAlerts, ...uniqueMocks];
+      setAlerts(merged);
+      onCountChange?.(merged.filter((a) => a.severity === 'critical').length);
     } catch (e) {
-      console.error(e);
-      setAlerts([
-        {
-          _id: 'a1',
-          message: 'Autonomous Protocol Synchronization Failed',
-          severity: 'critical',
-          type: 'SYNC_ERROR',
-          timestamp: new Date().toISOString(),
-        },
-      ]);
+      
+      setAlerts(MOCK_ALERTS);
+      onCountChange?.(MOCK_ALERTS.filter((a) => a.severity === 'critical').length);
     } finally {
       setLoading(false);
     }

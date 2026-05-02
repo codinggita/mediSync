@@ -10,7 +10,7 @@ const ProfileSettingsPanel = ({
 }) => {
   return (
     <div className="max-w-4xl animate-in fade-in slide-in-from-right-10 duration-700">
-      {/* Profile Identity Hub */}
+      {}
       <div className="flex flex-col md:flex-row items-center gap-12 mb-12 pb-12 border-b border-slate-100 dark:border-white/5">
         <div className="relative group">
           <div className="w-40 h-40 rounded-[3.5rem] bg-gradient-to-br from-[#2A7FFF] via-[#2A7FFF] to-[#2ECC71] p-1 shadow-2xl transition-all duration-500 group-hover:rotate-6">
@@ -61,7 +61,7 @@ const ProfileSettingsPanel = ({
         </div>
       </div>
 
-      {/* Detail Grid */}
+      {}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
         {[
           { label: 'First Name', name: 'firstName', val: userData.firstName },

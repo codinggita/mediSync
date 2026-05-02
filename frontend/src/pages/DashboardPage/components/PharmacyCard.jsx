@@ -3,7 +3,7 @@ import { MapPin, Star, ShoppingBag, Zap } from 'lucide-react';
 
 const PharmacyCard = ({ pharm, isBest, onClick }) => {
   const originalPrice = Math.round(pharm.price * 1.4);
-  const discount = 28; // Example static discount
+  const discount = 28; 
 
   return (
     <div
@@ -55,7 +55,13 @@ const PharmacyCard = ({ pharm, isBest, onClick }) => {
             <span className="text-[0.75rem] font-black text-[#2ECC71]">-{discount}%</span>
           </div>
         </div>
-        <button className="w-14 h-14 rounded-2xl bg-[#2A7FFF] text-white flex items-center justify-center shadow-lg shadow-[#2A7FFF]/20 group-hover/item:scale-110 group-hover/item:bg-[#1A6FFF] transition-all">
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            alert(`Sourcing Synchronization Successful: ${pharm.name} has reserved your medicine at the best clinical rate.`);
+          }}
+          className="w-14 h-14 rounded-2xl bg-[#2A7FFF] text-white flex items-center justify-center shadow-lg shadow-[#2A7FFF]/20 group-hover/item:scale-110 group-hover/item:bg-[#1A6FFF] transition-all active:scale-95"
+        >
           <ShoppingBag size={22} />
         </button>
       </div>

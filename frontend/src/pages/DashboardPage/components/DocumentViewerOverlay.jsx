@@ -70,7 +70,7 @@ const DocumentViewerOverlay = ({ record, pdfBlobUrl, onClose }) => {
           <div className="w-full max-w-2xl bg-white dark:bg-[#151E32] rounded-[32px] shadow-2xl overflow-hidden relative group min-h-[400px] flex items-center justify-center">
             {isImage(record.fileUrl) ? (
               <img
-                src={record.fileUrl}
+                src={record.fileUrl || reportPreviewImg}
                 alt="Clinical Report"
                 className="w-full h-auto object-contain animate-in fade-in zoom-in duration-500 max-h-[60vh]"
                 onError={(e) => {
@@ -85,9 +85,18 @@ const DocumentViewerOverlay = ({ record, pdfBlobUrl, onClose }) => {
                     title={record.title}
                     className="w-full h-full border-0 animate-in fade-in duration-500"
                   />
+                ) : record._id?.startsWith('sample') ? (
+                  <img
+                    src={reportPreviewImg}
+                    alt="Sample Report Preview"
+                    className="w-full h-full object-cover opacity-80 animate-in fade-in duration-700"
+                  />
                 ) : (
-                  <div className="flex items-center justify-center h-full text-slate-400 font-bold uppercase tracking-widest text-sm animate-pulse">
-                    Loading Secure Document...
+                  <div className="flex flex-col items-center justify-center h-full bg-slate-900/5">
+                    <div className="w-12 h-12 border-4 border-[#2A7FFF]/20 border-t-[#2A7FFF] rounded-full animate-spin mb-4" />
+                    <p className="text-[0.7rem] font-black text-[#2A7FFF] uppercase tracking-[0.3em] animate-pulse">
+                      Loading Secure Document...
+                    </p>
                   </div>
                 )}
               </div>

@@ -19,7 +19,7 @@ const AdminAlertItem = ({ alert, isDarkMode, onResolve }) => {
           : 'bg-[#ecf0f3] shadow-[20px_20px_40px_#cbced1,-20px_-20px_40px_#ffffff] border border-white/40'
       } hover:scale-[1.01]`}
     >
-      {/* Visual Accent Gradient */}
+      {}
       <div
         className="absolute left-0 top-0 bottom-0 w-1.5 opacity-60 group-hover:opacity-100 transition-opacity"
         style={{ backgroundColor: cfg.color }}

@@ -221,7 +221,7 @@ This project is licensed under the **MIT License**.
   <br />
 
   [![GitHub](https://img.shields.io/badge/Connect_on_GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/priyabratasahoo780)
-  [![LinkedIn](https://img.shields.io/badge/Professional_Network-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/priyabrata-sahoo/)
+  [![LinkedIn](https://img.shields.io/badge/Professional_Network-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/priyabratasahoo780/)
   [![Portfolio](https://img.shields.io/badge/Clinical_Portfolio-2A7FFF?style=for-the-badge&logo=google-chrome&logoColor=white)](https://github.com/priyabratasahoo780)
 
   <br />

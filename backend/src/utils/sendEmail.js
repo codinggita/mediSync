@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 
 const sendEmail = async (options) => {
-  // Create reusable transporter object using the default SMTP transport
+  
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST || 'smtp.mailtrap.io',
     port: process.env.SMTP_PORT || 2525,

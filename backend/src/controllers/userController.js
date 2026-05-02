@@ -1,17 +1,13 @@
 import User from '../models/User.js';
 import logger from '../utils/logger.js';
 
-// ─────────────────────────────────────────────
-//  GET /api/users/profile        → own profile
-//  PUT /api/users/profile        → update own profile
-//  PUT /api/users/vitals         → update own vitals
-// ─────────────────────────────────────────────
 
-/**
- * @desc    Get logged-in user's full profile
- * @route   GET /api/users/profile
- * @access  Private
- */
+
+
+
+
+
+
 export const getUserProfile = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id);
@@ -41,11 +37,7 @@ export const getUserProfile = async (req, res, next) => {
   }
 };
 
-/**
- * @desc    Update logged-in user's profile
- * @route   PUT /api/users/profile
- * @access  Private
- */
+
 export const updateUserProfile = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id).select('+password');
@@ -98,11 +90,7 @@ export const updateUserProfile = async (req, res, next) => {
   }
 };
 
-/**
- * @desc    Update logged-in user's vitals
- * @route   PUT /api/users/vitals
- * @access  Private
- */
+
 export const updateVitals = async (req, res, next) => {
   try {
     const { heartRate, bloodPressure, glucose, spO2 } = req.body;
@@ -128,11 +116,7 @@ export const updateVitals = async (req, res, next) => {
   }
 };
 
-/**
- * @desc    Get all doctors
- * @route   GET /api/users/doctors
- * @access  Private
- */
+
 export const getDoctors = async (req, res, next) => {
   try {
     const doctors = await User.find({ role: 'Doctor' }).select(

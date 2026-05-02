@@ -27,7 +27,7 @@ const sharedRecordSchema = new mongoose.Schema(
   }
 );
 
-// Ensure a record isn't shared with the same doctor multiple times redundantly
+
 sharedRecordSchema.index({ doctor: 1, record: 1 }, { unique: true });
 
 const SharedRecord = mongoose.model('SharedRecord', sharedRecordSchema);

@@ -6,7 +6,7 @@ import dnaImg from '../assets/images/dna.png';
 const PremiumLoader = ({ message = 'Synchronizing Intelligence' }) => {
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#ecf0f3] dark:bg-[#0B1121] overflow-hidden">
-      {/* Dynamic Background Telemetry */}
+      {}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
         <img
           src={healthAbstractImg}
@@ -15,19 +15,19 @@ const PremiumLoader = ({ message = 'Synchronizing Intelligence' }) => {
         />
       </div>
 
-      {/* 3D Space Simulation */}
+      {}
       <div className="absolute inset-0 flex items-center justify-center perspective-[1000px]">
         <div className="w-[800px] h-[800px] bg-[#2A7FFF]/5 rounded-full blur-[120px] animate-pulse" />
       </div>
 
       <div className="relative flex flex-col items-center gap-12">
-        {/* The Neural Core */}
+        {}
         <div className="relative w-64 h-64 flex items-center justify-center">
-          {/* Orbital Rings */}
+          {}
           <div className="absolute inset-0 border-[1px] border-[#2A7FFF]/10 rounded-full animate-spin-slow" />
           <div className="absolute inset-4 border-[1px] border-[#8B5CF6]/10 rounded-full animate-reverse-spin" />
 
-          {/* Holographic DNA Helix */}
+          {}
           <div className="relative w-40 h-40 group">
             <div className="absolute inset-0 bg-gradient-to-t from-[#2A7FFF] to-transparent opacity-20 blur-xl rounded-full" />
             <img
@@ -36,11 +36,11 @@ const PremiumLoader = ({ message = 'Synchronizing Intelligence' }) => {
               className="w-full h-full object-contain animate-float drop-shadow-[0_0_20px_rgba(42,127,255,0.4)]"
             />
 
-            {/* Biometric Scan Line */}
+            {}
             <div className="absolute left-0 right-0 h-[2px] bg-[#2A7FFF] shadow-[0_0_15px_#2A7FFF] animate-scan z-20" />
           </div>
 
-          {/* Satellite Nodes */}
+          {}
           {[0, 90, 180, 270].map((deg, i) => (
             <div
               key={i}
@@ -53,7 +53,7 @@ const PremiumLoader = ({ message = 'Synchronizing Intelligence' }) => {
           ))}
         </div>
 
-        {/* Intelligence Console */}
+        {}
         <div className="flex flex-col items-center gap-6">
           <div className="flex items-center gap-8 px-10 py-5 bg-white/40 dark:bg-white/5 backdrop-blur-3xl rounded-[2.5rem] border border-white/40 shadow-2xl relative overflow-hidden group">
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
@@ -84,7 +84,7 @@ const PremiumLoader = ({ message = 'Synchronizing Intelligence' }) => {
             </div>
           </div>
 
-          {/* Telemetry Progress Bar */}
+          {}
           <div className="w-80 h-1.5 bg-[#ecf0f3] dark:bg-white/5 rounded-full overflow-hidden shadow-inner relative">
             <div className="absolute inset-0 bg-gradient-to-r from-[#2A7FFF] via-[#8B5CF6] to-[#2A7FFF] w-full animate-loading-slide shadow-[0_0_15px_#2A7FFF]" />
           </div>

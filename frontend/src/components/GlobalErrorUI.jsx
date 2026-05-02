@@ -30,7 +30,7 @@ const GlobalErrorUI = ({ error, resetErrorBoundary }) => {
       ref={containerRef}
       className="min-h-screen flex items-center justify-center bg-[#ecf0f3] dark:bg-[#0a0f1d] p-6 font-outfit overflow-hidden relative"
     >
-      {/* Dynamic Background Elements */}
+      {}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute -top-1/4 -left-1/4 w-1/2 h-1/2 bg-red-500/5 rounded-full blur-[120px]" />
         <div className="absolute -bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-[#2A7FFF]/5 rounded-full blur-[120px]" />
@@ -41,7 +41,7 @@ const GlobalErrorUI = ({ error, resetErrorBoundary }) => {
         className="max-w-lg w-full rounded-[3.5rem] bg-[#ecf0f3] dark:bg-[#151E32] p-1 border border-white/20 dark:border-white/5 shadow-[20px_20px_60px_#bebebe,inset_4px_4px_8px_#ffffff] dark:shadow-none relative z-10"
       >
         <div className="bg-[#ecf0f3] dark:bg-[#151E32] rounded-[3.2rem] p-10 md:p-14 nm-inset dark:shadow-none flex flex-col items-center text-center">
-          {/* Tactical Alert Hub */}
+          {}
           <div className="relative mb-10">
             <div className="pulse-ring absolute inset-0 rounded-full bg-red-500/20" />
             <div className="pulse-ring absolute inset-0 rounded-full bg-red-500/10" />

@@ -5,7 +5,7 @@ import medicalHeroImg from '../../../assets/images/medical_hero.png';
 const LoginBranding = () => {
   return (
     <div className="flex-1 p-12 flex flex-col relative overflow-hidden hidden md:flex border-none bg-gradient-to-br from-[#ecf0f3] to-[#e0e5ec] dark:from-[#121826] dark:to-[#1a2133] shadow-[inset_10px_10px_20px_#cbced1,inset_-10px_-10px_20px_#ffffff] dark:shadow-[inset_10px_10px_20px_#0a0f1d,inset_-10px_-10px_20px_#202d47] m-4 rounded-[2rem] group/brand">
-      {/* Background Hero Image */}
+      {}
       <div className="absolute inset-0 opacity-10 group-hover/brand:opacity-20 transition-opacity pointer-events-none group-hover/brand:scale-110 transition-transform duration-[10s]">
         <img src={medicalHeroImg} alt="Branding" className="w-full h-full object-cover" />
       </div>

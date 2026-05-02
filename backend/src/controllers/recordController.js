@@ -2,9 +2,9 @@ import MedicalRecord from '../models/MedicalRecord.js';
 import SharedRecord from '../models/SharedRecord.js';
 import User from '../models/User.js';
 
-// @desc    Get logged in user's records (or patients of a doctor)
-// @route   GET /api/records
-// @access  Private
+
+
+
 const getRecords = async (req, res, next) => {
   try {
     let records;
@@ -14,13 +14,13 @@ const getRecords = async (req, res, next) => {
         'name specialty hospital'
       );
     } else if (req.user.role === 'Doctor') {
-      // Find records where doctor is the primary doctor
+      
       const primaryRecords = await MedicalRecord.find({ doctor: req.user._id }).populate(
         'patient',
         'name email patientId phone vitals gender bloodGroup dateOfBirth'
       );
 
-      // Find records shared with this doctor
+      
       const sharedMappings = await SharedRecord.find({ doctor: req.user._id }).populate({
         path: 'record',
         populate: {
@@ -31,7 +31,7 @@ const getRecords = async (req, res, next) => {
 
       const sharedRecords = sharedMappings.map((m) => m.record).filter((r) => r !== null);
 
-      // Combine and remove duplicates if any
+      
       records = [...primaryRecords, ...sharedRecords];
     } else {
       records = await MedicalRecord.find({})
@@ -44,16 +44,16 @@ const getRecords = async (req, res, next) => {
   }
 };
 
-// @desc    Upload a new medical record
-// @route   POST /api/records
-// @access  Private
+
+
+
 const createRecord = async (req, res, next) => {
   try {
     const { title, type, description, hospital, fileUrl, patientId, date } = req.body;
 
     let targetPatientId = req.user._id;
 
-    // If a doctor or admin is uploading, they must specify the patient ID
+    
     if (req.user.role === 'Doctor' || req.user.role === 'Admin') {
       if (!patientId) {
         res.status(400);
@@ -79,9 +79,9 @@ const createRecord = async (req, res, next) => {
   }
 };
 
-// @desc    Get record by ID
-// @route   GET /api/records/:id
-// @access  Private
+
+
+
 const getRecordById = async (req, res, next) => {
   try {
     const record = await MedicalRecord.findById(req.params.id)
@@ -89,10 +89,10 @@ const getRecordById = async (req, res, next) => {
       .populate('doctor', 'name email specialty hospital');
 
     if (record) {
-      // Check if it's shared with this doctor
+      
       const isShared = await SharedRecord.findOne({ record: record._id, doctor: req.user._id });
 
-      // Check authorization (patient can only see their own, doctor their patients OR if shared)
+      
       if (
         req.user.role === 'Admin' ||
         (record.patient && record.patient._id?.toString() === req.user._id.toString()) ||
@@ -113,14 +113,14 @@ const getRecordById = async (req, res, next) => {
   }
 };
 
-// @desc    Share a medical record with a doctor
-// @route   POST /api/records/share
-// @access  Private
+
+
+
 const shareRecord = async (req, res, next) => {
   try {
     const { recordId, doctorId } = req.body;
 
-    // Verify record ownership
+    
     const record = await MedicalRecord.findById(recordId);
     if (!record) {
       res.status(404);
@@ -132,14 +132,14 @@ const shareRecord = async (req, res, next) => {
       throw new Error('You can only share your own records');
     }
 
-    // Verify doctor exists
+    
     const doctor = await User.findById(doctorId);
     if (!doctor || doctor.role !== 'Doctor') {
       res.status(404);
       throw new Error('Doctor not found');
     }
 
-    // Create share entry
+    
     const sharedRecord = await SharedRecord.findOneAndUpdate(
       { record: recordId, doctor: doctorId },
       { patient: req.user._id, record: recordId, doctor: doctorId },
@@ -156,9 +156,9 @@ const shareRecord = async (req, res, next) => {
   }
 };
 
-// @desc    Delete a medical record
-// @route   DELETE /api/records/:id
-// @access  Private
+
+
+
 const deleteRecord = async (req, res, next) => {
   try {
     const record = await MedicalRecord.findById(req.params.id);
@@ -168,7 +168,7 @@ const deleteRecord = async (req, res, next) => {
       throw new Error('Medical record not found');
     }
 
-    // Check authorization
+    
     if (record.patient.toString() !== req.user._id.toString() && req.user.role !== 'Admin') {
       res.status(401);
       throw new Error('Not authorized to delete this record');

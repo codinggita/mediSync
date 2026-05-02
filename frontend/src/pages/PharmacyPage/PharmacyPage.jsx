@@ -27,15 +27,15 @@ const PharmacyPage = () => {
         <main className="flex-1 overflow-y-auto px-6 py-6 flex flex-col gap-8 scrollbar-hide pb-24 md:pb-10">
           <PharmacyHubHeader />
 
-          {/* 1. Medicine Search & Compare */}
+          {}
           <MedicineSearchPanel />
 
-          {/* 2. Full-width Nearby Pharmacies */}
+          {}
           <div className="w-full">
             <NearbyPharmacies />
           </div>
 
-          {/* 3. Saved Medicines (Full width) */}
+          {}
           <SavedMedicinesPanel />
         </main>
       </div>

@@ -1,12 +1,12 @@
 import User from '../models/User.js';
 import generateToken from '../utils/generateToken.js';
 
-// ── Registration Logic ──────────────────────────────────────────────────────
+
 const registerUser = async (req, res, next) => {
   try {
     const { email, phone, role, password, name, ...otherDetails } = req.body;
 
-    // Parallel validation for performance
+    
     const [emailExists, phoneExists] = await Promise.all([
       User.findOne({ email }),
       phone ? User.findOne({ phone }) : Promise.resolve(null)
@@ -15,7 +15,7 @@ const registerUser = async (req, res, next) => {
     if (emailExists) { res.status(400); throw new Error('Email already registered'); }
     if (phoneExists) { res.status(400); throw new Error('Mobile number already registered'); }
 
-    // Auto-generate Patient ID if applicable
+    
     let patientId;
     if (!role || role === 'Patient') {
       patientId = `MS-${Math.floor(10000 + Math.random() * 90000)}`;
@@ -49,7 +49,7 @@ const registerUser = async (req, res, next) => {
   }
 };
 
-// ── Login Logic ─────────────────────────────────────────────────────────────
+
 const loginUser = async (req, res, next) => {
   try {
     const { email: identifier, password } = req.body;
@@ -77,7 +77,7 @@ const loginUser = async (req, res, next) => {
   }
 };
 
-// ── Profile Logic ───────────────────────────────────────────────────────────
+
 const getMe = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id);
@@ -100,7 +100,7 @@ const getMe = async (req, res, next) => {
   }
 };
 
-// ── Google Authentication ───────────────────────────────────────────────────
+
 const googleLogin = async (req, res, next) => {
   try {
     const { email } = req.body;

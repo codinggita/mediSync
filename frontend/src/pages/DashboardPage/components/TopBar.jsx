@@ -1,43 +1,12 @@
 import React, { useState } from 'react';
-import {
-  Search,
-  Bell,
-  Sun,
-  Moon,
-  ChevronDown,
-  User,
-  X,
-  CheckCircle,
-  AlertTriangle,
-  LogOut,
-} from 'lucide-react';
+import { Search, Bell, Sun, Moon, ChevronDown, User } from 'lucide-react';
 import { useAuth } from '../../../context/AuthContext';
 import { useTheme } from '../../../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
+import NotificationDropdown from './NotificationDropdown';
+import ProfileDropdown from './ProfileDropdown';
 
-const notifications = [
-  {
-    id: 1,
-    type: 'alert',
-    text: 'Medicine refill required: Metformin',
-    time: '5 min ago',
-    unread: true,
-  },
-  {
-    id: 2,
-    type: 'success',
-    text: 'Lab results uploaded successfully',
-    time: '1 hr ago',
-    unread: true,
-  },
-  {
-    id: 3,
-    type: 'alert',
-    text: 'Appointment tomorrow at 10:00 AM',
-    time: '2 hrs ago',
-    unread: true,
-  },
-];
+const notifications = [];
 
 const TopBar = () => {
   const [notifOpen, setNotifOpen] = useState(false);
@@ -61,68 +30,56 @@ const TopBar = () => {
   };
 
   const [searchQuery, setSearchQuery] = useState('');
+  const [showResults, setShowResults] = useState(false);
+
+  
+  const MOCK_RESULTS = [
+    { id: 'r1', type: 'Medicine', name: 'Lisinopril 10mg', tab: 'medicines', path: '/admin' },
+    { id: 'r2', type: 'Medicine', name: 'Paracetamol 500mg', tab: 'medicines', path: '/admin' },
+    { id: 'r3', type: 'Pharmacy', name: 'Apollo Pharmacy', tab: 'pharmacy', path: '/admin' },
+    { id: 'r4', type: 'Pharmacy', name: 'MedPlus Central', tab: 'pharmacy', path: '/admin' },
+    { id: 'r5', type: 'Citizen', name: 'Rahul Gupta', tab: 'users', path: '/admin' },
+    { id: 'r6', type: 'Citizen', name: 'Dr. Arjun Mehta', tab: 'users', path: '/admin' },
+    { id: 'r7', type: 'System', name: 'Threat Protocols', tab: 'alerts', path: '/admin' },
+    { id: 'r8', type: 'System', name: 'Market Analytics', tab: 'analytics', path: '/admin' },
+  ];
+
+  const filteredResults = searchQuery.trim() 
+    ? MOCK_RESULTS.filter(r => r.name.toLowerCase().includes(searchQuery.toLowerCase()) || r.type.toLowerCase().includes(searchQuery.toLowerCase()))
+    : [];
+
+  const handleResultClick = (result) => {
+    navigate(result.path);
+    
+    
+    setSearchQuery('');
+    setShowResults(false);
+  };
 
   const handleGlobalSearch = (e) => {
     if (e.key === 'Enter' && searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
-
-      // Premium Smart Routing Engine (Frontend Simulation)
-      if (
-        q.includes('medicine') ||
-        q.includes('pill') ||
-        q.includes('pharmacy') ||
-        q.includes('aspirin') ||
-        q.includes('paracetamol')
-      ) {
-        navigate('/pharmacy');
-      } else if (
-        q.includes('doctor') ||
-        q.includes('appointment') ||
-        q.includes('dr') ||
-        q.includes('schedule') ||
-        q.includes('meet')
-      ) {
-        navigate('/appointments');
-      } else if (
-        q.includes('record') ||
-        q.includes('mri') ||
-        q.includes('scan') ||
-        q.includes('xray') ||
-        q.includes('blood') ||
-        q.includes('history') ||
-        q.includes('archive')
-      ) {
-        navigate('/records');
-      } else if (
-        q.includes('portal') ||
-        q.includes('clinical') ||
-        q.includes('active') ||
-        q.includes('note') ||
-        q.includes('patient') ||
-        q.includes('update')
-      ) {
-        navigate('/doctor-portal');
-      } else if (
-        q.includes('setting') ||
-        q.includes('profile') ||
-        q.includes('password') ||
-        q.includes('account')
-      ) {
-        navigate('/settings');
-      } else {
-        alert(
-          `Deep Search Triggered for: "${searchQuery}"\n\nIn production, this will query the global Elasticsearch database for patients, cross-hospital records, and external inventory.`
-        );
+      
+      
+      if (user?.role === 'Admin') {
+        if (q.includes('pharmacy') || q.includes('store')) {
+          alert('Switching to Pharmacy Matrix...');
+        } else if (q.includes('med') || q.includes('pill')) {
+          alert('Switching to Global Formulary...');
+        } else if (q.includes('user') || q.includes('patient') || q.includes('citizen')) {
+          alert('Switching to Identity Matrix...');
+        }
       }
 
+      setShowResults(false);
       setSearchQuery('');
-      e.target.blur(); // Remove focus after search
+      e.target.blur();
     }
   };
 
   return (
     <header className="h-[70px] bg-white dark:bg-[#121826] border-b border-slate-100 dark:border-slate-800/60 flex items-center px-6 gap-4 shadow-[0_2px_16px_rgba(15,23,42,0.07)] sticky top-0 z-[50]">
-      {/* Greeting */}
+      {}
       <div className="hidden lg:flex flex-col mr-4">
         <span className="text-[0.75rem] text-slate-400 dark:text-slate-500 font-medium flex items-center gap-1.5">
           <Sun size={13} className="text-amber-400" /> {greeting},{' '}
@@ -138,21 +95,54 @@ const TopBar = () => {
         </div>
       </div>
 
-      {/* Global Smart Search */}
-      <div className="flex-1 max-w-sm relative group">
+      {}
+      <div className="flex-1 max-w-md relative group">
         <Search
-          className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 group-focus-within:text-sky-500 transition-colors"
+          className={`absolute left-3.5 top-1/2 -translate-y-1/2 transition-colors ${
+            showResults ? 'text-sky-500' : 'text-slate-400 dark:text-slate-500'
+          }`}
           size={16}
         />
         <input
           type="text"
           value={searchQuery}
+          onFocus={() => setShowResults(true)}
+          onBlur={() => setTimeout(() => setShowResults(false), 200)}
           onChange={(e) => setSearchQuery(e.target.value)}
           onKeyDown={handleGlobalSearch}
           placeholder="Search medicines, records, doctors…"
-          className="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-[#0B1121] border border-slate-200 dark:border-slate-800 rounded-xl text-[0.85rem] text-slate-700 dark:text-white outline-none focus:border-sky-400 focus:ring-4 focus:ring-sky-400/10 focus:bg-white dark:focus:bg-[#151E32] transition-all placeholder:text-slate-400 font-medium"
+          className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-[#0B1121] border border-slate-200 dark:border-slate-800 rounded-2xl text-[0.85rem] text-slate-700 dark:text-white outline-none focus:border-sky-400 focus:ring-4 focus:ring-sky-400/10 focus:bg-white dark:focus:bg-[#151E32] transition-all placeholder:text-slate-400 font-bold"
         />
-        {searchQuery && (
+        
+        {}
+        {showResults && filteredResults.length > 0 && (
+          <div className={`absolute top-[calc(100%+10px)] left-0 w-full rounded-[1.5rem] border overflow-hidden shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-top-2 duration-300 ${
+            isDarkMode ? 'bg-slate-900/90 border-white/10 text-white' : 'bg-white/95 border-slate-200 text-slate-900'
+          }`}>
+            <div className="p-3 bg-slate-100/50 dark:bg-white/5 border-b border-slate-200 dark:border-white/5">
+              <p className="text-[0.6rem] font-black uppercase tracking-[0.2em] text-slate-400">Live Intelligence Results</p>
+            </div>
+            <div className="max-h-[350px] overflow-y-auto scrollbar-hide">
+              {filteredResults.map((result) => (
+                <button
+                  key={result.id}
+                  onClick={() => handleResultClick(result)}
+                  className="w-full flex items-center justify-between p-4 hover:bg-sky-500/10 transition-colors border-b last:border-0 border-slate-100 dark:border-white/5 group"
+                >
+                  <div className="flex flex-col items-start">
+                    <span className="text-[0.8rem] font-black group-hover:text-sky-500 transition-colors">{result.name}</span>
+                    <span className="text-[0.6rem] font-bold text-slate-400 uppercase tracking-widest mt-1">{result.type}</span>
+                  </div>
+                  <div className="px-3 py-1 rounded-lg bg-slate-100 dark:bg-white/10 text-[0.55rem] font-black uppercase tracking-widest text-slate-500 group-hover:bg-sky-500 group-hover:text-white transition-all">
+                    GO TO {result.tab}
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {searchQuery && !showResults && (
           <div className="absolute right-3 top-1/2 -translate-y-1/2 text-[0.6rem] font-bold text-slate-400 bg-slate-200 dark:bg-slate-700 px-1.5 py-0.5 rounded shadow-sm pointer-events-none">
             ENTER
           </div>
@@ -160,7 +150,7 @@ const TopBar = () => {
       </div>
 
       <div className="flex items-center gap-2 ml-auto">
-        {/* Theme Toggle */}
+        {}
         <button
           onClick={toggleTheme}
           className="relative w-10 h-10 flex items-center justify-center rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-[#151E32] hover:text-slate-900 dark:hover:text-white transition-all border border-slate-100 dark:border-slate-800"
@@ -172,7 +162,7 @@ const TopBar = () => {
           )}
         </button>
 
-        {/* Notification Bell */}
+        {}
         <div className="relative">
           <button
             onClick={() => {
@@ -188,57 +178,14 @@ const TopBar = () => {
           </button>
 
           {notifOpen && (
-            <div className="absolute right-0 top-full mt-2 w-80 bg-white dark:bg-[#151E32] border border-gray-100 dark:border-white/10 rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] z-[100] overflow-hidden">
-              <div className="flex items-center justify-between px-4 py-3 border-b border-gray-50 dark:border-white/5">
-                <span className="font-bold text-gray-900 dark:text-white text-[0.9rem]">
-                  Notifications
-                </span>
-                <button
-                  onClick={() => setNotifOpen(false)}
-                  className="text-gray-400 hover:text-gray-700 dark:hover:text-white"
-                >
-                  <X size={16} />
-                </button>
-              </div>
-              <div className="divide-y divide-gray-50 dark:divide-white/5">
-                {notifications.map((n) => (
-                  <div
-                    key={n.id}
-                    className={`px-4 py-3 flex gap-3 hover:bg-gray-50 dark:hover:bg-[#1E293B] transition-colors ${n.unread ? 'bg-[#2A7FFF]/3' : ''}`}
-                  >
-                    <div
-                      className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${n.type === 'alert' ? 'bg-red-50 dark:bg-red-500/10' : 'bg-green-50 dark:bg-green-500/10'}`}
-                    >
-                      {n.type === 'alert' ? (
-                        <AlertTriangle size={14} className="text-[#D32F2F] dark:text-red-400" />
-                      ) : (
-                        <CheckCircle size={14} className="text-[#2A7FFF] dark:text-green-400" />
-                      )}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-[0.8rem] font-semibold text-gray-800 dark:text-white leading-tight">
-                        {n.text}
-                      </p>
-                      <p className="text-[0.7rem] text-gray-400 dark:text-slate-500 mt-0.5">
-                        {n.time}
-                      </p>
-                    </div>
-                    {n.unread && (
-                      <div className="w-2 h-2 bg-[#2A7FFF] rounded-full shrink-0 mt-1"></div>
-                    )}
-                  </div>
-                ))}
-              </div>
-              <div className="px-4 py-2.5 border-t border-gray-50 dark:border-white/5 text-center">
-                <button className="text-[0.78rem] text-[#2A7FFF] font-bold hover:underline">
-                  View all notifications
-                </button>
-              </div>
-            </div>
+            <NotificationDropdown
+              notifications={notifications}
+              onClose={() => setNotifOpen(false)}
+            />
           )}
         </div>
 
-        {/* Profile */}
+        {}
         <div className="relative">
           <button
             onClick={() => {
@@ -247,14 +194,26 @@ const TopBar = () => {
             }}
             className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-[#151E32] border border-slate-100 dark:border-slate-800 transition-all"
           >
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#2A7FFF] to-[#2ECC71] flex items-center justify-center shadow-sm">
-              <User size={14} className="text-white" />
+            <div className="w-9 h-9 rounded-full relative p-0.5 border border-slate-200 dark:border-white/10 shadow-inner bg-slate-50 dark:bg-slate-800 flex items-center justify-center overflow-hidden">
+              {user?.profilePic ? (
+                <img 
+                  src={user.profilePic} 
+                  alt="Profile" 
+                  className="w-full h-full object-cover rounded-full"
+                />
+              ) : (
+                <div className="w-full h-full rounded-full bg-gradient-to-br from-[#2A7FFF] to-[#2ECC71] flex items-center justify-center">
+                  <User size={14} className="text-white" />
+                </div>
+              )}
+              {}
+              <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-white dark:border-slate-900 rounded-full shadow-sm" />
             </div>
             <div className="hidden sm:flex flex-col items-start text-left">
-              <span className="text-[0.8rem] font-bold text-gray-900 dark:text-white leading-none">
+              <span className="text-[0.8rem] font-black text-gray-900 dark:text-white leading-none">
                 {user?.name || 'MediSync Member'}
               </span>
-              <span className="text-[0.65rem] text-gray-400 dark:text-slate-500 font-medium mt-0.5">
+              <span className="text-[0.65rem] text-gray-400 dark:text-slate-500 font-black uppercase tracking-widest mt-1">
                 {user?.role || 'Patient'}
               </span>
             </div>
@@ -265,30 +224,10 @@ const TopBar = () => {
           </button>
 
           {profileOpen && (
-            <div className="absolute right-0 top-full mt-2 w-44 bg-white dark:bg-[#151E32] border border-gray-100 dark:border-white/10 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] py-2 z-[100]">
-              {['My Profile', 'System Settings', 'Security HUD'].map((item) => (
-                <button
-                  key={item}
-                  onClick={() => {
-                    setProfileOpen(false);
-                    if (item === 'My Profile') navigate('/settings?tab=profile');
-                    if (item === 'System Settings') navigate('/settings?tab=records');
-                    if (item === 'Security HUD') navigate('/settings?tab=security');
-                  }}
-                  className="w-full text-left px-4 py-2.5 text-[0.83rem] font-medium text-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-[#1E293B] hover:text-[#2A7FFF] transition-colors"
-                >
-                  {item}
-                </button>
-              ))}
-              <div className="border-t border-gray-100 dark:border-white/5 mt-1 pt-1">
-                <button
-                  onClick={handleLogout}
-                  className="w-full text-left px-4 py-2.5 text-[0.83rem] font-medium text-[#D32F2F] dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors flex items-center gap-2"
-                >
-                  <LogOut size={14} /> Logout
-                </button>
-              </div>
-            </div>
+            <ProfileDropdown
+              onClose={() => setProfileOpen(false)}
+              onLogout={handleLogout}
+            />
           )}
         </div>
       </div>

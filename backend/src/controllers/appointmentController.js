@@ -2,9 +2,9 @@ import mongoose from 'mongoose';
 import Appointment from '../models/Appointment.js';
 import User from '../models/User.js';
 
-// @desc    Get logged in user's appointments
-// @route   GET /api/appointments
-// @access  Private
+
+
+
 const getAppointments = async (req, res, next) => {
   try {
     let appointments;
@@ -28,14 +28,14 @@ const getAppointments = async (req, res, next) => {
   }
 };
 
-// @desc    Create a new appointment
-// @route   POST /api/appointments
-// @access  Private
+
+
+
 const createAppointment = async (req, res, next) => {
   try {
     const { doctorId, date, time, type, location } = req.body;
 
-    // 🛡️ ID Validation Guard
+    
     if (!mongoose.Types.ObjectId.isValid(doctorId)) {
       res.status(400);
       throw new Error('Invalid Doctor ID Format');
@@ -72,15 +72,15 @@ const createAppointment = async (req, res, next) => {
   }
 };
 
-// @desc    Update appointment status
-// @route   PATCH /api/appointments/:id/status
-// @access  Private
+
+
+
 const updateAppointmentStatus = async (req, res, next) => {
   try {
     const { status } = req.body;
     const { id } = req.params;
 
-    // 🛡️ ID Validation Guard
+    
     if (!mongoose.Types.ObjectId.isValid(id)) {
       res.status(400);
       throw new Error('Invalid Appointment ID Format');
@@ -89,7 +89,7 @@ const updateAppointmentStatus = async (req, res, next) => {
     const appointment = await Appointment.findById(id);
 
     if (appointment) {
-      // Check authorization
+      
       if (
         req.user.role === 'Admin' ||
         (appointment.patient && appointment.patient.toString() === req.user._id.toString()) ||
